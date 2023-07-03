@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -28,54 +30,65 @@
                 <h2 class="page-title">진로검사</h2>
                 <div class="row aptitude-content">
                     <div class="col-lg-12 col-xl-12">
-                       <h3 class="page-count"><span>29</span> / <span>153</span></h3>
+                       <h3 class="page-count"><span>0</span> / <span>${fn:length(RESULT)}</span></h3>
                        <h4 class="question-title">신체 운동능력</h4>
                        <div class="top-question">
                             <p class="top-q">기초체력을 바탕으로 효율적으로 몸을 움직이고 동작을 학습할 수 있는 능력입니다.<br>
                                 나의 신체·운동능력은 어느 정도일까요? 해당되는 번호를 선택하세요.</p>
                        </div>
-                       <ul class="question-wrap num">
-                            <li>
-                                <div class="question-item"><span class="ic-question">1</span>생명체의 기원, 발달 및 원리 등을 연구한다.</div>
-                                <div class="question-dt">
-                                    <div class="question-dt-info">무릎 대고 팔굽혀펴기를 5회 이상 하기 어렵다.</div>
-                                    <div class="question-dt-info">무릎 대고 팔굽혀펴기를 5회 이상 하기 어렵다.</div>
-                                </div>
-                                <div class="btn-group radio-group" role="group" aria-label="Basic radio toggle button group">
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                                    <label class="btn btn-outline-primary" for="btnradio1">1</label>
-                                  
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                                    <label class="btn btn-outline-primary" for="btnradio2">2</label>
-                                  
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-                                    <label class="btn btn-outline-primary" for="btnradio3">3</label>
-
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
-                                    <label class="btn btn-outline-primary" for="btnradio4">4</label>
-                                    
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
-                                    <label class="btn btn-outline-primary" for="btnradio4">5</label>
-
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
-                                    <label class="btn btn-outline-primary" for="btnradio4">6</label>
-
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
-                                    <label class="btn btn-outline-primary" for="btnradio4">7</label>
-                                  </div>
-                            </li>
-                       </ul>
+                       <c:forEach var="item" items="${RESULT}" varStatus="status">
+	                       <ul class="question-wrap num">
+	                            <li>
+	                                <div class="question-item"><span class="ic-question">${item.qitemNo}</span>${item.question}</div>
+	                                <div class="question-dt">
+	                                    <div class="question-dt-info">무릎 대고 팔굽혀펴기를 5회 이상 하기 어렵다.</div>
+	                                    <div class="question-dt-info">무릎 대고 팔굽혀펴기를 5회 이상 하기 어렵다.</div>
+	                                </div>
+	                                <div class="btn-group radio-group" role="group" aria-label="Basic radio toggle button group">
+	                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 1}" autocomplete="off">
+	                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 1}">1</label>
+	                                  
+	                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 2}" autocomplete="off">
+	                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 2}">2</label>
+	                                  
+	                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 3}" autocomplete="off">
+	                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 3}">3</label>
+	
+	                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 4}" autocomplete="off">
+	                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 4}">4</label>
+	                                    
+	                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 5}" autocomplete="off">
+	                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 5}">5</label>
+	
+	                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 6}" autocomplete="off">
+	                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 6}">6</label>
+	
+	                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 7}" autocomplete="off">
+	                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 7}">7</label>
+	                                  </div>
+	                            </li>
+	                       </ul>
+                       </c:forEach>
                        <div class="button-wrap">
                             <button class="white-btn">이전</button>
                             <button class="white-btn">다음</button>
                        </div>
                     </div>
                 </div>
-
-                
             </div>
         </section>
-    
+       <script>
+	       const radioButtons = document.querySelectorAll('.btn-check');
+	       const countSpan = document.querySelector('.page-count span:first-child');
+	       let count = 0;
+	   
+	       radioButtons.forEach(radioButton => {
+	           radioButton.addEventListener('click', () => {
+	               count = document.querySelectorAll('.btn-check:checked').length;
+	               countSpan.textContent = count;
+	           });
+	       });
+	   </script>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 

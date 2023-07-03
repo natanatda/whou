@@ -104,6 +104,7 @@ button.join-email i{position: absolute;left: 16px;top:24px;}
 .btn-check:checked+.btn{border-color: #fff;background-color:#5A3FFF}
 
 /* 라디오 버튼 그룹 num */
+.question-wrap{margin-bottom:37px;}
 .question-wrap.num .btn-group{justify-content: space-between;padding:0 20px;}
 .question-wrap.num .btn-group>.btn{width:40px;height:40px;flex:none;border-radius: 50%;}
 .question-wrap.num .radio-group{padding-top: 80px;}
