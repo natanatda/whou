@@ -1,6 +1,6 @@
-package whou.secproject.repository;
+package whou.secproject.service;
 
-import java.io.IOException; 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -18,12 +19,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import whou.secproject.component.JobDicListResponseDTO;
 import whou.secproject.component.JobDicParamDTO;
 
-public class JobDicApiDAO {
-	
+@Service
+public class JobDicAPIServiceImpl implements JobDicAPIService{
 	@Autowired
 	private String apiKey;
 	String url = "https://www.career.go.kr/cnet/front/openapi/jobs.json";
 	
+	@Override
 	public JobDicListResponseDTO getJobDicListSorted(JobDicParamDTO jParam) {  
 				
 	    jParam.setPageIndex("1");
@@ -76,6 +78,7 @@ public class JobDicApiDAO {
 		}
 	    return jobDicResponse; 
 	}
+	@Override
 	public JobDicListResponseDTO getJobDicDetail(int seq) {  
 		
 		URI uri = null;
