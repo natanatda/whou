@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class JobDicDetailResponseDTO {
+public class JobInfoDetailResponseDTO {
 	
 	@JsonProperty("dataSearch")
 	private DataSearch dataSearch;

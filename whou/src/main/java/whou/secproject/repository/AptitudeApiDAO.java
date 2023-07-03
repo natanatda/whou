@@ -20,7 +20,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import whou.secproject.component.AptitudeParamDTO;
 import whou.secproject.component.AptitudeTestResponseDTO;
 import whou.secproject.component.AptitudeTestResultRequestDTO;
 import whou.secproject.component.AptitudeTestResultResponseDTO;
@@ -33,14 +32,12 @@ public class AptitudeApiDAO {
 	
 	public AptitudeTestResponseDTO getAptitudeTestByNum(String q) {
 		String url = "http://www.career.go.kr/inspct/openapi/test/questions";
-	    AptitudeParamDTO aptitudeParam = new AptitudeParamDTO();
-	    aptitudeParam.setQ(q);
 	    
 	    URI uri = null;
 		try {
 			uri = UriComponentsBuilder.fromHttpUrl(url)
 			        .queryParam("apikey", URLEncoder.encode(apiKey, "UTF-8"))
-			        .queryParam("q", URLEncoder.encode(aptitudeParam.getQ(), "UTF-8"))
+			        .queryParam("q", URLEncoder.encode(q, "UTF-8"))
 			        .build(true)
 			        .toUri();
 		} catch (UnsupportedEncodingException e1) {
