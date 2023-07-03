@@ -20,7 +20,7 @@ import whou.secproject.component.JobTypeListResponseDTO;
 import whou.secproject.component.JobInfoDetailResponseDTO;
 import whou.secproject.component.JobInfoListResponseDTO;
 
-public class JobApiDAO {
+public class JobInfoApiDAO {
 	
 	@Autowired
 	private String apiKey;
@@ -124,7 +124,6 @@ public class JobApiDAO {
 		}
 		return jobInfoResponse; 
 	}
-	
 	public JobTypeListResponseDTO getJobTypeList() {
 		
 		String url = "https://www.career.go.kr/cnet/openapi/getOpenApi";
