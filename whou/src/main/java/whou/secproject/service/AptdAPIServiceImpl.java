@@ -1,4 +1,4 @@
-package whou.secproject.service;
+package whou.secproject.repository;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -13,7 +13,6 @@ import java.nio.charset.StandardCharsets;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -25,14 +24,12 @@ import whou.secproject.component.AptitudeTestResponseDTO;
 import whou.secproject.component.AptitudeTestResultRequestDTO;
 import whou.secproject.component.AptitudeTestResultResponseDTO;
 
-@Service
-public class AptdAPIServiceImpl implements AptdAPIService{
+public class AptitudeApiDAO {
 	
 	@Autowired
 	private String apiKey;
+
 	
-	
-	@Override
 	public AptitudeTestResponseDTO getAptitudeTestByNum(String q) {
 		String url = "http://www.career.go.kr/inspct/openapi/test/questions";
 	    
@@ -71,7 +68,6 @@ public class AptdAPIServiceImpl implements AptdAPIService{
 	    return aptitudeResponse; // 예제임 수정하셈
 	}
 	// 추가로 개인정보 dto 넣어줘야됨
-	@Override
 	public AptitudeTestResultResponseDTO getAptitudeTestResult(String [] answers, String q) {
 	    AptitudeTestResultResponseDTO aptiTestResultResponse = null;
 	    AptitudeTestResultRequestDTO atrr = new AptitudeTestResultRequestDTO();
@@ -143,4 +139,5 @@ public class AptdAPIServiceImpl implements AptdAPIService{
 		}
 		return aptiTestResultResponse;
 	}
+	
 }

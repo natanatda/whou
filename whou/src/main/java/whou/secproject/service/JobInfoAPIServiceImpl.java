@@ -1,4 +1,4 @@
-package whou.secproject.service;
+package whou.secproject.repository;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -15,12 +15,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import whou.secproject.component.JobDicDetailResponseDTO;
-import whou.secproject.component.JobInfoListResponseDTO;
 import whou.secproject.component.JobInfoParamDTO;
 import whou.secproject.component.JobTypeListResponseDTO;
+import whou.secproject.component.JobDicDetailResponseDTO;
+import whou.secproject.component.JobInfoListResponseDTO;
 
-public class JobInfoAPIServiceImpl {
+public class JobInfoApiDAO {
+	
 	@Autowired
 	private String apiKey;
 	
