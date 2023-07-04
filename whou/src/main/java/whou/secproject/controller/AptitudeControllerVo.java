@@ -1,8 +1,11 @@
 package whou.secproject.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,26 +19,28 @@ import whou.secproject.repository.AptitudeApiDAO;
 @RequestMapping("/aptitude")
 public class AptitudeControllerVo {
 	
-	//@Autowired
-	//private AptitdeService service;
-	
 	@Autowired
 	private AptitudeApiDAO dao;
 	
 	@RequestMapping("/vocation")
 	public String getAptitudeTestByNum(Model model, HttpServletRequest request) throws IOException {
 		
-		String q = request.getParameter("num");
-	    model.addAttribute("RESULT", dao.getAptitudeTestByNum(q).getRESULT());
+		String qnum = request.getParameter("qnum");
+	    model.addAttribute("RESULT", dao.getAptitudeTestByNum(qnum).getRESULT());
+	    model.addAttribute("qnum",qnum);
 	    
 	    return "/aptitude/vocationAptitude"; 
 	}
 	
-//	@RequestMapping("/testResult")
-//    public String getAptitudeTestResult() {
-//		String [] answers = new String[1];
-//		String q = "20";
-//		AptitudeTestResultResponseDTO aptiTestResultResponse = dao.getAptitudeTestResult(answers, q);
-//		return aptiTestResultResponse.getRESULT().getUrl();
-//    }
+	@RequestMapping("/report")
+    public String getAptitudeTestResult(String countQ, HttpServletRequest request, HttpServletResponse response) {
+		List<String> answers = new ArrayList<>();
+		for(int i = 1; i <= Integer.parseInt(countQ); i++) {
+			answers.add(request.getParameter("btnradio"+i));
+		}
+		String qnum = request.getParameter("qnum");
+		AptitudeTestResultResponseDTO aptiTestResultResponse = dao.getAptitudeTestResult(answers, qnum);
+		System.out.println(aptiTestResultResponse.getRESULT().getUrl());
+		return "/aptitude/report";
+    }
 }
