@@ -156,7 +156,3 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,eclipse,java
-whou/src/main/java/whou/secproject/repository/AptitudeApiDAO.java
-whou/src/main/java/whou/secproject/repository/JobDicApiDAO.java
-whou/src/main/java/whou/secproject/repository/JobInfoApiDAO.java
-whou/src/main/webapp/web.xml
