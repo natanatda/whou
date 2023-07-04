@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import whou.secproject.component.JobInfoParamDTO;
 import whou.secproject.component.JobTypeListResponseDTO;
-import whou.secproject.component.JobInfoDetailResponseDTO;
+import whou.secproject.component.JobDicDetailResponseDTO;
 import whou.secproject.component.JobInfoListResponseDTO;
 
 public class JobInfoApiDAO {
@@ -78,7 +78,7 @@ public class JobInfoApiDAO {
 		}
 	    return jobInfoResponse; 
 	}
-	public JobInfoDetailResponseDTO getJobInfoDetail(String q) {
+	public JobDicDetailResponseDTO getJobInfoDetail(String q) {
 		
 		String url = "https://www.career.go.kr/cnet/openapi/getOpenApi";
 		JobInfoParamDTO jParam = new JobInfoParamDTO();
@@ -102,7 +102,7 @@ public class JobInfoApiDAO {
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
-		JobInfoDetailResponseDTO jobInfoResponse = null;
+		JobDicDetailResponseDTO jobInfoResponse = null;
 		// 객체 byte 배열로 받은 후 utf처리
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<byte[]> response = restTemplate.getForEntity(uri, byte[].class);
@@ -115,7 +115,7 @@ public class JobInfoApiDAO {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-			jobInfoResponse = objectMapper.readValue(responseBody, JobInfoDetailResponseDTO.class);
+			jobInfoResponse = objectMapper.readValue(responseBody, JobDicDetailResponseDTO.class);
 			
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();

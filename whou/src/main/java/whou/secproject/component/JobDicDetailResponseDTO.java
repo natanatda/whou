@@ -1,4 +1,3 @@
-
 package whou.secproject.component;
 
 import java.util.List;
@@ -10,156 +9,235 @@ import lombok.Data;
 @Data
 public class JobDicDetailResponseDTO {
 	
-	@JsonProperty("dataSearch")
-	private DataSearch dataSearch;
-
+	@JsonProperty("baseInfo")
+	private BaseInfo baseInfo; //
+	
+	@JsonProperty("workList")
+	private List<Work> workList; // 하는일
+	
+	@JsonProperty("abilityList")
+	private List<Ability> abilityList; // 하는일
+	
+	@JsonProperty("departList")
+	private List<Depart> departList; // 관련 학과
+	
+	@JsonProperty("certiList")
+	private List<Certi> certiList; // 자격증
+	
+	@JsonProperty("aptitudeList")
+	private List<Aptitude> aptitudeList; // 자격증
+	
+	@JsonProperty("interestList")
+	private List<Interest> interestList; // 흥미
+	
+	@JsonProperty("tageList")
+	private List<String> Tag; // 관련 태그
+	
+	@JsonProperty("researchList")
+	private List<Research> researchList; // 진로탐색활동
+	
+	@JsonProperty("relVideoList")
+	private List<RelVideo> relVideo; // 비디오 관련
+	
+	@JsonProperty("relSolList")
+	private List<RelSol> relSol; // 진로 상담
+	
+	@JsonProperty("relJinSolList")
+	private List<RelJinSol> relJinSol; // 진로 관련 자료
+	
+	@JsonProperty("jobReadyList")
+	private List<JobReady> jobReady;
+	
+	@JsonProperty("jobRelOrgList")
+	private List<JobRelOrg> jobRelOrg; // 관련 기관
+	
+	@JsonProperty("forecastList")
+	private List<Forecast> forecast; // 직업 전망
+	
+	@JsonProperty("eduChart")
+	private List<EduChart> eduChart; // 학력분포
+	
+	@JsonProperty("majorChart")
+	private List<MajorChart> majorChart; // 전공 계열
+	
+	@JsonProperty("indicatorChart")
+	private IndicatorChart indicatorChart; // 전공 계열
+	
+	@JsonProperty("performList")
+	private List<Perform> perform; // 전공 계열
+	
 	@Data
-	public static class DataSearch {
-		@JsonProperty("content")
-	    private List<JobDetail> content;
-	}
-	@Data
-	public static class JobDetail {
-		private String summary; // 전자장비설치 및 수리원은 환자모니
-		private List<SchClass> SchClass;
-		private String similarJob;
-		private List<GenCD> GenCD;
-		private List<Stateofemp> stateofemp;
-	    private List<Prepareway> prepareway;
-	    private List<Division> division;
-	    private List<Capacity_major> capacity_major;
-	    private List<LstHighAptd> lstHighAptd;
-	    private List<LstVals> lstVals;
-	    private List<Contact> contact;
-	    private List<Job_possibility> job_possibility;
-	    private String aptitude;
-	    private String ability;
-	    private String job;
-	    private List<LstMiddleAptd> lstMiddleAptd;
-	}
-	@Data
-	public static class SchClass{
-		private List<SchPopular> popular; 
-		private List<SchBook> bookmark; 
+	public static class BaseInfo{
+		private String aptit_name; // 직업 분류
+		private String INTRST_YON_YN; // 관심직업 설정 여부
+		private String emp_job_nm; // 고용코드명
+		private String social; // 사회 공헌
+		private int emp_job_cd; // 고용 코드
+		private int job_cd; // 직업 코드
+		private double satisfiction; // 직업 만족도
+		private String rel_job_nm; // 관련 직업명
+		private String job_nm; // 직업명
+		private String std_job_nm; // 표준직업 코드명
+		private String wlb; // 워라벨
+		private String std_job_cd; // 표준직업코드
+		private String wage_source; // 평균연봉 출처
+		private String edit_dt; // 수정일
+		private String reg_dt; // 작성일
+		private String satisfi_source; // 직업만족도 출처
+		private String tag; // 태그
+		private int seq; // 직업 번호
+		private int views; // 조회수
+		private int likes; // 좋아요
+		private int wage; // 평균 연봉
 	}
 	
 	@Data
-	public static class SchPopular{
-		private String SCH_CLASS_NM; // 중학생(14~16세 청소년)
-		private double PCNT; // 52.4
-		private String PCNT1; // 52
-		private String PCNT2; // 4
-	}
-	
-	@Data
-	public static class SchBook{
-		private double PCNT; // 0.0
-		private String PCNT1; // 0
-		private String PCNT2; // 0
-	}
-	
-	@Data
-	public static class GenCD{
-		
-		private List<GenClass> GenPopular;
-		private List<GenClass> GenBook;
-	}
-	
-	@Data
-	public static class GenClass{
-		private String GenNM; // 남자
-		private double PCNT; // 75.9
-		private String PCNT1; // 75
-		private String PCNT2; // 9
-	}
-	
-	@Data
-	public static class Stateofemp{
-		private String empway; // 공채나 교육기관의 소개 등을 통해 의료장비
-		private String employment; // 자장비설치 및 수리원의 종사자 수는 131,000명이며,
-		private String salery; // "salery": "전자장비설치 및 수리원의 평균연봉(중위값)은 3075만원이다(자료: 워크넷 직업정보 2019년 7월 기준). 
-	}
-	
-	@Data
-	public static class Prepareway{
-		private String preparation; // 고등학교 졸업 이상의 학력이 요구된다.
-		private String training; // 직업전문학교나 기능대학에서 전자장비 설치 및
-		private String certification; // 관련 국가자격증으로는 한국산업인력공단에서 시행하는 전자기사
-	}
-	
-	@Data
-	public static class Division{
-		private String emplym_code_nm; // 8329기타 전기·전자 기기 설치·수리원
-		private String std_code_nm; // 7619기타 전기·전자기기 설치 및 수리원
-		private String cnet_job_dvs; // 공학분야(숙련직)
-	}
-	
-	@Data
-	public static class Capacity_major{
-		private String capacity; // 전자산업기사, 전자기사
-		private List<Major> major;
+	public static class Work{
+	    private String work;
 	}
 
 	@Data
-	public static class Major{
-		private int RNUM; // 1
-		private String MAJOR_NM; // 기계과
-		private int MAJOR_SEQ; // 87
-		private String CNTNTS_URL; // http://www.career.go.kr/cnet/front/base/major/FunivMajorView.do?SEQ=
-		private int TOTAL_CNT; // 3
+	public static class Ability{
+		private String SORT_ORDR; // 정렬순서
+		private String ability_name; // 핵심능력
+	} 
+	@Data
+	public static class Depart{
+		private String depart_id; // 관련학과 Id
+		private String depart_name; // 관련학과 명
 	}
 	
 	@Data
-	public static class LstHighAptd{
-		private List<LstHighAptdPop> popular;
-		private List<LstHighAptdBook> book;
+	public static class Certi{
+		private String certi; // 관련 자격증
+		private String LINK; // 관련 자격증 link
 	}
 	
 	@Data
-	public static class LstHighAptdPop{
-		private String CD_ORDR; // 05
-		private int RANK; // 1
-		private String CD_NM; // 창의력
-	}
-	@Data
-	public static class LstHighAptdBook{
-	}
-	@Data
-	public static class LstVals{
-		private List<LstValsPop> popular;
-		private List<LstValsBook> book;
-	}
-	@Data
-	public static class LstValsPop{
-	}
-	@Data
-	public static class LstValsBook{
+	public static class Aptitude{
+		private String aptitude; // 적성
 	}
 	
 	@Data
-	public static class Contact{
+	public static class Interest{
+		private String interest; // 흥미
 	}
 	
 	@Data
-	public static class Job_possibility{
-		private List<Chart_item_list> chart_item_list;
-		private String possiblity;
+	public static class Research{
+		private String research; // 진로탐색활동
+	}
+	
+	
+	@Data
+	public static class RelVideo{
+		private String video_name; // 동영상 제목
+		private String THUMNAIL_FILE_SER; // 썸네일 ID
+		private String job_cd; // 직업코드
+		private String THUMNAIL_PATH; // 썸네일 URL
+		private String OUTPATH3; // 동영상 URL
+		private String video_id; // 동영상 id
+		private String CID; // 콘텐츠 id
 	}
 	
 	@Data
-	public static class Chart_item_list{
-		private double chart_value; // 8.00
-		private String chart_key; // 보상
+	public static class RelSol{
+		private String TRGET_SE; // 타겟층
+		private String cnslt; // 진로상담 내용
+		private String SJ; // 제목
+		private String CN; // 내용
+		private String REGIST_DT; // 등록일
+		private int cnslt_seq; // 관련 진로 상담 id
+	}
+	
+	@Data
+	public static class RelJinSol{
+		private String SUBJECT; // 관련 자료명
+		private String ALT; // 관련 자료ID
+		private String THUMBNAIL; // 썸네일
+		private int SEQ; // 고유번호
+	}
+	
+	@Data
+	public static class JobReady{
+		private List<Recruit> recruit; // 입직 및 취업방법
+		private List<Certificate> certificate; //관련 자격증
+		private List<Training> training; //직업 훈련
+		private List<Curriculum> curriculum; // 정귝교육과정
 	}
 	@Data
-	public static class LstMiddleAptd{
-		private List<LstMiddleAptdPop> popular;
-		private List<LstMiddleAptdBook> book;
+	public static class Recruit{
+		private String recruit; 
 	}
 	@Data
-	public static class LstMiddleAptdPop{
+	public static class Certificate{
+		private String certificate;
 	}
 	@Data
-	public static class LstMiddleAptdBook{
+	public static class Training{
+		private String training;
 	}
+	@Data
+	public static class Curriculum{
+		private String curriculum;
+	}
+	
+	@Data
+	public static class JobRelOrg{
+		private String rel_org; // 관련기관명
+		private String rel_org_url; // 관련기관 URL
+	}
+	
+	@Data
+	public static class Forecast{
+		private String forcast; // 직업 전망
+	}
+	@Data
+	public static class EduChart{
+		private String chart_name; // 학력분포
+		private String chart_data; // 학력분포 데이터
+		private String source; // 출처
+	}
+	
+	@Data
+	public static class MajorChart{ 
+		private String major; // 전공계열명
+		private String major_data; // 전공계열 데이터
+		private String source; // 출처
+	}
+	
+	@Data
+	public static class IndicatorChart{
+		private String indicator; //직업지표명
+		private String indicator_data; // 직업지표데이터
+		private String source; // 출처
+	}
+	@Data
+	public static class Perform{
+		private List<Environment> environment; 
+		private List<Perform_> perform_;
+		private List<Knowledge> knowledge;
+	}
+	
+	@Data
+	public static class Environment{
+		private String environment; // 업무환경 능력명
+		private String inform; // 설명
+		private int importance; // 중요도
+	}
+	
+	@Data
+	public static class Perform_{
+		private String perform; // 업무수행능력 능력명
+		private String inform; // 설명
+		private String importance; // 중요도
+	}
+	
+	@Data
+	public static class Knowledge{
+		private String knowledge; // 지식중요도 능력명
+		private String inform; // 설명 
+		private String importance;//중요도
+	}
+	
 }

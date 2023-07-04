@@ -1,7 +1,7 @@
 package whou.secproject.controller;
 
 
-import javax.servlet.http.HttpServletRequest; 
+import javax.servlet.http.HttpServletRequest;  
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import whou.secproject.component.JobDicParamDTO;
 import whou.secproject.repository.JobDicApiDAO;
-import whou.secproject.repository.JobInfoApiDAO;
 
 @Controller
 @RequestMapping("/job")
@@ -52,7 +51,7 @@ public class JobController {
 		model.addAttribute("RESULT", dao.getJobDicListSorted(jParam));
 		return "/sample/fq"; // 예제임 수정하셈
 	}
-	@RequestMapping("/jobDicList")
+	@RequestMapping("/job")
 	public String getjobDicList(Model model){
 		model.addAttribute("RESULT", dao.getJobDicDetail(150));
 		return "/sample/fq"; // 예제임 수정하셈
