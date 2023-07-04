@@ -33,4 +33,8 @@
 	 -->	
 	<context:annotation-config />
 	
+		<beans:bean id="apiKey" class="java.lang.String"  factory-method="valueOf" scope="singleton">
+		<beans:constructor-arg value="c5d2abc17ab413db9d836aa7fcd81714"/>
+	</beans:bean>
+	
 </beans:beans>

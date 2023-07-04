@@ -1,6 +1,6 @@
 package whou.secproject.controller;
 
-import java.io.IOException; 
+import java.io.IOException;  
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,29 +10,30 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import whou.secproject.component.AptitudeTestResultResponseDTO;
-import whou.secproject.service.AptdAPIService;
+import whou.secproject.repository.AptitudeApiDAO;
 
 @Controller
 @RequestMapping("/aptitude")
 public class AptitudeController {
 	
+	
 	@Autowired
-	private AptdAPIService service;
+	private AptitudeApiDAO dao;
 	
 	@RequestMapping("/testByNum")
 	public String getAptitudeTestByNum(Model model, HttpServletRequest request) throws IOException {
 		
 		String q = request.getParameter("num");
-	    model.addAttribute("RESULT", service.getAptitudeTestByNum(q).getRESULT());
+	    model.addAttribute("RESULT", dao.getAptitudeTestByNum(q).getRESULT());
 	    
-	    return "/sample/fq"; // ¿¹Á¦ÀÓ ¼öÁ¤ÇÏ¼À
+	    return "/sample/fq"; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½
 	}
 	
 	@RequestMapping("/testResult")
     public String getAptitudeTestResult() {
 		String [] answers = new String[1];
 		String q = "20";
-		AptitudeTestResultResponseDTO aptiTestResultResponse = service.getAptitudeTestResult(answers, q);
+		AptitudeTestResultResponseDTO aptiTestResultResponse = dao.getAptitudeTestResult(answers, q);
 		return aptiTestResultResponse.getRESULT().getUrl();
     }
 }
