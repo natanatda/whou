@@ -67,6 +67,7 @@ ul,li,ol{list-style: none;margin-bottom: 0;padding:0;}
 a{text-decoration: none;color:#111;}
 button{border:0;background-color: white;}
 select:focus, input:focus{outline: none;}
+table{width:100%;}
 /* select */
 select{border:1px solid #acacac;color:#999;font-size: 14px;padding:0 10px;min-width: 130px;min-height: 30px;}
 
@@ -104,7 +105,7 @@ button.join-email i{position: absolute;left: 16px;top:24px;}
 .btn-check:checked+.btn{border-color: #fff;background-color:#5A3FFF}
 
 /* 라디오 버튼 그룹 num */
-.question-wrap{margin-bottom:37px;}
+.question-wrap.num{margin-bottom:37px;}
 .question-wrap.num .btn-group{justify-content: space-between;padding:0 20px;}
 .question-wrap.num .btn-group>.btn{width:40px;height:40px;flex:none;border-radius: 50%;}
 .question-wrap.num .radio-group{padding-top: 80px;}
@@ -309,3 +310,50 @@ input[type="checkbox"]:checked + label:after {
 .question-item{display: flex;gap:15px;font-size: 18px;font-weight: 600;align-items: center;padding-bottom: 37px;}
 .aptitude .button-wrap{justify-content: flex-end;margin-top: 20px;}
 .aptitude .question-title{font-size: 28px;font-weight: 500;}
+
+/* main */
+.aptitude-main-top{margin-top: 30px;}
+.aptitude-main-top:last-child .card-body{min-height: auto;background-color: #5A3FFF;border-radius: 4px;}
+
+.aptitude-main-top .card-body{min-height: 300px;display: flex;flex-direction: column;align-items: center;justify-content: center;}
+.aptitude-main-top .info-box p{font-size: 32px;font-weight: 500;}
+.aptitude-main-top button{font-size: 28px;padding:20px;margin-top: 30px;}
+.status-table{border-top:1px solid #ddd;}
+.status-table table{text-align: center;}
+.status-table td{border-right:1px solid #ddd;border-bottom: 1px solid #ddd;height: 50px;}
+.status-table th{border-bottom: 1px solid #ddd;border-right: 1px solid #ddd;height: 50px;}
+.status-table th:last-child{border-right: 0;}
+.status-table tr:last-child td{border-bottom: 0;}
+.status-table td:last-child{border-right:0;}
+.aptitude-main-top .status-box{display: flex;gap:20px;width:100%;}
+.aptitude-main-top .status-box > div{border:1px solid #ddd; border-radius: 4px;background:#fff;}
+.aptitude-main-top .status-box > div:first-child{padding:10px;width:30%;}
+.aptitude-main-top .status-box > div:first-child div{display: flex;flex-direction: column;align-items: center;justify-content: center;height: 100%;gap:30px;}
+.aptitude-main-top .status-box > div:last-child{width:70%}
+.aptitude-main-top .status-box > div:last-child .status-title{padding:10px 0 20px 10px}
+.aptitude-main-top .status-box .status-title{font-weight: 600;}
+
+.aptitude-main + .test-section{background: #fff;}
+
+/*****************************************************************************
+************************************* report ***********************************
+*****************************************************************************/
+
+.num-title{font-size: 28px;font-weight: 600;display: flex;align-items: center;gap:20px;margin-bottom: 20px;}
+.num-title span{color:#5A3FFF;font-weight: 600;font-size: 38px;}
+.report-section{}
+.report-section .card{border:0;margin-bottom: 30px;}
+.top-interest ul{display: flex;align-items: center;justify-content: center;height: 100px;}
+.top-interest ul li{width:100%;height:100%;border:2px solid #5A3FFF;border-right:0;display: flex;align-items: center;justify-content: center;}
+.top-interest ul li:last-child{border-right: 2px solid #5A3FFF;}
+.rcd-table{border:2px solid #5A3FFF}
+.rcd-table table{width:100%;text-align: center;}
+.rcd-table th{background-color: #593fff5d;height: 50px;font-weight: 500;font-size: 18px;}
+.rcd-table td div{min-height: 50px;display: flex;align-items: center;justify-content: center;}
+.rcd-table td ul li{margin-bottom: 10px;}
+.desc-table{border:1px solid #5A3FFF}
+.desc-table table{width:100%;text-align: center;}
+.desc-table th{background-color: #593fff5d;height: 32px;font-weight: 500;}
+.desc-table td{border-right:1px solid #5A3FFF;border-bottom:1px solid #5A3FFF;font-size: 14px;}
+.desc-table tr:last-child td{border-bottom: 0;}
+.desc-table td:last-child{border-right: 0;}
