@@ -49,25 +49,25 @@
 			                                    <div class="question-dt-info">무릎 대고 팔굽혀펴기를 5회 이상 하기 어렵다.</div>
 			                                </div>
 			                                <div class="btn-group radio-group" role="group" aria-label="Basic radio toggle button group">
-			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 1}" autocomplete="off">
+			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 1}" value="1" autocomplete="off" >
 			                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 1}">1</label>
 			                                  
-			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 2}" autocomplete="off">
+			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 2}" value="2" autocomplete="off">
 			                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 2}">2</label>
 			                                  
-			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 3}" autocomplete="off">
+			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 3}" value="3" autocomplete="off">
 			                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 3}">3</label>
 			
-			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 4}" autocomplete="off">
+			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 4}" value="4" autocomplete="off">
 			                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 4}">4</label>
 			                                    
-			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 5}" autocomplete="off">
+			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 5}" value="5" checked autocomplete="off">
 			                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 5}">5</label>
 			
-			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 6}" autocomplete="off">
+			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 6}" value="6" autocomplete="off">
 			                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 6}">6</label>
 			
-			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 7}" autocomplete="off">
+			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 7}" value="7" autocomplete="off">
 			                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 7}">7</label>
 			                                  </div>
 			                            </li>
@@ -86,16 +86,16 @@
 			                            <li>
 			                                <div class="question-item"><span class="ic-question">${item.qitemNo}</span>${item.question}</div>			                         
 			                                <div class="btn-group radio-group" role="group" aria-label="Basic radio toggle button group">
-			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 4 + 1}" autocomplete="off">
+			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 4 + 1}" checked value="1" autocomplete="off">
 			                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 4 + 1}">${item.answer01 }</label>
 			                                  
-			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 4 + 2}" autocomplete="off">
+			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 4 + 2}" value="2" autocomplete="off">
 			                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 4 + 2}">${item.answer02 }</label>
 			                                  
-			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 4 + 3}" autocomplete="off">
+			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 4 + 3}" value="3" autocomplete="off">
 			                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 4 + 3}">${item.answer03 }</label>
 			
-			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 4 + 4}" autocomplete="off">
+			                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 4 + 4}" value="4" autocomplete="off">
 			                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 4 + 4}">${item.answer04 }</label>
 			                                  </div>
 			                            </li>

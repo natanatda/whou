@@ -38,6 +38,8 @@ public class AptitudeControllerVo {
 		for(int i = 1; i <= Integer.parseInt(countQ); i++) {
 			answers.add(request.getParameter("btnradio"+i));
 		}
+		System.out.println(answers);
+		System.out.println(answers.size());
 		String qnum = request.getParameter("qnum");
 		AptitudeTestResultResponseDTO aptiTestResultResponse = dao.getAptitudeTestResult(answers, qnum);
 		System.out.println(aptiTestResultResponse.getRESULT().getUrl());
