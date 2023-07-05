@@ -77,7 +77,7 @@ public class AptitudeApiDAO {
 	    AptitudeTestResultRequestDTO atrr = new AptitudeTestResultRequestDTO();
 	    
 	    String trgetSe="";
-	    if(qnum.equals("27")) {
+	    if(qnum.equals("27") || qnum.equals("21") || qnum.equals("31")) {
 	    	trgetSe="100207";
 	    }else if(qnum.equals("6")){
 	    	trgetSe="100209";

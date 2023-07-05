@@ -30,7 +30,7 @@
                         <h3 class="num-title"><span>01</span> 높은 흥미를 나타내는 직업</h3>
                         <div class="top-interest">
                             <ul>
-                                <li>1</li>
+                                <li>${wc}</li>
                                 <li>2</li>
                                 <li>3</li>
                             </ul>

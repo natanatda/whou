@@ -14,6 +14,11 @@
 	<beans:bean id="apiKey" class="java.lang.String">
 		<beans:constructor-arg value="c5d2abc17ab413db9d836aa7fcd81714"/>
 	</beans:bean>
+	
+	<!-- Selenium WebDriver -->
+    <beans:bean id="webDriver" class="org.openqa.selenium.chrome.ChromeDriver">
+        <beans:constructor-arg name="webdriver.chrome.driver" value="path/to/chromedriver"/>
+    </beans:bean>
 </beans:beans>
 
 

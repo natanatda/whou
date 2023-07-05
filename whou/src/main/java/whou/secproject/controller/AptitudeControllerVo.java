@@ -32,7 +32,7 @@ public class AptitudeControllerVo {
 	    return "/aptitude/vocationAptitude"; 
 	}
 	
-	@RequestMapping("/report")
+	@RequestMapping("/report1")
     public String getAptitudeTestResult(String countQ, HttpServletRequest request, HttpServletResponse response) {
 		List<String> answers = new ArrayList<>();
 		for(int i = 1; i <= Integer.parseInt(countQ); i++) {

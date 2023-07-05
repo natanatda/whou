@@ -31,7 +31,7 @@
                 <div class="row aptitude-content">
                     <div class="col-lg-12 col-xl-12">
                     <form action="report"  method="post">
-                    	<input type="hidden" name="qnum" value="21">
+                    	<input type="hidden" name="qnum" value="31">
 						<input type="hidden" name="countQ" value="${fn:length(RESULT)}">
                        <h3 class="page-count"><span>0</span> / <span>${fn:length(RESULT)}</span></h3>
 	                       <c:if test="${qnum eq '21' || qnum == 21}">
