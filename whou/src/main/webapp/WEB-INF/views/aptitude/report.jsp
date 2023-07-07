@@ -16,7 +16,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
-              <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
  
 <body>
@@ -31,7 +31,7 @@
                         <div class="top-interest">
                             <ul>
                                 <li>${wc}</li>
-                                <li>2</li>
+                                <li>${percent }</li>
                                 <li>3</li>
                             </ul>
                         </div>
@@ -196,6 +196,16 @@
             });
           
             // 다각형
+            let data1 =[];
+            let percentValues = [
+            	 <c:forEach var="entry" items="${percent}">
+                 <%-- entry.getKey()로 키 값 가져오기 --%>
+                 '${entry.value}',
+             </c:forEach>
+            ];
+         	// 마지막 쉼표(,) 제거
+            percentValues = percentValues.slice(0, -1);
+            data1 = percentValues;
             var myChart2 = new Chart(ctx2, {
             type: 'radar',
             data: {
@@ -203,22 +213,17 @@
                 datasets: [
                 {
                     label: 'Dataset 1',
-                    data: [10, 20, 30, 40, 50],
+                    data: data1,
                     backgroundColor: 'rgba(255, 99, 132, 0.5)',
                     borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1
                 },
-                {
-                    label: 'Dataset 2',
-                    data: [20, 30, 40, 50, 60],
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }
+              
                 ]
             },
             options: {}
             });
+      
           </script>
     </body>
     
