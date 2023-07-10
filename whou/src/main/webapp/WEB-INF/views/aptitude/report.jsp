@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -30,9 +31,9 @@
                         <h3 class="num-title"><span>01</span> 높은 흥미를 나타내는 직업</h3>
                         <div class="top-interest">
                             <ul>
-                                <li>${wc}</li>
-                                <li>${percent }</li>
-                                <li>3</li>
+                            	<c:forEach var="item" items="${rank}" varStatus="status">
+                               		<li>${item}</li>                             
+                            	</c:forEach>                             
                             </ul>
                         </div>
                     </div>
@@ -88,9 +89,9 @@
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>attr</th>
-                                        <th>attr</th>
-                                        <th>attr</th>
+	                                    <c:forEach var="job" items="${job}" >
+	                               		     <th>${job}</th>                    
+	                            		</c:forEach> 
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -195,35 +196,40 @@
                 }
             });
           
-            // 다각형
-            let data1 =[];
-            let percentValues = [
-            	 <c:forEach var="entry" items="${percent}">
-                 <%-- entry.getKey()로 키 값 가져오기 --%>
-                 '${entry.value}',
-             </c:forEach>
-            ];
-         	// 마지막 쉼표(,) 제거
-            percentValues = percentValues.slice(0, -1);
-            data1 = percentValues;
+         // 다각형
+            let data1 = ${percent};
+            let labels = ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5', 'Label 6', 'Label 7', 'Label 8', 'Label 9', 'Label 10', 'Label 11'];
+
+            if (data1.length === 17) {
+                labels.push('Label 12', 'Label 13', 'Label 14', 'Label 15', 'Label 16', 'Label 17');
+            }
             var myChart2 = new Chart(ctx2, {
-            type: 'radar',
-            data: {
-                labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5'],
-                datasets: [
-                {
-                    label: 'Dataset 1',
-                    data: data1,
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1
+                type: 'radar',
+                data: {
+                	labels: labels,
+                    datasets: [
+                        {
+                            label: 'Dataset 1',
+                            data: data1,
+                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                       },             
+                    ],
                 },
-              
-                ]
-            },
-            options: {}
+                options: {
+                    scale: {                                          
+                            min: 0,
+                            max: 100,
+                            ticks: {
+                              stepSize:10
+                            }
+                        
+                    }
+                }
             });
-      
+
+
           </script>
     </body>
     

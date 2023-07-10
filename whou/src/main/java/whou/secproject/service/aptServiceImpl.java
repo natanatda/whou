@@ -1,9 +1,9 @@
 package whou.secproject.service;
 
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -103,18 +103,52 @@ public class aptServiceImpl implements aptService {
 	}
 	
 	@Override
-	public Map<String,Object> crawlingSplit(TestVoDTO dto) {
-		
-		String[] array = dto.getTest31_2().toString().split("\\+");
-		Map<String, Object> scoreMap = new HashMap<>();
-		String[] scores = dto.getTest31_2().toString().split("\\+");
-		String score = "";
-		for(int i = 1; i < scores.length; i++) {
-			score = scores[i];
-			scoreMap.put("key"+i, score);
+	public List<String> crawlingSplit(TestVoDTO dto, String qnum) {
+		List<String> resultList = new ArrayList<>();
+		if (qnum.equals("31")) {
+			String[] array = dto.getTest31_2().toString().split("\\+");
+			
+			for(String num : array) {
+				double value = Double.parseDouble(num.trim()) * 10;
+				int intValue = (int) value;
+				resultList.add(String.valueOf(intValue));
+			}
 		}
-		System.out.println(scoreMap);
-		return scoreMap;
+		
+		if (qnum.equals("21")) {
+			String[] array = dto.getTest21_2().toString().split("\\+");
+			resultList = Arrays.asList(array);
+		}
+	    return resultList;
+	}
+	
+	@Override
+	public List<String> crawlingSplitRank(TestVoDTO dto, String qnum) {
+		List<String> resultRankList = new ArrayList<>();
+		if (qnum.equals("31")) {
+			String[] array = dto.getTest31_1().toString().split("\\+");
+			resultRankList = Arrays.asList(array);
+		}
+		
+		if (qnum.equals("21")) {
+			String[] array = dto.getTest21_1().toString().split("\\+");
+			resultRankList = Arrays.asList(array);
+		}
+	    return resultRankList;
+	}
+	@Override
+	public List<String> crawlingSplitJob(TestVoDTO dto, String qnum) {
+		List<String> resultRankList = new ArrayList<>();
+		if (qnum.equals("31")) {
+			String[] array = dto.getTest31_3().toString().split("\\+");
+			resultRankList = Arrays.asList(array);
+		}
+		
+		if (qnum.equals("21")) {
+			String[] array = dto.getTest21_3().toString().split("\\+");
+			resultRankList = Arrays.asList(array);
+		}
+	    return resultRankList;
 	}
 	
 	@Override

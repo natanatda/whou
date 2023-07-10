@@ -63,7 +63,9 @@ public class AptitudeController {
 		System.out.println("dto 잘되나 확인"+dto.getTest21_1());
 		
 		service.crawlingInsert(dto);
-		model.addAttribute("percent",service.crawlingSplit(dto));
+		model.addAttribute("percent",service.crawlingSplit(dto,qnum));
+		model.addAttribute("rank",service.crawlingSplitRank(dto,qnum));
+		model.addAttribute("job",service.crawlingSplitJob(dto,qnum));
 		return "/aptitude/report";
     }
 
