@@ -37,7 +37,7 @@
 						<span>0</span> / <span>${fn:length(RESULT)}</span>
 					</h3>
 					<form action="report" method="post">
-						<input type="hidden" name="qnum" value="27">
+						<input type="hidden" name="qnum" value="${qnum }">
 						<input type="hidden" name="countQ" value="${fn:length(RESULT)}">
 						<c:if test="${qnum eq '27' || qnum == '27'}" >
 						<div class="top-question">
@@ -90,15 +90,17 @@
 									</div>
 									
 									<div class="btn-group radio-group" role="group" aria-label="Basic radio toggle button group">
-										<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 1}" value="1" checked autocomplete="off">
-										<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 1}">${item.answer01}</label>
+										<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 2 + 1}" value="1" checked autocomplete="off">
+										<label class="btn btn-outline-primary" for="btnradio${status.index * 2 + 1}">${item.answer01}</label>
 
-										<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 2}" value="2" autocomplete="off">
-										<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 2}">${item.answer02}</label>
-
-										<p>${item.answer03}<br>${item.answer04}</p>
+										<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 2 + 2}" value="2" autocomplete="off">
+										<label class="btn btn-outline-primary" for="btnradio${status.index * 2 + 2}">${item.answer02}</label>
 									</div>
 								</li>
+								<p>
+									${item.answer01}: ${item.answer03}<br>
+									${item.answer02}: ${item.answer04}
+								</p>
 							</c:forEach>
 						</ul>
 						</c:if>
