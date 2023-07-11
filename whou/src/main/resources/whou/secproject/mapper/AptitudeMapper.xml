@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
-<mapper namespace="whou.secproject.mapper.AptitudeMapperSJ">
+<mapper namespace="whou.secproject.mapper.AptitudeMapper">
 	
 	<!-- 크롤링한 직업검사 결과를 DB에 insert -->
 	<insert id="crawlingInsert">
@@ -31,10 +31,10 @@
 		)
 	</insert>
 	
-	<!-- 검사지 메인에 출력할 최근검사일과 검사 횟수
-	<select id="getRecentTest" resultType="whou.secproject.component.AptitudeTestValueDTOSJ">
+	<!-- 검사지 메인에 출력할 최근검사일과 검사 횟수 -->
+	<select id="getRecentTest" resultType="whou.secproject.component.AptitudeTestValueDTO">
 		SELECT test_num, max(test_date) AS max_test_date, count(*) AS count FROM user1_test_result GROUP BY test_num ORDER BY test_num
-	</select> -->
+	</select>
 	
 	
 	<!-- 모든 임시저장 값 -->

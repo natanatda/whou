@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,11 +19,14 @@
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
     </head>
- 
 <body>
+		<script>
+			<c:if test="${param.temporaryResult eq 'okSave' || param.temporaryResult=='okSave'}">
+				alert('검사지가 임시저장 되었습니다.');
+			</c:if>
+		</script>
         <!-- Responsive navbar-->
        <%@ include file="../header.jsp" %>     
-    
              <section class="py-2 aptitude aptitude-main">
             <div class="container px-5 my-5">
                 <h2 class="page-title">심리검사</h2>
@@ -40,8 +45,15 @@
                            <div>
                                 <p class="status-title">진행(임시저장) 중 인 검사</p>
                                 <div>
-                                    <i class="fa-regular fa-circle-xmark fa-2xl" style="color: #363636;"></i>
-                                    <p>진행중인 검사가 없습니다.</p>
+                                	<c:if test="${fn:length(tempList) == 0}">
+	                                    <i class="fa-regular fa-circle-xmark fa-2xl" style="color: #363636;"></i>
+	                                    <p>진행중인 검사가 없습니다.</p>
+                                    </c:if>
+                                    <c:if test="${fn:length(tempList) > 0}">
+                                    	<c:forEach items="${tempList}" var="templist">
+                                    		<a href="/whou/aptitude/itrstkAptitude?qnum=${templist.test_num}&tempSave=tempSave">${templist.test_name}</a> <br>
+                                    	</c:forEach>
+                                    </c:if>
                                 </div>
                            </div>
                            <div>
@@ -67,16 +79,16 @@
                                                     검사횟수
                                                 </td>
                                                 <td>
-                                                    -
+                                                    ${valueList[0].getCount()}
                                                 </td>
                                                 <td>
-                                                    -
+                                                    ${valueList[1].getCount()}
                                                 </td>
                                                 <td>
-                                                    -
+                                                    ${valueList[3].getCount()}
                                                 </td>
                                                 <td>
-                                                    -
+                                                    ${valueList[2].getCount()}
                                                 </td>                                    
                                             </tr>
                                             <tr>
@@ -84,16 +96,16 @@
                                                     최근검사일
                                                 </td>
                                                 <td>
-                                                    -
+                                                    ${valueList[0].getMax_test_date()}
                                                 </td>
                                                 <td>
-                                                    -
+                                                    ${valueList[1].getMax_test_date()}
                                                 </td>
                                                 <td>
-                                                    -
+                                                    ${valueList[2].getMax_test_date()}
                                                 </td>
                                                 <td>
-                                                    -
+                                                    ${valueList[3].getMax_test_date()}
                                                 </td>                                    
                                             </tr>
                                         </tbody>

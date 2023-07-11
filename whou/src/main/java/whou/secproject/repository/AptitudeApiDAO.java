@@ -33,7 +33,8 @@ public class AptitudeApiDAO {
 	
 	public AptitudeTestResponseDTO getAptitudeTestByNum(String qnum) {
 		String url = "http://www.career.go.kr/inspct/openapi/test/questions";
-//	    aptitudeParam.setQ(qnum); //검사 번호 역량27 가치관6 흥미31 적성21
+				
+//	    aptitudeParam.setQ(qnum); //검사 번호 역량27 가치관25 흥미31 적성21
 	    
 	    URI uri = null;
 		try {
@@ -67,35 +68,28 @@ public class AptitudeApiDAO {
 	    } catch (IOException e) {
 			e.printStackTrace();
 		}
-	    return aptitudeResponse; // 예제임 수정하셈
+	    return aptitudeResponse;
 	}
 	
 	
 
 	public AptitudeTestResultResponseDTO getAptitudeTestResult(List<String>answers, String qnum) {
-	    AptitudeTestResultResponseDTO aptiTestResultResponse = null;
+		AptitudeTestResultResponseDTO aptiTestResultResponse = null;
 	    AptitudeTestResultRequestDTO atrr = new AptitudeTestResultRequestDTO();
 	    
-	    String trgetSe="";
-	    if(qnum.equals("27")) {
-	    	trgetSe="100207";
-	    }else if(qnum.equals("6")){
-	    	trgetSe="100209";
-	    }
 	    
 	    atrr.setQestrnSeq(qnum);
-	    atrr.setTrgetSe(trgetSe); // 초등학생 등 타겟
-	    atrr.setName("홍길동"); 
+	    atrr.setTrgetSe("100207"); // 고등학생
+	    atrr.setName("홍길동");
 	    atrr.setGender("100323");
-	    atrr.setSchool("율도 중학교");
-	    atrr.setGrade("2"); 
+	    atrr.setSchool("");
+	    atrr.setGrade("3");
 	    atrr.setEmail(""); 
 	    atrr.setStartDtm(1550466291034L);
 	    StringBuilder answer = new StringBuilder();
 	    for(int i = 0; i<answers.size(); i++)
 	    	answer.append(i+1).append("=").append(answers.get(i)).append(" ");
 	    answer.setLength(answer.length() - 1); 
-	    System.out.println(answer);
 	    atrr.setAnswers(answer.toString());
 	    
 		try {
@@ -145,7 +139,6 @@ public class AptitudeApiDAO {
 			
 			aptiTestResultResponse = objectMapper.readValue(response.toString(), AptitudeTestResultResponseDTO.class);
 			System.out.println(aptiTestResultResponse.getRESULT().getUrl());
-			//https://www.career.go.kr/inspct/web/psycho/able/report?seq=NjMzODQxNDA
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
