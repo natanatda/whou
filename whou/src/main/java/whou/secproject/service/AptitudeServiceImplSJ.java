@@ -252,28 +252,74 @@ public class AptitudeServiceImplSJ implements AptitudeServiceSJ{
 	}
 
 	
+	//임시저장
 	@Override
 	public void temporarySaveInsert(List<String> answers, AptitudeTestTemporarySaveDTO dto, String qnum) {
 		StringBuilder answer = new StringBuilder();
-	    for(int i = 0; i<answers.size(); i++)
+		for(int i = 0; i<answers.size(); i++) {
 	    	answer.append(i+1).append("=").append(answers.get(i)).append(" ");
+	    	if(qnum.equals("25") && i==48)
+	    		answer.append(i+1).append("=").append("");
+	    }
 	    answer.setLength(answer.length() - 1); 
 	    System.out.println(answer);
-	    dto.setTestNum(Integer.parseInt(qnum));
-	    dto.setTestAnswers(answer.toString());
+	    dto.setTest_num(Integer.parseInt(qnum));
+	    dto.setTest_answers(answer.toString());
+	    
+	    String testName="";
+	    if(qnum.equals("21")) {
+	    	testName="직업적성검사";
+	    }
+	    if(qnum.equals("25")) {
+	    	testName="직업가치관검사";
+	    }
+	    if(qnum.equals("27")) {
+	    	testName="진로개발역량검사";
+	    }
+	    if(qnum.equals("31")) {
+	    	testName="진로개발역량검사";
+	    }
+	    dto.setTest_name(testName);
+	    
 	    mapper.temporarySaveInsert(dto);
 	}
 	
 	
+	
+	//최근 검사 정보
 	@Override
 	public List<AptitudeTestValueDTOSJ> getRecentTest(AptitudeTestValueDTOSJ dto){
 		return mapper.getRecentTest(dto);
 	}
 	
+	//임시저장한 값
 	@Override
 	public List<AptitudeTestTemporarySaveDTO> getTemporarySave(AptitudeTestTemporarySaveDTO dto){
-		
-		return null;
-	} //임시저장한 값
+		return mapper.getTemporarySave(dto);
+	} 
+	
+	//임시저장한 검사지 제출하면 삭제
+	@Override
+	public void temporarySaveDelete(int test_num) {
+		mapper.temporarySaveDelete(test_num);
+	}
+	
+	//임시저장한 검사지를 다시 임시저장
+	@Override
+	public void temporarySaveUpdate(List<String> answers, AptitudeTestTemporarySaveDTO dto, String qnum) {
+		StringBuilder answer = new StringBuilder();
+	    for(int i = 0; i<answers.size(); i++) {
+	    	answer.append(i+1).append("=").append(answers.get(i)).append(" ");
+	    	if(qnum.equals("25") && i==48)
+	    		answer.append(i+1).append("=").append("");
+	    }
+	    answer.setLength(answer.length() - 1); 
+	    
+	    
+	    dto.setTest_num(Integer.parseInt(qnum));
+	    dto.setTest_answers(answer.toString());
+	    
+		mapper.temporarySaveUpdate(dto);
+	}
 
 }

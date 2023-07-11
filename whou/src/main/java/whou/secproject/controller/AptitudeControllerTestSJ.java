@@ -39,6 +39,27 @@ public class AptitudeControllerTestSJ {
 	    model.addAttribute("RESULT", dao.getAptitudeTestByNum(qnum).getRESULT());
 	    model.addAttribute("qnum", qnum);
 	    
+	    
+	    //임시 저장한 설문지로 들어온 경우
+	    String tempSave = request.getParameter("tempSave");
+	    List<String> arrList = new ArrayList<>();
+	    if(tempSave.equals("tempSave")) {
+	    	List<AptitudeTestTemporarySaveDTO> tempList = null;
+	    	AptitudeTestTemporarySaveDTO tempDTO = new AptitudeTestTemporarySaveDTO();
+	    	tempDTO.setTest_num(Integer.parseInt(qnum));
+	    	tempList = service.getTemporarySave(tempDTO);
+	    	String[] arr = tempList.get(0).getTest_answers().split(" ");
+	    	for(String s:arr) {
+	    		String delstr = s.substring(0, s.indexOf("=")+1);
+	    		arrList.add(s.replace(delstr,""));
+	    	}
+	    	if(qnum.equals("25")) {
+	    		arrList.get(48);
+	    	}
+	    }
+	    model.addAttribute("arrList", arrList);
+	    
+	    
 	    return "/aptitudeTestSJ/itrstkAptitude";
 	}
 	
@@ -61,8 +82,18 @@ public class AptitudeControllerTestSJ {
 		AptitudeTestResultResponseDTO aptiTestResultResponse = dao.getAptitudeTestResult(answers, qnum);
 		String testURL = aptiTestResultResponse.getRESULT().getUrl();
 		
+		
+		//임시 저장한 것을 불러와 제출한 경우
+		String tempSave = request.getParameter("tempSave");
+		if(tempSave.equals("tempSave")) {
+			service.temporarySaveDelete(Integer.parseInt(qnum));
+		}
+		
+		
+		
 		// 크롤링한 값을 dto에 set
 		AptitudeTestValueDTOSJ dto = new AptitudeTestValueDTOSJ();
+		
 		dto = service.testCrawling(testURL, qnum);
 		dto.setTest_num(Integer.parseInt(qnum));
 		dto.setTest_answers(answers.toString());
@@ -94,8 +125,22 @@ public class AptitudeControllerTestSJ {
     	System.out.println("임시저장"+answers);
     	
     	AptitudeTestTemporarySaveDTO dto = new AptitudeTestTemporarySaveDTO();
-    	service.temporarySaveInsert(answers, dto, qnum); // 임시 저장
     	
+    	String tempSave = request.getParameter("tempSave");
+    	
+    	
+    	//임시 저장한 걸 다시 임시 저장한 경우
+		if(tempSave.equals("tempSave")) {
+			service.temporarySaveUpdate(answers, dto, qnum);
+		}
+
+		
+		// 첫 임시 저장
+		if(tempSave==null || tempSave.equals(null)){
+			service.temporarySaveInsert(answers, dto, qnum);
+		}
+    	
+		
     	return "redirect:/aptitudeTestSJ/aptitudeMain?temporarySave=okSave";
 	}
 	
@@ -104,18 +149,17 @@ public class AptitudeControllerTestSJ {
 	
 	//검사 횟수와 일자, 임시저장 값 꺼내기
 	@RequestMapping("/aptitudeMain")
-	public String aptitudeMain(Model model, AptitudeTestValueDTOSJ dto, HttpServletRequest request) throws IOException {
+	public String aptitudeMain(Model model, AptitudeTestValueDTOSJ dto1, AptitudeTestTemporarySaveDTO dto2, HttpServletRequest request) throws IOException {
 		
-		List<AptitudeTestValueDTOSJ> dtoList = service.getRecentTest(dto);
-		model.addAttribute("dtoList", dtoList);
+		//진행한 검사
+		List<AptitudeTestValueDTOSJ> valueList = service.getRecentTest(dto1);
+		model.addAttribute("valueList", valueList);
 		
-		for(int i=0; i<4; i++) {
-			System.out.println(dtoList.get(i).getTest_num());
-			System.out.println(dtoList.get(i).getMax_test_date());
-			System.out.println(dtoList.get(i).getCount());
-		}
+		//임시 저장
+		List<AptitudeTestTemporarySaveDTO> tempList = service.getTemporarySave(dto2);
+		model.addAttribute("tempList", tempList);
 		
-		
+		//임시 저장하고 메인화면으로 온건지 판별
 		String temporarySave = request.getParameter("temporarySave");
 		model.addAttribute("temporarySave", temporarySave);
 		

@@ -13,4 +13,7 @@ public interface AptitudeServiceSJ {
 	
 	public List<AptitudeTestValueDTOSJ> getRecentTest(AptitudeTestValueDTOSJ dto); //검사 메인의 검사횟수 및 최근검사일
 	public List<AptitudeTestTemporarySaveDTO> getTemporarySave(AptitudeTestTemporarySaveDTO dto); //임시저장한 값
+	
+	public void temporarySaveDelete(int test_num); //임시저장한 검사지 제출하면 삭제
+	public void temporarySaveUpdate(List<String> answers, AptitudeTestTemporarySaveDTO dto, String qnum); //임시저장한 검사지를 다시 임시저장
 }

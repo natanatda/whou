@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -47,8 +48,15 @@
                            <div>
                                 <p class="status-title">진행(임시저장) 중 인 검사</p>
                                 <div>
-                                    <i class="fa-regular fa-circle-xmark fa-2xl" style="color: #363636;"></i>
-                                    <p>진행중인 검사가 없습니다.</p>
+                                	<c:if test="${fn:length(tempList) == 0}">
+	                                    <i class="fa-regular fa-circle-xmark fa-2xl" style="color: #363636;"></i>
+	                                    <p>진행중인 검사가 없습니다.</p>
+                                    </c:if>
+                                    <c:if test="${fn:length(tempList) > 0}">
+                                    	<c:forEach items="${tempList}" var="templist">
+                                    		<a href="/whou/aptitudeTestSJ/itrstkAptitude?qnum=${templist.test_num}&tempSave=tempSave">${templist.test_name}</a> <br>
+                                    	</c:forEach>
+                                    </c:if>
                                 </div>
                            </div>
                            <div>
@@ -74,16 +82,16 @@
                                                     검사횟수
                                                 </td>
                                                 <td>
-                                                    ${dtoList[0].getCount()}
+                                                    ${valueList[0].getCount()}
                                                 </td>
                                                 <td>
-                                                    ${dtoList[1].getCount()}
+                                                    ${valueList[1].getCount()}
                                                 </td>
                                                 <td>
-                                                    ${dtoList[3].getCount()}
+                                                    ${valueList[3].getCount()}
                                                 </td>
                                                 <td>
-                                                    ${dtoList[2].getCount()}
+                                                    ${valueList[2].getCount()}
                                                 </td>                                    
                                             </tr>
                                             <tr>
@@ -91,16 +99,16 @@
                                                     최근검사일
                                                 </td>
                                                 <td>
-                                                    ${dtoList[0].getMax_test_date()}
+                                                    ${valueList[0].getMax_test_date()}
                                                 </td>
                                                 <td>
-                                                    ${dtoList[1].getMax_test_date()}
+                                                    ${valueList[1].getMax_test_date()}
                                                 </td>
                                                 <td>
-                                                    ${dtoList[2].getMax_test_date()}
+                                                    ${valueList[2].getMax_test_date()}
                                                 </td>
                                                 <td>
-                                                    ${dtoList[3].getMax_test_date()}
+                                                    ${valueList[3].getMax_test_date()}
                                                 </td>                                    
                                             </tr>
                                         </tbody>
