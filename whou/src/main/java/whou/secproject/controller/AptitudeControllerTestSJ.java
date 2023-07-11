@@ -2,6 +2,7 @@ package whou.secproject.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +45,7 @@ public class AptitudeControllerTestSJ {
 	
 	
 	//크롤링 결과 집어넣기
-	@RequestMapping("/report")
+	@RequestMapping("/report1")
     public String getAptitudeTestResult(Model model, String countQ, HttpServletRequest request, HttpServletResponse response) {
 		List<String>answers = new ArrayList<>();
 		String qnum = request.getParameter("qnum");
@@ -68,8 +69,36 @@ public class AptitudeControllerTestSJ {
 		dto.setTest_answers(answers.toString());
 		
 		service.crawlingInsert(dto);
+		
 		List<String> reportResult = service.reportView(qnum, dto);
 		model.addAttribute("reportResult", reportResult);
+		
+		List<String> updatedList1 = new ArrayList<>();
+		List<String> updatedList2 = new ArrayList<>();
+		List<String> updatedList3 = new ArrayList<>();
+		if (qnum.equals("27")) {
+			// chart 값 추출		
+			for(int i = 4; i <= 10; i += 2) {
+				String element = reportResult.get(i);
+				updatedList1.add(element);
+			}
+			for(int i = 12; i <= 22; i += 2 ) {
+				String element = reportResult.get(i);
+				updatedList2.add(element);
+			}
+		}
+		if (qnum.equals("25")) {
+			// chart 값 추출		
+			for(int i = 3; i <= 14; i++) {
+				String element = reportResult.get(i);
+				updatedList3.add(element);
+			}
+		
+		}
+		model.addAttribute("updatedList1", updatedList1);
+		model.addAttribute("updatedList2", updatedList2);
+		model.addAttribute("updatedList3", updatedList3);
+		
 		
 		
 		System.out.println(aptiTestResultResponse.getRESULT().getUrl());
@@ -122,10 +151,6 @@ public class AptitudeControllerTestSJ {
 		
     	return "/aptitudeTestSJ/aptitudeMain";
 	}
-	
-	
-	
-	
 	
 	
 	@RequestMapping("/commonTest")

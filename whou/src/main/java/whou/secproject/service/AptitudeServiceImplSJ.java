@@ -118,10 +118,10 @@ public class AptitudeServiceImplSJ implements AptitudeServiceSJ{
             System.out.println(valueSummary);
 
             // 가치 점수 정보 가져오기
-            List<WebElement> scoreElements = driver.findElements(By.cssSelector("div.aptitude-result-content > div:nth-child(1) > div:nth-child(5) > table > tbody"));
+            List<WebElement> scoreElements = driver.findElements(By.cssSelector("#ct > div.aptitude_result_wrap > div.aptitude-result-content > div:nth-child(1) > div:nth-child(5) > table > tbody > tr > td:nth-child(3n+0)"));
             String valueScore = "";
             for (WebElement element : scoreElements) {
-                valueScore += element.getText().replaceAll("\\n", " ");
+                valueScore += element.getText() + " + ";
             }
             System.out.println(valueScore);
 
@@ -236,17 +236,19 @@ public class AptitudeServiceImplSJ implements AptitudeServiceSJ{
 		        dto.getTest25_4()
 		    )
 		    .flatMap(value -> {
-		        if (value.equals(dto.getTest25_2())) {
-		            return Arrays.stream(value.split(" "));
-		        } else {
-		            return Arrays.stream(value.split("\\+"));
-		        }
+//		        if (value.equals(dto.getTest25_2())) {
+//		            return Arrays.stream(value.split(" "));
+//		        } else {
+//		            return Arrays.stream(value.split("\\+"));
+//		        }
+		    	  return Arrays.stream(value.split("\\+"));
 		    })
 		    .map(String::trim) // 공백 제거
 		    .filter(value -> value != null && !value.isEmpty())
 		    .collect(Collectors.toList());
 		    System.out.println("25의 결과 리스트" + result);
 		}
+		
 		
 		return result;
 	}

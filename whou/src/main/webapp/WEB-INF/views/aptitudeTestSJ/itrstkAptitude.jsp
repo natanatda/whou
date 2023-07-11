@@ -36,7 +36,7 @@
 					<h3 class="page-count">
 						<span>0</span> / <span>${fn:length(RESULT)}</span>
 					</h3>
-					<form action="report" method="post">
+					<form action="report1" method="post">
 						<input type="hidden" name="qnum" value="${qnum }">
 						<input type="hidden" name="countQ" value="${fn:length(RESULT)}">
 						<c:if test="${qnum eq '27' || qnum == '27'}" >
