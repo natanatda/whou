@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+<mapper namespace="whou.secproject.mapper.AptitudeMapperSJ">
+	
+	<!-- 크롤링한 직업검사 결과를 DB에 insert -->
+	<insert id="crawlingInsert">
+		insert into user1_test_result (
+			index_num, test_num, test_answers, test_date,
+			test21_1, test21_2, test21_3, test21_4, test21_5,test21_6, test21_7, test21_8, test21_9, test21_10,
+			test25_1, test25_2, test25_3, test25_4, test25_5,test25_6, test25_7, test25_8, test25_9, test25_10,
+			test27_1, test27_2, test27_3, test27_4, test27_5,test27_6, test27_7, test27_8, test27_9, test27_10,
+			test31_1, test31_2, test31_3, test31_4, test31_5,test31_6, test31_7, test31_8, test31_9, test31_10
+		)
+		values (
+			user1_test_result_seq.nextval, #{test_num}, #{test_answers}, sysdate,
+			#{test21_1}, #{test21_2}, #{test21_3}, #{test21_4},	#{test21_5},#{test21_6}, #{test21_7}, #{test21_8}, #{test21_9},	#{test21_10},
+			#{test25_1}, #{test25_2}, #{test25_3}, #{test25_4},	#{test25_5},#{test25_6}, #{test25_7}, #{test25_8}, #{test25_9},	#{test25_10},
+			#{test27_1}, #{test27_2}, #{test27_3}, #{test27_4},	#{test27_5},#{test27_6}, #{test27_7}, #{test27_8}, #{test27_9},	#{test27_10},
+			#{test31_1}, #{test31_2}, #{test31_3}, #{test31_4},	#{test31_5},#{test31_6}, #{test31_7}, #{test31_8}, #{test31_9},	#{test31_10}
+		)
+	</insert>
+	
+	<!-- 임시저장한 직업검사 결과를 DB에 insert -->
+	<insert id="temporarySaveInsert">
+		INSERT INTO user1_test_temporary_save (
+			index_num, test_num, test_answers, test_date
+		)VALUES(
+			user1_test_temporary_save_seq.nextval, #{testNum}, #{testAnswers}, sysdate
+		)
+	</insert>
+	
+	<!-- 검사지 메인에 출력할 최근검사일과 검사 횟수 -->
+	<select id="getRecentTest" resultType="whou.secproject.component.AptitudeTestValueDTOSJ">
+		SELECT test_num, max(test_date) AS max_test_date, count(*) AS count FROM user1_test_result GROUP BY test_num ORDER BY test_num
+	</select>
+	
+	
+	<select id="getTemporarySave" resultType="whou.secproject.component.AptitudeTestTemporarySaveDTO">
+		SELECT * FROM user1_test_temporary_save
+	</select>
+	
+	<!-- 임시저장의 test_num이 같으면 업데이트  -->
+	<update id="temporarySaveUpdate">
+	</update>
+	
+	<!-- 임시저장한 검사를 제출했다면 삭제  -->
+	<delete id="temporarySaveDelete">
+	</delete>
+	
+</mapper>

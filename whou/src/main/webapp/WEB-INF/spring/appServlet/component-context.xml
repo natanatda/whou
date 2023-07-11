@@ -9,6 +9,7 @@
 
 	
 	<beans:bean id="AptiDAO" class="whou.secproject.repository.AptitudeApiDAO"/>
+	<beans:bean id="AptitudeApiTestSJDAO" class="whou.secproject.repository.AptitudeApiTestSJDAO"/>
 	<beans:bean id="JobInfoDAO" class="whou.secproject.repository.JobInfoApiDAO"/>
 	<beans:bean id="JobDicDAO" class="whou.secproject.repository.JobDicApiDAO"/>
 	<beans:bean id="apiKey" class="java.lang.String">
