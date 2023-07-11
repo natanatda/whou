@@ -3,32 +3,35 @@ package whou.secproject.component;
 import java.sql.Timestamp;
 
 public class AptitudeTestTemporarySaveDTO {
-	private int indexNum;
-	private int testNum;
-	private String testAnswers;
-	private Timestamp testDate;
-	public int getIndexNum() {
-		return indexNum;
+	private String test_name;
+	private int test_num;
+	private String test_answers;
+	private Timestamp test_date;
+	public String getTest_name() {
+		return test_name;
 	}
-	public void setIndexNum(int indexNum) {
-		this.indexNum = indexNum;
+	public void setTest_name(String test_name) {
+		this.test_name = test_name;
 	}
-	public int getTestNum() {
-		return testNum;
+	public int getTest_num() {
+		return test_num;
 	}
-	public void setTestNum(int testNum) {
-		this.testNum = testNum;
+	public void setTest_num(int test_num) {
+		this.test_num = test_num;
 	}
-	public String getTestAnswers() {
-		return testAnswers;
+	public String getTest_answers() {
+		return test_answers;
 	}
-	public void setTestAnswers(String testAnswers) {
-		this.testAnswers = testAnswers;
+	public void setTest_answers(String test_answers) {
+		this.test_answers = test_answers;
 	}
-	public Timestamp getTestDate() {
-		return testDate;
+	public Timestamp getTest_date() {
+		return test_date;
 	}
-	public void setTestDate(Timestamp testDate) {
-		this.testDate = testDate;
+	public void setTest_date(Timestamp test_date) {
+		this.test_date = test_date;
 	}
+	
+	
+	
 }
