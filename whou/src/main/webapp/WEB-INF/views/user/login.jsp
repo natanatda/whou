@@ -20,24 +20,28 @@
  
 <body>
    
-    
-      <div class="login-container">
-        <div class="join-wrap">
-          <div class="logo"><a class="navbar-brand"><img src="/whou/resources/img/logo.svg"></a></div>
-          <p>이미 회원이신가요? <a href="/login.html">로그인하기</a></p>
+  <div class="login-container">
+       
+        <div class="login-wrap">
+       
+          <div class="logo"><a class="navbar-brand"  href="/whou/main"><img src="/whou/resources/img/logo.svg"></a></div>
+          <p>회원이 아니신가요? <a href="/whou/member/joinForm">회원가입하기</a></p>
          
           <div class="input-wrap">
-            <button type="button" class="btn join-kakao btn-xs"><img src="/whou/resources/img/kakao-login-l.png"/></button>
-            <button type="button" class="join-email btn-xs"><i class="fa-regular fa-envelope fa-lg" style="color: #111111;"></i> 아이디 만들기</button>
+            <div class="input-form-box"><input type="text" name="uid" class="form-control" placeholder="이메일"></div>
+            <div class="input-form-box"><input type="password" name="upw" class="form-control" placeholder="비밀번호"></div>
+              <button type="button" class="btn login-btn btn-xs">로그인하기</button>
           </div>
           <div class="simple-login">
-            <p>다른 방식으로 가입하기</p>
+            <p>SNS 간편 로그인</p>
             <ul>
-              <li><i class="fa-solid fa-comment" style="color: #ffffff;"></i></li>
-              <li><i class="fa-solid fa-n" style="color: #ffffff;"></i></li>
-              <li><i class="fa-brands fa-google" style="color: #ffffff;"></i></li>
-              <li><i class="fa-brands fa-facebook-f" style="color: #ffffff;"></i></li>
+              <li><a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=7411fb12b3136c342fa5bfeca89cc0d2&redirect_uri=http://localhost:8080/whou/member/kakao&prompt=login"><i class="fa-solid fa-comment" style="color: #ffffff;"></a></i></li>
+              <li><a href="/whou/member/naver"><img src="/whou/resources/img/btnG_아이콘원형.png" width="100%"></a></i></li>
+              <li><a href="/whou/member/google"><i class="fa-brands fa-google" style="color: #ffffff;"></a></i></li>
             </ul>
+          </div>
+          <div class="find-wrap">
+            <a href="#!">비밀번호 찾기</a>
           </div>
         </div>
       </div>
