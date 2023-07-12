@@ -99,7 +99,9 @@ public class AptitudeController {
 		service.crawlingInsert(dto);
 		List<String> reportResult = service.reportView(qnum, dto);
 		model.addAttribute("reportResult", reportResult);
-		
+		model.addAttribute("percent",service.crawlingSplit(dto,qnum));
+		model.addAttribute("rank",service.crawlingSplitRank(dto,qnum));
+		model.addAttribute("job",service.crawlingSplitJob(dto,qnum));
 		
 		System.out.println(aptiTestResultResponse.getRESULT().getUrl());
 		return "/aptitude/report";
