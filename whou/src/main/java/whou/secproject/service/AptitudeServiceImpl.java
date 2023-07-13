@@ -3,6 +3,7 @@ package whou.secproject.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -34,6 +35,7 @@ public class AptitudeServiceImpl implements AptitudeService{
         WebDriver driver = new ChromeDriver();
         driver.get(testURL);
         
+        // 역량
         if(qnum.equals("27")) {
         	List<WebElement> developElements = driver.findElements(By.cssSelector("div.develop-type > ul > li.on"));
         	StringBuilder developType = new StringBuilder();
@@ -101,7 +103,7 @@ public class AptitudeServiceImpl implements AptitudeService{
         }
         
         
-        
+        // 가치관
         if(qnum.equals("25")) {
         	// 가치 요약 정보 가져오기
             List<WebElement> summaryElements = driver.findElements(By.cssSelector("div.aptitude-tbl-list.value.import > table > tbody > tr:nth-child(1) > td:nth-child(2)"));
@@ -158,6 +160,7 @@ public class AptitudeServiceImpl implements AptitudeService{
     		dto.setTest25_4(valueImport);
         }
 		
+        // 적성
         if (qnum.equals("21")) {
 		    // 페이지 로드가 코드 실행보다 느려서 지연 추가
 		    try {
@@ -195,6 +198,7 @@ public class AptitudeServiceImpl implements AptitudeService{
 	         dto.setTest21_3(jobText);
 	      }
 		
+        // 흥미
 		if (qnum.equals("31")) {
 			 // TOP3
 	         List<WebElement> developElements = driver.findElements(By.cssSelector(
@@ -217,6 +221,28 @@ public class AptitudeServiceImpl implements AptitudeService{
 	         for (WebElement element : jobElements) {
 	        	 jobText += element.getText() + "+";
 	         }
+	         
+	         // 직업추천리스트1
+	         List<WebElement> jobList1 = driver.findElements(By.cssSelector(
+	               "#ct > div:nth-child(1) > div.aptitude-result-content > div:nth-child(2) > div > table > tbody > tr.td-background.span-block > td:nth-child(1) > span"));
+	         String jobListText1 ="";
+	         for (WebElement element : jobList1) {
+	        	 jobListText1 += element.getText() + "+";
+	         }
+	         // 직업추천리스트2
+	         List<WebElement> jobList2 = driver.findElements(By.cssSelector(
+	               "#ct > div:nth-child(1) > div.aptitude-result-content > div:nth-child(2) > div > table > tbody > tr.td-background.span-block > td:nth-child(2) > span"));
+	         String jobListText2 ="";
+	         for (WebElement element : jobList2) {
+	        	 jobListText2 += element.getText() + "+";
+	         }
+	         // 직업추천리스트3
+	         List<WebElement> jobList3 = driver.findElements(By.cssSelector(
+	               "#ct > div:nth-child(1) > div.aptitude-result-content > div:nth-child(2) > div > table > tbody > tr.td-background.span-block > td:nth-child(3) > span"));
+	         String jobListText3 ="";
+	         for (WebElement element : jobList3) {
+	        	 jobListText3 += element.getText() + "+";
+	         }
 
 	         driver.quit(); // WebDriver 종료
 
@@ -224,6 +250,9 @@ public class AptitudeServiceImpl implements AptitudeService{
 	         dto.setTest31_1(text);
 	         dto.setTest31_2(scoreText);
 	         dto.setTest31_3(jobText);
+	         dto.setTest31_4(jobListText1);
+	         dto.setTest31_5(jobListText2);
+	         dto.setTest31_6(jobListText3);
 	      }
         
         return dto;
@@ -236,7 +265,7 @@ public class AptitudeServiceImpl implements AptitudeService{
 	    // 결과를 저장할 리스트를 생성합니다.
 	    List<String> resultList = new ArrayList<>();
 	    
-	    // qnum이 "31"인 경우 실행합니다.
+	    // qnum이 "21"인 경우 실행합니다.
 	    if (qnum.equals("21")) {
 	        // dto 객체의 Test31_2 필드 값을 "+"를 기준으로 나눕니다.
 	        String[] array = dto.getTest21_2().toString().split("\\+");
@@ -254,18 +283,40 @@ public class AptitudeServiceImpl implements AptitudeService{
 	        }
 	    }
 	    
-	    // qnum이 "21"인 경우 실행합니다.
+	    // qnum이 "31"인 경우 실행합니다.
 	    if (qnum.equals("31")) {
-	        // dto 객체의 Test21_2 필드 값을 "+"를 기준으로 나눕니다.
+	    	
+	        // dto 객체의 Test31_2 필드 값을 "+"를 기준으로 나눕니다.
 	        String[] array = dto.getTest31_2().toString().split("\\+");
 	        
 	        // 나눈 값을 resultList에 할당합니다.
 	        resultList = Arrays.asList(array);
+	       
 	    }
 	    
 	    // 결과 리스트를 반환합니다.
 	    return resultList;
 	}
+	
+	//31번 문항의 직업흥미군을 리스트로 반환하기 위한 메소드
+	@Override
+	public List<String []> crawlingSplitArr(AptitudeTestValueDTO dto, String qnum) {
+		List<String[]> arrList = new ArrayList<>();
+		// qnum이 "31"인 경우 실행합니다.
+	    if (qnum.equals("31")) {
+	    	
+	        // dto 객체의 Test31_2 필드 값을 "+"를 기준으로 나눕니다.
+	        String[] array3 = dto.getTest31_4().toString().split("\\+"); //직업 흥미군1
+	        String[] array4 = dto.getTest31_5().toString().split("\\+"); //직업 흥미군2
+	        String[] array5 = dto.getTest31_6().toString().split("\\+"); //직업 흥미군3
+	       
+	        arrList.add(array3); //직업 흥미군1
+	        arrList.add(array4); //직업 흥미군2
+	        arrList.add(array5); //직업 흥미군3
+	    }
+	    return arrList;
+	}
+	
 
 	@Override
 	public List<String> crawlingSplitRank(AptitudeTestValueDTO dto, String qnum) {
@@ -447,6 +498,234 @@ public class AptitudeServiceImpl implements AptitudeService{
 	    dto.setTest_answers(answer.toString());
 	    
 		mapper.temporarySaveUpdate(dto);
+	}
+	
+	// 가치관 결과지 - 관련 직업명 추출
+	@Override
+	public String valuesJob() {
+		String job_cd="";
+		// 성취지향
+		String theme3=
+				"GIS전문가\r\n"
+				+ "건축공학기술자\r\n"
+				+ "건축사\r\n"
+				+ "금융자산운용가(펀드매니저)\r\n"
+				+ "기계공학 기술자ㆍ연구원\r\n"
+				+ "기업고위임원\r\n"
+				+ "네트워크엔지니어\r\n"
+				+ "데이터베이스관리자\r\n"
+				+ "번역가\r\n"
+				+ "변호사\r\n"
+				+ "보험계리인\r\n"
+				+ "부동산중개인\r\n"
+				+ "사회학연구원\r\n"
+				+ "상점판매원\r\n"
+				+ "파티플래너\r\n"
+				+ "상품중개인\r\n"
+				+ "생물학연구원\r\n"
+				+ "생활설계사\r\n"
+				+ "섬유공학기술자\r\n"
+				+ "시스템소프트웨어개발자\r\n"
+				+ "정보시스템운영자\r\n"
+				+ "식품공학기술자\r\n"
+				+ "언어학연구원\r\n"
+				+ "에너지공학기술자\r\n"
+				+ "영업원\r\n"
+				+ "외환딜러\r\n"
+				+ "운동감독\r\n"
+				+ "웹프로듀서\r\n"
+				+ "인문사회계열교수\r\n"
+				+ "일반의사\r\n"
+				+ "재료공학기술자\r\n"
+				+ "전기공학기술자\r\n"
+				+ "전자공학기술자\r\n"
+				+ "정보보호전문가\r\n"
+				+ "조경기술자\r\n"
+				+ "운동선수\r\n"
+				+ "출판물기획전문가\r\n"
+				+ "치과의사\r\n"
+				+ "컴퓨터하드웨어 기술자 및 연구원\r\n"
+				+ "텔레마케터\r\n"
+				+ "토목공학기술자\r\n"
+				+ "통신공학 기술자 및 연구원\r\n"
+				+ "투자분석가(애널리스트)\r\n"
+				+ "판사\r\n"
+				+ "검사\r\n"
+				+ "한의사\r\n"
+				+ "행사기획자\r\n"
+				+ "화학공학기술자\r\n"
+				+ "환경공학기술자 및 연구원";
+		// 변화지향
+		String theme2 =
+				"경영컨설턴트\r\n"
+				+ "경찰관\r\n"
+				+ "광고 및 홍보전문가\r\n"
+				+ "기자\r\n"
+				+ "도시 및 교통설계전문가\r\n"
+				+ "사회단체활동가\r\n"
+				+ "사회복지사\r\n"
+				+ "상담전문가\r\n"
+				+ "소방관\r\n"
+				+ "수의사\r\n"
+				+ "시각디자이너\r\n"
+				+ "의복수선원\r\n"
+				+ "인테리어디자이너\r\n"
+				+ "정밀 농업기술자\r\n"
+				+ "제품디자이너\r\n"
+				+ "패션디자이너\r\n"
+				+ "홍보도우미";
+		// 의미지향
+		String theme1 ="가수\r\n"
+				+ "간병인\r\n"
+				+ "간호사\r\n"
+				+ "간호조무사\r\n"
+				+ "경호원\r\n"
+				+ "공예원\r\n"
+				+ "교도관\r\n"
+				+ "국악인\r\n"
+				+ "귀금속 및 보석세공원\r\n"
+				+ "만화가\r\n"
+				+ "메이크업아티스트\r\n"
+				+ "무용가\r\n"
+				+ "바텐더\r\n"
+				+ "보육교사\r\n"
+				+ "사진작가\r\n"
+				+ "스포츠강사\r\n"
+				+ "아나운서\r\n"
+				+ "악기제조원\r\n"
+				+ "애완동물미용사\r\n"
+				+ "여행상품개발원\r\n"
+				+ "연기자\r\n"
+				+ "연예인매니저\r\n"
+				+ "웨딩플래너\r\n"
+				+ "웹디자이너\r\n"
+				+ "유치원교사\r\n"
+				+ "응급구조사\r\n"
+				+ "이용사\r\n"
+				+ "미용사\r\n"
+				+ "임상심리사\r\n"
+				+ "작가\r\n"
+				+ "제과사 및 제빵사\r\n"
+				+ "조리사 및 주방장\r\n"
+				+ "직업상담 및 취업알선원\r\n"
+				+ "촬영기사\r\n"
+				+ "통역가\r\n"
+				+ "특수교사\r\n"
+				+ "피부관리사\r\n"
+				+ "학예사(큐레이터)\r\n"
+				+ "화가";
+		
+		// 안전지향
+		String theme = "가전제품 설치 및 수리원\r\n"
+				+ "가축사육자\r\n"
+				+ "간판제작원\r\n"
+				+ "감정평가사\r\n"
+				+ "건설기계운전원\r\n"
+				+ "경비원\r\n"
+				+ "계산원 및 매표원\r\n"
+				+ "곡식작물재배자\r\n"
+				+ "공업기계설치 및 정비원\r\n"
+				+ "관세사\r\n"
+				+ "국제무역사무원\r\n"
+				+ "금속가공장치조작원\r\n"
+				+ "금형원\r\n"
+				+ "노무사\r\n"
+				+ "단순노무자\r\n"
+				+ "단열원\r\n"
+				+ "단조원\r\n"
+				+ "대형트럭 및 특수차운전원\r\n"
+				+ "도장원\r\n"
+				+ "목공\r\n"
+				+ "물리치료사\r\n"
+				+ "미장원\r\n"
+				+ "방사선사\r\n"
+				+ "방송장비(H/W)설치 및 수리원\r\n"
+				+ "배관원\r\n"
+				+ "버스운전기사\r\n"
+				+ "법률사무원\r\n"
+				+ "법무사\r\n"
+				+ "변리사\r\n"
+				+ "보건의료정보관리사\r\n"
+				+ "비파괴검사원\r\n"
+				+ "비행기조종사\r\n"
+				+ "사무보조원\r\n"
+				+ "사서\r\n"
+				+ "산업안전관리원\r\n"
+				+ "상ㆍ하수도 처리장치 조작원\r\n"
+				+ "석유화학기술자\r\n"
+				+ "선장 및 항해사\r\n"
+				+ "세무사\r\n"
+				+ "세탁원\r\n"
+				+ "손해사정사\r\n"
+				+ "식품가공검사원\r\n"
+				+ "안경사\r\n"
+				+ "약사 및 한약사\r\n"
+				+ "연근해 어부 및 해녀\r\n"
+				+ "영양사\r\n"
+				+ "용접원\r\n"
+				+ "유리부착원\r\n"
+				+ "음료제조관련조작원\r\n"
+				+ "인문계중등학교교사\r\n"
+				+ "인쇄기조작원\r\n"
+				+ "임상병리사\r\n"
+				+ "자동차정비원\r\n"
+				+ "자동차조립원\r\n"
+				+ "장례지도사\r\n"
+				+ "전공\r\n"
+				+ "전기설비조작원\r\n"
+				+ "전문비서\r\n"
+				+ "조림 영림 및 벌목원\r\n"
+				+ "시장 및 여론조사전문가\r\n"
+				+ "조적공\r\n"
+				+ "주조원\r\n"
+				+ "철골공\r\n"
+				+ "철도 및 지하철기관사\r\n"
+				+ "청소원\r\n"
+				+ "청원경찰\r\n"
+				+ "초등학교교사\r\n"
+				+ "치과기공사\r\n"
+				+ "치과위생사\r\n"
+				+ "캐드원\r\n"
+				+ "콘크리트공\r\n"
+				+ "크레인 및 호이스트운전원\r\n"
+				+ "택배원\r\n"
+				+ "택시운전기사\r\n"
+				+ "통신장비기사\r\n"
+				+ "판금원\r\n"
+				+ "학원강사\r\n"
+				+ "항공교통관제사\r\n"
+				+ "비행기승무원\r\n"
+				+ "항공기정비원\r\n"
+				+ "회계사\r\n"
+				+ "회계사무원";
+	
+		  String[] list = theme3.split("\\r\\n");
+		  
+		  StringBuilder sb = new StringBuilder();
+		  
+		  for(int i=0; i<list.length; i++) {
+			  job_cd = list[i];
+			  
+			  if(i==0) {
+				  sb.append(mapper.valuesJob(job_cd));
+			  }else{
+				  sb.append(",").append(mapper.valuesJob(job_cd));
+			  }
+		  }		  
+		  System.out.println(sb.toString());
+		  return sb.toString();
+	}
+
+	// 가치관 결과지 - 관련 직업 번호 저장
+	@Override
+	public void valuesInsert(String result) {
+		mapper.valuesInsert(result);		
+	}
+	
+	@Override
+	public String jobSelect(String jobListItem) {
+		
+		return mapper.jobSelect(jobListItem);	
 	}
 
 }

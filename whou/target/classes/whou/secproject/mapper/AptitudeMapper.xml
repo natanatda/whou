@@ -61,4 +61,19 @@
 		DELETE FROM user1_test_temporary_save WHERE test_num=#{test_num}
 	</delete>
 	
+	
+	
+	<!-- 가치관 검사지 유형별 직업리스트 seq 검색 -->
+	<select id="valuesJob" resultType="String">
+		SELECT seq FROM job_unique_num2 WHERE job_nm = #{job_nm}
+	</select>
+	
+	<!-- 가치관 직업번호 저장 -->
+	<select id="valuesInsert" >
+		insert into values_common (job_cd, value_aim) values (#{result},'성취지향')
+	</select>
+	
+	<select id="jobSelect" resultType="String">
+		SELECT seq FROM job_unique_num2 WHERE job_nm = #{jobListItem}
+	</select>
 </mapper>

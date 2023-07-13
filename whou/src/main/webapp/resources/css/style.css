@@ -349,8 +349,11 @@ input[type="checkbox"]:checked + label:after {
 .rcd-table{border:2px solid #5A3FFF}
 .rcd-table table{width:100%;text-align: center;}
 .rcd-table th{background-color: #593fff5d;height: 50px;font-weight: 500;font-size: 18px;}
+.rcd-table td{border-bottom:1px solid #5A3FFF;vertical-align: top;}
+.rcd-table tr:last-child td{border-bottom:0}
 .rcd-table td div{min-height: 50px;display: flex;align-items: center;justify-content: center;}
-.rcd-table td ul li{margin-bottom: 10px;}
+.rcd-table td ul{margin-top:10px;}
+.rcd-table td ul li{margin-bottom: 5px;}
 .desc-table{border:1px solid #5A3FFF}
 .desc-table table{width:100%;text-align: center;}
 .desc-table th{background-color: #593fff5d;height: 32px;font-weight: 500;}

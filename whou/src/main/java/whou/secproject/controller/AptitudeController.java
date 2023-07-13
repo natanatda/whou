@@ -98,16 +98,40 @@ public class AptitudeController {
 		
 		service.crawlingInsert(dto);
 		List<String> reportResult = service.reportView(qnum, dto);
+		List<String[]> reportResultArr = service.crawlingSplitArr(dto,qnum);
+		
+		// 흥미검사 결과지의 직업 리스트의 code 추출
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < reportResultArr.size(); i++) {
+			for(int j = 0; j <reportResultArr.get(i).length; j++) {
+				String jobListItem = reportResultArr.get(i)[j].toString();
+				System.out.println("%%%%%%%%%%%%%%%%%%%%: " + jobListItem);
+				String b = service.jobSelect(jobListItem);
+				sb.append(b).append(",");
+			}		
+			
+		}
+		System.out.println("%%%%%%%%%%%%%%%%%%%%: " + sb);
+		
 		model.addAttribute("reportResult", reportResult);
+		model.addAttribute("reportResultArr", reportResultArr);
 		model.addAttribute("percent",service.crawlingSplit(dto,qnum));
 		model.addAttribute("rank",service.crawlingSplitRank(dto,qnum));
 		model.addAttribute("job",service.crawlingSplitJob(dto,qnum));
+
 		
 		System.out.println(aptiTestResultResponse.getRESULT().getUrl());
 		return "/aptitude/report";
     }
 	
+	@RequestMapping("/test")
+	public String select(HttpServletRequest request) {
+		String qnum = request.getParameter("qnum");
+		AptitudeTestValueDTO dto = new AptitudeTestValueDTO();
+		List<String[]> reportResultArr = service.crawlingSplitArr(dto,qnum);
 	
+		return "dd";
+	}
 	//임시저장하기
 	@RequestMapping("/temporarySave")
 	public String temporaryResult(Model model, String countQ, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -166,4 +190,12 @@ public class AptitudeController {
 		
     	return "/aptitude/aptitudeMain";
 	}
+	
+//	@RequestMapping("/test")
+//	public String test() {
+//		String result = "";
+//		result = service.valuesJob();
+//		service.valuesInsert(result);
+//		return "/test";
+//	}
 }

@@ -31,7 +31,7 @@
 	            <c:if test="${qnum eq '21' || qnum == '21' || qnum eq '31' || qnum == '31'}">
 	            <div class="card">
 	                    <div class="card-body">
-	                        <h3 class="num-title"><span>01</span> 높은 흥미를 나타내는 직업</h3>
+	                        <h3 class="num-title"><span>01</span> 높은 흥미를 나타내는 직업</h3>	                        
 	                        <div class="top-interest">
 	                            <ul>
 	                            	<c:forEach var="item" items="${rank}" varStatus="status">
@@ -190,6 +190,7 @@
 	                            <table>
 	                                <thead>
 	                                    <tr>
+	                                        
 		                                    <c:forEach var="job" items="${job}" >
 		                               		     <th>${job}</th>                    
 		                            		</c:forEach> 
@@ -197,17 +198,6 @@
 	                                </thead>
 	                                <tbody>
 	                                    <tr>
-	                                        <td>
-	                                            <div>desc</div>
-	                                        </td>
-	                                        <td>
-	                                            <div>desc</div>
-	                                        </td>
-	                                        <td>
-	                                            <div>desc</div>
-	                                        </td>
-	                                    </tr>
-	                                    <tr>
 	                                        <td><div>관련 직업</div></td>
 	                                        <td><div>관련 직업</div></td>
 	                                        <td><div>관련 직업</div></td>
@@ -215,32 +205,23 @@
 	                                    <tr>
 	                                        <td>
 	                                            <ul>
-	                                                <li>list</li>
-	                                                <li>list</li>
-	                                                <li>list</li>
-	                                                <li>list</li>
-	                                                <li>list</li>
-	                                                <li>list</li>
+													<c:forEach var="jobList" items="${reportResultArr.get(0)}" >
+		                                                <li>${jobList}</li>
+		                                            </c:forEach>
 	                                            </ul>
 	                                        </td>
 	                                        <td>
 	                                            <ul>
-	                                                <li>list</li>
-	                                                <li>list</li>
-	                                                <li>list</li>
-	                                                <li>list</li>
-	                                                <li>list</li>
-	                                                <li>list</li>
+	                                                <c:forEach var="jobList" items="${reportResultArr.get(1)}" >
+		                                                <li>${jobList}</li>
+		                                            </c:forEach>
 	                                            </ul>
 	                                        </td>
 	                                        <td>
 	                                            <ul>
-	                                                <li>list</li>
-	                                                <li>list</li>
-	                                                <li>list</li>
-	                                                <li>list</li>
-	                                                <li>list</li>
-	                                                <li>list</li>
+	                                                <c:forEach var="jobList" items="${reportResultArr.get(2)}" >
+		                                                <li>${jobList}</li>
+		                                            </c:forEach>
 	                                            </ul>
 	                                        </td>
 	                                    </tr>

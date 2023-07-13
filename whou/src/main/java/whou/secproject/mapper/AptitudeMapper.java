@@ -12,4 +12,7 @@ public interface AptitudeMapper {
 	public List<AptitudeTestTemporarySaveDTO> getTemporarySave(AptitudeTestTemporarySaveDTO dto); //임시저장한 값
 	public void temporarySaveDelete(int test_num); //임시저장한 검사지 제출하면 삭제
 	public void temporarySaveUpdate(AptitudeTestTemporarySaveDTO dto); //임시저장한 검사지를 다시 임시저장
+	public String valuesJob(String job_cd);
+	public void valuesInsert(String result); // 가치관 번호 저장
+	public String jobSelect(String jobListItem);
 }
