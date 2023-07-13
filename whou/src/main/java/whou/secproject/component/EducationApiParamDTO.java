@@ -12,8 +12,4 @@ public class EducationApiParamDTO {
 	private String searchTitle; //검색어
 	private String majorSeq; //상세페이지 경우, 학과 코드
 	
-	
-	
-	
-	
 }

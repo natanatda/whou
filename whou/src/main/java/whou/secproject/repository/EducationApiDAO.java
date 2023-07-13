@@ -24,18 +24,22 @@ public class EducationApiDAO {
 	@Autowired
 	private String apiKey;
 	
-	//커리어넷 학과 API
+	//커리어넷 학과 리스트 API
 	public EducationMajorResponseDTO getMajorApi(EducationApiParamDTO majorParam) {
 		String url = "https://www.career.go.kr/cnet/openapi/getOpenApi.json";
 	    
 	    URI uri = null;
 		try {
+			String svcCode = "MAJOR";
+			if(majorParam.getMajorSeq() != null)
+				svcCode="MAJOR_VIEW";
+			
 			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
 					.queryParam("apiKey", URLEncoder.encode(apiKey, "UTF-8"))
 			        .queryParam("svcType", URLEncoder.encode("api", "UTF-8"))
-			        .queryParam("svcCode", URLEncoder.encode("MAJOR", "UTF-8"))
+			        .queryParam("svcCode", URLEncoder.encode(svcCode, "UTF-8"))
 			        .queryParam("contentType", URLEncoder.encode("json", "UTF-8"))
-			        .queryParam("gubun", URLEncoder.encode("univ_list", "UTF-8"));
+					.queryParam("gubun", URLEncoder.encode("univ_list", "UTF-8"));
 			
 			if (majorParam.getUnivSe() != null) 
 	            builder.queryParam("univSe", URLEncoder.encode(majorParam.getUnivSe(), "UTF-8"));
@@ -63,18 +67,19 @@ public class EducationApiDAO {
 	    String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
 
 	    // 로깅을 활용한 디버깅
-	    System.out.println("API 응답: " + responseBody.substring(0,60));
+    	System.out.println("API 응답: " + responseBody.substring(0,60));
 	    
 	    EducationMajorResponseDTO educationMajorResponseDTO = null;
 	    try {
 	        ObjectMapper objectMapper = new ObjectMapper();
 	        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+	        System.out.println("DeserializationFeature 했다! "+objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false));
 	        educationMajorResponseDTO = objectMapper.readValue(responseBody, EducationMajorResponseDTO.class);
 	    } catch (JsonProcessingException e) {
 	        e.printStackTrace();
 	    } catch (IOException e) {
 			e.printStackTrace();
 		}
-	    return educationMajorResponseDTO; // 예제임 수정하셈
+	    return educationMajorResponseDTO;
 	}
 }

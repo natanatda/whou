@@ -20,6 +20,8 @@
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
     </head>
+    
+    
  
 <body>
         <!-- Responsive navbar-->
@@ -28,10 +30,11 @@
               <header class="pt-5">
             <div class="container px-5">
                 <h2 class="page-title">학과정보</h2>
-                
+                ${paramDTO}
                 <section class="py-5" >
                 	<form method="post" action="majorList">
                 		<input type="hidden" name="notFirst" value="notFirst">
+                		<input type="hidden" name="perPage" value="">
 	                    <div class="card edu-search-card">
 	                        <div class="card-body">
 	                            <div class="input-group search-form">
@@ -43,7 +46,7 @@
 	                                <ul class="check-group">
 	                                    <li>
 	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="agree_rule1" name="subject">
+	                                            <input type="checkbox" id="agree_rule1" ${paramDTO.getSubject().length()>45 ? 'checked' : ''}>
 	                                            <label class="Lbl check-fil check_off" for="agree_rule1">
 	                                            전체
 	                                            </label>                                                  
@@ -51,7 +54,7 @@
 	                                    </li>
 	                                    <li>
 	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="agree_rule2" name="subject" value="100391">
+	                                            <input type="checkbox" id="agree_rule2" name="subject" value="100391" ${paramDTO.getSubject().contains('100391') ? 'checked' : ''}>
 	                                            <label class="Lbl check-fil check_off" for="agree_rule2">
 	                                            인문계열
 	                                            </label>                                                  
@@ -59,7 +62,7 @@
 	                                    </li>
 	                                    <li>
 	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="agree_rule3" name="subject" value="100392">
+	                                            <input type="checkbox" id="agree_rule3" name="subject" value="100392" ${paramDTO.getSubject().contains('100392') ? 'checked' : ''}>
 	                                            <label class="Lbl check-fil check_off" for="agree_rule3">
 	                                            사회계열
 	                                            </label>                                                  
@@ -67,7 +70,7 @@
 	                                    </li>
 	                                    <li>
 	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="agree_rule4" name="subject" value="100393">
+	                                            <input type="checkbox" id="agree_rule4" name="subject" value="100393" ${paramDTO.getSubject().contains('100393') ? 'checked' : ''}>
 	                                            <label class="Lbl check-fil check_off" for="agree_rule4">
 	                                            교육계열
 	                                            </label>                                                  
@@ -75,7 +78,7 @@
 	                                    </li>
 	                                    <li>
 	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="agree_rule5" name="subject" value="100394">
+	                                            <input type="checkbox" id="agree_rule5" name="subject" value="100394" ${paramDTO.getSubject().contains('100394') ? 'checked' : ''}>
 	                                            <label class="Lbl check-fil check_off" for="agree_rule5">
 	                                            공학계열
 	                                            </label>                                                  
@@ -83,7 +86,7 @@
 	                                    </li>
 	                                    <li>
 	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="agree_rule6" name="subject" value="100395">
+	                                            <input type="checkbox" id="agree_rule6" name="subject" value="100395" ${paramDTO.getSubject().contains('100395') ? 'checked' : ''}>
 	                                            <label class="Lbl check-fil check_off" for="agree_rule6">
 	                                            자연계열
 	                                            </label>                                                  
@@ -91,7 +94,7 @@
 	                                    </li>
 	                                    <li>
 	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="agree_rule7" name="subject" value="100396">
+	                                            <input type="checkbox" id="agree_rule7" name="subject" value="100396" ${paramDTO.getSubject().contains('100396') ? 'checked' : ''}>
 	                                            <label class="Lbl check-fil check_off" for="agree_rule7">
 	                                            의약계열
 	                                            </label>                                                  
@@ -99,7 +102,7 @@
 	                                    </li>
 	                                    <li>
 	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="agree_rule8" name="subject" value="100397">
+	                                            <input type="checkbox" id="agree_rule8" name="subject" value="100397" ${paramDTO.getSubject().contains('100397') ? 'checked' : ''}>
 	                                            <label class="Lbl check-fil check_off" for="agree_rule8">
 	                                            예체능계열
 	                                            </label>                                                  
@@ -110,7 +113,7 @@
 	                                <ul class="check-group">
 	                                    <li>
 	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="ok_rule1">
+	                                            <input type="checkbox" id="ok_rule1" ${paramDTO.getUnivSe().length()>10 ? 'checked' : ''}>
 	                                            <label class="Lbl check-fil check_off" for="ok_rule1">
 	                                            전체
 	                                            </label>                                                  
@@ -118,7 +121,7 @@
 	                                    </li>
 	                                    <li>
 	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="ok_rule2" name="univSe" value="univ">
+	                                            <input type="checkbox" id="ok_rule2" name="univSe" value="univ" ${paramDTO.getUnivSe().contains('univ') ? 'checked' : ''}>
 	                                            <label class="Lbl check-fil check_off" for="ok_rule2">
 	                                            대학
 	                                            </label>                                                  
@@ -126,7 +129,7 @@
 	                                    </li>
 	                                    <li>
 	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="ok_rule3" name="univSe" value="college">
+	                                            <input type="checkbox" id="ok_rule3" name="univSe" value="college" ${paramDTO.getUnivSe().contains('college') ? 'checked' : ''}>
 	                                            <label class="Lbl check-fil check_off" for="ok_rule3">
 	                                            전문대학
 	                                            </label>                                                  
@@ -149,16 +152,16 @@
         <section class="py-2 education-section">
             <div class="container px-5 my-5">
                 <div class="result-top">
-                    <p class="result-top-txt">총 <span>${fn:length(RESULT.getDataSearch().getContent())}</span>건이 검색되었습니다</p>
+                    <p class="result-top-txt">총 <span>${univCount}</span>건이 검색되었습니다</p>
                     <div class="result-top-right">
                     	<!-- 
                         <select name="" id="">
                             <option value="">정렬순서</option>
                         </select>
                          -->
-                        <select name="perPage" id="">
-                            <option value="10">10개씩보기</option>
-                            <option value="20">20개씩보기</option>
+                        <select name="perPage" id="perPageSelect">
+                            <option value="10" >10개씩보기</option>
+                            <option value="20" ${paramDTO.getPerPage() eq '20' ? 'selected' : ''}>20개씩보기</option>
                         </select>
                         <button class="square-btn">적용</button>
                         <div><i class="fa-solid fa-table-cells fa-lg"></i></div>
@@ -168,35 +171,28 @@
                 
         	<c:if test="${notFirst eq 'notFirst'}">
                 <div class="row justify-content-center">
-                    <div class="edu-card">
-                        <div class="edu-item-tit">
-                            <div>한국어학과 <span>대학교</span></div>
-                            <div><span>인문</span></div>
-                        </div>
-                        <div class="edu-item-cont">
-                            <div class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi magnam, alias ipsa dolor animi corrupti laborum fuga. Incidunt, illo aperiam aut, perspiciatis facere, quisquam at quis omnis sit officia consequuntur.Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi magnam, alias ipsa dolor animi corrupti laborum fuga. Incidunt, illo aperiam aut, perspiciatis facere, quisquam at quis omnis sit officia consequuntur.</div>
-                            <div class="disc">관련학과 : </div>
-                        </div>
-                        <div class="edu-item-bottom">
-                            <div><i class="fa-solid fa-magnifying-glass" style="color: #707070;"></i> 조회수 : <span>33,042</span></div>
-                            <div><i class="fa-regular fa-thumbs-up" style="color: #707070;"></i> 추천수 : <span>2</span></div>
-                        </div>
-                    </div>
-                    <div class="edu-card">
-                        <div class="edu-item-tit">
-                            <div>한국어학과 <span>대학교</span></div>
-                            <div><span>인문</span></div>
-                        </div>
-                        <div class="edu-item-cont">
-                            <div class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi magnam, alias ipsa dolor animi corrupti laborum fuga. Incidunt, illo aperiam aut, perspiciatis facere, quisquam at quis omnis sit officia consequuntur.Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi magnam, alias ipsa dolor animi corrupti laborum fuga. Incidunt, illo aperiam aut, perspiciatis facere, quisquam at quis omnis sit officia consequuntur.</div>
-                            <div class="disc">관련학과 : </div>
-                        </div>
-                        <div class="edu-item-bottom">
-                            <div><i class="fa-solid fa-magnifying-glass" style="color: #707070;"></i> 조회수 : <span>33,042</span></div>
-                            <div><i class="fa-regular fa-thumbs-up" style="color: #707070;"></i> 추천수 : <span>2</span></div>
-                        </div>
-                    </div>
-                </div>
+                ${majorDetailLstResponseDTO.get(0)}<br><br>
+                ${majorDetailLstResponseDTO.get(1)}<br><br>
+                ${majorDetailLstResponseDTO.get(2)}<br><br>
+	                <c:forEach items="${RESULT.getDataSearch().getContent()}"  var="eachRESULT" varStatus="status">
+	                    <div class="edu-card">
+	                        <div class="edu-item-tit">
+	                            <div>${eachRESULT.getMClass()} <span>대학교</span></div>
+	                            <div><span>${eachRESULT.getLClass()}</span></div>
+	                        </div>
+	                        <div class="edu-item-cont">
+	                            <div class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi magnam, alias ipsa dolor animi corrupti laborum fuga. Incidunt, illo aperiam aut, perspiciatis facere, quisquam at quis omnis sit officia consequuntur.Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi magnam, alias ipsa dolor animi corrupti laborum fuga. Incidunt, illo aperiam aut, perspiciatis facere, quisquam at quis omnis sit officia consequuntur.</div>
+	                            <div class="disc">관련학과 : ${eachRESULT.getFacilName()}</div>
+	                        </div>
+	                        <!-- 
+	                        <div class="edu-item-bottom">
+	                            <div><i class="fa-solid fa-magnifying-glass" style="color: #707070;"></i> 조회수 : <span>33,042</span></div>
+	                            <div><i class="fa-regular fa-thumbs-up" style="color: #707070;"></i> 추천수 : <span>2</span></div>
+	                        </div>
+	                         -->
+	                    </div>
+                    </c:forEach>
+                    
         	</c:if>
 	
                 <div class="pagination">
@@ -207,9 +203,9 @@
                               <span aria-hidden="true">&laquo;</span>
                             </a>
                           </li>
-                          <li class="page-item"><a class="page-link" href="#!">1</a></li>
-                          <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                          <li class="page-item"><a class="page-link" href="#!">3</a></li>
+                          <li class="page-item"><a class="page-link" href="majorList?thisPage=1">1</a></li>
+                          <li class="page-item"><a class="page-link" href="majorList?thisPage=2">2</a></li>
+                          <li class="page-item"><a class="page-link" href="majorList?thisPage=3">3</a></li>
                           <li class="page-item">
                             <a class="page-link" href="#!" aria-label="Next">
                               <span aria-hidden="true">&raquo;</span>
@@ -218,7 +214,6 @@
                         </ul>
                       </nav>
                 </div>
-                
             </div>
         </section>
     <%@ include file="../footer.jsp" %> 
@@ -226,5 +221,67 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
+    
+    
+    <script>
+    	//10개씩 보기, 20개씩 보기 때문에 만든 스크립트
+	    // HTML 코드에서 <select> 요소와 <input> 요소를 가져옵니다.
+	    const selectElement = document.querySelector('#perPageSelect');
+	    const inputElement = document.querySelector('input[name="perPage"]');
+	
+	    // <select> 요소의 값이 변경될 때마다 호출되는 이벤트 핸들러를 설정합니다.
+	    selectElement.addEventListener('change', function() {
+	        // 선택된 <select> 요소의 값으로 <input> 요소의 값을 업데이트합니다.
+	        inputElement.value = this.value;
+	        alert(inputElement.value);
+	    });
+	
+	    // 초기에 <select> 요소의 값으로 <input> 요소의 값을 설정합니다.
+	    inputElement.value = selectElement.value;
+	    
+	</script>
+	
+	<script>
+	
+		// 체크박스 전체 선택 및 해제 처리 함수
+		function handleCheckboxToggle(allCheckbox, checkboxes) {
+		    // 전체 체크박스의 변경 이벤트 리스너 추가
+		    allCheckbox.addEventListener('change', function() {
+		        checkboxes.forEach(function(checkbox) {
+		            checkbox.checked = allCheckbox.checked;
+		        });
+		    });
+	
+		    // 개별 체크박스의 변경 이벤트 리스너 추가
+		    checkboxes.forEach(function(checkbox) {
+		        checkbox.addEventListener('change', function() {
+		            if (!checkbox.checked) {
+		                allCheckbox.checked = false;
+		            } else {
+		                // 모든 체크박스가 선택되었는지 확인
+		                const areAllChecked = Array.from(checkboxes).every(function(checkbox) {
+		                    return checkbox.checked;
+		                });
+		                allCheckbox.checked = areAllChecked;
+		            }
+		        });
+		    });
+		}
+	
+		// 학교 유형 체크박스 처리
+		const univAllCheckbox = document.getElementById('ok_rule1');
+		const univCheckboxes = document.querySelectorAll('input[name="univSe"]');
+		handleCheckboxToggle(univAllCheckbox, univCheckboxes);
+	
+		// 전공 유형 체크박스 처리
+		const subjectAllCheckbox = document.getElementById('agree_rule1');
+		const subjectCheckboxes = document.querySelectorAll('input[name="subject"]');
+		handleCheckboxToggle(subjectAllCheckbox, subjectCheckboxes);
+		
+	</script>
+	
+	
+    
+    
     
 </html>
