@@ -237,9 +237,9 @@ public class AptitudeServiceImpl implements AptitudeService{
 	    List<String> resultList = new ArrayList<>();
 	    
 	    // qnum이 "31"인 경우 실행합니다.
-	    if (qnum.equals("31")) {
+	    if (qnum.equals("21")) {
 	        // dto 객체의 Test31_2 필드 값을 "+"를 기준으로 나눕니다.
-	        String[] array = dto.getTest31_2().toString().split("\\+");
+	        String[] array = dto.getTest21_2().toString().split("\\+");
 	        
 	        // 나눈 각 값을 반복하여 처리합니다.
 	        for(String num : array) {
@@ -255,9 +255,9 @@ public class AptitudeServiceImpl implements AptitudeService{
 	    }
 	    
 	    // qnum이 "21"인 경우 실행합니다.
-	    if (qnum.equals("21")) {
+	    if (qnum.equals("31")) {
 	        // dto 객체의 Test21_2 필드 값을 "+"를 기준으로 나눕니다.
-	        String[] array = dto.getTest21_2().toString().split("\\+");
+	        String[] array = dto.getTest31_2().toString().split("\\+");
 	        
 	        // 나눈 값을 resultList에 할당합니다.
 	        resultList = Arrays.asList(array);
