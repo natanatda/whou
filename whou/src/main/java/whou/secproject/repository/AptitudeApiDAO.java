@@ -24,12 +24,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import whou.secproject.component.AptitudeTestResponseDTO;
 import whou.secproject.component.AptitudeTestResultRequestDTO;
 import whou.secproject.component.AptitudeTestResultResponseDTO;
+import whou.secproject.service.aptService;
 
 public class AptitudeApiDAO {
 	
 	@Autowired
 	private String apiKey;
-
 	
 	public AptitudeTestResponseDTO getAptitudeTestByNum(String qnum) {
 		String url = "http://www.career.go.kr/inspct/openapi/test/questions";
@@ -76,15 +76,9 @@ public class AptitudeApiDAO {
 	    AptitudeTestResultResponseDTO aptiTestResultResponse = null;
 	    AptitudeTestResultRequestDTO atrr = new AptitudeTestResultRequestDTO();
 	    
-	    String trgetSe="";
-	    if(qnum.equals("27")) {
-	    	trgetSe="100207";
-	    }else if(qnum.equals("6")){
-	    	trgetSe="100209";
-	    }
-	    
+
 	    atrr.setQestrnSeq(qnum);
-	    atrr.setTrgetSe(trgetSe); // 초등학생 등 타겟
+	    atrr.setTrgetSe("100207"); 
 	    atrr.setName("홍길동"); 
 	    atrr.setGender("100323");
 	    atrr.setSchool("율도 중학교");

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -16,7 +17,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
-              <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
  
 <body>
@@ -30,9 +31,9 @@
                         <h3 class="num-title"><span>01</span> 높은 흥미를 나타내는 직업</h3>
                         <div class="top-interest">
                             <ul>
-                                <li>1</li>
-                                <li>2</li>
-                                <li>3</li>
+                            	<c:forEach var="item" items="${rank}" varStatus="status">
+                               		<li>${item}</li>                             
+                            	</c:forEach>                             
                             </ul>
                         </div>
                     </div>
@@ -88,9 +89,9 @@
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>attr</th>
-                                        <th>attr</th>
-                                        <th>attr</th>
+	                                    <c:forEach var="job" items="${job}" >
+	                               		     <th>${job}</th>                    
+	                            		</c:forEach> 
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -195,30 +196,40 @@
                 }
             });
           
-            // 다각형
+         // 다각형
+            let data1 = ${percent};
+            let labels = ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5', 'Label 6', 'Label 7', 'Label 8', 'Label 9', 'Label 10', 'Label 11'];
+
+            if (data1.length === 17) {
+                labels.push('Label 12', 'Label 13', 'Label 14', 'Label 15', 'Label 16', 'Label 17');
+            }
             var myChart2 = new Chart(ctx2, {
-            type: 'radar',
-            data: {
-                labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5'],
-                datasets: [
-                {
-                    label: 'Dataset 1',
-                    data: [10, 20, 30, 40, 50],
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1
+                type: 'radar',
+                data: {
+                	labels: labels,
+                    datasets: [
+                        {
+                            label: 'Dataset 1',
+                            data: data1,
+                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                       },             
+                    ],
                 },
-                {
-                    label: 'Dataset 2',
-                    data: [20, 30, 40, 50, 60],
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
+                options: {
+                    scale: {                                          
+                            min: 0,
+                            max: 100,
+                            ticks: {
+                              stepSize:10
+                            }
+                        
+                    }
                 }
-                ]
-            },
-            options: {}
             });
+
+
           </script>
     </body>
     

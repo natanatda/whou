@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import whou.secproject.component.JobDicListResponseDTO;
 import whou.secproject.component.JobDicParamDTO;
 import whou.secproject.repository.JobDicApiDAO;
 
@@ -20,6 +21,10 @@ public class JobController {
 	@RequestMapping("/jobDicList")
 	public String getjobDicListSort(Model model){
 		JobDicParamDTO jParam = new JobDicParamDTO();
+		jParam.setPageIndex("1");
+		JobDicListResponseDTO dto = dao.getJobDicListSorted(jParam);
+		int seq = dto.getJobs().get(0).getSeq();
+		String name= dto.getJobs().get(0).getJob_nm();
 		model.addAttribute("RESULT", dao.getJobDicListSorted(jParam));
 		return "/sample/fq"; // ������ �����ϼ�
 	}
