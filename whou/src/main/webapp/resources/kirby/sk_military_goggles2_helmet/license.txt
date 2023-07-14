@@ -1,0 +1,11 @@
+Model Information:
+* title:	SK_Military_Goggles2_Helmet
+* source:	https://sketchfab.com/3d-models/sk-military-goggles2-helmet-e00a7a3399d849d6b3cd9fc4518d3b4e
+* author:	ak47gaming777 (https://sketchfab.com/ak47gaming777)
+
+Model License:
+* license type:	CC-BY-NC-ND-4.0 (http://creativecommons.org/licenses/by-nc-nd/4.0/)
+* requirements:	Author must be credited. No commercial use. Modified versions can not be distributed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "SK_Military_Goggles2_Helmet" (https://sketchfab.com/3d-models/sk-military-goggles2-helmet-e00a7a3399d849d6b3cd9fc4518d3b4e) by ak47gaming777 (https://sketchfab.com/ak47gaming777) licensed under CC-BY-NC-ND-4.0 (http://creativecommons.org/licenses/by-nc-nd/4.0/)

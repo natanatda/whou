@@ -1,0 +1,11 @@
+Model Information:
+* title:	Vx2000 voxel
+* source:	https://sketchfab.com/3d-models/vx2000-voxel-0ad1b883c76c4591b9a04b0b656eda20
+* author:	bl34k (https://sketchfab.com/bl34k)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Vx2000 voxel" (https://sketchfab.com/3d-models/vx2000-voxel-0ad1b883c76c4591b9a04b0b656eda20) by bl34k (https://sketchfab.com/bl34k) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
