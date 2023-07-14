@@ -45,22 +45,31 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 	
+	//회원가입 폼
 	@RequestMapping("/joinForm")
 	public String  joinForm() {
 		
 		return "/user/joinForm";
 	}
 	
+	//로그인 폼
 	@RequestMapping("/login")
 	public String  login() {
 		
 		return "/user/login";
 	}
 	
+	//로그인
 	@RequestMapping("/loginPro")
-	public String  loginPro() {
-		
-		return "/main";
+	public @ResponseBody String  loginPro(String email, String pw, HttpServletRequest request) {
+		String dpw = service.login(email);
+		System.out.println(dpw);
+		HttpSession session = request.getSession();
+		if(pw.equals(dpw)) {
+			session.setAttribute("memId", email);
+			System.out.println("비번 일치");
+		}
+		return dpw;
 	}
 	
 	//메인페이지(세션확인)
@@ -68,16 +77,74 @@ public class MemberController {
 	public String main(Model model, HttpServletRequest request) throws IOException {
 		HttpSession session = request.getSession();
 		String memId = (String)session.getAttribute("memId");
+		System.out.println(memId);
 		model.addAttribute("memId", memId);
 		return "/main";
 	}
 	
 	//로그아웃
-  	@RequestMapping(value="/logout")
-  	public String Glogout(HttpSession session, HttpServletRequest request, Model model ) {
+  	@RequestMapping("/logout")
+  	public String logout(HttpSession session, HttpServletRequest request, Model model ) {
   	    session.removeAttribute("access_Token");
   	    session.removeAttribute("memId");
   		return "/main";
+  	}
+  	
+  	//이메일 찾기 폼
+  	@RequestMapping("/findEmail")
+  	public String findEmail(HttpSession session, HttpServletRequest request, Model model ) {
+  		return "/user/findEmail";
+  	}
+  	
+  	//이메일 찾기
+  	@RequestMapping("/findEmailPro")
+  	public @ResponseBody String findEmailPro(String name, String tel) {
+  		System.out.println(name+" ////// "+tel);
+  		String email = service.getEmail(name, tel);
+  		String type = null;
+  		if(email != null) {
+  	  		type = service.join_type(email);
+  		}
+  		if(email == null) { //가입한적 없음
+  	  		return "0";
+  		}else if(email != null && type != null) { //소셜가입
+  			return "1";
+  		}else{ //자체가입함
+  	  		return email;
+  		}
+  	}
+  	//이메일 찾기 결과
+  	@RequestMapping("/findEmailPro2")
+  	public String findEmailPro2(Model model,@RequestParam("result") String result) {
+  		model.addAttribute("email", result);
+  		return "/user/findEmailPro";
+  	}
+  	
+  	//비밀번호 찾기 폼
+  	@RequestMapping("/findPw")
+  	public String findPw(HttpSession session, HttpServletRequest request, Model model ) {
+  		return "/user/findPw";
+  	}
+  	
+  	//비밀번호 찾기
+  	@RequestMapping("/findPwPro")
+  	public @ResponseBody String findPwPro(String email) {
+  		String dpw = service.login(email);
+  		String type = service.join_type(email);
+  		if(dpw == null && type == null) { //가입한적 없음
+  	  		return "0";
+  		}else if(dpw == null && type != null) { //소셜가입
+  			return "1";
+  		}else { //자체가입함
+  	  		return dpw;
+  		}
+  	}
+  	
+  	//비밀번호 찾기 결과
+  	@RequestMapping("/findPwPro2")
+  	public String findPwPro2(Model model,@RequestParam("result") String result) {
+  		model.addAttribute("pw", result);
+  		return "/user/findPwPro2";
   	}
 	
 	//네이버 로그인
@@ -136,7 +203,7 @@ public class MemberController {
 	        	return "/user/joinForm";
 	        }else if(count == 1) {
 	        	//가입타입을 검사해서 N이면 로그인 아니면 다른걸로 가입햇음
-	        	String join = service.join(email);
+	        	String join = service.join_type(email);
 	        	if(join.equals("N")) {
 	        		session.setAttribute("memId", email);
 			        session.setAttribute("access_Token", accessToken);
@@ -170,7 +237,7 @@ public class MemberController {
   	        	return "/user/joinForm";
   	        }else if(count == 1) {
   	        	//가입타입을 검사해서 N이면 로그인 아니면 다른걸로 가입햇음
-  	        	String join = service.join(email);
+  	        	String join = service.join_type(email);
   	        	System.out.println(join);
   	        	if(join.equals("K")) {
   	        		session.setAttribute("memId", email);
@@ -239,7 +306,7 @@ public class MemberController {
 	      	        	return "/user/joinForm";
 	      	      }else if(count == 1) {
 	      	        	//가입타입을 검사해서 N이면 로그인 아니면 다른걸로 가입햇음
-	      	        	String join = service.join(email);
+	      	        	String join = service.join_type(email);
 	      	        	if(join.equals("G")) {
 	      	        		session.setAttribute("memId", email);
 	      			        session.setAttribute("access_Token", accessToken);
@@ -282,7 +349,7 @@ public class MemberController {
   	}
   	
   	@RequestMapping("/telChk")
-  	public @ResponseBody String sendSMS(String tel) {
+  	public @ResponseBody String telChk(String tel) {
         Random rand  = new Random(); //랜덤숫자 생성하기 !!
         String numStr = "";
         for(int i=0; i<4; i++) {
@@ -293,4 +360,12 @@ public class MemberController {
         System.out.println(numStr);
         return numStr;
     }	
+  	
+  	@RequestMapping("/emailChk")
+  	public @ResponseBody int emailChk(String email) {
+  		int result = service.check(email);
+        System.out.println(result);
+        return result;
+    }
+  
 }

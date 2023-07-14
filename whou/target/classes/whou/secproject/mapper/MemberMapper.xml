@@ -23,7 +23,15 @@
 		select count(*) from whou_user where email = #{email}
 	</select>
 	
-	<select id="join" resultType="String">
+	<select id="join_type" resultType="String">
 		select join_type from whou_user where email = #{email}
+	</select>
+	
+	<select id="login" resultType="String">
+		select pw from whou_user where email = #{email}
+	</select>
+	
+	<select id="getEmail" resultType="String">
+		select email from whou_user where name = #{name} and tel = #{tel}
 	</select>
 </mapper>
