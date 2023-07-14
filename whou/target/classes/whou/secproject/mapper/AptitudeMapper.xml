@@ -76,4 +76,8 @@
 	<select id="jobSelect" resultType="String">
 		SELECT seq FROM job_unique_num2 WHERE job_nm = #{jobListItem}
 	</select>
+	
+	<select id="aptdSelect" resultType="String">
+		SELECT sort_values FROM aptd_factor WHERE sort_name = #{sortName}
+	</select>
 </mapper>

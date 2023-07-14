@@ -24,9 +24,10 @@ public interface AptitudeService {
 	public void temporarySaveUpdate(List<String> answers, AptitudeTestTemporarySaveDTO dto, String qnum); //임시저장한 검사지를 다시 임시저장
 	
 	
+	// 추천 테이블 관련 작업
 	public String valuesJob();// 가치관 결과지 - 관련 직업번호 추출
 	public void valuesInsert(String result); // 가치관 번호 저장
-	
-	
 	public String jobSelect(String jobListItem);
+	
+	public String aptdSelect(String sortName); // 적성
 }

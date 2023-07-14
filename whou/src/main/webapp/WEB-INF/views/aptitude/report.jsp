@@ -90,7 +90,6 @@
 		                                        <td>대인관계능력</td>  
 		                                        <td>조직 속에서 구성원들과 협조적이며 원만한 관계를 유지하는 능력</td>                            
 		                                    </tr>
-		                                    
 		                                </tbody>
 		                            </table>
 		                        </div>      
@@ -231,9 +230,7 @@
 	                    </div>
 	                </div>
 	            </c:if>
-	              <c:if test="${qnum eq '31' || qnum == '31'}">
-	              
-	              </c:if>
+	    
               <c:if test="${qnum eq '25' || qnum == '25'}">
 	                <div class="card">
 	                    <div class="card-body">

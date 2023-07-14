@@ -190,12 +190,41 @@ public class AptitudeServiceImpl implements AptitudeService{
 		         for (WebElement element : jobElements) {
 		        	 jobText += element.getText() + "+";
 		         }
+		         
+	         // 직업추천리스트1
+	         List<WebElement> jobList1 = driver.findElements(By.cssSelector(
+		               "div.aptitude-tbl-list.black-line.page-break > table > tbody:nth-child(4) > tr.line-top > td:nth-child(5)"));
+		         String jobListText1 ="";
+		         for (WebElement element : jobList1) {
+		        	 jobListText1 += element.getText() + "+";
+		         }
+		         
+	         // 직업추천리스트2
+	         List<WebElement> jobList2 = driver.findElements(By.cssSelector(
+		               "div.aptitude-tbl-list.black-line.page-break > table > tbody:nth-child(5) > tr.line-top > td:nth-child(5)"));
+		         String jobListText2 ="";
+		         for (WebElement element : jobList2) {
+		        	 jobListText2 += element.getText() + "+";
+		         }
+		         
+	         // 직업추천리스트2
+	         List<WebElement> jobList3 = driver.findElements(By.cssSelector(
+		               "div.aptitude-tbl-list.black-line.page-break > table > tbody:nth-child(6) > tr.line-top > td:nth-child(5)"));
+		         String jobListText3 ="";
+		         for (WebElement element : jobList3) {
+		        	 jobListText3 += element.getText() + "+";
+		         }
+		         
+		         
 	         driver.quit(); // WebDriver 종료
 
 	         // DB에 넣으려고 검사 크롤링 값 dto에 셋하기
 	         dto.setTest21_1(text);
 	         dto.setTest21_2(scoreText);
 	         dto.setTest21_3(jobText);
+	         dto.setTest21_4(jobListText1);
+	         dto.setTest21_5(jobListText2);
+	         dto.setTest21_6(jobListText3);
 	      }
 		
         // 흥미
@@ -500,6 +529,7 @@ public class AptitudeServiceImpl implements AptitudeService{
 		mapper.temporarySaveUpdate(dto);
 	}
 	
+	// 추천 테이블을 위한 작업
 	// 가치관 결과지 - 관련 직업명 추출
 	@Override
 	public String valuesJob() {
@@ -724,8 +754,13 @@ public class AptitudeServiceImpl implements AptitudeService{
 	
 	@Override
 	public String jobSelect(String jobListItem) {
-		
 		return mapper.jobSelect(jobListItem);	
+	}
+	
+	// 적성 결과지 능력에 해당하는 sortValues 검색
+	@Override
+	public String aptdSelect(String sortName) {
+		return mapper.aptdSelect(sortName);	
 	}
 
 }

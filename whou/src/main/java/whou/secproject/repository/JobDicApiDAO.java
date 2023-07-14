@@ -28,7 +28,7 @@ public class JobDicApiDAO {
 				
 	    jParam.setPageIndex("1");
 	    // jParam.setPageIndex(pageNum);
-	    jParam.setSearchAptdCodes(new String [] {"104740"});
+	    //jParam.setSearchAptdCodes(new String [] {"104740"});
 	    jParam.setSearchJobNm("");
 
 	    URI uri = null;
@@ -43,7 +43,7 @@ public class JobDicApiDAO {
 	        if (jParam.getSearchThemeCode() != null) 
 	        	builder.queryParam("searchJobNm", URLEncoder.encode(jParam.getSearchThemeCode(), "UTF-8"));
 	        if (jParam.getSearchAptdCodes() != null) 
-	        	builder.queryParam("searchAptdCodes", URLEncoder.encode(String.join(",", jParam.getSearchAptdCodes()), "UTF-8"));
+	        	builder.queryParam("searchAptdCodes", URLEncoder.encode(jParam.getSearchAptdCodes(), "UTF-8"));
 	        if (jParam.getSearchJobCd() != null) 
 	        	builder.queryParam("searchJobCd", URLEncoder.encode(jParam.getSearchJobCd(), "UTF-8"));
 	        uri = builder.build(true).toUri();
