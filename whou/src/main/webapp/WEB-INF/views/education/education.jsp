@@ -32,9 +32,8 @@
                 <h2 class="page-title">학과정보</h2>
                 ${paramDTO}
                 <section class="py-5" >
-                	<form method="post" action="majorList">
-                		<input type="hidden" name="notFirst" value="notFirst">
-                		<input type="hidden" name="perPage" value="">
+                	<form method="post" action="majorListSubmit" id="majorListForm">
+                		<input type="hidden" name="perPage" id="perPageInput" >
 	                    <div class="card edu-search-card">
 	                        <div class="card-body">
 	                            <div class="input-group search-form">
@@ -159,29 +158,29 @@
                             <option value="">정렬순서</option>
                         </select>
                          -->
+                        
                         <select name="perPage" id="perPageSelect">
-                            <option value="10" >10개씩보기</option>
+                            <option value="10" ${paramDTO.getPerPage() ne '20' ? 'selected' : ''}>10개씩보기</option>
                             <option value="20" ${paramDTO.getPerPage() eq '20' ? 'selected' : ''}>20개씩보기</option>
                         </select>
-                        <button class="square-btn">적용</button>
+                        <button class="square-btn" onclick="submitForm()">적용</button>
+                        
                         <div><i class="fa-solid fa-table-cells fa-lg"></i></div>
                         <div><i class="fa-solid fa-bars fa-lg"></i></div>
                     </div>
                 </div>
                 
-        	<c:if test="${notFirst eq 'notFirst'}">
                 <div class="row justify-content-center">
-                ${majorDetailLstResponseDTO.get(0)}<br><br>
-                ${majorDetailLstResponseDTO.get(1)}<br><br>
-                ${majorDetailLstResponseDTO.get(2)}<br><br>
-	                <c:forEach items="${RESULT.getDataSearch().getContent()}"  var="eachRESULT" varStatus="status">
+	                <c:forEach items="${RESULT}"  var="eachRESULT" varStatus="status">
 	                    <div class="edu-card">
 	                        <div class="edu-item-tit">
-	                            <div>${eachRESULT.getMClass()} <span>대학교</span></div>
-	                            <div><span>${eachRESULT.getLClass()}</span></div>
+	                            <div>${eachRESULT.getMClass()} <span>${eachRESULT.getLClass()}</span></div>
+	                            <!-- <div><span>${eachRESULT.getLClass()}</span></div> -->
 	                        </div>
 	                        <div class="edu-item-cont">
+	                        	<!-- 
 	                            <div class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi magnam, alias ipsa dolor animi corrupti laborum fuga. Incidunt, illo aperiam aut, perspiciatis facere, quisquam at quis omnis sit officia consequuntur.Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi magnam, alias ipsa dolor animi corrupti laborum fuga. Incidunt, illo aperiam aut, perspiciatis facere, quisquam at quis omnis sit officia consequuntur.</div>
+	                             -->
 	                            <div class="disc">관련학과 : ${eachRESULT.getFacilName()}</div>
 	                        </div>
 	                        <!-- 
@@ -192,28 +191,36 @@
 	                         -->
 	                    </div>
                     </c:forEach>
-                    
-        	</c:if>
 	
                 <div class="pagination">
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination">
-                          <li class="page-item">
-                            <a class="page-link" href="#!" aria-label="Previous">
-                              <span aria-hidden="true">&laquo;</span>
-                            </a>
-                          </li>
-                          <li class="page-item"><a class="page-link" href="majorList?thisPage=1">1</a></li>
-                          <li class="page-item"><a class="page-link" href="majorList?thisPage=2">2</a></li>
-                          <li class="page-item"><a class="page-link" href="majorList?thisPage=3">3</a></li>
-                          <li class="page-item">
-                            <a class="page-link" href="#!" aria-label="Next">
-                              <span aria-hidden="true">&raquo;</span>
-                            </a>
-                          </li>
-                        </ul>
-                      </nav>
-                </div>
+				    <nav aria-label="Page navigation">
+				    	<c:set var="totalCount" value="${univCount}" />
+				    	<c:set var="pageSize" value="${Integer.parseInt(paramDTO.getPerPage())}" />
+			            <c:set var="totalPages" value="${Math.ceil(totalCount / pageSize)}" />
+			            <c:set var="currentPage" value="${Integer.parseInt(paramDTO.getThisPage())}" />
+				        <ul class="pagination">
+				        	<c:if test="${totalPages > 1}">
+					            <li class="page-item">
+					                <a class="page-link" href="majorList?thisPage=${currentPage - 1}" aria-label="Previous">
+					                    <span aria-hidden="true">&laquo;</span>
+					                </a>
+					            </li>
+				            </c:if>
+				            <c:forEach begin="1" end="${totalPages}" varStatus="page">
+				                <li class="page-item" onclick="handlePageLinkClick(${page.index})">
+				                    <a class="page-link" href="majorList?thisPage=${page.index}">${page.index}</a>
+				                </li>
+				            </c:forEach>
+				        	<c:if test="${totalPages > 1}">
+					            <li class="page-item">
+					                <a class="page-link" href="majorList?thisPage=${currentPage + 1}" aria-label="Next">
+					                    <span aria-hidden="true">&raquo;</span>
+					                </a>
+					            </li>
+				            </c:if>
+				        </ul>
+				    </nav>
+				</div>
             </div>
         </section>
     <%@ include file="../footer.jsp" %> 
@@ -224,22 +231,42 @@
     
     
     <script>
+
     	//10개씩 보기, 20개씩 보기 때문에 만든 스크립트
 	    // HTML 코드에서 <select> 요소와 <input> 요소를 가져옵니다.
 	    const selectElement = document.querySelector('#perPageSelect');
 	    const inputElement = document.querySelector('input[name="perPage"]');
+	    const perPageInputElement = document.querySelector('#perPageInput');
 	
 	    // <select> 요소의 값이 변경될 때마다 호출되는 이벤트 핸들러를 설정합니다.
 	    selectElement.addEventListener('change', function() {
 	        // 선택된 <select> 요소의 값으로 <input> 요소의 값을 업데이트합니다.
 	        inputElement.value = this.value;
-	        alert(inputElement.value);
 	    });
 	
-	    // 초기에 <select> 요소의 값으로 <input> 요소의 값을 설정합니다.
+	    // 초기에 <select> 요소의 값으로 <input> 요소의 값을 설정
 	    inputElement.value = selectElement.value;
-	    
+	    function submitForm() {
+	        const form = document.getElementById('majorListForm'); // <form> 요소를 가져옵니다.
+	        form.submit(); // <form> 요소를 제출합니다.
+	    }
 	</script>
+	
+	<script>
+    // 페이지 링크 클릭 시 폼 제출 이벤트 핸들러
+    function handlePageLinkClick(thisPage) {
+        // 폼 선택
+        const form = document.getElementById('majorListForm');
+        
+        // thisPage 값을 설정하는 방법에 따라 다음과 같이 처리할 수 있습니다.
+        // form.querySelector('#thisPageInput').value = thisPage;
+        // 또는
+        // form.elements['thisPage'].value = thisPage;
+        
+        // 폼 제출
+        form.submit();
+    }
+</script>
 	
 	<script>
 	
