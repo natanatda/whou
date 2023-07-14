@@ -80,4 +80,10 @@
 	<select id="aptdSelect" resultType="String">
 		SELECT sort_values FROM aptd_factor WHERE sort_name = #{sortName}
 	</select>
+	
+	<!-- 흥미 직업번호 저장 -->
+	<insert id="interesteInsert">
+		insert into recommand_info (intereste_name1,iIntereste_name2,iIntereste_name3,iIntereste_job1,intereste_job2,intereste_job3) values(#{intereste_name1},#{intereste_name2},#{intereste_name3},#{intereste_job1},#{intereste_job2},#{intereste_job3})
+	</insert>
+	
 </mapper>

@@ -26,7 +26,6 @@ public class JobDicApiDAO {
 	
 	public JobDicListResponseDTO getJobDicListSorted(JobDicParamDTO jParam) {  
 				
-	    jParam.setPageIndex("1");
 	    // jParam.setPageIndex(pageNum);
 	    //jParam.setSearchAptdCodes(new String [] {"104740"});
 	    jParam.setSearchJobNm("");
@@ -37,7 +36,7 @@ public class JobDicApiDAO {
 	                .queryParam("apiKey", URLEncoder.encode(apiKey, "UTF-8"));
 
 	        if (jParam.getPageIndex() != null) 
-	            builder.queryParam("perIndex", URLEncoder.encode(jParam.getPageIndex(), "UTF-8"));
+	            builder.queryParam("pageIndex", URLEncoder.encode(jParam.getPageIndex(), "UTF-8"));
 	        if (jParam.getSearchJobNm() != null) 
 	        	builder.queryParam("searchJobNm", URLEncoder.encode(jParam.getSearchJobNm(), "UTF-8"));
 	        if (jParam.getSearchThemeCode() != null) 
@@ -62,7 +61,7 @@ public class JobDicApiDAO {
 	    String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
 
 	    // 로깅을 활용한 디버깅
-	    System.out.println("API 응답: " + responseBody.substring(0,60));
+//	    System.out.println("API 응답: " + responseBody.substring(0,60));
 	    
 	    try {
 	        ObjectMapper objectMapper = new ObjectMapper();

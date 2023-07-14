@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import whou.secproject.component.AptitudeTestTemporarySaveDTO;
 import whou.secproject.component.AptitudeTestValueDTO;
+import whou.secproject.component.RecommandInfoDTO;
 import whou.secproject.mapper.AptitudeMapper;
 
 @Service
@@ -762,5 +763,12 @@ public class AptitudeServiceImpl implements AptitudeService{
 	public String aptdSelect(String sortName) {
 		return mapper.aptdSelect(sortName);	
 	}
+	
+	// 흥미 검사지 - 직업 번호 저장
+	@Override
+	public String interesteInsert(RecommandInfoDTO dtoRe) {
+		return mapper.interesteInsert(dtoRe);	
+	}
+	
 
 }

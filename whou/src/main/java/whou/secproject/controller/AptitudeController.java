@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import whou.secproject.component.AptitudeTestResultResponseDTO;
 import whou.secproject.component.AptitudeTestTemporarySaveDTO;
 import whou.secproject.component.AptitudeTestValueDTO;
+import whou.secproject.component.JobDicListResponseDTO;
 import whou.secproject.component.JobDicParamDTO;
+import whou.secproject.component.RecommandInfoDTO;
 import whou.secproject.repository.AptitudeApiDAO;
 import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.service.AptitudeService;
@@ -69,7 +71,7 @@ public class AptitudeController {
 	
 	//크롤링 결과 집어넣기
 	@RequestMapping("/report")
-	public String getAptitudeTestResult(Model model, String countQ, HttpServletRequest request, HttpServletResponse response, JobDicParamDTO jParam) {
+	public String getAptitudeTestResult(Model model, String countQ, HttpServletRequest request, HttpServletResponse response, JobDicParamDTO jParam, RecommandInfoDTO dtoRe) {
 		List<String>answers = new ArrayList<>();
 		String qnum = request.getParameter("qnum");
 		model.addAttribute("qnum", qnum);
@@ -104,20 +106,31 @@ public class AptitudeController {
 		service.crawlingInsert(dto);
 		List<String> reportResult = service.reportView(qnum, dto);
 		List<String[]> reportResultArr = service.crawlingSplitArr(dto,qnum);
-		
+		List<String> testJob = service.crawlingSplitJob(dto,qnum);
 		// 검사 결과지에서 추천을 위해 추천테이블에 넣을 정보
 			// 흥미검사 결과지의 직업 리스트의 code 추출 - 흥미31
 			StringBuilder sb = new StringBuilder();
+			
 			if(qnum.equals("31")) {
+				dtoRe.setIntereste_name1(testJob.get(0));
+				dtoRe.setIntereste_name2(testJob.get(1));
+				dtoRe.setIntereste_name3(testJob.get(2));
+				System.out.println("@!#@#!@#! : " + testJob);
 				for(int i = 0; i < reportResultArr.size(); i++) {
 					for(int j = 0; j <reportResultArr.get(i).length; j++) {
 						String jobListItem = reportResultArr.get(i)[j].toString();
-						System.out.println("%%%%%%%%%%%%%%%%%%%%: " + jobListItem);
-						String b = service.jobSelect(jobListItem);
-						sb.append(b).append(",");
+//						System.out.println("%%%%%%%%%%%%%%%%%%%%: " + jobListItem);
+						String interesteJob = service.jobSelect(jobListItem);
+						sb.append(interesteJob).append(",");
 					}		
+					if(i == 0) dtoRe.setIntereste_job1(sb.toString());	
+					else if(i  == 1) dtoRe.setIntereste_job2(sb.toString());
+					else if(i == 2 ) dtoRe.setIntereste_job3(sb.toString());
+					System.out.println("%%%%%%%%%%%%%%%%%%%%: "+ sb);
+					sb.delete(0, sb.length());
 				}
-				System.out.println("%%%%%%%%%%%%%%%%%%%%: " + sb);
+				service.interesteInsert(dtoRe);
+				
 			}
 			
 		
@@ -126,19 +139,28 @@ public class AptitudeController {
 				String sortName = "";
 				String sortValue = "";
 				List<String> topList = service.crawlingSplitRank(dto, qnum);
+				
 				for(String list : topList) {
-					//sb.append(list).append(",");
 					sortName = list;
 					sortValue = service.aptdSelect(sortName);
-					System.out.println("%%%%%%%%%%%%%%%%%%%%: " + sortValue);
 					jParam.setSearchAptdCodes(sortValue);
 					jParam.setPageIndex("1");
-					daoJob.getJobDicListSorted(jParam);			
-					System.out.println("@@@@@@@@@@@@@@@@@@@: " + daoJob.getJobDicListSorted(jParam));
-					for(int i = 0; i < daoJob.getJobDicListSorted(jParam).getJobs().size(); i++) {
-							
-					}
+					JobDicListResponseDTO jdlrDTO = daoJob.getJobDicListSorted(jParam);	
+					int total = jdlrDTO.getCount();
+					int count = total / 10;
+					String [] jobListCd = new String[total];
+
 					
+					for(int i = 1; i <= count+1; i++) {
+						jParam.setPageIndex(i+"");
+//						System.out.println(jParam.getPageIndex());
+						jdlrDTO = daoJob.getJobDicListSorted(jParam);
+						for(int j = 0; j < jdlrDTO.getJobs().size(); j++) {
+							jobListCd[(i-1)*10+j] = jdlrDTO.getJobs().get(j).getJob_cd();
+						}
+					}
+					String jobListCode = String.join(",", jobListCd);
+					System.out.println("@@@@@@@@@@@@@@@@@@@@ 적성 코드: "+ jobListCode);
 				}
 			
 			}

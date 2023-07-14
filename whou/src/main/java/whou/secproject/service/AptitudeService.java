@@ -4,6 +4,7 @@ import java.util.List;
 
 import whou.secproject.component.AptitudeTestTemporarySaveDTO;
 import whou.secproject.component.AptitudeTestValueDTO;
+import whou.secproject.component.RecommandInfoDTO;
 import whou.secproject.component.TestVoDTO;
 
 public interface AptitudeService {
@@ -30,4 +31,5 @@ public interface AptitudeService {
 	public String jobSelect(String jobListItem);
 	
 	public String aptdSelect(String sortName); // 적성
+	public String interesteInsert(RecommandInfoDTO dtoRe);//흥미 직업 번호저장
 }

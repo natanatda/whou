@@ -4,6 +4,7 @@ import java.util.List;
 
 import whou.secproject.component.AptitudeTestTemporarySaveDTO;
 import whou.secproject.component.AptitudeTestValueDTO;
+import whou.secproject.component.RecommandInfoDTO;
 
 public interface AptitudeMapper {
 	public void crawlingInsert(AptitudeTestValueDTO dto); //크롤링 결과 DB에 넣기
@@ -18,4 +19,5 @@ public interface AptitudeMapper {
 	public void valuesInsert(String result); // 가치관 번호 저장
 	public String jobSelect(String jobListItem);
 	public String aptdSelect(String sortName); // 적성
+	public String interesteInsert(RecommandInfoDTO dtoRe);//흥미 직업 번호저장
 }
