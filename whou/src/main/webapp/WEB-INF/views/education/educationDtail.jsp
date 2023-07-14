@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -15,7 +18,9 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
         <link rel="stylesheet" href="/whou/resources/css/style.css">
+        <!--  --><link rel="stylesheet" href="/whou/resources/css/eduDetailStyle.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
  
     <body>
@@ -28,26 +33,66 @@
                     <div class="right-wrap">
                         <nav>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                              <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">직업개요</button>
-                              <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">직업탐색 및 준비</button>
-                              <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">직업현황 및 자료</button>
-                              <button class="nav-link" id="nav-disabled-tab" data-bs-toggle="tab" data-bs-target="#nav-disabled" type="button" role="tab" aria-controls="nav-disabled" aria-selected="false">능력/ 지식/ 환경</button>
+                              <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">학과 개요</button>
+                              <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">개설 대학</button>
+                              <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">학과 전망</button>
                             </div>
                           </nav>
                           <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-                                <div class="content-item">
-                                    <p class="icon-title">관련 직업명</p>
-                                    <div class="content-box">내용</div>
+                            <div class="tab-pane fade show active edu-detail-div1" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                                <div class="content-item edu-detail-div2">
+                                    <p class="icon-title"><i class="fa-sharp fa-solid fa-circle-chevron-right"></i>학과 설명</p>
+                                    <div class="content-box">${RESULT.getSummary()}</div>
                                 </div>
-                                <div class="content-item">
-                                    <p class="icon-title">관련 학과</p>
-                                    <div class="content-box">내용</div>
+                                <div class="content-item edu-detail-div2">
+                                    <p class="icon-title"><i class="fa-sharp fa-solid fa-circle-chevron-right"></i>흥미와 적성</p>
+                                    <div class="content-box">${RESULT.getInterest()}</div>
+                                </div>
+                                <div class="content-item edu-detail-div2">
+                                    <p class="icon-title"><i class="fa-sharp fa-solid fa-circle-chevron-right"></i>관련 자격증</p>
+                                    <div class="content-box">${RESULT.getQualifications()}</div>
+                                </div>
+                                <div class="content-item edu-detail-div2">
+                                    <p class="icon-title"><i class="fa-sharp fa-solid fa-circle-chevron-right"></i>관련 직업</p>
+                                    
+                                    <div class="content-box">${RESULT.getJob()}</div>
+                                </div>
+                                <div class="content-item edu-detail-div2">
+                                    <p class="icon-title"><i class="fa-sharp fa-solid fa-circle-chevron-right"></i>졸업 후 진출 분야</p>
+                                    <c:forEach items="${RESULT.getEnterFields()}" var="enterFields" varStatus="status">
+                                    	<div class="content-box edu-graduate">${enterFields.getGraduate() }</div>
+                                    	<div class="content-box edu-description">${enterFields.getDescription() }</div>
+                                    	<br>
+                                    </c:forEach>
+                                </div>
+                                <div class="content-item edu-detail-div2">
+                                    <p class="icon-title"><i class="fa-sharp fa-solid fa-circle-chevron-right"></i>세부관련학과</p>
+                                    <div class="content-box">${RESULT.getDepartment()}</div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">...</div>
-                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">...</div>
-                            <div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">...</div>
+                            <div class="tab-pane fade edu-detail-div1" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                            	<table class="edu-detail-table">
+                            		<tr>
+                            			<th>지역</th>
+                            			<th>대학명</th>
+                            			<th>학과명</th>
+                            		</tr>
+                            		<c:forEach items="${RESULT.getUniversities()}" var="enterUniversities" varStatus="status">
+	                            		<tr>
+	                            			<td>${enterUniversities.getArea()}</td>
+	                            			<td class="edu-detail-table-td"><a href="${enterUniversities.getSchoolURL()}">${enterUniversities.getSchoolName()}</a></td>
+	                            			<td>${enterUniversities.getMajorName()}</td>
+	                            		</tr>
+                            		</c:forEach>
+                            	</table>
+                            </div>
+                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                            	<div class="content-item">
+                                    <p class="icon-title">학과 설명</p>
+                                    <div class="content-box">${RESULT.getSummary()}</div>
+                                    <canvas id="doughnutChartCanvas"></canvas>
+                                </div>
+                            </div>
                           </div>
                     </div>
                 </div>    
@@ -87,4 +132,27 @@
         </script>
     </body>
     
+    
+    <script>
+    	const canvas = document.getElementById("doughnutChartCanvas");
+    	const data = {
+    	  labels: ["Red", "Blue", "Yellow"],
+    	  datasets: [
+    	    {
+    	      label: "My First Dataset",
+    	      data: [300, 50, 100],
+    	      backgroundColor: [
+    	        "rgb(255, 99, 132)",
+    	        "rgb(54, 162, 235)",
+    	        "rgb(255, 205, 86)",
+    	      ],
+    	      hoverOffset: 4,
+    	    },
+    	  ],
+    	};
+    	new Chart(canvas, {
+    	  type: "doughnut",
+    	  data,
+    	});
+    </script>
 </html>

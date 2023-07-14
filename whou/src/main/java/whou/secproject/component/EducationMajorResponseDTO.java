@@ -54,42 +54,30 @@ public class EducationMajorResponseDTO {
 	    private String employment;
 	    private String department;
 	    private String summary;
-	    private List<CareerActivityDTO> careerActivities;
 	    private String job;
 	    private String qualifications;
 	    private String interest;
-	    private String property;
+	    @JsonProperty("enter_field")
 	    private List<EnterFieldDTO> enterFields;
-	    private List<MainSubjectDTO> mainSubjects;
+	    @JsonProperty("university")
 	    private List<UniversityDTO> universities;
+	    @JsonProperty("chartData")
 	    private List<ChartDataDTO> chartData;
 		
     }
 	
 	@Data
-	public static class CareerActivityDTO {
-        private String actName;
-        private String actDescription;
-    }
-
-	@Data
     public static class EnterFieldDTO {
+		@JsonProperty("gradeuate")
         private String graduate;
         private String description;
-    }
-
-	@Data
-    public static class MainSubjectDTO {
-        private String subjectName;
-        private String subjectSummary;
-
-        // 생성자, getter 및 setter 생략
     }
 	
 	@Data
     public static class UniversityDTO {
         private String area;
         private String schoolURL;
+        @JsonProperty("campus_nm")
         private String campusName;
         private String majorName;
         private String schoolName;
@@ -98,8 +86,11 @@ public class EducationMajorResponseDTO {
 	
 	@Data
     public static class ChartDataDTO {
+		@JsonProperty("field")
         private List<FieldDTO> fields;
+		@JsonProperty("avg_salary")
         private List<SalaryDTO> avgSalary;
+		@JsonProperty("applicant")
         private List<ApplicantDTO> applicants;
     }
 	

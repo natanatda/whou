@@ -1,0 +1,16 @@
+ /*****************************************************************************
+  ************************************* education ***********************************
+  *****************************************************************************/
+  
+  .edu-detail-div1{margin:15px 15px; text-align:left;}
+  .edu-detail-div2{margin:40px 0px;}
+  .edu-detail-div2 p{font-weight: 700; margin:10px 0px;}
+  .edu-detail-div2 i{margin:0px 10px;}
+  .edu-detail-div2 div{margin:0px 0px 0px 45px;}
+  .edu-detail-graduate{font-weight: 600;}
+  .edu-detail-description{color:#666666;}
+  .edu-detail-table table,th,td,tr{border-collapse: collapse; border:1px solid #0d6efd; padding:5px 10px;}
+  .edu-detail-table table{width:70%;}
+  .edu-detail-table th{text-align:center; background-color:#D1D9FF; font-weight: 700;}
+  .edu-detail-table-td{background-color:#F5F5F5;}
+  .edu-detail-table-td:hover{text-decoration: underline;}

@@ -25,7 +25,7 @@ public class EducationController {
 	
 	@RequestMapping("/majorList")
 	public String majorList(Model model, HttpServletRequest request, Integer univCount, 
-			List<EducationMajorResponseDTO.MajorInfo> majorListDTO, EducationApiParamDTO paramDTO) throws IOException {
+			ArrayList<EducationMajorResponseDTO.MajorInfo> majorListDTO, EducationApiParamDTO paramDTO) throws IOException {
 			
 		
 		model.addAttribute("paramDTO", paramDTO);
@@ -63,7 +63,7 @@ public class EducationController {
 		
 		String thisPage = request.getParameter("thisPage")!=null ? request.getParameter("thisPage"):"1"; //현재페이지
 		String perPage = request.getParameter("perPage")!= null ? request.getParameter("perPage"):"10"; //한페이지당 건수
-		String searchTitle = request.getParameter("searchTitle"); //검색어
+		String searchTitle = request.getParameter("searchTitle")!=null?request.getParameter("searchTitle"):""; //검색어
 		
 		//파라미터 DTO에 set하기
 		EducationApiParamDTO paramDTO= new EducationApiParamDTO();
@@ -72,9 +72,7 @@ public class EducationController {
 		paramDTO.setThisPage("1");
 		paramDTO.setPerPage("510");
 		paramDTO.setPerPageSet(perPage); //사용자 입력값 점검
-		if(searchTitle.length() > 0) {
-			paramDTO.setSearchTitle(searchTitle);
-		}
+		paramDTO.setSearchTitle(searchTitle);
 		
 		// 모든 결과 불러오기
 		EducationMajorResponseDTO responseDTO = dao.getMajorApi(paramDTO);
@@ -87,21 +85,47 @@ public class EducationController {
 		paramDTO.setThisPage(thisPage);
 		paramDTO.setPerPage(perPage);
 		responseDTO = dao.getMajorApi(paramDTO);
-		List<EducationMajorResponseDTO.MajorInfo> majorListDTO = new ArrayList<>();
+		ArrayList<EducationMajorResponseDTO.MajorInfo> majorListDTO = new ArrayList<>();
 		for(int i=0; i<responseDTO.getDataSearch().getContent().size(); i++) {
 			majorListDTO.add(responseDTO.getDataSearch().getContent().get(i));
 		}
-		
-		System.out.println("이게 머야 majorDetailLstResponseDTO "+majorListDTO);
-		System.out.println();
 		
 		return majorList(model, request, univCount, majorListDTO, paramDTO);
 	}
 	
 	
 	@RequestMapping("/majorDetail")
-	public String majorDetail() throws IOException {
-	    return "/education/educationDetail";
+	public String majorDetail(Model model, HttpServletRequest request) throws IOException {
+		
+		if(request.getParameter("seq")!=null) {
+			String majorSeq = request.getParameter("seq");
+			System.out.println("@@@ 번호 @@@"+majorSeq);
+			EducationApiParamDTO paramDTO= new EducationApiParamDTO();
+			paramDTO.setMajorSeq(majorSeq);
+			
+			EducationMajorResponseDTO responseDTO = dao.getMajorApi(paramDTO);
+			System.out.println("학교 상세 responseDTO "+responseDTO.getDataSearch().getContent().get(0));
+			System.out.println("학교 getChartData "+responseDTO.getDataSearch().getContent().get(0).getChartData().get(0));
+			
+			List<String> fieldItemList = new ArrayList<>();
+			List<String> fieldDataList = new ArrayList<>();
+			for(int i=0; i<responseDTO.getDataSearch().getContent().get(0).getChartData().get(0).getFields().size(); i++) {
+				fieldItemList.add(responseDTO.getDataSearch().getContent().get(0).getChartData().get(0).getFields().get(i).getItem());
+				fieldDataList.add(responseDTO.getDataSearch().getContent().get(0).getChartData().get(0).getFields().get(i).getData());
+			}
+			
+			model.addAttribute("RESULT", responseDTO.getDataSearch().getContent().get(0));
+			model.addAttribute("fieldItemList", fieldItemList);
+			model.addAttribute("fieldDataList", fieldDataList);
+		}
+		
+	    return "/education/educationDtail";
+	}
+	
+	@RequestMapping("/chartTest")
+	public String chartTest() throws IOException {
+		
+	    return "/education/chartTest";
 	}
 	
 }
