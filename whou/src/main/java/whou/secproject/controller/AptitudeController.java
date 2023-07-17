@@ -112,20 +112,24 @@ public class AptitudeController {
 			StringBuilder sb = new StringBuilder();
 			
 			if(qnum.equals("31")) {
-				dtoRe.setIntereste_name1(testJob.get(0));
-				dtoRe.setIntereste_name2(testJob.get(1));
-				dtoRe.setIntereste_name3(testJob.get(2));
+				dtoRe.setInterest_name1(testJob.get(0));
+				dtoRe.setInterest_name2(testJob.get(1));
+				dtoRe.setInterest_name3(testJob.get(2));
 				System.out.println("@!#@#!@#! : " + testJob);
 				for(int i = 0; i < reportResultArr.size(); i++) {
 					for(int j = 0; j <reportResultArr.get(i).length; j++) {
 						String jobListItem = reportResultArr.get(i)[j].toString();
 //						System.out.println("%%%%%%%%%%%%%%%%%%%%: " + jobListItem);
 						String interesteJob = service.jobSelect(jobListItem);
-						sb.append(interesteJob).append(",");
+						 if(j==0) {
+							 sb.append(interesteJob);
+						  }else{
+							  sb.append(",").append(interesteJob);
+						  }
 					}		
-					if(i == 0) dtoRe.setIntereste_job1(sb.toString());	
-					else if(i  == 1) dtoRe.setIntereste_job2(sb.toString());
-					else if(i == 2 ) dtoRe.setIntereste_job3(sb.toString());
+					if(i == 0) dtoRe.setInterest_job1(sb.toString());	
+					else if(i  == 1) dtoRe.setInterest_job2(sb.toString());
+					else if(i == 2 ) dtoRe.setInterest_job3(sb.toString());
 					System.out.println("%%%%%%%%%%%%%%%%%%%%: "+ sb);
 					sb.delete(0, sb.length());
 				}
@@ -139,7 +143,7 @@ public class AptitudeController {
 				String sortName = "";
 				String sortValue = "";
 				List<String> topList = service.crawlingSplitRank(dto, qnum);
-				
+				int num = 0;
 				for(String list : topList) {
 					sortName = list;
 					sortValue = service.aptdSelect(sortName);
@@ -160,10 +164,33 @@ public class AptitudeController {
 						}
 					}
 					String jobListCode = String.join(",", jobListCd);
-					System.out.println("@@@@@@@@@@@@@@@@@@@@ 적성 코드: "+ jobListCode);
+					if(num == 0) {
+						dtoRe.setAptitude_name1(list);
+						dtoRe.setAptitude_job1(jobListCode);
+					}
+					if(num == 1) {
+						dtoRe.setAptitude_name2(list);
+						dtoRe.setAptitude_job2(jobListCode);
+					}
+					if(num == 2) {
+						dtoRe.setAptitude_name3(list);
+						dtoRe.setAptitude_job3(jobListCode);
+					}
+//					System.out.println("@@@@@@@@@@@@@@@@@@@@ 적성 코드: "+ dtoRe.getAptitude_name1() + " /// " + dtoRe.getAptitude_name2()+ " /// " + dtoRe.getAptitude_name3());
+//					System.out.println("@@@@@@@@@@@@@@@@@@@@ 적성 코드: "+ dtoRe.getAptitude_job1() + " /// " + dtoRe.getAptitude_job2()+ " /// " + dtoRe.getAptitude_job3());
+//					System.out.println("@@@@@@@@@@@@@@@@@@@@ 적성 코드: "+ jobListCode);
+					num++;
 				}
-			
+				service.aptitudeUpdate(dtoRe);
 			}
+//			
+//			if(qnum.equals("25")) {
+//				String[] score = dto.getTest25_5().toString().split("\\+");
+//				String scores = String.join(",", score);
+//				dtoRe.setValues_score(scores);
+//				service.valuesUpdate(dtoRe);
+//				System.out.println();
+//			}
 			
 			
 			

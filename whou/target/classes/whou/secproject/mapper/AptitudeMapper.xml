@@ -83,7 +83,15 @@
 	
 	<!-- 흥미 직업번호 저장 -->
 	<insert id="interesteInsert">
-		insert into recommand_info (intereste_name1,iIntereste_name2,iIntereste_name3,iIntereste_job1,intereste_job2,intereste_job3) values(#{intereste_name1},#{intereste_name2},#{intereste_name3},#{intereste_job1},#{intereste_job2},#{intereste_job3})
+		insert into recommand_info (num,interest_name1, interest_name2, interest_name3, interest_job1, interest_job2, interest_job3) values(1,#{interest_name1}, #{interest_name2}, #{interest_name3}, #{interest_job1}, #{interest_job2}, #{interest_job3})
+	</insert>
+	<!-- 적성 직업번호 저장 -->
+	<insert id="aptitudeUpdate">
+		update recommand_info set aptitude_name1=#{aptitude_name1}, aptitude_name2=#{aptitude_name2}, aptitude_name3=#{aptitude_name3}, aptitude_job1=#{aptitude_job1}, aptitude_job2=#{aptitude_job2}, aptitude_job3=#{aptitude_job3} where num=1
+	</insert>
+	<!-- 가치관 차트점수 저장 -->
+	<insert id="valuesUpdate">
+		update recommand_info set values_score=#{values_score} where num=1
 	</insert>
 	
 </mapper>

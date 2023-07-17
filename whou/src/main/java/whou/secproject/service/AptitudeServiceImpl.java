@@ -149,7 +149,8 @@ public class AptitudeServiceImpl implements AptitudeService{
                 }
             }
             System.out.println(valueImport);
-
+            
+            
             
             driver.quit();  // WebDriver 종료
             
@@ -159,6 +160,7 @@ public class AptitudeServiceImpl implements AptitudeService{
     		dto.setTest25_2(valueScore);
     		dto.setTest25_3(valueType);
     		dto.setTest25_4(valueImport);
+    	
         }
 		
         // 적성
@@ -366,6 +368,15 @@ public class AptitudeServiceImpl implements AptitudeService{
 	    if (qnum.equals("21")) {
 	        // dto 객체의 Test21_1 필드 값을 "+"를 기준으로 나눕니다.
 	        String[] array = dto.getTest21_1().toString().split("\\+");
+	        
+	        // 나눈 값을 resultRankList에 할당합니다.
+	        resultRankList = Arrays.asList(array);
+	    }
+	    
+	 // qnum이 "25"인 경우 실행합니다.
+	    if (qnum.equals("25")) {
+	        // dto 객체의 Test25_5 필드 값을 "+"를 기준으로 나눕니다.
+	        String[] array = dto.getTest25_2().toString().split("\\+");
 	        
 	        // 나눈 값을 resultRankList에 할당합니다.
 	        resultRankList = Arrays.asList(array);
@@ -766,8 +777,19 @@ public class AptitudeServiceImpl implements AptitudeService{
 	
 	// 흥미 검사지 - 직업 번호 저장
 	@Override
-	public String interesteInsert(RecommandInfoDTO dtoRe) {
-		return mapper.interesteInsert(dtoRe);	
+	public void interesteInsert(RecommandInfoDTO dtoRe) {
+		mapper.interesteInsert(dtoRe);	
+	}
+	
+	// 적성 검사지 - 직업 번호 저장
+	@Override
+	public void aptitudeUpdate(RecommandInfoDTO dtoRe) {
+		mapper.aptitudeUpdate(dtoRe);	
+	}
+	// 가지관 검사지 - 차트 점수 저장
+	@Override
+	public void valuesUpdate(RecommandInfoDTO dtoRe) {
+		mapper.valuesUpdate(dtoRe);	
 	}
 	
 
