@@ -16,34 +16,22 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
  
 <body>
    
   <div class="login-container">
-       
         <div class="login-wrap">
-       
-          <div class="logo"><a class="navbar-brand"><img src="/whou/resources/img/logo.svg"></a></div>
-          <p>회원이 아니신가요? <a href="/join.html">회원가입하기</a></p>
-         
-          <div class="input-wrap">
-            <div class="input-form-box"><input type="text" name="uid" class="form-control" placeholder="이메일"></div>
-            <div class="input-form-box"><input type="password" name="upw" class="form-control" placeholder="비밀번호"></div>
-              <button type="button" class="btn login-btn btn-xs">로그인하기</button>
-          </div>
-          <div class="simple-login">
-            <p>SNS 간편 로그인</p>
-            <ul>
-              <li><i class="fa-solid fa-comment" style="color: #ffffff;"></i></li>
-              <li><i class="fa-solid fa-n" style="color: #ffffff;"></i></li>
-              <li><i class="fa-brands fa-google" style="color: #ffffff;"></i></li>
-              <li><i class="fa-brands fa-facebook-f" style="color: #ffffff;"></i></li>
-            </ul>
-          </div>
-          <div class="find-wrap">
-            <a href="#!">비밀번호 찾기</a>
-          </div>
+          <div class="logo"><a class="navbar-brand"  href="/whou/main"><img src="/whou/resources/img/logo.svg"></a></div>
+          	<form action = "/whou/member/login">
+	          	<div>
+			    	<p>회원님이 등록하신 이메일입니다.</p>
+			    	<p>${email}</p>
+				    <button type="submit" class="btn login-btn btn-xs" id="btn1">로그인 하기</button>
+				    <button type="button" class="btn login-btn btn-xs" id="btn2" onclick="location='/whou/member/findPw'">비밀번호 찾기</button>
+		    	</div>
+		    </form>
         </div>
       </div>
         <!-- Bootstrap core JS-->
