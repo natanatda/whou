@@ -12,8 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import whou.secproject.component.EducationApiParamDTO;
+import whou.secproject.component.EducationHrdParamDTO;
+import whou.secproject.component.EducationHrdResponseDTO;
 import whou.secproject.component.EducationMajorResponseDTO;
-import whou.secproject.component.EducationMajorResponseDTO.MajorInfo;
 import whou.secproject.repository.EducationApiDAO;
 
 @Controller
@@ -99,13 +100,11 @@ public class EducationController {
 		
 		if(request.getParameter("seq")!=null) {
 			String majorSeq = request.getParameter("seq");
-			System.out.println("@@@ 번호 @@@"+majorSeq);
 			EducationApiParamDTO paramDTO= new EducationApiParamDTO();
 			paramDTO.setMajorSeq(majorSeq);
 			
 			EducationMajorResponseDTO responseDTO = dao.getMajorApi(paramDTO);
 			System.out.println("학교 상세 responseDTO "+responseDTO.getDataSearch().getContent().get(0));
-			System.out.println("학교 getChartData "+responseDTO.getDataSearch().getContent().get(0).getChartData().get(0));
 			
 			List<String> fieldItemList = new ArrayList<>();
 			List<String> fieldDataList = new ArrayList<>();
@@ -113,19 +112,45 @@ public class EducationController {
 				fieldItemList.add(responseDTO.getDataSearch().getContent().get(0).getChartData().get(0).getFields().get(i).getItem());
 				fieldDataList.add(responseDTO.getDataSearch().getContent().get(0).getChartData().get(0).getFields().get(i).getData());
 			}
+			List<String> salaryItemList = new ArrayList<>();
+			List<String> salaryDataList = new ArrayList<>();
+			for(int i=0; i<responseDTO.getDataSearch().getContent().get(0).getChartData().get(0).getAvgSalary().size(); i++) {
+				salaryItemList.add(responseDTO.getDataSearch().getContent().get(0).getChartData().get(0).getAvgSalary().get(i).getItem());
+				salaryDataList.add(responseDTO.getDataSearch().getContent().get(0).getChartData().get(0).getAvgSalary().get(i).getData());
+			}
+			List<String> applicantItemList = new ArrayList<>();
+			List<String> applicantDataList = new ArrayList<>();
+			for(int i=0; i<responseDTO.getDataSearch().getContent().get(0).getChartData().get(0).getApplicants().size(); i++) {
+				applicantItemList.add(responseDTO.getDataSearch().getContent().get(0).getChartData().get(0).getApplicants().get(i).getItem());
+				applicantDataList.add(responseDTO.getDataSearch().getContent().get(0).getChartData().get(0).getApplicants().get(i).getData());
+			}
 			
 			model.addAttribute("RESULT", responseDTO.getDataSearch().getContent().get(0));
+			model.addAttribute("seq", majorSeq);
 			model.addAttribute("fieldItemList", fieldItemList);
 			model.addAttribute("fieldDataList", fieldDataList);
+			model.addAttribute("salaryItemList", salaryItemList);
+			model.addAttribute("salaryDataList", salaryDataList);
+			model.addAttribute("applicantItemList", applicantItemList);
+			model.addAttribute("applicantDataList", applicantDataList);
 		}
 		
 	    return "/education/educationDtail";
 	}
 	
-	@RequestMapping("/chartTest")
-	public String chartTest() throws IOException {
+	@RequestMapping("/training")
+	public String educationTrain(Model model, HttpServletRequest request) throws IOException {
+		EducationHrdParamDTO hrdParam = new EducationHrdParamDTO();
+		hrdParam.setPageNum("1");
+		hrdParam.setSort("ASC");
+		hrdParam.setSrchKeco1("01");
+		hrdParam.setSrchTraStDt("20230717");
+		hrdParam.setSrchTraEndDt("20230717");
+		hrdParam.setSrchTraArea1("00");
 		
-	    return "/education/chartTest";
+		List<EducationHrdResponseDTO> responseDTO = dao.getHrdApi("HRDPOA62/HRDPOA62_1.jsp", hrdParam);
+		
+		return "/education/educationTrain";
 	}
 	
 }
