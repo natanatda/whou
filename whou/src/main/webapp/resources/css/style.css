@@ -97,13 +97,13 @@ button.join-email i{position: absolute;left: 16px;top:24px;}
 /* icon */
 .ic-question{display:flex;align-items: center;justify-content: center;background-color: #5A3FFF;border-radius: 50%;width:25px;height: 25px;color:#fff;font-weight: 500;}
 
-/* 라디오 버튼 그룹 text */
+/* �씪�뵒�삤 踰꾪듉 洹몃９ text */
 .radio-group{width: 100%;height: 50px;}
 .radio-group label{border-color: #fff;background-color: #b4c5d2;color: #fff;display: flex;align-items: center;justify-content: center;}
 .btn-check+.btn:hover{background-color: #5A3FFF;border-color: #fff;color:#fff;}
 .btn-check:checked+.btn{border-color: #fff;background-color:#5A3FFF}
 
-/* 라디오 버튼 그룹 num */
+/* �씪�뵒�삤 踰꾪듉 洹몃９ num */
 .question-wrap.num .btn-group{justify-content: space-between;padding:0 20px;}
 .question-wrap.num .btn-group>.btn{width:40px;height:40px;flex:none;border-radius: 50%;}
 .question-wrap.num .radio-group{padding-top: 80px;}
@@ -222,14 +222,14 @@ input[type="checkbox"]:checked + label:after {
 ************************************* main ***********************************
 *****************************************************************************/
 
-/* 검색창 */
+/* 寃��깋李� */
 .search-form{position:relative;width:80%;margin:0 auto;}
 .search-form .search-btn{cursor: pointer;}
 .search-form span{position:absolute;top:20px;left:30px;}
 .search-form input{height: 60px;width:100%;border: 3px solid #5A3FFF; border-radius: 32px !important; padding: 0px 30px 0 70px;}
 .search-form input:focus{ outline: none;}
 
-/* 자동추천 아이콘 박스 */
+/* �옄�룞異붿쿇 �븘�씠肄� 諛뺤뒪 */
 .icon-box{width:220px;height:100px;border: 4px solid #5A3FFF;border-radius: 4px;display: flex;align-items: center;justify-content: flex-start;padding:20px;}
 .main-ai-wrap{position:relative;}
 .main-ai-wrap .main-ai{position:absolute;top:35px;right:50px}
@@ -241,7 +241,7 @@ input[type="checkbox"]:checked + label:after {
 .main-content > div h2{font-weight: 600;}
 .main-content p{font-size: 13px;color:#111;}
 
-/* 메인-검사하기 */
+/* 硫붿씤-寃��궗�븯湲� */
 .test-section{background-color:#5A3FFF;color: #fff;}
 .test-section .add-btn{text-align: right;}
 .test-section .add-btn a{color: #fff;}
@@ -252,7 +252,7 @@ input[type="checkbox"]:checked + label:after {
 .test-cont-wrap .button-wrap{height: 34px;margin-bottom: 10px;}
 .test-cont-wrap .purple-btn{height: 50px;font-size: 20px;}
 
-/* 메인-컨설팅 */
+/* 硫붿씤-而⑥꽕�똿 */
 .consult-section{color:#5A3FFF;}
 .consult-box{border: 3px solid #5A3FFF; border-radius: 4px;}
 
@@ -274,7 +274,8 @@ input[type="checkbox"]:checked + label:after {
 .tab-content{text-align: center;}
 .tab-content .tab-pane h5{font-size: 16px;margin:40px 0;}
 
-/* 검색 아이콘 */
+#pills-profile .button-wrap {justify-content:flex-start;}
+/* 寃��깋 �븘�씠肄� */
 .circle-btn{border:2px solid #ddd;border-radius: 50%;width:80px;height:80px;}
 .circle-btn:hover, .circle-btn.active{border-color:#5A3FFF}
 .circle-btn.active p{color:#5A3FFF}
