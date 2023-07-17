@@ -56,19 +56,34 @@ public class MemberServiceImpl implements MemberService {
     
     //가입타입이 맞는지 확인
 	@Override
-	public String join(String email) {
-    	return mapper.join(email);
+	public String join_type(String email) {
+    	return mapper.join_type(email);
     }
     
+	//user_info테이블에 추가
 	@Override
     public void insert2(String email) {
 		mapper.insert2(email);
 	}
     
+	//whou_user테이블에 추가
 	@Override
     public void insertPro(MemberDTO dto) {
 		mapper.insertPro(dto);
 	}
+	
+	//로그인시 pw비교(pw찾기)
+	@Override
+	public String login(String email) {
+		return mapper.login(email);
+	}
+	
+	//이메일 찾기
+	@Override
+    public String getEmail(String name, String tel) {
+		return mapper.getEmail(name, tel);
+	}
+
     
     //카카오 로그인시 토큰 생성
 	@Override
@@ -195,12 +210,12 @@ public class MemberServiceImpl implements MemberService {
     //휴대폰번호 인증
 	@Override 
 	public void telChk(String tel, String numStr) {
-		DefaultMessageService messageService =  NurigoApp.INSTANCE.initialize("NCSHKJEBDMSBIXIV", "BZHLBMXADDKG9KQFCGTZETY5WE8P80VR", "https://api.coolsms.co.kr");
+		DefaultMessageService messageService =  NurigoApp.INSTANCE.initialize("NCSGRV3UKNCELVIM", "BNYAU0IXAKIDYBDYQKUSN6ZFBHS0DSXV", "https://api.coolsms.co.kr");
 		// Message 패키지가 중복될 경우 net.nurigo.sdk.message.model.Message로 치환하여 주세요
 		Message message = new Message();
-		message.setFrom("01086720663");
+		message.setFrom("01023492565");
 		message.setTo(tel);
-		message.setText("[whoU] 인증번호 " + numStr + " 를 입력하세요.");
+		message.setText("[whoU] 인증번호 " + "[" + numStr + "]" +" 를 입력하세요.");
 
 		try {
 		  // send 메소드로 ArrayList<Message> 객체를 넣어도 동작합니다!

@@ -16,21 +16,21 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
  
 <body>
    
   <div class="login-container">
-       
         <div class="login-wrap">
        
           <div class="logo"><a class="navbar-brand"  href="/whou/main"><img src="/whou/resources/img/logo.svg"></a></div>
           <p>회원이 아니신가요? <a href="/whou/member/joinForm">회원가입하기</a></p>
          
           <div class="input-wrap">
-            <div class="input-form-box"><input type="text" name="uid" class="form-control" placeholder="이메일"></div>
-            <div class="input-form-box"><input type="password" name="upw" class="form-control" placeholder="비밀번호"></div>
-              <button type="button" class="btn login-btn btn-xs">로그인하기</button>
+            <div class="input-form-box"><input type="text" name="email" id="email" class="form-control" placeholder="이메일"></div>
+            <div class="input-form-box"><input type="password" name="pw" id="pw" class="form-control" placeholder="비밀번호"></div>
+              <button type="button" class="btn login-btn btn-xs" id="btn1">로그인 하기</button>
           </div>
           <div class="simple-login">
             <p>SNS 간편 로그인</p>
@@ -41,12 +41,47 @@
             </ul>
           </div>
           <div class="find-wrap">
-            <a href="#!">비밀번호 찾기</a>
+            <a href="/whou/member/findEmail">이메일/비밀번호 찾기</a>
           </div>
         </div>
       </div>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    	<script>
+    	//email과 pw가 일치하는지 확인
+   		$(function() {
+		    $("#btn1").click(function() {
+		    	var email = $("#email").val();
+		    	var pw = $("#pw").val();
+		        
+		        if (email === '' || pw == '') {
+		            alert("모든 항목을 입력해주세요.");
+		            return false;
+		        }
+
+		        $.ajax({
+		            url: "/whou/member/loginPro",
+		            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		            method: "POST",
+		            data:{email:email, pw:pw},
+		            error: function(xhr, status, error) {
+		                var errorMessage = "오류: " + xhr.status + " " + xhr.statusText;
+		                alert(errorMessage);
+		                //window.location.href = "/whou/main";
+		            },
+		            success: function(dpw) {
+		                if(dpw == '') {
+		                	alert("이메일을 다시 확인해주세요.");
+		                }else if(dpw == pw) {
+		                	window.location.href = "/whou/main";
+		                }else if(dpw != pw ){
+		                	alert("비밀번호가 일치하지 않습니다.\n다시 입력해주세요.");
+		                }
+		            }
+		        });
+		    });
+		});
+    	</script> 
     </body>
     
 </html>
