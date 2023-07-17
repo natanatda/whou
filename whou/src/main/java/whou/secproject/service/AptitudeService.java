@@ -33,5 +33,5 @@ public interface AptitudeService {
 	public String aptdSelect(String sortName); // 적성
 	public void interesteInsert(RecommandInfoDTO dtoRe);//흥미 직업 번호 저장
 	public void aptitudeUpdate(RecommandInfoDTO dtoRe);//적성 직업 번호 저장
-	public void valuesUpdate(RecommandInfoDTO dtoRe); //가지관 차트 점수 저장
+	public void valuesUpdate(String score); //가지관 차트 점수 저장
 }

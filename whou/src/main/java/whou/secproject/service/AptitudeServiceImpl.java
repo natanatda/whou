@@ -123,10 +123,10 @@ public class AptitudeServiceImpl implements AptitudeService{
             System.out.println(valueSummary);
 
             // 가치 점수 정보 가져오기
-            List<WebElement> scoreElements = driver.findElements(By.cssSelector("div.aptitude-result-content > div:nth-child(1) > div:nth-child(5) > table > tbody"));
+            List<WebElement> scoreElements = driver.findElements(By.cssSelector("#ct > div.aptitude_result_wrap > div.aptitude-result-content > div:nth-child(1) > div:nth-child(5) > table > tbody > tr > td:nth-child(3n+0)"));
             String valueScore = "";
             for (WebElement element : scoreElements) {
-                valueScore += element.getText().replaceAll("\\n", " ");
+                valueScore += element.getText() + " + ";
             }
             System.out.println(valueScore);
 
@@ -457,11 +457,9 @@ public class AptitudeServiceImpl implements AptitudeService{
 		        dto.getTest25_4()
 		    )
 		    .flatMap(value -> {
-		        if (value.equals(dto.getTest25_2())) {
-		            return Arrays.stream(value.split(" "));
-		        } else {
+		    
 		            return Arrays.stream(value.split("\\+"));
-		        }
+		      
 		    })
 		    .map(String::trim) // 공백 제거
 		    .filter(value -> value != null && !value.isEmpty())
@@ -788,8 +786,8 @@ public class AptitudeServiceImpl implements AptitudeService{
 	}
 	// 가지관 검사지 - 차트 점수 저장
 	@Override
-	public void valuesUpdate(RecommandInfoDTO dtoRe) {
-		mapper.valuesUpdate(dtoRe);	
+	public void valuesUpdate(String score) {
+		mapper.valuesUpdate(score);	
 	}
 	
 

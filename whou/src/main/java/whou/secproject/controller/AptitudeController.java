@@ -107,6 +107,7 @@ public class AptitudeController {
 		List<String> reportResult = service.reportView(qnum, dto);
 		List<String[]> reportResultArr = service.crawlingSplitArr(dto,qnum);
 		List<String> testJob = service.crawlingSplitJob(dto,qnum);
+		
 		// 검사 결과지에서 추천을 위해 추천테이블에 넣을 정보
 			// 흥미검사 결과지의 직업 리스트의 code 추출 - 흥미31
 			StringBuilder sb = new StringBuilder();
@@ -183,17 +184,38 @@ public class AptitudeController {
 				}
 				service.aptitudeUpdate(dtoRe);
 			}
-//			
-//			if(qnum.equals("25")) {
-//				String[] score = dto.getTest25_5().toString().split("\\+");
-//				String scores = String.join(",", score);
-//				dtoRe.setValues_score(scores);
-//				service.valuesUpdate(dtoRe);
-//				System.out.println();
-//			}
 			
+			List<String> updatedList1 = new ArrayList<>();
+			List<String> updatedList2 = new ArrayList<>();
+			List<String> updatedList3 = new ArrayList<>();
+			String[] updatedList4 = new String[13];
+			if (qnum.equals("27")) {
+				// chart 값 추출		
+				for(int i = 4; i <= 10; i += 2) {
+					String element = reportResult.get(i);
+					updatedList1.add(element);
+				}
+				for(int i = 12; i <= 22; i += 2 ) {
+					String element = reportResult.get(i);
+					updatedList2.add(element);
+				}
+			}
+			if (qnum.equals("25")) {
+				for(int j = 0; j <= 12;j++) {
+					for(int i = 3; i <= 14; i++ ) {
+						updatedList4[j] = reportResult.get(i);
+						continue;
+					}
+				}
+				String score = String.join(",", updatedList4);
+				service.valuesUpdate(score);
+				System.out.println("가치관 점수 12개 :" + score);
 			
+			}
 			
+		model.addAttribute("updatedList1", updatedList1);
+		model.addAttribute("updatedList2", updatedList2);
+		model.addAttribute("updatedList3", updatedList3);	
 		model.addAttribute("reportResult", reportResult);
 		model.addAttribute("reportResultArr", reportResultArr);
 		model.addAttribute("percent",service.crawlingSplit(dto,qnum));
@@ -280,3 +302,6 @@ public class AptitudeController {
 //		return "/test";
 //	}
 }
+
+
+

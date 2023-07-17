@@ -91,7 +91,7 @@
 	</insert>
 	<!-- 가치관 차트점수 저장 -->
 	<insert id="valuesUpdate">
-		update recommand_info set values_score=#{values_score} where num=1
+		update recommand_info set values_score=#{score} where num=1
 	</insert>
 	
 </mapper>
