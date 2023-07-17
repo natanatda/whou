@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,35 +24,36 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import whou.secproject.component.AptitudeTestResponseDTO;
 import whou.secproject.component.AptitudeTestResultRequestDTO;
 import whou.secproject.component.AptitudeTestResultResponseDTO;
+import whou.secproject.service.aptService;
 
 public class AptitudeApiDAO {
 	
 	@Autowired
 	private String apiKey;
-
 	
-	public AptitudeTestResponseDTO getAptitudeTestByNum(String q) {
+	public AptitudeTestResponseDTO getAptitudeTestByNum(String qnum) {
 		String url = "http://www.career.go.kr/inspct/openapi/test/questions";
+//	    aptitudeParam.setQ(qnum); //ê²€ì‚¬ ë²ˆí˜¸ ì—­ëŸ‰27 ê°€ì¹˜ê´€6 í¥ë¯¸31 ì ì„±21
 	    
 	    URI uri = null;
 		try {
 			uri = UriComponentsBuilder.fromHttpUrl(url)
 			        .queryParam("apikey", URLEncoder.encode(apiKey, "UTF-8"))
-			        .queryParam("q", URLEncoder.encode(q, "UTF-8"))
+			        .queryParam("q", URLEncoder.encode(qnum, "UTF-8"))
 			        .build(true)
 			        .toUri();
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
 	    
-	    // °´Ã¼ byte ¹è¿­·Î ¹ŞÀº ÈÄ utfÃ³¸®
+	    // ê°ì²´ byte ë°°ì—´ë¡œ ë°›ì€ í›„ utfì²˜ë¦¬
 	    RestTemplate restTemplate = new RestTemplate();
 	    ResponseEntity<byte[]> response = restTemplate.getForEntity(uri, byte[].class);
 	    byte[] responseBodyBytes = response.getBody();
 	    String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
 
-	    // ·Î±ëÀ» È°¿ëÇÑ µğ¹ö±ë
-	    System.out.println("API ÀÀ´ä: " + responseBody.substring(0,60));
+	    // ë¡œê¹…ì„ í™œìš©í•œ ë””ë²„ê¹…
+	    System.out.println("API ì‘ë‹µ: " + responseBody.substring(0,60));
 	    
 	    AptitudeTestResponseDTO aptitudeResponse = null;
 	    try {
@@ -59,34 +61,37 @@ public class AptitudeApiDAO {
 	        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 	        aptitudeResponse = objectMapper.readValue(responseBody, AptitudeTestResponseDTO.class);
 	        
-	        System.out.println("¿¡·¯ ÀÌÀ¯"+aptitudeResponse.getERROR_REASON());
+	        System.out.println("ì—ëŸ¬ ì´ìœ "+aptitudeResponse.getERROR_REASON());
 	    } catch (JsonProcessingException e) {
 	        e.printStackTrace();
 	    } catch (IOException e) {
 			e.printStackTrace();
 		}
-	    return aptitudeResponse; // ¿¹Á¦ÀÓ ¼öÁ¤ÇÏ¼À
+	    return aptitudeResponse; // ì˜ˆì œì„ ìˆ˜ì •í•˜ì…ˆ
 	}
-	// Ãß°¡·Î °³ÀÎÁ¤º¸ dto ³Ö¾îÁà¾ßµÊ
-	public AptitudeTestResultResponseDTO getAptitudeTestResult(String [] answers, String q) {
+	
+	
+
+	public AptitudeTestResultResponseDTO getAptitudeTestResult(List<String>answers, String qnum) {
 	    AptitudeTestResultResponseDTO aptiTestResultResponse = null;
 	    AptitudeTestResultRequestDTO atrr = new AptitudeTestResultRequestDTO();
 	    
-	    atrr.setQestrnSeq(q);
-	    atrr.setTrgetSe("100206"); // ÃÊµîÇĞ»ı µî Å¸°Ù
-	    atrr.setName("È«±æµ¿"); 
-	    atrr.setGender("100323"); // ¼ºº°?
-	    atrr.setSchool("À²µµ ÁßÇĞ±³"); // 
+
+	    atrr.setQestrnSeq(qnum);
+	    atrr.setTrgetSe("100207"); 
+	    atrr.setName("í™ê¸¸ë™"); 
+	    atrr.setGender("100323");
+	    atrr.setSchool("ìœ¨ë„ ì¤‘í•™êµ");
 	    atrr.setGrade("2"); 
 	    atrr.setEmail(""); 
 	    atrr.setStartDtm(1550466291034L);
-	    atrr.setAnswers("1=5 2=7 3=3 4=7 5=1 6=2 7=1 8=5 9=5 10=1 11=4 12=4 13=5 14=4 15=4 16=4 17=4 18=5 19=1 20=1 21=1 22=5 23=3 24=6 25=3 26=2 27=2 28=6 29=3 30=2 31=4 32=3 33=5 34=2 35=3 36=2 37=7 38=2 39=5 40=5 41=5 42=1 43=7 44=6 45=5 46=4 47=2 48=5 49=4 50=5 51=5 52=5 53=7 54=2 55=6 56=4 57=6 58=4 59=3 60=5 61=5 62=5 63=7 64=4 65=7 66=5");
 	    StringBuilder answer = new StringBuilder();
-	    for(int i = 0; i<answers.length; i++)
-	    	answer.append(i+1).append("=").append(answers[i]).append(" ");
+	    for(int i = 0; i<answers.size(); i++)
+	    	answer.append(i+1).append("=").append(answers.get(i)).append(" ");
 	    answer.setLength(answer.length() - 1); 
+	    System.out.println(answer);
+	    atrr.setAnswers(answer.toString());
 	    
-	    //atrr.setAnswers(answer.toString());
 		try {
 			URL url = new URL("http://www.career.go.kr/inspct/openapi/test/report");
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -110,12 +115,12 @@ public class AptitudeApiDAO {
 	
 			String jsonInputString = jsonInputBuilder.toString();
 	    
-			// ¿äÃ» µ¥ÀÌÅÍ Àü¼Û
+			// ìš”ì²­ ë°ì´í„° ì „ì†¡
 			DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream()); 
 			byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
 			outputStream.write(input, 0, input.length);
 	
-			// ÀÀ´ä µ¥ÀÌÅÍ ÀĞ±â
+			// ì‘ë‹µ ë°ì´í„° ì½ê¸°
 			StringBuilder response = new StringBuilder();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)); 
 			String line;
@@ -124,20 +129,20 @@ public class AptitudeApiDAO {
 				response.append(line);
 			}
 			
-			// ¿¬°á ÇØÁ¦
+			// ì—°ê²° í•´ì œ
 			connection.disconnect();
 			
-			// ÀÀ´ä ¹İÈ¯
+			// ì‘ë‹µ ë°˜í™˜
 			response.toString();
 			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
+			
 			aptiTestResultResponse = objectMapper.readValue(response.toString(), AptitudeTestResultResponseDTO.class);
 			System.out.println(aptiTestResultResponse.getRESULT().getUrl());
+			//https://www.career.go.kr/inspct/web/psycho/able/report?seq=NjMzODQxNDA
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return aptiTestResultResponse;
 	}
-	
 }

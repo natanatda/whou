@@ -20,6 +20,10 @@ public class AptitudeTestResponseDTO {
     // Getters and Setters
     @Data
     public static class ResultItem {
+    	private String relm;
+    	private String qestn;
+    	private String qestnrSeq;
+    	
         private String question;
         private String answer01;
         private String answer02;
