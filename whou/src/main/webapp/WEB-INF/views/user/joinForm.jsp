@@ -486,11 +486,11 @@
 		    	var email = $("#email").val();
 		    	var pw = $("#pw").val();
 		    	var name = $("#name").val();
-		    	var birthYear = $("#birthYear").val();
+		    	var birth_year = $("#birth_year").val();
 		    	var tel = $("#tel").val();
-		    	var gender = $("#gender").val();
+		    	var gender = $("input[name='gender']:checked").val();
 		    	var join = $("#join").val();
-		        if (email === '' || pw == '' || name === '' || birthYear === '' || tel === '' || gender === '') {
+		        if (email == '' || pw == '' || name == '' || birth_year == '' || tel == '' || gender == '') {
 		            alert("모든 항목을 입력해주세요.");
 		            return false; // Prevent form submission
 		        }
@@ -519,7 +519,7 @@
 		            email: email,
 		            pw: pw,
 		            name: name,
-		            birth_year: birthYear,
+		            birth_year: birth_year,
 		            tel: tel,
 		            gender: gender,
 		            join_type: join

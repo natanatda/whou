@@ -1,6 +1,7 @@
 package whou.secproject.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
@@ -35,7 +36,11 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import whou.secproject.component.JobDicDetailResponseDTO;
+import whou.secproject.component.JobDicDetailResponseDTO.Knowledge;
+import whou.secproject.component.JobDicDetailResponseDTO.Perform_;
 import whou.secproject.component.MemberDTO;
+import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.service.MemberService;
 
 @Controller
@@ -44,6 +49,9 @@ public class MemberController {
 
 	@Autowired
 	private MemberService service;
+	
+	@Autowired
+	private JobDicApiDAO dao;
 	
 	//회원가입 폼
 	@RequestMapping("/joinForm")
@@ -367,5 +375,40 @@ public class MemberController {
         System.out.println(result);
         return result;
     }
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+    @RequestMapping("/info")
+    public String JobDicInfo(HttpServletRequest request, Model model) {
+       int seq = -1;
+       String strSeq= request.getParameter("job_cd");
+       JobDicDetailResponseDTO jobDetail = null;
+       if(strSeq!=null) 
+          seq = Integer.parseInt(strSeq);
+       
+       System.out.println("seq == " +seq);
+       jobDetail= dao.getJobDicDetail(seq);
+       //System.out.println("////////// " + jobDetail);// dto.work
+       List<JobDicDetailResponseDTO.Work> workList = jobDetail.getWorkList(); 
+       String link = jobDetail.getCertiList().get(0).getLink();
+       List<Knowledge> knowledge = jobDetail.getPerform().getKnowledge();
+       //Object p = jobDetail.getPerform().getPerform_();
+
+      
+      //System.out.println(knowledge);
+      //      JobDicDetailResponseDTO.BaseInfo baseInfo = jobDetail.getBaseInfo(); 
+//       for(int i=0; i<jobDetail.getWorkList().size(); i++)
+//          System.out.println(jobDetail.getWorkList().get(i).getWork());
+       model.addAttribute("jobDetail", jobDetail);
+       return "/job/description-detail";
+    }
+    
   
 }
