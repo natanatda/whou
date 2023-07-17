@@ -15,12 +15,10 @@
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
 <script>
-var cnt = 0;
 $(function(){
     var chat = "";
     function appendChat(user, bot) { // 채팅 내용 출력하는 함수
-        chat += '<p id="user">유저: ' + user + '<p/>' + '<p id="bot'+cnt+'">챗봇: ' + bot + '<p/>'; 
-        cnt++; // p태그 bot에 번호 1씩 증가(tts읽기 위해서)
+        chat += '<p class="chat user" id="user">유저: ' + user + '<p/>' + '<p class="chat bot" id="bot">챗봇: ' + bot + '<p/>'; 
         $(".editable").html(chat);
         scrollToBottom(); 
     }
@@ -74,12 +72,7 @@ $(function(){
 
     function handleButtonClick() { // 첫 질문 버튼 함수
         var button = $(this).val(); // 해당 버튼 value를 button 변수에 대입
-        sendAjaxRequest(button); // ajax동작 함수로 제출
-    }
-
-    function handleOtherButtonClick() {
-        var button = $(this).val();
-        sendAjaxRequest(button);
+        sendAjaxRequest(button); // ajax동작 함수 호출
     }
 
     function handleBackButtonClick() { // 돌아가기 버튼 함수
@@ -88,24 +81,29 @@ $(function(){
         		+'</c:forEach>');
     }
 
-    $(document).on('click', '.mainbtn', handleButtonClick); // 해당 클래스 버튼 클릭했을 때 함수 호출
-    $(document).on('click', '.otherBtn', handleOtherButtonClick);
+    $(document).on('click', '.mainbtn, .otherBtn', handleButtonClick); // 해당 클래스 버튼 클릭했을 때 함수 호출
     $(document).on('click', '#back', handleBackButtonClick); // 해당 id 버튼 클릭했을 때 함수 호출
 });
+
+
+var audioFile = new Audio();
 function readBot(){
-	var botCnt = cnt - 1; // ++; 이라 -1
+	if(!read){return;} // 취소버튼 눌렀을 때 동작 안 하고 끝냄
+	var text = $(this).text(); 
 	var data = {    
 		    "voice":{
 			    "languageCode":"ko-KR",
 			//   	"name":"hi-IN-Standard-A"
 		    },
 		    "input":{
-		        "text": $('#bot'+botCnt).text()
+		        "text": text 
 		    },
 		    "audioConfig":{
 		        "audioEncoding":"mp3"
 		    }
 		}
+	audioFile.pause();
+	audioFile.currentTime = 0;
 	$.ajax({
 		type:'POST',
 		url: 'https://texttospeech.googleapis.com/v1/text:synthesize?key=AIzaSyDD1c5EpqlpRrRrnHqi36SVDTyzwygoOHg',
@@ -113,16 +111,16 @@ function readBot(){
 		dataType: 'JSON',
  		contentType: "application/json; charset=UTF-8",
         success: function(res) {
-        	var audioFile = new Audio();
-        	let audioBlob = base64ToBlob(res.audioContent, "mp3");
-        	audioFile.src = window.URL.createObjectURL(audioBlob);
-        	audioFile.playbackRate = 1; //재생속도
-        	audioFile.play();
+            let audioBlob = base64ToBlob(res.audioContent, "mp3");
+            audioFile.src = window.URL.createObjectURL(audioBlob);
+            audioFile.playbackRate = 1; //재생속도
+            audioFile.play();
         },
         error : function(request, status, error ) {
         	alert("오류","오류가 발생하였습니다. 관리자에게 문의해주세요.");
     	}
 	});
+	
 };
 
 function base64ToBlob(base64, fileType) {
@@ -144,7 +142,25 @@ function base64ToBlob(base64, fileType) {
 	    type: mime
 	  });
 	}
+
+	var read = false;
+	$(document).on("click", "#readbtn", function(){ // 읽기버튼 눌렀을 때 동작
+			$("#readArea").html('<input type="button" id="csbtn" class="btn btn-light" value="취소" />');
+			read = true; 
+			checkReadStatus(); // 함수 호출해서 read값 반영
+	});
 	
+	$(document).on("click", "#csbtn", function(){
+			$("#readArea").html('<input type="button" id="readbtn" class="btn btn-light" value="읽기" />');
+			read = false;
+			checkReadStatus();
+	});
+	function checkReadStatus(){
+		if(read){ // 읽기 버튼을 눌렀을때 텍스트에 마우스 갖다대면 tts함수 실행
+				$(document).on('mouseenter', '.user, .bot', readBot);
+		}	
+	}
+
 </script>
 <html>
 <head>
@@ -156,12 +172,13 @@ function base64ToBlob(base64, fileType) {
             overflow: auto;
             margin:0 auto;
         }
+        p#bot {
+			text-align : left;
+		}
         p#user{
         	text-align : right;
         }
-        p#bot{
-        	text-align : left;
-        }
+        
         div#btnContain{
         	display: inline-block;
         	width: fit-content;
@@ -176,17 +193,20 @@ function base64ToBlob(base64, fileType) {
                 <h2 class="page-title">ai</h2>
 			</div>
 		</header>
+		
 	<div style="width: 500px; height: 600px; border: 1px solid #dcdcdc; overflow: auto; margin:0 auto;">
-		<div class="editable" id="editable" contenteditable="false">문의하실 내용을 선택해주세요.</div>
+		<div class="editable" id="editable" contenteditable="false">
+		<p class="chat"> 문의하실 내용을 선택해주세요. </p>
+		</div>
 			<div style="display: flex; justify-content: right; align-items: right;">
 				<div id="btnContain">
 				<c:forEach items="${list}" var="ailist">
-				
 					<input type="button" class="btn btn-light mainbtn" value="${ailist.qes}"/>
-				
 				</c:forEach>
 			</div>
-		<button class="btn btn-light" onclick="readBot()">읽기</button>
+			<div id="readArea" style="display: flex; justify-content: right; align-items: right;">
+				<button class="btn btn-light" id="readbtn">읽기</button>
+			</div>
 		</div>
 	</div>
 	<footer class="container py-5">
@@ -220,4 +240,8 @@ function base64ToBlob(base64, fileType) {
 				})
         </script>
     </body>
+    <script>
+    	
+    
+    </script>
 </html>
