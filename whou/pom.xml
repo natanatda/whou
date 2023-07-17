@@ -274,6 +274,28 @@
 		  <version>4.2.7</version>
 		</dependency>
 			        
+		<!-- Selenium WebDriver -->
+ 		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>3.141.59</version>
+		</dependency> 
+		
+		<!-- okhttp3와 selenium 의 충돌로 인증번호가 안오는 문제가 생김. 아래의 버전을 추가함으로써 해결 완료 -->
+		<!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
+		<dependency>
+		    <groupId>com.squareup.okhttp3</groupId>
+		    <artifactId>okhttp</artifactId>
+		    <version>4.11.0</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.squareup.okio/okio -->
+		<dependency>
+		    <groupId>com.squareup.okio</groupId>
+		    <artifactId>okio</artifactId>
+		    <version>3.4.0</version>
+		</dependency>
+		
 	</dependencies>
     <build>
         <plugins>
