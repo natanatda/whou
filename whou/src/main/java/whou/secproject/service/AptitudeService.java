@@ -1,11 +1,10 @@
 package whou.secproject.service;
 
-import java.util.List;
+import java.util.List; 
 
 import whou.secproject.component.AptitudeTestTemporarySaveDTO;
 import whou.secproject.component.AptitudeTestValueDTO;
 import whou.secproject.component.RecommandInfoDTO;
-import whou.secproject.component.TestVoDTO;
 
 public interface AptitudeService {
 	public AptitudeTestValueDTO testCrawling(String testURL, String qnum); //검사 결과를 크롤링

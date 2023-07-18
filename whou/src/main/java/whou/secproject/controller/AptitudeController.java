@@ -172,7 +172,7 @@ public class AptitudeController {
 //						System.out.println(jParam.getPageIndex());
 						jdlrDTO = daoJob.getJobDicListSorted(jParam);
 						for(int j = 0; j < jdlrDTO.getJobs().size(); j++) {
-							jobListCd[(i-1)*10+j] = jdlrDTO.getJobs().get(j).getJob_cd();
+							jobListCd[(i-1)*10+j] = jdlrDTO.getJobs().get(j).getJob_cd()+"";
 						}
 					}
 					String jobListCode = String.join(",", jobListCd);
@@ -237,15 +237,6 @@ public class AptitudeController {
 		System.out.println(aptiTestResultResponse.getRESULT().getUrl());
 		return "/aptitude/report";
     }
-	
-	@RequestMapping("/test")
-	public String select(HttpServletRequest request) {
-		String qnum = request.getParameter("qnum");
-		AptitudeTestValueDTO dto = new AptitudeTestValueDTO();
-		List<String[]> reportResultArr = service.crawlingSplitArr(dto,qnum);
-	
-		return "dd";
-	}
 	//임시저장하기
 	@RequestMapping("/temporarySave")
 	public String temporaryResult(Model model, String countQ, HttpServletRequest request, HttpServletResponse response) throws IOException {

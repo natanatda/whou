@@ -219,11 +219,7 @@
 		    <version>0.6-8.1</version>
 		</dependency>
 		
-<<<<<<< HEAD
-				<!-- json-simple -->
-=======
 		<!-- json-simple -->
->>>>>>> aptitude
 		<dependency>
 		    <groupId>com.googlecode.json-simple</groupId>
 		    <artifactId>json-simple</artifactId>
@@ -276,7 +272,6 @@
 		  <groupId>net.nurigo</groupId>
 		  <artifactId>sdk</artifactId>
 		  <version>4.2.7</version>
-<<<<<<< HEAD
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
 		<dependency>
@@ -285,9 +280,6 @@
 		    <version>3.6.1</version>
 		</dependency>
 					   
-=======
-		</dependency>
-			        
 		<!-- Selenium WebDriver -->
  		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
@@ -317,7 +309,6 @@
 		    <version>32.1.1-jre</version>
 		</dependency>
 		
->>>>>>> aptitude
 	</dependencies>
     <build>
         <plugins>

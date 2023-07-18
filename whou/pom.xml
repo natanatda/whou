@@ -273,7 +273,6 @@
 		  <artifactId>sdk</artifactId>
 		  <version>4.2.7</version>
 		</dependency>
-<<<<<<< HEAD
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
 		<dependency>
 		    <groupId>org.apache.commons</groupId>
@@ -281,8 +280,6 @@
 		    <version>3.6.1</version>
 		</dependency>
 					   
-=======
-			        
 		<!-- Selenium WebDriver -->
  		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
@@ -312,7 +309,6 @@
 		    <version>32.1.1-jre</version>
 		</dependency>
 		
->>>>>>> aptitude
 	</dependencies>
     <build>
         <plugins>

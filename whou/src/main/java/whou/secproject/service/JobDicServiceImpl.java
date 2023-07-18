@@ -221,7 +221,7 @@ public class JobDicServiceImpl implements JobDicService {
 			if(foreList.size()!=0)
 				for(JobDicDetailResponseDTO.Forecast jf : foreList) {
 					if(jf!=null) {
-						if(jf.getForcast()!=null)jindto.setValue(jf.getForcast());
+						if(jf.getForecast()!=null)jindto.setValue(jf.getForecast());
 						else jindto.setValue("");
 						
 						mapper.insertJD(jindto);
@@ -317,8 +317,8 @@ public class JobDicServiceImpl implements JobDicService {
 							mapper.insertJD(jindto);
 						}
 						jindto.setFactor_value("link");
-						if(certi.getLINK()!=null) {
-							jindto.setValue(certi.getLINK());
+						if(certi.getLink()!=null) {
+							jindto.setValue(certi.getLink());
 							mapper.insertJD(jindto);
 						}
 					}
