@@ -6,6 +6,7 @@ import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.math3.distribution.NormalDistribution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -51,14 +52,14 @@ public class JobDicApiDAO {
 		
 	    JobDicListResponseDTO jobDicResponse = null;
 	    
-	    // °´Ã¼ byte ¹è¿­·Î ¹ŞÀº ÈÄ utfÃ³¸®
+	    // ê°ì²´ byte ë°°ì—´ë¡œ ë°›ì€ í›„ utfì²˜ë¦¬
 	    RestTemplate restTemplate = new RestTemplate();
 	    ResponseEntity<byte[]> response = restTemplate.getForEntity(uri, byte[].class);
 	    byte[] responseBodyBytes = response.getBody();
 	    String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
 
-	    // ·Î±ëÀ» È°¿ëÇÑ µğ¹ö±ë
-	    System.out.println("API ÀÀ´ä: " + responseBody);
+	    // ë¡œê¹…ì„ í™œìš©í•œ ë””ë²„ê¹…
+	    System.out.println("API ì‘ë‹µ: " + responseBody);
 	    
 	    try {
 	        ObjectMapper objectMapper = new ObjectMapper();
@@ -67,9 +68,7 @@ public class JobDicApiDAO {
 	        
 	    } catch (JsonProcessingException e) {
 	        e.printStackTrace();
-	    } catch (IOException e) {
-			e.printStackTrace();
-		}
+	    }
 	    return jobDicResponse; 
 	}
 	public JobDicDetailResponseDTO getJobDicDetail(int seq) {  
@@ -88,14 +87,14 @@ public class JobDicApiDAO {
 		
 		JobDicDetailResponseDTO jobDicResponse = null;
 		
-		// °´Ã¼ byte ¹è¿­·Î ¹ŞÀº ÈÄ utfÃ³¸®
+		// ê°ì²´ byte ë°°ì—´ë¡œ ë°›ì€ í›„ utfì²˜ë¦¬
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<byte[]> response = restTemplate.getForEntity(uri, byte[].class);
 		byte[] responseBodyBytes = response.getBody();
 		String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
 		
-		// ·Î±ëÀ» È°¿ëÇÑ µğ¹ö±ë
-		System.out.println("API ÀÀ´ä: " + responseBody.substring(0,60));
+		// ë¡œê¹…ì„ í™œìš©í•œ ë””ë²„ê¹…
+		System.out.println("API ì‘ë‹µ: " + responseBody.substring(0,60));
 		
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -104,9 +103,8 @@ public class JobDicApiDAO {
 			
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
+		
 		return jobDicResponse; 
 	}
 }
