@@ -102,12 +102,12 @@
 	
 	<!-- 모든 임시저장 값 -->
 	<select id="getTemporarySave" resultType="whou.secproject.component.AptitudeTestTemporarySaveDTO">
-		SELECT * FROM user${userName}_test_temporary_save
-		<where>
-			<if test="test_num > 0">
-				test_num = ${test_num}
-			</if>
-		</where>
+		SELECT * FROM user${userNum}_test_temporary_save
+<!-- 		<where> -->
+<!-- 			<if test="test_num > 0"> -->
+<!-- 				test_num = #{test_num} -->
+<!-- 			</if> -->
+<!-- 		</where> -->
 	</select>
 	
 	

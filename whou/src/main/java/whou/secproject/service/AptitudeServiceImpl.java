@@ -26,7 +26,7 @@ public class AptitudeServiceImpl implements AptitudeService{
 	
 	@Autowired
 	private AptitudeMapper mapper;
-	
+    	
 	//크롤링 하기
 	@Override
 	public AptitudeTestValueDTO testCrawling(String testURL, String qnum) {
@@ -516,8 +516,9 @@ public class AptitudeServiceImpl implements AptitudeService{
 
 	// 임시저장한 값 DB에서 꺼내기
 	@Override
-	public List<AptitudeTestTemporarySaveDTO> getTemporarySave(AptitudeTestTemporarySaveDTO dto) {
-		return mapper.getTemporarySave(dto);
+	public List<AptitudeTestTemporarySaveDTO> getTemporarySave(AptitudeTestTemporarySaveDTO dto, int userNum) {
+		System.out.println("테스트넘이용~" + dto.getTest_num());
+		return mapper.getTemporarySave(dto, userNum);
 	}
 
 	//임시저장한 검사지를 제출하면 DB에서 삭제

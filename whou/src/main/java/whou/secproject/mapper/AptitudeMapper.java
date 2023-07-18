@@ -12,7 +12,7 @@ public interface AptitudeMapper {
 	public void crawlingInsert(@Param("dto") AptitudeTestValueDTO dto, @Param("userNum") int userNum); //크롤링 결과 DB에 넣기
 	public void temporarySaveInsert(@Param("dtoSv") AptitudeTestTemporarySaveDTO dto, @Param("userNum") int userNum); //임시저장 값 DB에 넣기
 	public List<AptitudeTestValueDTO> getRecentTest(AptitudeTestValueDTO dto); // 검사 결과 회수와 최근일자
-	public List<AptitudeTestTemporarySaveDTO> getTemporarySave(AptitudeTestTemporarySaveDTO dto); //임시저장한 값
+	public List<AptitudeTestTemporarySaveDTO> getTemporarySave(@Param("dtoSv") AptitudeTestTemporarySaveDTO dto, @Param("userNum") int userNum); //임시저장한 값
 	public void temporarySaveDelete(@Param("test_num") int test_num, @Param("userNum") int userNum); //임시저장한 검사지 제출하면 삭제
 	public void temporarySaveUpdate(@Param("dtoSv") AptitudeTestTemporarySaveDTO dto, @Param("userNum") int userNum); //임시저장한 검사지를 다시 임시저장
 	

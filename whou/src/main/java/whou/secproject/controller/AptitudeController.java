@@ -44,6 +44,10 @@ public class AptitudeController {
 		System.out.println(qnum);
 	    model.addAttribute("RESULT", dao.getAptitudeTestByNum(qnum).getRESULT());
 	    model.addAttribute("qnum", qnum);
+	    HttpSession session = request.getSession();
+		String memId = (String)session.getAttribute("memId");
+		// user_info 테이블에서 세션에 해당하는 num 추출
+		int userNum = service.userNumSelect(memId);
 	    
 	    //임시 저장한 설문지로 들어온 경우
 	    String tempSave= request.getParameter("tempSave")!= null?request.getParameter("tempSave"):"";
@@ -54,7 +58,7 @@ public class AptitudeController {
 	    	List<AptitudeTestTemporarySaveDTO> tempList = null;
 	    	AptitudeTestTemporarySaveDTO tempDTO = new AptitudeTestTemporarySaveDTO();
 	    	tempDTO.setTest_num(Integer.parseInt(qnum));
-	    	tempList = service.getTemporarySave(tempDTO);
+	    	tempList = service.getTemporarySave(tempDTO, userNum);
 	    	String[] arr = tempList.get(0).getTest_answers().split(" ");
 	    	for(String s:arr) {
 	    		String delstr = s.substring(0, s.indexOf("=")+1);
@@ -286,8 +290,11 @@ public class AptitudeController {
 	//검사 횟수와 일자, 임시저장 값 꺼내기
 	@RequestMapping("/aptitudeMain")
 	public String aptitudeMain(Model model, AptitudeTestValueDTO dto1, AptitudeTestTemporarySaveDTO dto2, HttpServletRequest request) throws IOException {
+		
 		HttpSession session = request.getSession();
 		String memId = (String)session.getAttribute("memId");
+		// user_info 테이블에서 세션에 해당하는 num 추출
+		int userNum = service.userNumSelect(memId);
 		
 		// 세션으로 이름 꺼내기
 		String name = service.getName(memId);
@@ -298,7 +305,7 @@ public class AptitudeController {
 		model.addAttribute("valueList", valueList);
 		
 		//임시 저장
-		List<AptitudeTestTemporarySaveDTO> tempList = service.getTemporarySave(dto2);
+		List<AptitudeTestTemporarySaveDTO> tempList = service.getTemporarySave(dto2, userNum);
 		model.addAttribute("tempList", tempList);
 		
 		//임시 저장하고 메인화면으로 온건지 판별
