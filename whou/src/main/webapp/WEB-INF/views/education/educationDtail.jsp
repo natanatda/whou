@@ -26,7 +26,6 @@
 	<input type="hidden" id="majorSeq" value="${seq}">
     <script>
 		var seq = document.getElementById('majorSeq').value;
-		alert(seq);
 		if (seq === null || seq === '') {
 			alert('잘못된 접근입니다.');
 			location.href = "majorList";

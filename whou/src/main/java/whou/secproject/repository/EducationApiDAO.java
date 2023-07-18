@@ -1,15 +1,16 @@
 package whou.secproject.repository;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -23,6 +24,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -111,7 +113,7 @@ public class EducationApiDAO {
 		}
 		System.out.println("xml파싱 유알앨 "+url);
 
-		List<EducationHrdResponseDTO> educationHrdResponseList = null;
+		List<EducationHrdResponseDTO> educationHrdResponseList = new ArrayList<>();
 		try {
 			// HTTP 요청 보내기
             HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
@@ -123,7 +125,7 @@ public class EducationApiDAO {
 			if (responseCode == HttpURLConnection.HTTP_OK) {
 				// 응답 데이터 읽기
 				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
+						new InputStreamReader(conn.getInputStream(), "EUC-KR"));
 				StringBuilder response = new StringBuilder();
 				String line;
 				while ((line = reader.readLine()) != null) {
@@ -132,54 +134,47 @@ public class EducationApiDAO {
 
 				// 응답 데이터를 XML로 파싱
 				String xmlData = response.toString();
-				System.out.println("XML 데이터: " + xmlData.substring(0, 60));
+				System.out.println("XML 데이터: " + xmlData.substring(0,150));
 
 				// XML 파서 설정
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder builder = factory.newDocumentBuilder();
-				ByteArrayInputStream input = new ByteArrayInputStream(xmlData.getBytes(StandardCharsets.UTF_8));
-				Document document = builder.parse(input);
+				Document document = builder.parse(new InputSource(new StringReader(xmlData)));
 				
-				// "response" 엘리먼트 아래의 "HRDNet" 엘리먼트를 찾습니다.
-				Element responseElement = document.getDocumentElement();
-				Element hrdnetElement = (Element) responseElement.getElementsByTagName("HRDNet").item(0);
-				System.out.println("aaaaa 되냐 aaaaa? "+hrdnetElement);
+	            // "HRDNet" 엘리먼트를 찾습니다.
+	            Element hrdnetElement = document.getDocumentElement();
+
+	            // "srchList" 엘리먼트를 찾습니다.
+	            Element srchListElement = (Element) hrdnetElement.getElementsByTagName("srchList").item(0);
+
+	            // "scn_list" 엘리먼트들을 찾습니다.
+	            NodeList scnListNodes = srchListElement.getElementsByTagName("scn_list");
+	            System.out.println("cccc 되냐 cccc? " + scnListNodes.getLength());
 				
-				// "hrdnetElement" 엘리먼트 아래의 "srchList" 엘리먼트를 찾습니다.
-				Element srchListElement = (Element) hrdnetElement.getElementsByTagName("srchList").item(0);
-				
-				// "srchList" 엘리먼트 아래의 모든 "scn_list" 엘리먼트를 찾습니다.
-				NodeList scnListNodeList = srchListElement.getElementsByTagName("scn_list");
-				
-				for (int i = 0; i < ((NodeList) srchListElement).getLength(); i++) {
-					Node itemNode = scnListNodeList.item(i);
-					if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
-						Element itemElement = (Element) itemNode;
-						
-						// "item" 엘리먼트에서 필요한 데이터를 추출합니다.
-						String address = getElementValue((Element)scnListNodeList, "address");
-						String subTitle = getElementValue((Element)scnListNodeList, "subTitle");
-						String title = getElementValue((Element)scnListNodeList, "title");
-						String titleLink = getElementValue((Element)scnListNodeList, "titleLink");
-						String traStartDate = getElementValue((Element)scnListNodeList, "traStartDate");
-						String traEndDate = getElementValue((Element)scnListNodeList, "traEndDate");
-						
-						// Festival 객체를 생성하고 리스트에 추가합니다.
-						EducationHrdResponseDTO educationHrdResponseDTO = new EducationHrdResponseDTO();
-						educationHrdResponseDTO.setAddress(url);
-						educationHrdResponseDTO.setSubTitle(subTitle);
-						educationHrdResponseDTO.setSubTitle(subTitle);
-						educationHrdResponseDTO.setTitle(title);
-						educationHrdResponseDTO.setTraStartDate(traStartDate);;
-						educationHrdResponseDTO.setTraEndDate(traEndDate);
-						
-						educationHrdResponseList.add(educationHrdResponseDTO);
-					}
-				}
-				
+	            for (int i = 0; i < scnListNodes.getLength(); i++) {
+	                Node itemNode = scnListNodes.item(i);
+	                if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
+	                    Element itemElement = (Element) itemNode;
+
+	                    String address = getElementValue(itemElement, "address");
+	                    String subTitle = getElementValue(itemElement, "subTitle");
+	                    String title = getElementValue(itemElement, "title");
+	                    String titleLink = getElementValue(itemElement, "titleLink");
+	                    String traStartDate = getElementValue(itemElement, "traStartDate");
+	                    String traEndDate = getElementValue(itemElement, "traEndDate");
+
+	                    EducationHrdResponseDTO educationHrdResponseDTO = new EducationHrdResponseDTO();
+	                    educationHrdResponseDTO.setAddress(address);
+	                    educationHrdResponseDTO.setSubTitle(subTitle);
+	                    educationHrdResponseDTO.setTitle(title);
+	                    educationHrdResponseDTO.setTitleLink(titleLink);
+	                    educationHrdResponseDTO.setTraStartDate(traStartDate);
+	                    educationHrdResponseDTO.setTraEndDate(traEndDate);
+
+	                    educationHrdResponseList.add(educationHrdResponseDTO);
+	                }
+	            }
 			}
-            
-            
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -198,7 +193,7 @@ public class EducationApiDAO {
 			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
 					.queryParam("authKey", URLEncoder.encode(authKey, "UTF-8"))
 			        .queryParam("returnType", URLEncoder.encode("XML", "UTF-8"))
-			        .queryParam("pageSize", URLEncoder.encode("20", "UTF-8"))
+			        .queryParam("pageSize", URLEncoder.encode("100", "UTF-8"))
 			        .queryParam("sortCol", URLEncoder.encode("TRNG_BGDE", "UTF-8"))
 					.queryParam("outType", URLEncoder.encode("1", "UTF-8"));
 			
@@ -228,19 +223,19 @@ public class EducationApiDAO {
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
-		
 		return url;
 	}
 	
 	// XML 엘리먼트의 값을 가져오는 유틸리티 메소드
-    private String getElementValue(Element element, String tagName) {
-        NodeList nodeList = element.getElementsByTagName(tagName);
-        if (nodeList.getLength() > 0) {
-            Node node = nodeList.item(0);
-            return node.getTextContent();
-        } else {
-            System.out.println("Element value for tag " + tagName + " not found.");
-            return "";
-        }
-    }
+	public String getElementValue(Element element, String tagName) {
+	    NodeList nodeList = element.getElementsByTagName(tagName);
+	    if (nodeList != null && nodeList.getLength() > 0) {
+	        Node node = nodeList.item(0);
+	        if (node.getNodeType() == Node.ELEMENT_NODE) {
+	            Element childElement = (Element) node;
+	            return childElement.getTextContent();
+	        }
+	    }
+	    return null;
+	}
 }

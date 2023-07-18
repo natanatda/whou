@@ -140,15 +140,39 @@ public class EducationController {
 	
 	@RequestMapping("/training")
 	public String educationTrain(Model model, HttpServletRequest request) throws IOException {
-		EducationHrdParamDTO hrdParam = new EducationHrdParamDTO();
-		hrdParam.setPageNum("1");
-		hrdParam.setSort("ASC");
-		hrdParam.setSrchKeco1("01");
-		hrdParam.setSrchTraStDt("20230717");
-		hrdParam.setSrchTraEndDt("20230717");
-		hrdParam.setSrchTraArea1("00");
 		
-		List<EducationHrdResponseDTO> responseDTO = dao.getHrdApi("HRDPOA62/HRDPOA62_1.jsp", hrdParam);
+		//파라미터 set하기
+		EducationHrdParamDTO hrdParam = new EducationHrdParamDTO();
+		String trainGb = request.getParameter("trainGb");
+		String urlParam = "";
+		if(trainGb != null) {
+			
+			if(trainGb.equals("11")) {
+				urlParam="HRDPOA60/HRDPOA60_1.jsp";
+				hrdParam.setSrchNcs1(request.getParameter("setSrchNcs1")!=null?request.getParameter("setSrchNcs1"):"");
+			}else {
+				if(trainGb.equals("12")) urlParam="HRDPOA62/HRDPOA62_1.jsp";
+				if(trainGb.equals("13")) urlParam="HRDPOA68/HRDPOA68_1.jsp";
+				if(trainGb.equals("14")) urlParam="HRDPOA69/HRDPOA69_1.jsp";
+				hrdParam.setSrchKeco1(request.getParameter("setSrchNcs1")!=null?request.getParameter("setSrchNcs1"):"");
+			}
+			
+			hrdParam.setPageNum(request.getParameter("pageNum")!=null?request.getParameter("pageNum"):"1");
+			hrdParam.setSort(request.getParameter("sort")!=null?request.getParameter("sort"):"ASC");
+			
+			String srchTraStDt = request.getParameter("srchTraStDt").replace("-","");
+			hrdParam.setSrchTraStDt(srchTraStDt);
+			hrdParam.setSrchTraEndDt("20230810");
+			hrdParam.setSrchTraArea1(request.getParameter("srchTraArea1")!=null?request.getParameter("srchTraArea1"):"");
+			
+			
+			List<EducationHrdResponseDTO> responseDTO = dao.getHrdApi(urlParam, hrdParam);
+			model.addAttribute("responseDTO", responseDTO);
+			model.addAttribute("hrdCount", responseDTO.size());
+			model.addAttribute("hrdParam", hrdParam);
+			
+			//페이징 처리 및 개수세기
+		}
 		
 		return "/education/educationTrain";
 	}

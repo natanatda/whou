@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	
-	<beans:bean id="AptiDAO" class="whou.secproject.repository.AptitudeApiDAO"/>
+
 	<beans:bean id="AptitudeApiTestSJDAO" class="whou.secproject.repository.AptitudeApiTestSJDAO"/>
 	<beans:bean id="EducationApiDAO" class="whou.secproject.repository.EducationApiDAO"/>
 	<beans:bean id="JobInfoDAO" class="whou.secproject.repository.JobInfoApiDAO"/>

@@ -30,7 +30,6 @@
               <header class="pt-5">
             <div class="container px-5">
                 <h2 class="page-title">학과정보</h2>
-                ${paramDTO}
                 <section class="py-5" >
                 	<form method="post" action="majorListSubmit" id="majorListForm">
                 		<input type="hidden" name="perPage" id="perPageInput" >
@@ -166,8 +165,6 @@
                         </select>
                         <button class="square-btn" onclick="submitForm()">적용</button>
                         
-                        <div><i class="fa-solid fa-table-cells fa-lg"></i></div>
-                        <div><i class="fa-solid fa-bars fa-lg"></i></div>
                     </div>
                 </div>
                 

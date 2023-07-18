@@ -17,8 +17,10 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-        <link rel="stylesheet" href="/whou/resources/css/style.css">
+        <link rel="stylesheet" href="/whou/resources/css/style.css?ver=1">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/whou/resources/css/eduDetailStyle.css?ver=2">
+        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     </head>
     
     
@@ -30,117 +32,105 @@
               <header class="pt-5">
             <div class="container px-5">
                 <h2 class="page-title">학과정보</h2>
-                ${paramDTO}
                 <section class="py-5" >
-                	<form method="post" action="majorListSubmit" id="majorListForm">
+                	<form method="post" action="training" id="majorListForm" onsubmit="return trainSubmit();">
                 		<input type="hidden" name="perPage" id="perPageInput" >
                 		<input type="hidden" name="thisPage" id="thisPageInput" >
 	                    <div class="card edu-search-card">
 	                        <div class="card-body">
-	                            <div class="input-group search-form">
-	                                <span class="search-btn"><i class="fa-solid fa-magnifying-glass fa-xl" style="color: #5a3fff;"></i></span>
-	                                <input type="text" class="" name="searchTitle" placeholder="학과명을 입력하세요">
-	                            </div>
-	                            <div class="search-cont" >
-	                                <h5>전공계열<span class="info"><i class="fa-solid fa-circle-info" style="color: #707070;"></i></span></h5>
-	                                <ul class="check-group">
-	                                    <li>
-	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="agree_rule1" ${paramDTO.getSubject().length()>45 ? 'checked' : ''}>
-	                                            <label class="Lbl check-fil check_off" for="agree_rule1">
-	                                            전체
-	                                            </label>                                                  
-	                                        </div>
-	                                    </li>
-	                                    <li>
-	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="agree_rule2" name="subject" value="100391" ${paramDTO.getSubject().contains('100391') ? 'checked' : ''}>
-	                                            <label class="Lbl check-fil check_off" for="agree_rule2">
-	                                            인문계열
-	                                            </label>                                                  
-	                                        </div>
-	                                    </li>
-	                                    <li>
-	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="agree_rule3" name="subject" value="100392" ${paramDTO.getSubject().contains('100392') ? 'checked' : ''}>
-	                                            <label class="Lbl check-fil check_off" for="agree_rule3">
-	                                            사회계열
-	                                            </label>                                                  
-	                                        </div>
-	                                    </li>
-	                                    <li>
-	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="agree_rule4" name="subject" value="100393" ${paramDTO.getSubject().contains('100393') ? 'checked' : ''}>
-	                                            <label class="Lbl check-fil check_off" for="agree_rule4">
-	                                            교육계열
-	                                            </label>                                                  
-	                                        </div>
-	                                    </li>
-	                                    <li>
-	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="agree_rule5" name="subject" value="100394" ${paramDTO.getSubject().contains('100394') ? 'checked' : ''}>
-	                                            <label class="Lbl check-fil check_off" for="agree_rule5">
-	                                            공학계열
-	                                            </label>                                                  
-	                                        </div>
-	                                    </li>
-	                                    <li>
-	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="agree_rule6" name="subject" value="100395" ${paramDTO.getSubject().contains('100395') ? 'checked' : ''}>
-	                                            <label class="Lbl check-fil check_off" for="agree_rule6">
-	                                            자연계열
-	                                            </label>                                                  
-	                                        </div>
-	                                    </li>
-	                                    <li>
-	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="agree_rule7" name="subject" value="100396" ${paramDTO.getSubject().contains('100396') ? 'checked' : ''}>
-	                                            <label class="Lbl check-fil check_off" for="agree_rule7">
-	                                            의약계열
-	                                            </label>                                                  
-	                                        </div>
-	                                    </li>
-	                                    <li>
-	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="agree_rule8" name="subject" value="100397" ${paramDTO.getSubject().contains('100397') ? 'checked' : ''}>
-	                                            <label class="Lbl check-fil check_off" for="agree_rule8">
-	                                            예체능계열
-	                                            </label>                                                  
-	                                        </div>
-	                                    </li>
-	                                </ul>
-	                                <h5>학교유형</h5>
-	                                <ul class="check-group">
-	                                    <li>
-	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="ok_rule1" ${paramDTO.getUnivSe().length()>10 ? 'checked' : ''}>
-	                                            <label class="Lbl check-fil check_off" for="ok_rule1">
-	                                            전체
-	                                            </label>                                                  
-	                                        </div>
-	                                    </li>
-	                                    <li>
-	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="ok_rule2" name="univSe" value="univ" ${paramDTO.getUnivSe().contains('univ') ? 'checked' : ''}>
-	                                            <label class="Lbl check-fil check_off" for="ok_rule2">
-	                                            대학
-	                                            </label>                                                  
-	                                        </div>
-	                                    </li>
-	                                    <li>
-	                                        <div class="InpBox">
-	                                            <input type="checkbox" id="ok_rule3" name="univSe" value="college" ${paramDTO.getUnivSe().contains('college') ? 'checked' : ''}>
-	                                            <label class="Lbl check-fil check_off" for="ok_rule3">
-	                                            전문대학
-	                                            </label>                                                  
-	                                        </div>
-	                                    </li>
-	                                </ul>
-	                            </div>
-	                            <div class="search-bottom">
-	                                <button class="purple-btn">조건검색</button>
-	                            </div>
-	                        </div>
+		                        <div class="edu-train-search-form">
+									<div class="input-group mb-3">
+										<div>
+											<span class="input-group-text" id="basic-addon3">훈련기관명</span>
+											<input type="text" class="form-control" id="basic-url"
+												aria-describedby="basic-addon3" placeholder="훈련기관명을 입력하세요">
+										</div>
+										<div>
+											<span class="input-group-text" id="basic-addon3">훈련과정명</span>
+											<input type="text" class="form-control" id="basic-url"
+												aria-describedby="basic-addon3" placeholder="훈련과정명을 입력하세요">
+										</div>
+									</div>
+								</div>
+									<div class="search-cont">
+										<div class="input-group mb-3">
+											<label class="input-group-text" for="inputGroupSelect01">훈련유형</label>
+											<select name="trainGb" class="form-select" id="inputGroupSelect01">
+												<option>선택 필수 입니다.</option>
+												<option value="11">국민내일배움카드 훈련</option>
+												<option value="12">사업주훈련 훈련</option>
+												<option value="13">국가인적자원개발 컨소시엄 훈련</option>
+												<option value="14">일학습병행 훈련</option>
+											</select>
+										</div>
+										<div class="input-group mb-3">
+											<label class="input-group-text" for="inputGroupSelect01">지역</label>
+											<select name="srchTraArea1" class="form-select" id="inputGroupSelect01">
+												<option></option>
+												<option value="43">경기</option>
+												<option value="50">경남</option>
+												<option value="48">경북</option>
+												<option value="30">광주</option>
+												<option value="28">대구</option>
+												<option value="31">대전</option>
+												<option value="26">부산</option>
+												<option value="11">서울</option>
+												<option value="41">세종</option>
+												<option value="36">울산</option>
+												<option value="29">인천</option>
+												<option value="47">전남</option>
+												<option value="46">전북</option>
+												<option value="51">제주</option>
+												<option value="45">충남</option>
+												<option value="44">충북</option>
+											</select>
+											
+											<label class="input-group-text" for="inputGroupSelect01">직종</label>
+											<select name="setSrchNcs1" class="form-select" id="inputGroupSelect01">
+												<option></option>
+												<option value="01">사업관리</option>
+												<option value="02">경영/회계/사무</option>
+												<option value="03">금융/보험</option>
+												<option value="04">교육/자연/사회과학</option>
+												<option value="05">법률/경찰/소방/교도/국방</option>
+												<option value="06">보건/의료</option>
+												<option value="07">사회복지/종교</option>
+												<option value="08">문화/예술/디자인/방송</option>
+												<option value="09">운전/운송</option>
+												<option value="10">영업판매</option>
+												<option value="11">경비/청소</option>
+												<option value="12">이용/숙박/여행/오락/스포츠</option>
+												<option value="13">음식서비스</option>
+												<option value="14">건설</option>
+												<option value="15">기계</option>
+												<option value="16">재료</option>
+												<option value="17">화학</option>
+												<option value="18">섬유/의복</option>
+												<option value="19">전기/전자</option>
+												<option value="20">정보통신</option>
+												<option value="21">식품가공</option>
+												<option value="22">인쇄/목재/가구/공예</option>
+												<option value="23">환경/에너지/안전</option>
+												<option value="24">농림어업</option>
+											</select>
+										</div>
+										<div class="edu-train-date-input">
+											개강 일자 <input type="date" name="srchTraStDt" id="start-date" onchange="setEndDateSameAsStartDate()">
+											<span class="d-inline-block" tabindex="0"
+												data-bs-toggle="popover" data-bs-trigger="hover focus"
+												data-bs-content="Disabled popover" id="example" data-bs-placement="top" >
+												종강 일자 <input type="date" name="srchTraEndDt" id="end-date" readonly>
+											</span>
+											<button type="button" class="btn btn-outline-secondary" id="btn-one-week">일주일</button>
+											<button type="button" class="btn btn-outline-secondary" id="btn-one-month">한달</button>
+											<button type="button" class="btn btn-outline-secondary" id="btn-three-months">3개월</button>
+										</div>
+									</div>
+
+									<div class="search-bottom">
+										<button class="purple-btn">조건검색</button>
+									</div>
+							</div>
 	                    </div>
                     </form>
                 </section>
@@ -152,57 +142,50 @@
         <section class="py-2 education-section">
             <div class="container px-5 my-5">
                 <div class="result-top">
-                    <p class="result-top-txt">총 <span>${univCount}</span>건이 검색되었습니다</p>
+                    <p class="result-top-txt">
+                    	총 <span>${hrdCount}</span>건이 검색되었습니다.
+                    	(최대 100건까지만 검색 가능합니다.)
+                    </p>
                     <div class="result-top-right">
-                    	<!-- 
                         <select name="" id="">
-                            <option value="">정렬순서</option>
-                        </select>
-                         -->
-                        
-                        <select name="perPage" id="perPageSelect">
-                            <option value="10" ${paramDTO.getPerPage() ne '20' ? 'selected' : ''}>10개씩보기</option>
-                            <option value="20" ${paramDTO.getPerPage() eq '20' ? 'selected' : ''}>20개씩보기</option>
+                            <option value="ASC" ${hrdParam.getSort() eq 'ASC' ? 'selected' : ''}>오름차순(마감일)</option>
+                            <option value="DESC" ${hrdParam.getSort() eq 'DESC' ? 'selected' : ''}>내림차순(마감일)</option>
                         </select>
                         <button class="square-btn" onclick="submitForm()">적용</button>
-                        
-                        <div><i class="fa-solid fa-table-cells fa-lg"></i></div>
-                        <div><i class="fa-solid fa-bars fa-lg"></i></div>
                     </div>
                 </div>
-                
-                <c:if test="${RESULT != null}">
-	                <div class="row justify-content-center">
-		                <c:forEach items="${RESULT}"  var="eachRESULT" varStatus="status">
-		                    <div class="edu-card">
-		                        <div class="edu-item-tit">
-		                            <div>
-		                            	<a href="majorDetail?seq=${eachRESULT.getMajorSeq()}">${eachRESULT.getMClass()}</a> 
-		                            	<span>${eachRESULT.getLClass()}</span>
-		                            </div>
-		                            <!-- <div><span>${eachRESULT.getLClass()}</span></div> -->
-		                        </div>
-		                        <div class="edu-item-cont">
-		                        	<!-- 
-		                            <div class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi magnam, alias ipsa dolor animi corrupti laborum fuga. Incidunt, illo aperiam aut, perspiciatis facere, quisquam at quis omnis sit officia consequuntur.Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi magnam, alias ipsa dolor animi corrupti laborum fuga. Incidunt, illo aperiam aut, perspiciatis facere, quisquam at quis omnis sit officia consequuntur.</div>
-		                             -->
-		                            <div class="disc">관련학과 : ${eachRESULT.getFacilName()}</div>
-		                        </div>
-		                        <!-- 
-		                        <div class="edu-item-bottom">
-		                            <div><i class="fa-solid fa-magnifying-glass" style="color: #707070;"></i> 조회수 : <span>33,042</span></div>
-		                            <div><i class="fa-regular fa-thumbs-up" style="color: #707070;"></i> 추천수 : <span>2</span></div>
-		                        </div>
-		                         -->
-		                    </div>
-	                    </c:forEach>
-		
+
+			
+
+			<c:if test="${responseDTO != null}">
+                <div class="row justify-content-center">
+					<div class="container text-center edu-train-cart-subject">
+						<div class="row">
+							<div class="col">기관명</div>
+							<div class="col-6 edu-train-detail">강의 내용</div>
+							<div class="col"></div>
+						</div>
+					</div>
+	                <c:forEach items="${responseDTO}"  var="eachResponseDTO" varStatus="status">
+						<div class="container text-center edu-train-cart">
+							<div class="row">
+								<div class="col"><h5>${eachResponseDTO.getSubTitle()}</h5></div>
+								<div class="col-6 edu-train-detail">
+									<div><h6>강의명 ${eachResponseDTO.getTitle()}</h6></div>
+									<div><span>지역</span> ${eachResponseDTO.getAddress()}</div>
+									<div><span>기간</span> ${eachResponseDTO.getTraStartDate()} ~ ${eachResponseDTO.getTraEndDate()}</div>
+								</div>
+								<div class="col"><a class="btn btn-primary" href="${eachResponseDTO.getTitleLink()}" target="_blank" role="button">자세히 보기</a></div>
+							</div>
+						</div>
+					</c:forEach>
+			
 	                <div class="pagination">
 					    <nav aria-label="Page navigation">
-						    <c:set var="totalCount" value="${univCount}" />
-						    <c:set var="pageSize" value="${paramDTO.getPerPage()!=null && !paramDTO.getPerPage().isEmpty() ? Integer.parseInt(paramDTO.getPerPage()) : 10 }" />
-						    <c:set var="totalPages" value="${Math.ceil(totalCount / pageSize)}" />
-						    <c:set var="currentPage" value="${paramDTO.getThisPage()!=null && !paramDTO.getThisPage().isEmpty() ? Integer.parseInt(paramDTO.getThisPage()) : 1}" />
+						    <c:set var="totalCount" value="${hrdCount}" />
+							<c:set var="pageSize" value="20" /> <!-- Set page size to 20 -->
+							<c:set var="totalPages" value="${Math.ceil(totalCount / pageSize)}" />
+							<c:set var="currentPage" value="${hrdParam.getPageNum()!=null && !hrdParam.getPageNum().isEmpty() ? Integer.parseInt(hrdParam.getPageNum()) : 1}" />
 						    <ul class="pagination">
 						        <c:if test="${totalPages > 1 && currentPage!=1}">
 						            <li class="page-item">
@@ -263,95 +246,86 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
-    
-    
-    <script>
-
-    	//10개씩 보기, 20개씩 보기 때문에 만든 스크립트
-	    // HTML 코드에서 <select> 요소와 <input> 요소를 가져옵니다.
-	    const selectElement = document.querySelector('#perPageSelect');
-	    const inputPerPageElement = document.querySelector('input[name="perPage"]');
-	    const inputThisPageElement = document.querySelector('input[name="thisPage"]');
-	    const perPageInputElement = document.querySelector('#perPageInput');
-	
-	    // <select> 요소의 값이 변경될 때마다 호출되는 이벤트 핸들러를 설정합니다.
-	    selectElement.addEventListener('change', function() {
-	        // 선택된 <select> 요소의 값으로 <input> 요소의 값을 업데이트합니다.
-	        inputPerPageElement.value = this.value;
-	    });
-	
-	    // 초기에 <select> 요소의 값으로 <input> 요소의 값을 설정
-	    inputPerPageElement.value = selectElement.value;
-	    function submitForm() {
-	        const form = document.getElementById('majorListForm'); // <form> 요소를 가져옵니다.
-	        form.submit(); // <form> 요소를 제출합니다.
-	    }
-	</script>
-	
-	<script>
-	    // 페이지 링크 클릭 시 폼 제출 이벤트 핸들러
-	    function handlePageLinkClick(thisPage) {
-	        // 폼 선택
-	        const form = document.getElementById('majorListForm');
-	        inputThisPageElement.value = thisPage;
-	        form.submit();
-	    }
-	</script>
-	
-	<script>
-		// 학과 상세 클릭하면 상세페이지로 이동
-	    const resultInfoElements = document.querySelectorAll('.result-info');
-	    resultInfoElements.forEach((element) => {
-	        element.addEventListener('click', () => {
-	            const majorSeq = element.dataset.majorseq;
-	            // majorSeq 값을 사용하여 원하는 작업 수행
-	            console.log(majorSeq); // 예시: 콘솔에 값을 로그로 출력
-	            // majorSeq 값을 처리하기 위한 원하는 코드 추가
-	        });
-	    });
-	</script>
-	
-	<script>
-	
-		// 체크박스 전체 선택 및 해제 처리 함수
-		function handleCheckboxToggle(allCheckbox, checkboxes) {
-		    // 전체 체크박스의 변경 이벤트 리스너 추가
-		    allCheckbox.addEventListener('change', function() {
-		        checkboxes.forEach(function(checkbox) {
-		            checkbox.checked = allCheckbox.checked;
-		        });
-		    });
-	
-		    // 개별 체크박스의 변경 이벤트 리스너 추가
-		    checkboxes.forEach(function(checkbox) {
-		        checkbox.addEventListener('change', function() {
-		            if (!checkbox.checked) {
-		                allCheckbox.checked = false;
-		            } else {
-		                // 모든 체크박스가 선택되었는지 확인
-		                const areAllChecked = Array.from(checkboxes).every(function(checkbox) {
-		                    return checkbox.checked;
-		                });
-		                allCheckbox.checked = areAllChecked;
-		            }
-		        });
-		    });
-		}
-	
-		// 학교 유형 체크박스 처리
-		const univAllCheckbox = document.getElementById('ok_rule1');
-		const univCheckboxes = document.querySelectorAll('input[name="univSe"]');
-		handleCheckboxToggle(univAllCheckbox, univCheckboxes);
-	
-		// 전공 유형 체크박스 처리
-		const subjectAllCheckbox = document.getElementById('agree_rule1');
-		const subjectCheckboxes = document.querySelectorAll('input[name="subject"]');
-		handleCheckboxToggle(subjectAllCheckbox, subjectCheckboxes);
-		
-	</script>
 	
 	
-    
-    
-    
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        훈련유형을 선택해주세요.
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </html>
+<script>
+	// 필수값 누락 시 모달창
+	function trainSubmit() {
+		var inputValue = $('select[name=trainGb]').val();
+		if(isNaN(inputValue)){
+			$('#exampleModal').modal('show');
+			return false;
+		}
+   }
+	
+	//종강일자 선택불가 안내 팝오버
+	document.addEventListener('DOMContentLoaded', function() {
+	    const exampleEl = document.getElementById('example');
+	    const popover = new bootstrap.Popover(exampleEl, {
+	      content: "종강 일자는 일주일, 한달, 3개월 버튼으로만 설정 가능합니다.",
+	      trigger: "hover focus"
+	    });
+	  });
+
+	//오늘 날짜를 가져오기 위한 함수
+	document.getElementById('start-date').value = new Date().toISOString().substring(0, 10);
+	document.getElementById('end-date').value = new Date().toISOString().substring(0, 10);
+	
+	// 종강 일자를 개강 일자와 동일하게 설정
+	function setEndDateSameAsStartDate() {
+	      const startDateInput = document.getElementById('start-date');
+	      const endDateInput = document.getElementById('end-date');
+	      endDateInput.value = startDateInput.value;
+   }
+	
+	//jquery 1주일, 1달, 3달 증가 버튼
+	$(document).ready(function() {
+	    $("#btn-one-week").click(function() { updateEndDate(7, "day"); });
+	    $("#btn-one-month").click(function() { updateEndDate(1, "month"); });
+	    $("#btn-three-months").click(function() { updateEndDate(3, "month"); });
+	    
+	 	// 종강 일자를 업데이트
+	    function updateEndDate(interval, unit) {
+	 		//HTML 요소의 값을 가져와서 JavaScript의 Date 객체를 생성
+	        var startDate = new Date($("#start-date").val());
+	        if (!isNaN(startDate.getTime())) {
+	        	// 종강 일자를 일 또는 월 단위로 증가시킴
+	            var endDate = new Date(startDate);
+	            switch (unit) {
+	                case "day":
+	                    endDate.setDate(endDate.getDate() + interval); // 일 단위로 증가
+	                    break;
+	                case "month":
+	                    endDate.setMonth(endDate.getMonth() + interval); // 월 단위로 증가
+	                    break;
+	                default:
+	                    break;
+	            }
+	         	// 종강 일자를 YYYY-MM-DD 형식으로 변환
+	            var endDateFormatted = endDate.toISOString().split("T")[0];
+	            $("#end-date").val(endDateFormatted);
+	        }
+	    }
+	});
+	
+	
+	
+</script>
