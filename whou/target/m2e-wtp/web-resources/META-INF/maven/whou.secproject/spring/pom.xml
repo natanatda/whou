@@ -219,21 +219,25 @@
 		    <version>0.6-8.1</version>
 		</dependency>
 		
+<<<<<<< HEAD
 				<!-- json-simple -->
+=======
+		<!-- json-simple -->
+>>>>>>> aptitude
 		<dependency>
 		    <groupId>com.googlecode.json-simple</groupId>
 		    <artifactId>json-simple</artifactId>
 		    <version>1.1.1</version>
 		</dependency>
 		
-		<!-- JSON parsing-->
+		<!-- JSON parsing -->
 		<dependency>
 		    <groupId>com.google.code.gson</groupId>
 		    <artifactId>gson</artifactId>
 		    <version>2.8.5</version>
 		</dependency>
 		
-		<!-- naver OAuth2.0-->
+		<!-- naver OAuth2.0 -->
 		<dependency>
 			<groupId>com.github.scribejava</groupId>
 			<artifactId>scribejava-core</artifactId>
@@ -272,6 +276,7 @@
 		  <groupId>net.nurigo</groupId>
 		  <artifactId>sdk</artifactId>
 		  <version>4.2.7</version>
+<<<<<<< HEAD
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
 		<dependency>
@@ -280,6 +285,39 @@
 		    <version>3.6.1</version>
 		</dependency>
 					   
+=======
+		</dependency>
+			        
+		<!-- Selenium WebDriver -->
+ 		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>3.141.59</version>
+		</dependency> 
+		
+<!-- 		okhttp3와 selenium 의 충돌로 인증번호가 안오는 문제가 생김. 아래의 버전을 추가함으로써 해결 완료 -->
+<!-- 		https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
+		<dependency>
+		    <groupId>com.squareup.okhttp3</groupId>
+		    <artifactId>okhttp</artifactId>
+		    <version>4.11.0</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.squareup.okio/okio -->
+		<dependency>
+		    <groupId>com.squareup.okio</groupId>
+		    <artifactId>okio</artifactId>
+		    <version>3.4.0</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<dependency>
+		    <groupId>com.google.guava</groupId>
+		    <artifactId>guava</artifactId>
+		    <version>32.1.1-jre</version>
+		</dependency>
+		
+>>>>>>> aptitude
 	</dependencies>
     <build>
         <plugins>

@@ -142,43 +142,7 @@
                                     <button class="black-btn">검사소개</button>
                                     <button class="black-btn">검사결과 예시</button>
                                 </div>
-                                <button class="purple-btn">검사시작</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 직업성숙도검사 -->
-                    <div class="col-lg-6 col-xl-3">
-                        <div class="card mb-5 mb-xl-0 test-cont-wrap">
-                            <div class="card-body p-4">
-                                <h4>직업적성검사</h4>
-                                <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
-                                <div class="d-flex test-cont-info">
-                                    <div>
-                                        <ul>
-                                            <li>중</li>
-                                            <li>20분</li>
-                                            <li>66문항</li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <ul>
-                                            <li>고</li>
-                                            <li>30분</li>
-                                            <li>88문항</li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <ul> 
-                                            <li><i class="fa-regular fa-clock" style="color: #262a31;"></i></li>
-                                            <li><i class="fa-solid fa-file-pen" style="color: #292a31;"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="button-wrap">
-                                    <button class="black-btn">검사소개</button>
-                                    <button class="black-btn">검사결과 예시</button>
-                                </div>
-                                <button class="purple-btn">검사시작</button>
+                                <button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=21'" >검사시작</button>
                             </div>
                         </div>
                     </div>
@@ -186,7 +150,7 @@
                     <div class="col-lg-6 col-xl-3">
                         <div class="card mb-5 mb-xl-0 test-cont-wrap">
                             <div class="card-body p-4">
-                                <h4>직업적성검사</h4>
+                                <h4>직업흥미검사</h4>
                                 <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
                                 <div class="d-flex test-cont-info">
                                     <div>
@@ -214,7 +178,7 @@
                                     <button class="black-btn">검사소개</button>
                                     <button class="black-btn">검사결과 예시</button>
                                 </div>
-                                <button class="purple-btn">검사시작</button>
+                                <button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=31'" >검사시작</button>
                             </div>
                         </div>
                     </div>
@@ -222,7 +186,7 @@
                     <div class="col-lg-6 col-xl-3">
                         <div class="card mb-5 mb-xl-0 test-cont-wrap">
                             <div class="card-body p-4">
-                                <h4>직업적성검사</h4>
+                                <h4>직업가치관검사</h4>
                                 <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
                                 <div class="d-flex test-cont-info">
                                     <div>
@@ -250,7 +214,43 @@
                                     <button class="black-btn">검사소개</button>
                                     <button class="black-btn">검사결과 예시</button>
                                 </div>
-                                <button class="purple-btn">검사시작</button>
+                                <button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=25'" >검사시작</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 직업역량검사 -->
+                    <div class="col-lg-6 col-xl-3">
+                        <div class="card mb-5 mb-xl-0 test-cont-wrap">
+                            <div class="card-body p-4">
+                                <h4>직업역량검사</h4>
+                                <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
+                                <div class="d-flex test-cont-info">
+                                    <div>
+                                        <ul>
+                                            <li>중</li>
+                                            <li>20분</li>
+                                            <li>66문항</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <ul>
+                                            <li>고</li>
+                                            <li>30분</li>
+                                            <li>88문항</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <ul> 
+                                            <li><i class="fa-regular fa-clock" style="color: #262a31;"></i></li>
+                                            <li><i class="fa-solid fa-file-pen" style="color: #292a31;"></i></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="button-wrap">
+                                    <button class="black-btn">검사소개</button>
+                                    <button class="black-btn">검사결과 예시</button>
+                                </div>
+                                <button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=27'" >검사시작</button>
                             </div>
                         </div>
                     </div>

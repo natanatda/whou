@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import whou.secproject.component.AptitudeTestResultResponseDTO;
 import whou.secproject.component.AptitudeTestTemporarySaveDTO;
 import whou.secproject.component.AptitudeTestValueDTO;
+import whou.secproject.component.JobDicListResponseDTO;
+import whou.secproject.component.JobDicParamDTO;
+import whou.secproject.component.RecommandInfoDTO;
 import whou.secproject.repository.AptitudeApiDAO;
+import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.service.AptitudeService;
 
 @Controller
@@ -24,6 +29,9 @@ public class AptitudeController {
 	
 	@Autowired
 	private AptitudeApiDAO dao;
+	
+	@Autowired
+	private JobDicApiDAO daoJob;
 
 	@Autowired
 	private AptitudeService service;
@@ -64,7 +72,10 @@ public class AptitudeController {
 	
 	//크롤링 결과 집어넣기
 	@RequestMapping("/report")
-	public String getAptitudeTestResult(Model model, String countQ, HttpServletRequest request, HttpServletResponse response) {
+	public String getAptitudeTestResult(Model model, String countQ, HttpServletRequest request, HttpServletResponse response, JobDicParamDTO jParam, RecommandInfoDTO dtoRe) {
+		HttpSession session = request.getSession();
+		String memId = (String)session.getAttribute("memId");
+		
 		List<String>answers = new ArrayList<>();
 		String qnum = request.getParameter("qnum");
 		model.addAttribute("qnum", qnum);
@@ -98,14 +109,143 @@ public class AptitudeController {
 		
 		service.crawlingInsert(dto);
 		List<String> reportResult = service.reportView(qnum, dto);
-		model.addAttribute("reportResult", reportResult);
+		List<String[]> reportResultArr = service.crawlingSplitArr(dto,qnum);
+		List<String> testJob = service.crawlingSplitJob(dto,qnum);
 		
+		// 검사 결과지에서 추천을 위해 추천테이블에 넣을 정보
+			// num
+			int userNum = service.userNumSelect(memId);
+			
+			int userCount = service.userNumCount(userNum);
+			if(userCount == 0) {
+				service.userNumInsert(userNum);	
+			}
+			
+			// 흥미검사 결과지의 직업 리스트의 code 추출 - 흥미31
+			StringBuilder sb = new StringBuilder();
+			
+			if(qnum.equals("31")) {
+				dtoRe.setInterest_name1(testJob.get(0));
+				dtoRe.setInterest_name2(testJob.get(1));
+				dtoRe.setInterest_name3(testJob.get(2));
+				System.out.println("@!#@#!@#! : " + testJob);
+				for(int i = 0; i < reportResultArr.size(); i++) {
+					for(int j = 0; j <reportResultArr.get(i).length; j++) {
+						String jobListItem = reportResultArr.get(i)[j].toString();
+//						System.out.println("%%%%%%%%%%%%%%%%%%%%: " + jobListItem);
+						String interesteJob = service.jobSelect(jobListItem);
+						 if(j==0) {
+							 sb.append(interesteJob);
+						  }else{
+							  sb.append(",").append(interesteJob);
+						  }
+					}		
+					if(i == 0) dtoRe.setInterest_job1(sb.toString());	
+					else if(i  == 1) dtoRe.setInterest_job2(sb.toString());
+					else if(i == 2 ) dtoRe.setInterest_job3(sb.toString());
+					System.out.println("%%%%%%%%%%%%%%%%%%%%: "+ sb);
+					sb.delete(0, sb.length());
+				}
+				service.interestUpdate(dtoRe,userNum);
+			}
+			
+		
+			// 적성검사 결과지의 높은 적성 top3 - 적성21
+			if(qnum.equals("21")) {
+				String sortName = "";
+				String sortValue = "";
+				List<String> topList = service.crawlingSplitRank(dto, qnum);
+				int num = 0;
+				for(String list : topList) {
+					sortName = list;
+					sortValue = service.aptdSelect(sortName);
+					jParam.setSearchAptdCodes(sortValue);
+					jParam.setPageIndex("1");
+					JobDicListResponseDTO jdlrDTO = daoJob.getJobDicListSorted(jParam);	
+					int total = jdlrDTO.getCount();
+					int count = total / 10;
+					String [] jobListCd = new String[total];
+
+					
+					for(int i = 1; i <= count+1; i++) {
+						jParam.setPageIndex(i+"");
+//						System.out.println(jParam.getPageIndex());
+						jdlrDTO = daoJob.getJobDicListSorted(jParam);
+						for(int j = 0; j < jdlrDTO.getJobs().size(); j++) {
+							jobListCd[(i-1)*10+j] = jdlrDTO.getJobs().get(j).getJob_cd();
+						}
+					}
+					String jobListCode = String.join(",", jobListCd);
+					if(num == 0) {
+						dtoRe.setAptitude_name1(list);
+						dtoRe.setAptitude_job1(jobListCode);
+					}
+					if(num == 1) {
+						dtoRe.setAptitude_name2(list);
+						dtoRe.setAptitude_job2(jobListCode);
+					}
+					if(num == 2) {
+						dtoRe.setAptitude_name3(list);
+						dtoRe.setAptitude_job3(jobListCode);
+					}
+//					System.out.println("@@@@@@@@@@@@@@@@@@@@ 적성 코드: "+ dtoRe.getAptitude_name1() + " /// " + dtoRe.getAptitude_name2()+ " /// " + dtoRe.getAptitude_name3());
+//					System.out.println("@@@@@@@@@@@@@@@@@@@@ 적성 코드: "+ dtoRe.getAptitude_job1() + " /// " + dtoRe.getAptitude_job2()+ " /// " + dtoRe.getAptitude_job3());
+//					System.out.println("@@@@@@@@@@@@@@@@@@@@ 적성 코드: "+ jobListCode);
+					num++;
+				}
+				service.aptitudeUpdate(dtoRe,userNum);
+			}
+			
+			List<String> updatedList1 = new ArrayList<>();
+			List<String> updatedList2 = new ArrayList<>();
+			List<String> updatedList3 = new ArrayList<>();
+			String[] updatedList4 = new String[13];
+			if (qnum.equals("27")) {
+				// chart 값 추출		
+				for(int i = 4; i <= 10; i += 2) {
+					String element = reportResult.get(i);
+					updatedList1.add(element);
+				}
+				for(int i = 12; i <= 22; i += 2 ) {
+					String element = reportResult.get(i);
+					updatedList2.add(element);
+				}
+			}
+			if (qnum.equals("25")) {
+				for(int j = 0; j <= 12;j++) {
+					for(int i = 3; i <= 14; i++ ) {
+						updatedList4[j] = reportResult.get(i);
+						continue;
+					}
+				}
+				String score = String.join(",", updatedList4);
+				service.valuesUpdate(score, userNum);
+				System.out.println("가치관 점수 12개 :" + score);
+			
+			}
+			
+		model.addAttribute("updatedList1", updatedList1);
+		model.addAttribute("updatedList2", updatedList2);
+		model.addAttribute("updatedList3", updatedList3);	
+		model.addAttribute("reportResult", reportResult);
+		model.addAttribute("reportResultArr", reportResultArr);
+		model.addAttribute("percent",service.crawlingSplit(dto,qnum));
+		model.addAttribute("rank",service.crawlingSplitRank(dto,qnum));
+		model.addAttribute("job",service.crawlingSplitJob(dto,qnum));
+
 		
 		System.out.println(aptiTestResultResponse.getRESULT().getUrl());
 		return "/aptitude/report";
     }
 	
+	@RequestMapping("/test")
+	public String select(HttpServletRequest request) {
+		String qnum = request.getParameter("qnum");
+		AptitudeTestValueDTO dto = new AptitudeTestValueDTO();
+		List<String[]> reportResultArr = service.crawlingSplitArr(dto,qnum);
 	
+		return "dd";
+	}
 	//임시저장하기
 	@RequestMapping("/temporarySave")
 	public String temporaryResult(Model model, String countQ, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -164,4 +304,15 @@ public class AptitudeController {
 		
     	return "/aptitude/aptitudeMain";
 	}
+	
+//	@RequestMapping("/test")
+//	public String test() {
+//		String result = "";
+//		result = service.valuesJob();
+//		service.valuesInsert(result);
+//		return "/test";
+//	}
 }
+
+
+

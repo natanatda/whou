@@ -10,8 +10,8 @@
 	
 	<beans:bean id="AptiDAO" class="whou.secproject.repository.AptitudeApiDAO"/>
 	
-	<beans:bean id="JobInfoDAO" class="whou.secproject.repository.JobInfoApiDAO"/>
-	<beans:bean id="JobDicDAO" class="whou.secproject.repository.JobDicApiDAO"/>
+	<beans:bean id="JobInfoApiDAO" class="whou.secproject.repository.JobInfoApiDAO"/>
+	<beans:bean id="JobDicApiDAO" class="whou.secproject.repository.JobDicApiDAO"/>
 	
 	<beans:bean id="apiKey" class="java.lang.String">
 		<beans:constructor-arg value="c5d2abc17ab413db9d836aa7fcd81714"/>

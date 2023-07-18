@@ -1,6 +1,7 @@
 package whou.secproject.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
@@ -35,7 +36,11 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import whou.secproject.component.JobDicDetailResponseDTO;
+import whou.secproject.component.JobDicDetailResponseDTO.Knowledge;
+import whou.secproject.component.JobDicDetailResponseDTO.Perform_;
 import whou.secproject.component.MemberDTO;
+import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.service.MemberService;
 
 @Controller
@@ -45,21 +50,24 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 	
-	//�쉶�썝媛��엯 �뤌
+	@Autowired
+	private JobDicApiDAO dao;
+	
+	//회원가입 폼
 	@RequestMapping("/joinForm")
 	public String  joinForm() {
 		
 		return "/user/joinForm";
 	}
 	
-	//濡쒓렇�씤 �뤌
+	//로그인 폼
 	@RequestMapping("/login")
 	public String  login() {
 		
 		return "/user/login";
 	}
 	
-	//濡쒓렇�씤
+	//로그인
 	@RequestMapping("/loginPro")
 	public @ResponseBody String  loginPro(String email, String pw, HttpServletRequest request) {
 		String dpw = service.login(email);
@@ -67,12 +75,12 @@ public class MemberController {
 		HttpSession session = request.getSession();
 		if(pw.equals(dpw)) {
 			session.setAttribute("memId", email);
-			System.out.println("鍮꾨쾲 �씪移�");
+			System.out.println("비번 일치");
 		}
 		return dpw;
 	}
 	
-	//硫붿씤�럹�씠吏�(�꽭�뀡�솗�씤)
+	//메인페이지(세션확인)
 	@RequestMapping("/main")
 	public String main(Model model, HttpServletRequest request) throws IOException {
 		HttpSession session = request.getSession();
@@ -82,7 +90,7 @@ public class MemberController {
 		return "/main";
 	}
 	
-	//濡쒓렇�븘�썐
+	//로그아웃
   	@RequestMapping("/logout")
   	public String logout(HttpSession session, HttpServletRequest request, Model model ) {
   	    session.removeAttribute("access_Token");
@@ -90,13 +98,13 @@ public class MemberController {
   		return "/main";
   	}
   	
-  	//�씠硫붿씪 李얘린 �뤌
+  	//이메일 찾기 폼
   	@RequestMapping("/findEmail")
   	public String findEmail(HttpSession session, HttpServletRequest request, Model model ) {
   		return "/user/findEmail";
   	}
   	
-  	//�씠硫붿씪 李얘린
+  	//이메일 찾기
   	@RequestMapping("/findEmailPro")
   	public @ResponseBody String findEmailPro(String name, String tel) {
   		System.out.println(name+" ////// "+tel);
@@ -105,49 +113,49 @@ public class MemberController {
   		if(email != null) {
   	  		type = service.join_type(email);
   		}
-  		if(email == null) { //媛��엯�븳�쟻 �뾾�쓬
+  		if(email == null) { //가입한적 없음
   	  		return "0";
-  		}else if(email != null && type != null) { //�냼�뀥媛��엯
+  		}else if(email != null && type != null) { //소셜가입
   			return "1";
-  		}else{ //�옄泥닿��엯�븿
+  		}else{ //자체가입함
   	  		return email;
   		}
   	}
-  	//�씠硫붿씪 李얘린 寃곌낵
+  	//이메일 찾기 결과
   	@RequestMapping("/findEmailPro2")
   	public String findEmailPro2(Model model,@RequestParam("result") String result) {
   		model.addAttribute("email", result);
   		return "/user/findEmailPro";
   	}
   	
-  	//鍮꾨�踰덊샇 李얘린 �뤌
+  	//비밀번호 찾기 폼
   	@RequestMapping("/findPw")
   	public String findPw(HttpSession session, HttpServletRequest request, Model model ) {
   		return "/user/findPw";
   	}
   	
-  	//鍮꾨�踰덊샇 李얘린
+  	//비밀번호 찾기
   	@RequestMapping("/findPwPro")
   	public @ResponseBody String findPwPro(String email) {
   		String dpw = service.login(email);
   		String type = service.join_type(email);
-  		if(dpw == null && type == null) { //媛��엯�븳�쟻 �뾾�쓬
+  		if(dpw == null && type == null) { //가입한적 없음
   	  		return "0";
-  		}else if(dpw == null && type != null) { //�냼�뀥媛��엯
+  		}else if(dpw == null && type != null) { //소셜가입
   			return "1";
-  		}else { //�옄泥닿��엯�븿
+  		}else { //자체가입함
   	  		return dpw;
   		}
   	}
   	
-  	//鍮꾨�踰덊샇 李얘린 寃곌낵
+  	//비밀번호 찾기 결과
   	@RequestMapping("/findPwPro2")
   	public String findPwPro2(Model model,@RequestParam("result") String result) {
   		model.addAttribute("pw", result);
   		return "/user/findPwPro2";
   	}
 	
-	//�꽕�씠踰� 濡쒓렇�씤
+	//네이버 로그인
 	@RequestMapping("/naver")
     public String naverLogin(HttpServletRequest request) {
         OAuth20Service service = new ServiceBuilder("QWYmFRRrJidAIVICUYXk")
@@ -163,14 +171,14 @@ public class MemberController {
         return "redirect:" + authorizationUrl;
     }
     
-	//�꽕�씠踰� 肄쒕갚
+	//네이버 콜백
     @RequestMapping("/Ncallback")
     public String naverCallback(@RequestParam("code") String code, HttpServletRequest request, Model model) throws IOException, InterruptedException, ExecutionException {
         OAuth20Service serv = (OAuth20Service) request.getSession().getAttribute("oauth2Service");
         
         OAuth2AccessToken accessToken = serv.getAccessToken(code);
         
-        // HttpClient瑜� �궗�슜�븯�뿬 �슂泥��쓣 蹂대깄�땲�떎.
+        // HttpClient를 사용하여 요청을 보냅니다.
         HttpClient httpClient = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet("https://openapi.naver.com/v1/nid/me");
         httpGet.addHeader("X-Naver-Client-Id", "QWYmFRRrJidAIVICUYXk");
@@ -180,19 +188,19 @@ public class MemberController {
         HttpResponse httpResponse = httpClient.execute(httpGet);
         String responseBody = EntityUtils.toString(httpResponse.getEntity());
         
-        // JSON �뙆�떛�쓣 �쐞�븳 ObjectMapper �씤�뒪�꽩�뒪 �깮�꽦
+        // JSON 파싱을 위한 ObjectMapper 인스턴스 생성
         ObjectMapper objectMapper = new ObjectMapper();
 
-        // JSON �뜲�씠�꽣 �뙆�떛
+        // JSON 데이터 파싱
         JsonNode jsonNode = objectMapper.readTree(responseBody);
 
-        // �궗�슜�옄 �젙蹂� 異붿텧
+        // 사용자 정보 추출
         //String id = jsonNode.get("response").get("id").asText();
         String email = jsonNode.get("response").get("email").asText();
         
         System.out.println(jsonNode);
         
-        //�꽭�뀡 �깮�꽦
+        //세션 생성
         HttpSession session = request.getSession();
 		if (email != null) {
 	        model.addAttribute("email", email);
@@ -202,7 +210,7 @@ public class MemberController {
 	        	model.addAttribute("join", 1);
 	        	return "/user/joinForm";
 	        }else if(count == 1) {
-	        	//媛��엯���엯�쓣 寃��궗�빐�꽌 N�씠硫� 濡쒓렇�씤 �븘�땲硫� �떎瑜멸구濡� 媛��엯�뻼�쓬
+	        	//가입타입을 검사해서 N이면 로그인 아니면 다른걸로 가입햇음
 	        	String join = service.join_type(email);
 	        	if(join.equals("N")) {
 	        		session.setAttribute("memId", email);
@@ -219,13 +227,13 @@ public class MemberController {
         return "/main";
     }
     
-    //移댁뭅�삤 濡쒓렇�씤
+    //카카오 로그인
   	@RequestMapping("/kakao")
   	public String login(@RequestParam("code") String code, Model model, HttpServletRequest request) {
   		String access_Token = service.getAccessToken(code);
-  		System.out.println("/////�넗�겙////"+access_Token);
+  		System.out.println("/////토큰////"+access_Token);
   	    String email = service.getUserInfo(access_Token);
-  		System.out.println("�씠硫붿씪------" + email);
+  		System.out.println("이메일------" + email);
   		HttpSession session = request.getSession();
   		if (email != null) {
   	        model.addAttribute("email", email);
@@ -236,7 +244,7 @@ public class MemberController {
   	        	model.addAttribute("join", 1);
   	        	return "/user/joinForm";
   	        }else if(count == 1) {
-  	        	//媛��엯���엯�쓣 寃��궗�빐�꽌 N�씠硫� 濡쒓렇�씤 �븘�땲硫� �떎瑜멸구濡� 媛��엯�뻼�쓬
+  	        	//가입타입을 검사해서 N이면 로그인 아니면 다른걸로 가입햇음
   	        	String join = service.join_type(email);
   	        	System.out.println(join);
   	        	if(join.equals("K")) {
@@ -254,7 +262,7 @@ public class MemberController {
           return "/main";
     }
   		
-	//援ш� 濡쒓렇�씤
+	//구글 로그인
   	@RequestMapping("/google")
   	public String google(Model model, HttpServletRequest request) throws IOException {
 		String googleLoginUrl = "https://accounts.google.com/o/oauth2/auth" +
@@ -262,11 +270,11 @@ public class MemberController {
 		          "&redirect_uri=" + "http://localhost:8080/whou/member/googleLog" +
 		          "&response_type=code" +
 		          "&scope=email profile";
-		System.out.println("援ш� 嫄곗퀜媛�");
+		System.out.println("구글 거쳐감");
 		return "redirect:" + googleLoginUrl;
 	}
   	
-  	//援ш� 濡쒓렇�씤�봽濡�
+  	//구글 로그인프로
   	@RequestMapping("/googleLog")
   	public String googleLog(@RequestParam("code") String authorizationCode, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
   		try {
@@ -280,21 +288,21 @@ public class MemberController {
                       "http://localhost:8080/whou/member/googleLog"
               ).execute();
 
-              // �젒洹� �넗�겙 媛��졇�삤湲�
+              // 접근 토큰 가져오기
               String accessToken = tokenResponse.getAccessToken();
               System.out.println(accessToken);
               
-              // �젒洹� �넗�겙�쑝濡� �젙蹂� 媛��졇�삤湲�
+              // 접근 토큰으로 정보 가져오기
               ResponseEntity<String> json = service.getInfo(accessToken);
               System.out.println(json);
               
-              // �쉶�썝 �젙蹂� �뙆�떛
+              // 회원 정보 파싱
               JsonParser jsonParser = new JsonParser();
               JsonObject jsonObject = jsonParser.parse(json.getBody()).getAsJsonObject();
 
               String email = jsonObject.get("email").getAsString();
               
-              //�꽭�뀡 �깮�꽦
+              //세션 생성
               HttpSession session = request.getSession();
 	      	  if (email != null) {
 	      	      model.addAttribute("email", email);
@@ -305,7 +313,7 @@ public class MemberController {
 	      	        	model.addAttribute("join", 1);
 	      	        	return "/user/joinForm";
 	      	      }else if(count == 1) {
-	      	        	//媛��엯���엯�쓣 寃��궗�빐�꽌 N�씠硫� 濡쒓렇�씤 �븘�땲硫� �떎瑜멸구濡� 媛��엯�뻼�쓬
+	      	        	//가입타입을 검사해서 N이면 로그인 아니면 다른걸로 가입햇음
 	      	        	String join = service.join_type(email);
 	      	        	if(join.equals("G")) {
 	      	        		session.setAttribute("memId", email);
@@ -319,13 +327,13 @@ public class MemberController {
 	      	  }else if(email == null){
 	      	    	return "/user/joinForm";
 	      	  }
-	              return "/main"; // �씤利앹씠 �꽦怨듯븳 寃쎌슦 由щ뵒�젆�뀡�븷 �럹�씠吏�
+	              return "/main"; // 인증이 성공한 경우 리디렉션할 페이지
 	       } catch (IOException e) {
-	              // �삁�쇅 泥섎━
-	              return "redirect:/error"; // �씤利앹씠 �떎�뙣�븳 寃쎌슦 由щ뵒�젆�뀡�븷 �럹�씠吏�
+	              // 예외 처리
+	              return "redirect:/error"; // 인증이 실패한 경우 리디렉션할 페이지
 	       }
   	}
-  	//以묐났�솗�씤 & 異붽��젙蹂�
+  	//중복확인 & 추가정보
   	@PostMapping("/check")
   	public @ResponseBody int check(MemberDTO dto, HttpSession session) {
   	    System.out.println(dto);
@@ -340,7 +348,6 @@ public class MemberController {
   	        
   	    }else if(count == 0 && check == 0){
   	    	result = 0;
-  	    	System.out.println(dto.getBirth_year());
   	    	service.insertPro(dto);
   		  	service.insert2(dto.getEmail());
   	        session.setAttribute("memId", dto.getEmail());
@@ -351,7 +358,7 @@ public class MemberController {
   	
   	@RequestMapping("/telChk")
   	public @ResponseBody String telChk(String tel) {
-        Random rand  = new Random(); //�옖�뜡�닽�옄 �깮�꽦�븯湲� !!
+        Random rand  = new Random(); //랜덤숫자 생성하기 !!
         String numStr = "";
         for(int i=0; i<4; i++) {
             String ran = Integer.toString(rand.nextInt(10));
@@ -368,5 +375,40 @@ public class MemberController {
         System.out.println(result);
         return result;
     }
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+//    @RequestMapping("/info")
+//    public String JobDicInfo(HttpServletRequest request, Model model) {
+//       int seq = -1;
+//       String strSeq= request.getParameter("job_cd");
+//       JobDicDetailResponseDTO jobDetail = null;
+//       if(strSeq!=null) 
+//          seq = Integer.parseInt(strSeq);
+//       
+//       System.out.println("seq == " +seq);
+//       jobDetail= dao.getJobDicDetail(seq);
+//       //System.out.println("////////// " + jobDetail);// dto.work
+//       List<JobDicDetailResponseDTO.Work> workList = jobDetail.getWorkList(); 
+//       String link = jobDetail.getCertiList().get(0).getLink();
+//       List<Knowledge> knowledge = jobDetail.getPerform().getKnowledge();
+//       //Object p = jobDetail.getPerform().getPerform_();
+//
+//      
+//      //System.out.println(knowledge);
+//      //      JobDicDetailResponseDTO.BaseInfo baseInfo = jobDetail.getBaseInfo(); 
+////       for(int i=0; i<jobDetail.getWorkList().size(); i++)
+////          System.out.println(jobDetail.getWorkList().get(i).getWork());
+//       model.addAttribute("jobDetail", jobDetail);
+//       return "/job/description-detail";
+//    }
+    
   
 }
