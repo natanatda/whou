@@ -94,7 +94,7 @@
 		                            </table>
 		                        </div>      
 	                        </c:if>  
-	                          <c:if test="${qnum eq '31' || qnum == '31'}">
+	                        <c:if test="${qnum eq '31' || qnum == '31'}">
 		                        <div class="table-wrap desc-table">
 		                            <table>
 		                                <colgroup>
@@ -178,57 +178,58 @@
 		                                    </tr>
 		                                </tbody>
 		                            </table>
-		                        </div>      
+		                        </div>   
+		                         <div class="card">
+				                    <div class="card-body">
+				                        <h3 class="num-title"><span>03</span> 직업추천</h3>
+				                        <div class="table-wrap rcd-table">
+				                            <table>
+				                                <thead>
+				                                    <tr>
+				                                        
+					                                    <c:forEach var="job" items="${job}" >
+					                               		     <th>${job}</th>                    
+					                            		</c:forEach> 
+				                                    </tr>
+				                                </thead>
+				                                <tbody>
+				                                    <tr>
+				                                        <td><div>관련 직업</div></td>
+				                                        <td><div>관련 직업</div></td>
+				                                        <td><div>관련 직업</div></td>
+				                                    </tr>
+				                                    <tr>
+				                                        <td>
+				                                            <ul>
+																<c:forEach var="jobList" items="${reportResultArr.get(0)}" >
+					                                                <li>${jobList}</li>
+					                                            </c:forEach>
+				                                            </ul>
+				                                        </td>
+				                                        <td>
+				                                            <ul>
+				                                                <c:forEach var="jobList" items="${reportResultArr.get(1)}" >
+					                                                <li>${jobList}</li>
+					                                            </c:forEach>
+				                                            </ul>
+				                                        </td>
+				                                        <td>
+				                                            <ul>
+				                                                <c:forEach var="jobList" items="${reportResultArr.get(2)}" >
+					                                                <li>${jobList}</li>
+					                                            </c:forEach>
+				                                            </ul>
+				                                        </td>
+				                                    </tr>
+				                                </tbody>
+				                            </table>
+				                        </div>
+				                    </div>
+				                </div>   
 	                        </c:if>                      
 	                    </div>
 	                </div>
-	                <div class="card">
-	                    <div class="card-body">
-	                        <h3 class="num-title"><span>03</span> 직업추천</h3>
-	                        <div class="table-wrap rcd-table">
-	                            <table>
-	                                <thead>
-	                                    <tr>
-	                                        
-		                                    <c:forEach var="job" items="${job}" >
-		                               		     <th>${job}</th>                    
-		                            		</c:forEach> 
-	                                    </tr>
-	                                </thead>
-	                                <tbody>
-	                                    <tr>
-	                                        <td><div>관련 직업</div></td>
-	                                        <td><div>관련 직업</div></td>
-	                                        <td><div>관련 직업</div></td>
-	                                    </tr>
-	                                    <tr>
-	                                        <td>
-	                                            <ul>
-													<c:forEach var="jobList" items="${reportResultArr.get(0)}" >
-		                                                <li>${jobList}</li>
-		                                            </c:forEach>
-	                                            </ul>
-	                                        </td>
-	                                        <td>
-	                                            <ul>
-	                                                <c:forEach var="jobList" items="${reportResultArr.get(1)}" >
-		                                                <li>${jobList}</li>
-		                                            </c:forEach>
-	                                            </ul>
-	                                        </td>
-	                                        <td>
-	                                            <ul>
-	                                                <c:forEach var="jobList" items="${reportResultArr.get(2)}" >
-		                                                <li>${jobList}</li>
-		                                            </c:forEach>
-	                                            </ul>
-	                                        </td>
-	                                    </tr>
-	                                </tbody>
-	                            </table>
-	                        </div>
-	                    </div>
-	                </div>
+	               
 	            </c:if>
 	    
               <c:if test="${qnum eq '25' || qnum == '25'}">
@@ -581,7 +582,7 @@
 	            var myChart3 = new Chart(ctx3, {
 	                type: 'radar',
 	                data: {
-	                    labels:['낙관성', '지속성', '호기심', '유연성','도전성','의사소통', '지속성', '호기심', '유연성','도전성','의사소통','의사소통'],
+	                    labels:['안정성', '보수', '일과 삶의 균형', '즐거움','소속감','자기계발', '도전성', '영향력', '사회적 기여','성취','사회적 인정','자율성'],
 	                    datasets: [
 	                    {
 	                        data: data3,

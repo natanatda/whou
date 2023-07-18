@@ -41,6 +41,7 @@ import whou.secproject.component.JobDicDetailResponseDTO.Knowledge;
 import whou.secproject.component.JobDicDetailResponseDTO.Perform_;
 import whou.secproject.component.MemberDTO;
 import whou.secproject.repository.JobDicApiDAO;
+import whou.secproject.service.AptitudeService;
 import whou.secproject.service.MemberService;
 
 @Controller
@@ -49,6 +50,9 @@ public class MemberController {
 
 	@Autowired
 	private MemberService service;
+	
+	@Autowired
+	private AptitudeService serviceAt;
 	
 	@Autowired
 	private JobDicApiDAO dao;
@@ -350,7 +354,11 @@ public class MemberController {
   	    	result = 0;
   	    	service.insertPro(dto);
   		  	service.insert2(dto.getEmail());
-  	        session.setAttribute("memId", dto.getEmail());
+  		  	String memId = dto.getEmail();
+  	        session.setAttribute("memId", memId);
+  	        // 회원가입 성공 시 테이블 3개 생성
+  	        int userNum = serviceAt.userNumSelect(memId);
+  	        serviceAt.createTableSet(userNum);
   	    }
   	    System.out.println(result);
   	    return result;

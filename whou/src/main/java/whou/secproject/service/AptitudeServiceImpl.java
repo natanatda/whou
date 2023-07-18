@@ -302,18 +302,18 @@ public class AptitudeServiceImpl implements AptitudeService{
 	    if (qnum.equals("21")) {
 	        // dto 객체의 Test31_2 필드 값을 "+"를 기준으로 나눕니다.
 	        String[] array = dto.getTest21_2().toString().split("\\+");
-	        
-	        // 나눈 각 값을 반복하여 처리합니다.
-	        for(String num : array) {
-	            // 문자열을 실수로 변환하고 10을 곱합니다.
-	            double value = Double.parseDouble(num.trim()) * 10;
-	            
-	            // 실수를 정수로 변환합니다.
-	            int intValue = (int) value;
-	            
-	            // 변환한 정수 값을 resultList에 추가합니다.
-	            resultList.add(String.valueOf(intValue));
-	        }
+	        resultList = Arrays.asList(array);
+//	        // 나눈 각 값을 반복하여 처리합니다.
+//	        for(String num : array) {
+//	            // 문자열을 실수로 변환하고 10을 곱합니다.
+//	            double value = Double.parseDouble(num.trim()) * 10;
+//	            
+//	            // 실수를 정수로 변환합니다.
+//	            int intValue = (int) value;
+//	            
+//	            // 변환한 정수 값을 resultList에 추가합니다.
+//	            resultList.add(String.valueOf(intValue));
+//	        }
 	    }
 	    
 	    // qnum이 "31"인 경우 실행합니다.
@@ -418,8 +418,8 @@ public class AptitudeServiceImpl implements AptitudeService{
 	
 	//크롤링한 거 DB에 넣기
 	@Override
-	public void crawlingInsert(AptitudeTestValueDTO dto) {
-		mapper.crawlingInsert(dto);
+	public void crawlingInsert(AptitudeTestValueDTO dto, int userNum) {
+		mapper.crawlingInsert(dto, userNum);
 	}
 	
 	
@@ -471,9 +471,13 @@ public class AptitudeServiceImpl implements AptitudeService{
 		return result;
 	}
 	
+	
+
 	// 검사지 임시 저장
 	@Override
-	public void temporarySaveInsert(List<String> answers, AptitudeTestTemporarySaveDTO dto, String qnum) {
+	public void temporarySaveInsert(List<String> answers, AptitudeTestTemporarySaveDTO dto, String qnum, int userNum) {
+		
+		System.out.println("테이블 새로 만듦"+userNum);
 		StringBuilder answer = new StringBuilder();
 		for(int i = 0; i<answers.size(); i++) {
 	    	answer.append(i+1).append("=").append(answers.get(i)).append(" ");
@@ -500,7 +504,7 @@ public class AptitudeServiceImpl implements AptitudeService{
 	    }
 	    dto.setTest_name(testName);
 	    
-	    mapper.temporarySaveInsert(dto);
+	    mapper.temporarySaveInsert(dto, userNum);
 	}
 
 	
@@ -518,13 +522,13 @@ public class AptitudeServiceImpl implements AptitudeService{
 
 	//임시저장한 검사지를 제출하면 DB에서 삭제
 	@Override
-	public void temporarySaveDelete(int test_num) {
-		mapper.temporarySaveDelete(test_num);		
+	public void temporarySaveDelete(int test_num, int userNum) {
+		mapper.temporarySaveDelete(test_num, userNum);
 	}
 	
 	//임시저장한 검사지를 다시 임시저장하면, DB 업데이트
 	@Override
-	public void temporarySaveUpdate(List<String> answers, AptitudeTestTemporarySaveDTO dto, String qnum) {
+	public void temporarySaveUpdate(List<String> answers, AptitudeTestTemporarySaveDTO dto, String qnum, int userNum) {
 		StringBuilder answer = new StringBuilder();
 	    for(int i = 0; i<answers.size(); i++) {
 	    	answer.append(i+1).append("=").append(answers.get(i)).append(" ");
@@ -537,7 +541,7 @@ public class AptitudeServiceImpl implements AptitudeService{
 	    dto.setTest_num(Integer.parseInt(qnum));
 	    dto.setTest_answers(answer.toString());
 	    
-		mapper.temporarySaveUpdate(dto);
+		mapper.temporarySaveUpdate(dto, userNum);
 	}
 	
 	// 추천 테이블을 위한 작업
@@ -807,4 +811,17 @@ public class AptitudeServiceImpl implements AptitudeService{
 	}
 	
 
+	// 세션으로 이름 꺼내기
+	@Override
+	public String getName(String memId) {
+		return mapper.getName(memId);
+	}
+	
+	// 회원가입시 테이블 만들기 
+	@Override
+	public void createTableSet(int userNum) {
+		mapper.createUserTable(userNum);
+		mapper.createSequence(userNum);
+		mapper.createuSaveTable(userNum);
+	}
 }
