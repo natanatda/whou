@@ -4,9 +4,72 @@
   "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
 <mapper namespace="whou.secproject.mapper.AptitudeMapper">
 	
+	<!-- 회원가입 시 회원 num으로 테이블 생성 -->
+	<insert id="createUserTable">
+		create table user${userNum}_test_result(
+			index_num number not null primary key,
+			test_num number,
+			test_answers varchar2(4000),
+			test_date date default sysdate,
+			test21_1 varchar2(4000),
+			test21_2 varchar2(4000),
+			test21_3 varchar2(4000),
+			test21_4 varchar2(4000),
+			test21_5 varchar2(4000),
+			test21_6 varchar2(4000),
+			test21_7 varchar2(4000),
+			test21_8 varchar2(4000),
+			test21_9 varchar2(4000),
+			test21_10 varchar2(4000),
+			test25_1 varchar2(4000),
+			test25_2 varchar2(4000),
+			test25_3 varchar2(4000),
+			test25_4 varchar2(4000),
+			test25_5 varchar2(4000),
+			test25_6 varchar2(4000),
+			test25_7 varchar2(4000),
+			test25_8 varchar2(4000),
+			test25_9 varchar2(4000),
+			test25_10 varchar2(4000),
+			test27_1 varchar2(4000),
+			test27_2 varchar2(4000),
+			test27_3 varchar2(4000),
+			test27_4 varchar2(4000),
+			test27_5 varchar2(4000),
+			test27_6 varchar2(4000),
+			test27_7 varchar2(4000),
+			test27_8 varchar2(4000),
+			test27_9 varchar2(4000),
+			test27_10 varchar2(4000),
+			test31_1 varchar2(4000),
+			test31_2 varchar2(4000),
+			test31_3 varchar2(4000),
+			test31_4 varchar2(4000),
+			test31_5 varchar2(4000),
+			test31_6 varchar2(4000),
+			test31_7 varchar2(4000),
+			test31_8 varchar2(4000),
+			test31_9 varchar2(4000),
+			test31_10 varchar2(4000)
+		)
+	</insert>
+	
+	 <insert id="createSequence">
+        CREATE SEQUENCE user${userNum}_test_result_seq
+    </insert>
+    
+    <insert id="createuSaveTable">
+		create table user${userNum}_test_temporary_save(
+			test_num number not null primary key,
+			test_name varchar2(1000),
+			test_answers varchar2(4000),
+			test_date date default sysdate
+		)
+    </insert>
+	
 	<!-- 크롤링한 직업검사 결과를 DB에 insert -->
 	<insert id="crawlingInsert">
-		insert into user1_test_result (
+		insert into user${userNum}_test_result (
 			index_num, test_num, test_answers, test_date,
 			test21_1, test21_2, test21_3, test21_4, test21_5,test21_6, test21_7, test21_8, test21_9, test21_10,
 			test25_1, test25_2, test25_3, test25_4, test25_5,test25_6, test25_7, test25_8, test25_9, test25_10,
@@ -14,20 +77,20 @@
 			test31_1, test31_2, test31_3, test31_4, test31_5,test31_6, test31_7, test31_8, test31_9, test31_10
 		)
 		values (
-			user1_test_result_seq.nextval, #{test_num}, #{test_answers}, sysdate,
-			#{test21_1}, #{test21_2}, #{test21_3}, #{test21_4},	#{test21_5},#{test21_6}, #{test21_7}, #{test21_8}, #{test21_9},	#{test21_10},
-			#{test25_1}, #{test25_2}, #{test25_3}, #{test25_4},	#{test25_5},#{test25_6}, #{test25_7}, #{test25_8}, #{test25_9},	#{test25_10},
-			#{test27_1}, #{test27_2}, #{test27_3}, #{test27_4},	#{test27_5},#{test27_6}, #{test27_7}, #{test27_8}, #{test27_9},	#{test27_10},
-			#{test31_1}, #{test31_2}, #{test31_3}, #{test31_4},	#{test31_5},#{test31_6}, #{test31_7}, #{test31_8}, #{test31_9},	#{test31_10}
+			user${userNum}_test_result_seq.nextval, #{dto.test_num}, #{dto.test_answers}, sysdate,
+			#{dto.test21_1}, #{dto.test21_2}, #{dto.test21_3}, #{dto.test21_4},	#{dto.test21_5},#{dto.test21_6}, #{dto.test21_7}, #{dto.test21_8}, #{dto.test21_9},	#{dto.test21_10},
+			#{dto.test25_1}, #{dto.test25_2}, #{dto.test25_3}, #{dto.test25_4},	#{dto.test25_5},#{dto.test25_6}, #{dto.test25_7}, #{dto.test25_8}, #{dto.test25_9},	#{dto.test25_10},
+			#{dto.test27_1}, #{dto.test27_2}, #{dto.test27_3}, #{dto.test27_4},	#{dto.test27_5},#{dto.test27_6}, #{dto.test27_7}, #{dto.test27_8}, #{dto.test27_9},	#{dto.test27_10},
+			#{dto.test31_1}, #{dto.test31_2}, #{dto.test31_3}, #{dto.test31_4},	#{dto.test31_5},#{dto.test31_6}, #{dto.test31_7}, #{dto.test31_8}, #{dto.test31_9},	#{dto.test31_10}
 		)
 	</insert>
 	
 	<!-- 임시저장한 직업검사 결과를 DB에 insert -->
 	<insert id="temporarySaveInsert">
-		INSERT INTO user1_test_temporary_save (
+		INSERT INTO user${userNum}_test_temporary_save (
 			test_num, test_name, test_answers, test_date
 		)VALUES(
-			#{test_num}, #{test_name}, #{test_answers}, sysdate
+			#{dtoSv.test_num}, #{dtoSv.test_name}, #{dtoSv.test_answers}, sysdate
 		)
 	</insert>
 	
@@ -39,7 +102,7 @@
 	
 	<!-- 모든 임시저장 값 -->
 	<select id="getTemporarySave" resultType="whou.secproject.component.AptitudeTestTemporarySaveDTO">
-		SELECT * FROM user1_test_temporary_save
+		SELECT * FROM user${userName}_test_temporary_save
 		<where>
 			<if test="test_num > 0">
 				test_num = ${test_num}
@@ -51,14 +114,14 @@
 	
 	<!-- 임시저장의 test_num이 같으면 업데이트  -->
 	<update id="temporarySaveUpdate">
-		UPDATE user1_test_temporary_save 
-			SET test_answers=#{test_answers}, test_date=sysdate 
-			WHERE test_num=#{test_num}
+		UPDATE user${userNum}_test_temporary_save 
+			SET test_answers=#{dtoSv.test_answers}, test_date=sysdate 
+			WHERE test_num=#{dtoSv.test_num}
 	</update>
 	
 	<!-- 임시저장한 검사를 제출했다면 삭제  -->
 	<delete id="temporarySaveDelete">
-		DELETE FROM user1_test_temporary_save WHERE test_num=#{test_num}
+		DELETE FROM user${userNum}_test_temporary_save WHERE test_num=#{test_num}
 	</delete>
 	
 	<!-- userNum 검색 -->
@@ -112,5 +175,10 @@
 	<update id="valuesUpdate">
 		UPDATE recommand_info SET values_score=#{score} WHERE num=#{userNum}
 	</update>
+	
+	<!-- 세션으로 이름 꺼내기 -->
+	<select id="getName" resultType="String">
+		SELECT name FROM whou_user WHERE email = #{memId}
+	</select>
 	
 </mapper>

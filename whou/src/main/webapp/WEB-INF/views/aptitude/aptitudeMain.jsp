@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,11 +19,14 @@
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
     </head>
- 
 <body>
+      <script>
+         <c:if test="${param.temporaryResult eq 'okSave' || param.temporaryResult=='okSave'}">
+            alert('검사지가 임시저장 되었습니다.');
+         </c:if>
+      </script>
         <!-- Responsive navbar-->
        <%@ include file="../header.jsp" %>     
-    
              <section class="py-2 aptitude aptitude-main">
             <div class="container px-5 my-5">
                 <h2 class="page-title">심리검사</h2>
@@ -40,12 +45,19 @@
                            <div>
                                 <p class="status-title">진행(임시저장) 중 인 검사</p>
                                 <div>
-                                    <i class="fa-regular fa-circle-xmark fa-2xl" style="color: #363636;"></i>
-                                    <p>진행중인 검사가 없습니다.</p>
+                                   <c:if test="${fn:length(tempList) == 0}">
+                                       <i class="fa-regular fa-circle-xmark fa-2xl" style="color: #363636;"></i>
+                                       <p>진행중인 검사가 없습니다.</p>
+                                    </c:if>
+                                    <c:if test="${fn:length(tempList) > 0}">
+                                       <c:forEach items="${tempList}" var="templist">
+                                          <a href="/whou/aptitude/itrstkAptitude?qnum=${templist.test_num}&tempSave=tempSave">${templist.test_name}</a> <br>
+                                       </c:forEach>
+                                    </c:if>
                                 </div>
                            </div>
                            <div>
-                                <p class="status-title">OO님의 심리검사 현황</p>
+                                <p class="status-title">${name}님의 심리검사 현황</p>
                                 <div class="table-wrap status-table">
                                     <table>
                                         <colgroup>
@@ -67,16 +79,16 @@
                                                     검사횟수
                                                 </td>
                                                 <td>
-                                                    -
+                                                    ${valueList[0].getCount()}
                                                 </td>
                                                 <td>
-                                                    -
+                                                    ${valueList[1].getCount()}
                                                 </td>
                                                 <td>
-                                                    -
+                                                    ${valueList[3].getCount()}
                                                 </td>
                                                 <td>
-                                                    -
+                                                    ${valueList[2].getCount()}
                                                 </td>                                    
                                             </tr>
                                             <tr>
@@ -84,16 +96,16 @@
                                                     최근검사일
                                                 </td>
                                                 <td>
-                                                    -
+                                                    ${valueList[0].getMax_test_date()}
                                                 </td>
                                                 <td>
-                                                    -
+                                                    ${valueList[1].getMax_test_date()}
                                                 </td>
                                                 <td>
-                                                    -
+                                                    ${valueList[2].getMax_test_date()}
                                                 </td>
                                                 <td>
-                                                    -
+                                                    ${valueList[3].getMax_test_date()}
                                                 </td>                                    
                                             </tr>
                                         </tbody>
@@ -142,7 +154,43 @@
                                     <button class="black-btn">검사소개</button>
                                     <button class="black-btn">검사결과 예시</button>
                                 </div>
-                                <button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=21'" >검사시작</button>
+                                <button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=21'">검사시작</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 직업성숙도검사 -->
+                    <div class="col-lg-6 col-xl-3">
+                        <div class="card mb-5 mb-xl-0 test-cont-wrap">
+                            <div class="card-body p-4">
+                                <h4>직업적성검사</h4>
+                                <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
+                                <div class="d-flex test-cont-info">
+                                    <div>
+                                        <ul>
+                                            <li>중</li>
+                                            <li>20분</li>
+                                            <li>66문항</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <ul>
+                                            <li>고</li>
+                                            <li>30분</li>
+                                            <li>88문항</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <ul> 
+                                            <li><i class="fa-regular fa-clock" style="color: #262a31;"></i></li>
+                                            <li><i class="fa-solid fa-file-pen" style="color: #292a31;"></i></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="button-wrap">
+                                    <button class="black-btn">검사소개</button>
+                                    <button class="black-btn">검사결과 예시</button>
+                                </div>
+                                <button class="purple-btn">검사시작</button>
                             </div>
                         </div>
                     </div>
@@ -150,7 +198,7 @@
                     <div class="col-lg-6 col-xl-3">
                         <div class="card mb-5 mb-xl-0 test-cont-wrap">
                             <div class="card-body p-4">
-                                <h4>직업흥미검사</h4>
+                                <h4>직업적성검사</h4>
                                 <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
                                 <div class="d-flex test-cont-info">
                                     <div>
@@ -178,7 +226,7 @@
                                     <button class="black-btn">검사소개</button>
                                     <button class="black-btn">검사결과 예시</button>
                                 </div>
-                                <button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=31'" >검사시작</button>
+                                <button class="purple-btn">검사시작</button>
                             </div>
                         </div>
                     </div>
@@ -186,7 +234,7 @@
                     <div class="col-lg-6 col-xl-3">
                         <div class="card mb-5 mb-xl-0 test-cont-wrap">
                             <div class="card-body p-4">
-                                <h4>직업가치관검사</h4>
+                                <h4>직업적성검사</h4>
                                 <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
                                 <div class="d-flex test-cont-info">
                                     <div>
@@ -214,43 +262,7 @@
                                     <button class="black-btn">검사소개</button>
                                     <button class="black-btn">검사결과 예시</button>
                                 </div>
-                                <button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=25'" >검사시작</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 직업역량검사 -->
-                    <div class="col-lg-6 col-xl-3">
-                        <div class="card mb-5 mb-xl-0 test-cont-wrap">
-                            <div class="card-body p-4">
-                                <h4>직업역량검사</h4>
-                                <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
-                                <div class="d-flex test-cont-info">
-                                    <div>
-                                        <ul>
-                                            <li>중</li>
-                                            <li>20분</li>
-                                            <li>66문항</li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <ul>
-                                            <li>고</li>
-                                            <li>30분</li>
-                                            <li>88문항</li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <ul> 
-                                            <li><i class="fa-regular fa-clock" style="color: #262a31;"></i></li>
-                                            <li><i class="fa-solid fa-file-pen" style="color: #292a31;"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="button-wrap">
-                                    <button class="black-btn">검사소개</button>
-                                    <button class="black-btn">검사결과 예시</button>
-                                </div>
-                                <button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=27'" >검사시작</button>
+                                <button class="purple-btn">검사시작</button>
                             </div>
                         </div>
                     </div>

@@ -46,13 +46,9 @@ public class AptitudeController {
 	    model.addAttribute("qnum", qnum);
 	    
 	    //임시 저장한 설문지로 들어온 경우
-	    String tempSave="";
-	    tempSave = request.getParameter("tempSave");
+	    String tempSave= request.getParameter("tempSave")!= null?request.getParameter("tempSave"):"";
+//	    tempSave = request.getParameter("tempSave");
 	    List<String> arrList = new ArrayList<>();
-	    
-	    if(tempSave == null) {
-	    	tempSave="";
-	    }
 	    
 	    if(tempSave.equals("tempSave")) {
 	    	List<AptitudeTestTemporarySaveDTO> tempList = null;
@@ -75,6 +71,8 @@ public class AptitudeController {
 	public String getAptitudeTestResult(Model model, String countQ, HttpServletRequest request, HttpServletResponse response, JobDicParamDTO jParam, RecommandInfoDTO dtoRe) {
 		HttpSession session = request.getSession();
 		String memId = (String)session.getAttribute("memId");
+		// user_info 테이블에서 세션에 해당하는 num 추출
+		int userNum = service.userNumSelect(memId);
 		
 		List<String>answers = new ArrayList<>();
 		String qnum = request.getParameter("qnum");
@@ -95,7 +93,7 @@ public class AptitudeController {
 		//임시 저장한 것을 불러와 제출한 경우
 		String tempSave = request.getParameter("tempSave");
 		if(tempSave.equals("tempSave")) {
-			service.temporarySaveDelete(Integer.parseInt(qnum));
+			service.temporarySaveDelete(Integer.parseInt(qnum), userNum);
 		}
 		
 		
@@ -107,14 +105,13 @@ public class AptitudeController {
 		dto.setTest_num(Integer.parseInt(qnum));
 		dto.setTest_answers(answers.toString());
 		
-		service.crawlingInsert(dto);
+		service.crawlingInsert(dto, userNum);
 		List<String> reportResult = service.reportView(qnum, dto);
 		List<String[]> reportResultArr = service.crawlingSplitArr(dto,qnum);
 		List<String> testJob = service.crawlingSplitJob(dto,qnum);
 		
 		// 검사 결과지에서 추천을 위해 추천테이블에 넣을 정보
-			// num
-			int userNum = service.userNumSelect(memId);
+		
 			
 			int userCount = service.userNumCount(userNum);
 			if(userCount == 0) {
@@ -218,6 +215,10 @@ public class AptitudeController {
 						continue;
 					}
 				}
+				for(int i = 3; i < 15;i++) {
+					String element = reportResult.get(i);
+					updatedList3.add(element);
+				}
 				String score = String.join(",", updatedList4);
 				service.valuesUpdate(score, userNum);
 				System.out.println("가치관 점수 12개 :" + score);
@@ -237,11 +238,19 @@ public class AptitudeController {
 		System.out.println(aptiTestResultResponse.getRESULT().getUrl());
 		return "/aptitude/report";
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/aptitude
 	//임시저장하기
 	@RequestMapping("/temporarySave")
 	public String temporaryResult(Model model, String countQ, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		List<String>answers = new ArrayList<>();
 		String qnum = request.getParameter("qnum");
+		HttpSession session = request.getSession();
+		String memId = (String)session.getAttribute("memId");
+		// user_info 테이블에서 세션에 해당하는 num 추출
+		int userNum = service.userNumSelect(memId);
 		
 		//검사25의 49번 문제 예외처리
     	for(int i=1; i<=Integer.parseInt(countQ);i++) {
@@ -260,13 +269,14 @@ public class AptitudeController {
     	
     	//임시 저장한 걸 다시 임시 저장한 경우
 		if(tempSave.equals("tempSave")) {
-			service.temporarySaveUpdate(answers, dto, qnum);
+			service.temporarySaveUpdate(answers, dto, qnum, userNum);
 		}
 
 		
 		// 첫 임시 저장
-		if(tempSave==null || tempSave.equals(null)){
-			service.temporarySaveInsert(answers, dto, qnum);
+		if(tempSave==null || tempSave.equals(null) || tempSave.equals("")){
+			System.out.println("tempSave 이거 실행"+tempSave);
+			service.temporarySaveInsert(answers, dto, qnum, userNum);
 		}
     	
 		
@@ -279,6 +289,12 @@ public class AptitudeController {
 	//검사 횟수와 일자, 임시저장 값 꺼내기
 	@RequestMapping("/aptitudeMain")
 	public String aptitudeMain(Model model, AptitudeTestValueDTO dto1, AptitudeTestTemporarySaveDTO dto2, HttpServletRequest request) throws IOException {
+		HttpSession session = request.getSession();
+		String memId = (String)session.getAttribute("memId");
+		
+		// 세션으로 이름 꺼내기
+		String name = service.getName(memId);
+		model.addAttribute("name",name);
 		
 		//진행한 검사
 		List<AptitudeTestValueDTO> valueList = service.getRecentTest(dto1);
@@ -296,13 +312,6 @@ public class AptitudeController {
     	return "/aptitude/aptitudeMain";
 	}
 	
-//	@RequestMapping("/test")
-//	public String test() {
-//		String result = "";
-//		result = service.valuesJob();
-//		service.valuesInsert(result);
-//		return "/test";
-//	}
 }
 
 
