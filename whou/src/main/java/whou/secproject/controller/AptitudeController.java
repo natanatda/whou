@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -72,6 +73,9 @@ public class AptitudeController {
 	//크롤링 결과 집어넣기
 	@RequestMapping("/report")
 	public String getAptitudeTestResult(Model model, String countQ, HttpServletRequest request, HttpServletResponse response, JobDicParamDTO jParam, RecommandInfoDTO dtoRe) {
+		HttpSession session = request.getSession();
+		String memId = (String)session.getAttribute("memId");
+		
 		List<String>answers = new ArrayList<>();
 		String qnum = request.getParameter("qnum");
 		model.addAttribute("qnum", qnum);
@@ -109,6 +113,14 @@ public class AptitudeController {
 		List<String> testJob = service.crawlingSplitJob(dto,qnum);
 		
 		// 검사 결과지에서 추천을 위해 추천테이블에 넣을 정보
+			// num
+			int userNum = service.userNumSelect(memId);
+			
+			int userCount = service.userNumCount(userNum);
+			if(userCount == 0) {
+				service.userNumInsert(userNum);	
+			}
+			
 			// 흥미검사 결과지의 직업 리스트의 code 추출 - 흥미31
 			StringBuilder sb = new StringBuilder();
 			
@@ -134,8 +146,7 @@ public class AptitudeController {
 					System.out.println("%%%%%%%%%%%%%%%%%%%%: "+ sb);
 					sb.delete(0, sb.length());
 				}
-				service.interesteInsert(dtoRe);
-				
+				service.interestUpdate(dtoRe,userNum);
 			}
 			
 		
@@ -182,7 +193,7 @@ public class AptitudeController {
 //					System.out.println("@@@@@@@@@@@@@@@@@@@@ 적성 코드: "+ jobListCode);
 					num++;
 				}
-				service.aptitudeUpdate(dtoRe);
+				service.aptitudeUpdate(dtoRe,userNum);
 			}
 			
 			List<String> updatedList1 = new ArrayList<>();
@@ -208,7 +219,7 @@ public class AptitudeController {
 					}
 				}
 				String score = String.join(",", updatedList4);
-				service.valuesUpdate(score);
+				service.valuesUpdate(score, userNum);
 				System.out.println("가치관 점수 12개 :" + score);
 			
 			}

@@ -246,6 +246,7 @@ public class AptitudeServiceImpl implements AptitudeService{
 	         for (WebElement element : scoreElements) {
 	        	 scoreText += element.getText() + "+";
 	         }
+	         
 		      // 직업추천
 	         List<WebElement> jobElements = driver.findElements(By.cssSelector(
 	               "#ct > div:nth-child(1) > div.aptitude-result-content > div:nth-child(2) > div > table > thead > tr > th"));
@@ -756,6 +757,21 @@ public class AptitudeServiceImpl implements AptitudeService{
 		  return sb.toString();
 	}
 
+	
+	// num
+	@Override
+	public int userNumSelect(String memId) {
+		return mapper.userNumSelect(memId);		
+	}
+	@Override
+	public void userNumInsert(int userNum) {
+		 mapper.userNumInsert(userNum);		
+	}
+	@Override
+	public int userNumCount(int userNum) {
+		return mapper.userNumCount(userNum);		
+	}
+	
 	// 가치관 결과지 - 관련 직업 번호 저장
 	@Override
 	public void valuesInsert(String result) {
@@ -775,19 +791,19 @@ public class AptitudeServiceImpl implements AptitudeService{
 	
 	// 흥미 검사지 - 직업 번호 저장
 	@Override
-	public void interesteInsert(RecommandInfoDTO dtoRe) {
-		mapper.interesteInsert(dtoRe);	
+	public void interestUpdate(RecommandInfoDTO dtoRe, int userNum) {
+		mapper.interestUpdate(dtoRe, userNum);	
 	}
 	
 	// 적성 검사지 - 직업 번호 저장
 	@Override
-	public void aptitudeUpdate(RecommandInfoDTO dtoRe) {
-		mapper.aptitudeUpdate(dtoRe);	
+	public void aptitudeUpdate(RecommandInfoDTO dtoRe, int userNum) {
+		mapper.aptitudeUpdate(dtoRe, userNum);	
 	}
 	// 가지관 검사지 - 차트 점수 저장
 	@Override
-	public void valuesUpdate(String score) {
-		mapper.valuesUpdate(score);	
+	public void valuesUpdate(String score, int userNum) {
+		mapper.valuesUpdate(score, userNum);	
 	}
 	
 

@@ -385,30 +385,30 @@ public class MemberController {
   	
   	
   	
-    @RequestMapping("/info")
-    public String JobDicInfo(HttpServletRequest request, Model model) {
-       int seq = -1;
-       String strSeq= request.getParameter("job_cd");
-       JobDicDetailResponseDTO jobDetail = null;
-       if(strSeq!=null) 
-          seq = Integer.parseInt(strSeq);
-       
-       System.out.println("seq == " +seq);
-       jobDetail= dao.getJobDicDetail(seq);
-       //System.out.println("////////// " + jobDetail);// dto.work
-       List<JobDicDetailResponseDTO.Work> workList = jobDetail.getWorkList(); 
-       String link = jobDetail.getCertiList().get(0).getLink();
-       List<Knowledge> knowledge = jobDetail.getPerform().getKnowledge();
-       //Object p = jobDetail.getPerform().getPerform_();
-
-      
-      //System.out.println(knowledge);
-      //      JobDicDetailResponseDTO.BaseInfo baseInfo = jobDetail.getBaseInfo(); 
-//       for(int i=0; i<jobDetail.getWorkList().size(); i++)
-//          System.out.println(jobDetail.getWorkList().get(i).getWork());
-       model.addAttribute("jobDetail", jobDetail);
-       return "/job/description-detail";
-    }
+//    @RequestMapping("/info")
+//    public String JobDicInfo(HttpServletRequest request, Model model) {
+//       int seq = -1;
+//       String strSeq= request.getParameter("job_cd");
+//       JobDicDetailResponseDTO jobDetail = null;
+//       if(strSeq!=null) 
+//          seq = Integer.parseInt(strSeq);
+//       
+//       System.out.println("seq == " +seq);
+//       jobDetail= dao.getJobDicDetail(seq);
+//       //System.out.println("////////// " + jobDetail);// dto.work
+//       List<JobDicDetailResponseDTO.Work> workList = jobDetail.getWorkList(); 
+//       String link = jobDetail.getCertiList().get(0).getLink();
+//       List<Knowledge> knowledge = jobDetail.getPerform().getKnowledge();
+//       //Object p = jobDetail.getPerform().getPerform_();
+//
+//      
+//      //System.out.println(knowledge);
+//      //      JobDicDetailResponseDTO.BaseInfo baseInfo = jobDetail.getBaseInfo(); 
+////       for(int i=0; i<jobDetail.getWorkList().size(); i++)
+////          System.out.println(jobDetail.getWorkList().get(i).getWork());
+//       model.addAttribute("jobDetail", jobDetail);
+//       return "/job/description-detail";
+//    }
     
   
 }

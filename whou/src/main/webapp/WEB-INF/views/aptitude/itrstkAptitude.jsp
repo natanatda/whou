@@ -29,7 +29,18 @@
 	<!-- Pricing section-->
 	<section class="py-2 aptitude aptitude-section">
 		<div class="container px-5 my-5">
-			<h2 class="page-title">진로검사</h2>
+		<c:if test="${qnum eq '21' || qnum == '21'}">
+			<h2 class="page-title">직업적성검사</h2>
+		</c:if>
+		<c:if test="${qnum eq '31' || qnum == '31'}">
+			<h2 class="page-title">직업흥미검사</h2>
+		</c:if>
+		<c:if test="${qnum eq '25' || qnum == '25'}">
+			<h2 class="page-title">직업가치관검사</h2>
+		</c:if>
+		<c:if test="${qnum eq '27' || qnum == '27'}">
+			<h2 class="page-title">직업역량검사</h2>
+		</c:if>
 
 			<div class="row aptitude-content">
 				<div class="col-lg-12 col-xl-12">

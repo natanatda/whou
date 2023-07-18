@@ -26,12 +26,15 @@ public interface AptitudeService {
 	
 	
 	// 추천 테이블 관련 작업
+	public int userNumSelect(String memId); // userNum 추출
+	public void userNumInsert(int userNum); // userNum 저장
+	public int userNumCount(int userNum); // userNum 저장
 	public String valuesJob();// 가치관 결과지 - 관련 직업번호 추출
 	public void valuesInsert(String result); // 가치관 번호 저장
 	public String jobSelect(String jobListItem);
 	
 	public String aptdSelect(String sortName); // 적성
-	public void interesteInsert(RecommandInfoDTO dtoRe);//흥미 직업 번호 저장
-	public void aptitudeUpdate(RecommandInfoDTO dtoRe);//적성 직업 번호 저장
-	public void valuesUpdate(String score); //가지관 차트 점수 저장
+	public void interestUpdate(RecommandInfoDTO dtoRe, int userNum);//흥미 직업 번호 저장
+	public void aptitudeUpdate(RecommandInfoDTO dtoRe, int userNum);//적성 직업 번호 저장
+	public void valuesUpdate(String score, int userNum); //가지관 차트 점수 저장
 }
