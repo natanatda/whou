@@ -145,35 +145,59 @@ public class EducationController {
 		EducationHrdParamDTO hrdParam = new EducationHrdParamDTO();
 		String trainGb = request.getParameter("trainGb");
 		String urlParam = "";
+		System.out.println("실행함?");
+		System.out.println("trainGb "+trainGb);
+		System.out.println("pageNum "+request.getParameter("pageNum"));
+		System.out.println("sort "+request.getParameter("sort"));
 		if(trainGb != null) {
+			System.out.println("실행함111?");
 			
+			hrdParam.setTrainGb(trainGb);
+			String setSrchNcs1 = request.getParameter("setSrchNcs1"); //setSrchNcs1와 setSrchKeco1에 사용
+			String sort = request.getParameter("sort");
+			String srchTraStDt = request.getParameter("srchTraStDt");
+			String srchTraEndDt = request.getParameter("srchTraEndDt");
+			String srchTraArea1 = request.getParameter("srchTraArea1");
+			String srchTraOrganNm =  request.getParameter("srchTraOrganNm");
+			String srchTraProcessNm = request.getParameter("srchTraProcessNm");
+			String pageNum = request.getParameter("pageNum");
+			
+			hrdParam.setSrchNcs1(null);
+			hrdParam.setSrchKeco1(null);
 			if(trainGb.equals("11")) {
 				urlParam="HRDPOA60/HRDPOA60_1.jsp";
-				hrdParam.setSrchNcs1(request.getParameter("setSrchNcs1")!=null?request.getParameter("setSrchNcs1"):"");
+				hrdParam.setSrchNcs1(setSrchNcs1!=null && !(setSrchNcs1.equals(""))?setSrchNcs1:"");
 			}else {
 				if(trainGb.equals("12")) urlParam="HRDPOA62/HRDPOA62_1.jsp";
 				if(trainGb.equals("13")) urlParam="HRDPOA68/HRDPOA68_1.jsp";
 				if(trainGb.equals("14")) urlParam="HRDPOA69/HRDPOA69_1.jsp";
-				hrdParam.setSrchKeco1(request.getParameter("setSrchNcs1")!=null?request.getParameter("setSrchNcs1"):"");
+				hrdParam.setSrchKeco1(setSrchNcs1!=null && !(setSrchNcs1.equals(""))?setSrchNcs1:"");
 			}
 			
-			hrdParam.setPageNum(request.getParameter("pageNum")!=null?request.getParameter("pageNum"):"1");
-			hrdParam.setSort(request.getParameter("sort")!=null?request.getParameter("sort"):"ASC");
+			hrdParam.setSort(sort != null && !sort.equals("") ? sort : "ASC");
 			
-			String srchTraStDt = request.getParameter("srchTraStDt").replace("-","");
-			hrdParam.setSrchTraStDt(srchTraStDt);
-			hrdParam.setSrchTraEndDt("20230810");
-			hrdParam.setSrchTraArea1(request.getParameter("srchTraArea1")!=null?request.getParameter("srchTraArea1"):"");
-			
+			hrdParam.setSrchTraStDt(srchTraStDt != null && !srchTraStDt.equals("") ? srchTraStDt.replace("-","") : "");
+			hrdParam.setSrchTraEndDt(srchTraEndDt!=null && !(srchTraEndDt.equals(""))? srchTraEndDt.replace("-",""):"");
+			hrdParam.setSrchTraArea1(srchTraArea1!=null && !(srchTraArea1.equals(""))? srchTraArea1:"");
+			hrdParam.setSrchTraOrganNm(srchTraOrganNm!=null && !(srchTraOrganNm.equals(""))? srchTraOrganNm:"");
+			hrdParam.setSrchTraProcessNm(srchTraProcessNm!=null && !(srchTraProcessNm.equals(""))? srchTraProcessNm:"");
+			hrdParam.setSrchTraProcessNm(srchTraProcessNm!=null && !(srchTraProcessNm.equals(""))? srchTraProcessNm:"");
+			hrdParam.setPageSize("100");
+			hrdParam.setPageNum("1");
 			
 			List<EducationHrdResponseDTO> responseDTO = dao.getHrdApi(urlParam, hrdParam);
-			model.addAttribute("responseDTO", responseDTO);
 			model.addAttribute("hrdCount", responseDTO.size());
+			
+			hrdParam.setPageNum(pageNum!=null && !(pageNum.equals(""))?pageNum:"1");
+			hrdParam.setPageSize("20");
+			responseDTO = dao.getHrdApi(urlParam, hrdParam);
+			model.addAttribute("responseDTO", responseDTO);
+			
+			hrdParam.setSrchTraStDt(srchTraStDt);
+			hrdParam.setSrchTraEndDt(srchTraEndDt);
 			model.addAttribute("hrdParam", hrdParam);
 			
-			//페이징 처리 및 개수세기
 		}
-		
 		return "/education/educationTrain";
 	}
 	

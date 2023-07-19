@@ -5,11 +5,13 @@ import lombok.Data;
 @Data
 public class EducationHrdParamDTO {
 	
+	private String trainGb;
 	private String srchTraOrganNm; //기관검색
 	private String srchTraProcessNm; //과정 검색
 	private String srchTraStDt;
 	private String srchTraEndDt;
 	private String pageNum;
+	private String pageSize;
 	private String sort; // 오름차순/내림차순
 	private String srchTraGbn; //훈련구분
 	private String srchTraArea1; //지역

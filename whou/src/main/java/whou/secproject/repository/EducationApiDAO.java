@@ -134,7 +134,7 @@ public class EducationApiDAO {
 
 				// 응답 데이터를 XML로 파싱
 				String xmlData = response.toString();
-				System.out.println("XML 데이터: " + xmlData.substring(0,150));
+				System.out.println("XML 데이터: " + xmlData.substring(0,90));
 
 				// XML 파서 설정
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -149,7 +149,6 @@ public class EducationApiDAO {
 
 	            // "scn_list" 엘리먼트들을 찾습니다.
 	            NodeList scnListNodes = srchListElement.getElementsByTagName("scn_list");
-	            System.out.println("cccc 되냐 cccc? " + scnListNodes.getLength());
 				
 	            for (int i = 0; i < scnListNodes.getLength(); i++) {
 	                Node itemNode = scnListNodes.item(i);
@@ -186,44 +185,48 @@ public class EducationApiDAO {
 	
 	//HRD-net URL 처리
 	public String getHrdURL(String param, EducationHrdParamDTO dto) {
-	    String url = "https://www.hrd.go.kr/jsp/HRDP/HRDPO00/"+param;
 	    
-	    URI uri = null;
-		try {
-			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
-					.queryParam("authKey", URLEncoder.encode(authKey, "UTF-8"))
-			        .queryParam("returnType", URLEncoder.encode("XML", "UTF-8"))
-			        .queryParam("pageSize", URLEncoder.encode("100", "UTF-8"))
-			        .queryParam("sortCol", URLEncoder.encode("TRNG_BGDE", "UTF-8"))
-					.queryParam("outType", URLEncoder.encode("1", "UTF-8"));
-			
-			if (dto.getSrchNcs1() != null) 
-				builder.queryParam("srchNcs1", URLEncoder.encode(dto.getSrchNcs1(), "UTF-8"));
-			if (dto.getSrchKeco1() != null) 
-				builder.queryParam("srchKeco1", URLEncoder.encode(dto.getSrchKeco1(), "UTF-8"));
-			if (dto.getSrchTraOrganNm() != null) 
-	            builder.queryParam("srchTraOrganNm", URLEncoder.encode(dto.getSrchTraOrganNm(), "UTF-8"));
-	        if (dto.getSrchTraProcessNm() != null) 
-	        	builder.queryParam("srchTraProcessNm", URLEncoder.encode(dto.getSrchTraProcessNm(), "UTF-8"));
-	        if (dto.getSrchTraStDt() != null) 
-	        	builder.queryParam("srchTraStDt", URLEncoder.encode(dto.getSrchTraStDt(), "UTF-8"));
-	        if (dto.getSrchTraEndDt() != null) 
-	        	builder.queryParam("srchTraEndDt", URLEncoder.encode(dto.getSrchTraEndDt(), "UTF-8"));
-	        if (dto.getPageNum() != null) 
-	        	builder.queryParam("pageNum", URLEncoder.encode(dto.getPageNum(), "UTF-8"));
-	        if (dto.getSort() != null) 
-	        	builder.queryParam("sort", URLEncoder.encode(dto.getSort(), "UTF-8"));
-	        if (dto.getSrchTraGbn() != null) 
-	        	builder.queryParam("srchTraGbn", URLEncoder.encode(dto.getSrchTraGbn(), "UTF-8"));
-	        if (dto.getSrchTraArea1() != null) 
-	        	builder.queryParam("srchTraArea1", URLEncoder.encode(dto.getSrchTraArea1(), "UTF-8"));
-						
-			uri = builder.build(true).toUri();
-			url = uri.toString();
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
+		StringBuilder url = new StringBuilder();
+		url.append("https://www.hrd.go.kr/jsp/HRDP/HRDPO00/").append(param)
+	    .append("?authKey=").append(authKey)
+	    .append("&returnType=XML").append("&sortCol=TRNG_BGDE").append("&outType=1");
+		
+	    
+		if (dto.getSrchNcs1() != null && !(dto.getSrchNcs1().equals("")) ) {
+			url.append("&srchNcs1=").append(dto.getSrchNcs1());
 		}
-		return url;
+		if (dto.getSrchKeco1() != null && !(dto.getSrchKeco1().equals("")) ) { 
+			url.append("&srchKeco1=").append(dto.getSrchKeco1());
+		}
+		if (dto.getSrchTraOrganNm() != null && !(dto.getSrchTraOrganNm().equals("")) ) { 
+			url.append("&srchTraOrganNm=").append(dto.getSrchTraOrganNm());
+		}
+		if (dto.getSrchTraProcessNm() != null && !(dto.getSrchTraProcessNm().equals("")) ) { 
+			url.append("&srchTraProcessNm=").append(dto.getSrchTraProcessNm());
+		}
+		if (dto.getSrchTraStDt() != null && !(dto.getSrchTraStDt().equals("")) ) { 
+			url.append("&srchTraStDt=").append(dto.getSrchTraStDt());
+		}
+		if (dto.getSrchTraEndDt() != null && !(dto.getSrchTraEndDt().equals("")) ) { 
+			url.append("&srchTraEndDt=").append(dto.getSrchTraEndDt());
+		}
+		if (dto.getSort() != null && !(dto.getSort().equals("")) ) { 
+			url.append("&sort=").append(dto.getSort());
+		}
+		if (dto.getSrchTraGbn() != null && !(dto.getSrchTraGbn().equals("")) ) { 
+			url.append("&srchTraGbn=").append(dto.getSrchTraGbn());
+		}
+		if (dto.getSrchTraArea1() != null && !(dto.getSrchTraArea1().equals("")) ) {
+			url.append("&srchTraArea1=").append(dto.getSrchTraArea1());
+		}
+		if (dto.getPageSize() != null && !(dto.getPageSize().equals("")) ) {
+			url.append("&pageSize=").append(dto.getPageSize());
+		}
+		if (dto.getPageNum() != null && !(dto.getPageNum().equals("")) ) {
+			url.append("&pageNum=").append(dto.getPageNum());
+		}
+	    
+		return url.toString();
 	}
 	
 	// XML 엘리먼트의 값을 가져오는 유틸리티 메소드
