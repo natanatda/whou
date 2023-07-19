@@ -510,15 +510,14 @@ public class AptitudeServiceImpl implements AptitudeService{
 	
 	// 최근 검사 회수와 일자 정보 DB에서 select
 	@Override
-	public List<AptitudeTestValueDTO> getRecentTest(AptitudeTestValueDTO dto) {
-		return mapper.getRecentTest(dto);
+	public List<AptitudeTestValueDTO> getRecentTest(AptitudeTestValueDTO dto, int userNum) {
+		return mapper.getRecentTest(dto, userNum);
 	}
 
 	// 임시저장한 값 DB에서 꺼내기
 	@Override
-	public List<AptitudeTestTemporarySaveDTO> getTemporarySave(AptitudeTestTemporarySaveDTO dto, int userNum) {
-		System.out.println("테스트넘이용~" + dto.getTest_num());
-		return mapper.getTemporarySave(dto, userNum);
+	public List<AptitudeTestTemporarySaveDTO> getTemporarySave(AptitudeTestTemporarySaveDTO dto) {
+		return mapper.getTemporarySave(dto);
 	}
 
 	//임시저장한 검사지를 제출하면 DB에서 삭제

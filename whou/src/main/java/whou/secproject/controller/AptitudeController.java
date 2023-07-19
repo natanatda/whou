@@ -58,7 +58,8 @@ public class AptitudeController {
 	    	List<AptitudeTestTemporarySaveDTO> tempList = null;
 	    	AptitudeTestTemporarySaveDTO tempDTO = new AptitudeTestTemporarySaveDTO();
 	    	tempDTO.setTest_num(Integer.parseInt(qnum));
-	    	tempList = service.getTemporarySave(tempDTO, userNum);
+	    	tempDTO.setUserNum(userNum);
+	    	tempList = service.getTemporarySave(tempDTO);
 	    	String[] arr = tempList.get(0).getTest_answers().split(" ");
 	    	for(String s:arr) {
 	    		String delstr = s.substring(0, s.indexOf("=")+1);
@@ -272,12 +273,21 @@ public class AptitudeController {
 		if(tempSave.equals("tempSave")) {
 			service.temporarySaveUpdate(answers, dto, qnum, userNum);
 		}
+		
 
 		
 		// 첫 임시 저장
 		if(tempSave==null || tempSave.equals(null) || tempSave.equals("")){
-			System.out.println("tempSave 이거 실행"+tempSave);
-			service.temporarySaveInsert(answers, dto, qnum, userNum);
+			dto.setTest_num(Integer.parseInt(qnum));
+			dto.setUserNum(userNum);
+			List<AptitudeTestTemporarySaveDTO> count = service.getTemporarySave(dto);
+			//임시저장한 것이 있음에도 다시 새로 작성하여 저장하려고 할 때
+			if(count.size()==1) {
+				service.temporarySaveUpdate(answers, dto, qnum, userNum);
+			}
+			if(count.size()==0){
+				service.temporarySaveInsert(answers, dto, qnum, userNum);
+			}
 		}
     	
 		
@@ -301,11 +311,12 @@ public class AptitudeController {
 		model.addAttribute("name",name);
 		
 		//진행한 검사
-		List<AptitudeTestValueDTO> valueList = service.getRecentTest(dto1);
+		List<AptitudeTestValueDTO> valueList = service.getRecentTest(dto1, userNum);
 		model.addAttribute("valueList", valueList);
 		
-		//임시 저장
-		List<AptitudeTestTemporarySaveDTO> tempList = service.getTemporarySave(dto2, userNum);
+		//임시 저장한 모든 값 가져오기
+		dto2.setUserNum(userNum);
+		List<AptitudeTestTemporarySaveDTO> tempList = service.getTemporarySave(dto2);
 		model.addAttribute("tempList", tempList);
 		
 		//임시 저장하고 메인화면으로 온건지 판별

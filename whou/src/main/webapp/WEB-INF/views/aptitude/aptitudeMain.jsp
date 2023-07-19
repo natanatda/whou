@@ -69,8 +69,8 @@
                                                 <th></th>
                                                 <th>직업적성검사</th>
                                                 <th>직업가치관검사</th>
-                                                <th>직업흥미검사</th>
                                                 <th>진로개발역량검사</th>
+                                                <th>직업흥미검사</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -85,10 +85,10 @@
                                                     ${valueList[1].getCount()}
                                                 </td>
                                                 <td>
-                                                    ${valueList[3].getCount()}
+                                                    ${valueList[2].getCount()}
                                                 </td>
                                                 <td>
-                                                    ${valueList[2].getCount()}
+                                                    ${valueList[3].getCount()}
                                                 </td>                                    
                                             </tr>
                                             <tr>
@@ -151,18 +151,37 @@
                                     </div>
                                 </div>
                                 <div class="button-wrap">
-                                    <button class="black-btn">검사소개</button>
+                                    <button class="black-btn" data-bs-toggle="modal" data-bs-target="#aptitudeModal">검사소개</button>
+                                     <!-- Modal -->
+										<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="#aptitudeModal" aria-hidden="true">
+										  <div class="modal-dialog">
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+										        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										      </div>
+										      <div class="modal-body">
+										        ...
+										      </div>
+										      <div class="modal-footer">
+										        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+										        <button type="button" class="btn btn-primary">Save changes</button>
+										      </div>
+										    </div>
+										  </div>
+										</div>
                                     <button class="black-btn">검사결과 예시</button>
                                 </div>
                                 <button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=21'">검사시작</button>
                             </div>
                         </div>
                     </div>
+                   
                     <!-- 직업성숙도검사 -->
                     <div class="col-lg-6 col-xl-3">
                         <div class="card mb-5 mb-xl-0 test-cont-wrap">
                             <div class="card-body p-4">
-                                <h4>직업적성검사</h4>
+                                <h4>직업가치관검사</h4>
                                 <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
                                 <div class="d-flex test-cont-info">
                                     <div>
@@ -190,7 +209,7 @@
                                     <button class="black-btn">검사소개</button>
                                     <button class="black-btn">검사결과 예시</button>
                                 </div>
-                                <button class="purple-btn">검사시작</button>
+                                <button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=25'">검사시작</button>
                             </div>
                         </div>
                     </div>
@@ -198,7 +217,7 @@
                     <div class="col-lg-6 col-xl-3">
                         <div class="card mb-5 mb-xl-0 test-cont-wrap">
                             <div class="card-body p-4">
-                                <h4>직업적성검사</h4>
+                                <h4>직업역량검사</h4>
                                 <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
                                 <div class="d-flex test-cont-info">
                                     <div>
@@ -226,7 +245,7 @@
                                     <button class="black-btn">검사소개</button>
                                     <button class="black-btn">검사결과 예시</button>
                                 </div>
-                                <button class="purple-btn">검사시작</button>
+                                <button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=27'">검사시작</button>
                             </div>
                         </div>
                     </div>
@@ -234,7 +253,7 @@
                     <div class="col-lg-6 col-xl-3">
                         <div class="card mb-5 mb-xl-0 test-cont-wrap">
                             <div class="card-body p-4">
-                                <h4>직업적성검사</h4>
+                                <h4>직업흥미검사</h4>
                                 <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
                                 <div class="d-flex test-cont-info">
                                     <div>
@@ -262,7 +281,7 @@
                                     <button class="black-btn">검사소개</button>
                                     <button class="black-btn">검사결과 예시</button>
                                 </div>
-                                <button class="purple-btn">검사시작</button>
+                                <button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=31'">검사시작</button>
                             </div>
                         </div>
                     </div>
@@ -273,6 +292,7 @@
     
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  
     </body>
     
 </html>

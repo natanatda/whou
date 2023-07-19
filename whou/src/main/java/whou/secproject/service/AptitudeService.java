@@ -18,8 +18,8 @@ public interface AptitudeService {
 	public List<String> reportView(String qnum, AptitudeTestValueDTO dto); //크롤링 결과 출력할 수 있게 list로 가공
 	public void temporarySaveInsert(List<String> answers, AptitudeTestTemporarySaveDTO dto, String qnum, int userNum); //임시 저장
 	
-	public List<AptitudeTestValueDTO> getRecentTest(AptitudeTestValueDTO dto); //검사 메인의 검사횟수 및 최근검사일
-	public List<AptitudeTestTemporarySaveDTO> getTemporarySave(AptitudeTestTemporarySaveDTO dto, int userNum); //임시저장한 값
+	public List<AptitudeTestValueDTO> getRecentTest(AptitudeTestValueDTO dto, int userNum); //검사 메인의 검사횟수 및 최근검사일
+	public List<AptitudeTestTemporarySaveDTO> getTemporarySave(AptitudeTestTemporarySaveDTO dto); //임시저장한 값
 	
 	public void temporarySaveDelete(int test_num, int userNum); //임시저장한 검사지 제출하면 삭제
 	public void temporarySaveUpdate(List<String> answers, AptitudeTestTemporarySaveDTO dto, String qnum, int userNum); //임시저장한 검사지를 다시 임시저장
