@@ -2,7 +2,7 @@ package whou.secproject.repository;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
 
-public class RecommandDAO {
+public class RecommendDAO {
 	
     public static double calculatePercentileValue(double percentile, double mean, double stdDev) {
         NormalDistribution normalDistribution = new NormalDistribution(mean, stdDev);
