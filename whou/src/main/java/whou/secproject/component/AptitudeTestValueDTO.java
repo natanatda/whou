@@ -10,7 +10,6 @@ public class AptitudeTestValueDTO {
 	private Timestamp max_test_date;
 	private int count;
 	
-
 	private String test21_1="";
 	private String test21_2="";
 	private String test21_3="";

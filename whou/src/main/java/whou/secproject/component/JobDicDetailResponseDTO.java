@@ -8,236 +8,240 @@ import lombok.Data;
 
 @Data
 public class JobDicDetailResponseDTO {
-	
-	@JsonProperty("baseInfo")
-	private BaseInfo baseInfo; //
-	
-	@JsonProperty("workList")
-	private List<Work> workList; // ÇÏ´ÂÀÏ
-	
-	@JsonProperty("abilityList")
-	private List<Ability> abilityList; // ÇÏ´ÂÀÏ
-	
-	@JsonProperty("departList")
-	private List<Depart> departList; // °ü·Ã ÇĞ°ú
-	
-	@JsonProperty("certiList")
-	private List<Certi> certiList; // ÀÚ°İÁõ
-	
-	@JsonProperty("aptitudeList")
-	private List<Aptitude> aptitudeList; // ÀÚ°İÁõ
-	
-	@JsonProperty("interestList")
-	private List<Interest> interestList; // Èï¹Ì
-	
-	@JsonProperty("tageList")
-	private List<String> Tag; // °ü·Ã ÅÂ±×
-	
-	@JsonProperty("researchList")
-	private List<Research> researchList; // Áø·ÎÅ½»öÈ°µ¿
-	
-	@JsonProperty("relVideoList")
-	private List<RelVideo> relVideo; // ºñµğ¿À °ü·Ã
-	
-	@JsonProperty("relSolList")
-	private List<RelSol> relSol; // Áø·Î »ó´ã
-	
-	@JsonProperty("relJinSolList")
-	private List<RelJinSol> relJinSol; // Áø·Î °ü·Ã ÀÚ·á
-	
-	@JsonProperty("jobReadyList")
-	private List<JobReady> jobReady;
-	
-	@JsonProperty("jobRelOrgList")
-	private List<JobRelOrg> jobRelOrg; // °ü·Ã ±â°ü
-	
-	@JsonProperty("forecastList")
-	private List<Forecast> forecast; // Á÷¾÷ Àü¸Á
-	
-	@JsonProperty("eduChart")
-	private List<EduChart> eduChart; // ÇĞ·ÂºĞÆ÷
-	
-	@JsonProperty("majorChart")
-	private List<MajorChart> majorChart; // Àü°ø °è¿­
-	
-	@JsonProperty("indicatorChart")
-	private IndicatorChart indicatorChart; // Àü°ø °è¿­
-	
-	@JsonProperty("performList")
-	private List<Perform> perform; // Àü°ø °è¿­
-	
-	@Data
-	public static class BaseInfo{
-		private String aptit_name; // Á÷¾÷ ºĞ·ù
-		private String INTRST_YON_YN; // °ü½ÉÁ÷¾÷ ¼³Á¤ ¿©ºÎ
-		private String emp_job_nm; // °í¿ëÄÚµå¸í
-		private String social; // »çÈ¸ °øÇå
-		private int emp_job_cd; // °í¿ë ÄÚµå
-		private int job_cd; // Á÷¾÷ ÄÚµå
-		private double satisfiction; // Á÷¾÷ ¸¸Á·µµ
-		private String rel_job_nm; // °ü·Ã Á÷¾÷¸í
-		private String job_nm; // Á÷¾÷¸í
-		private String std_job_nm; // Ç¥ÁØÁ÷¾÷ ÄÚµå¸í
-		private String wlb; // ¿ö¶óº§
-		private String std_job_cd; // Ç¥ÁØÁ÷¾÷ÄÚµå
-		private String wage_source; // Æò±Õ¿¬ºÀ ÃâÃ³
-		private String edit_dt; // ¼öÁ¤ÀÏ
-		private String reg_dt; // ÀÛ¼ºÀÏ
-		private String satisfi_source; // Á÷¾÷¸¸Á·µµ ÃâÃ³
-		private String tag; // ÅÂ±×
-		private int seq; // Á÷¾÷ ¹øÈ£
-		private int views; // Á¶È¸¼ö
-		private int likes; // ÁÁ¾Æ¿ä
-		private int wage; // Æò±Õ ¿¬ºÀ
-	}
-	
-	@Data
-	public static class Work{
-	    private String work;
-	}
+   
+   @JsonProperty("workList")
+   private List<Work> workList; // í•˜ëŠ”ì¼
+   
+   @JsonProperty("baseInfo")
+   private BaseInfo baseInfo; //
+   
+   @JsonProperty("abilityList")
+   private List<Ability> abilityList; // í•µì‹¬ëŠ¥ë ¥
+   
+   @JsonProperty("departList")
+   private List<Depart> departList; // ê´€ë ¨ í•™ê³¼
+   
+   @JsonProperty("certiList")
+   private List<Certi> certiList; // ìê²©ì¦
+   
+   @JsonProperty("aptitudeList")
+   private List<Aptitude> aptitudeList; // ìê²©ì¦
+   
+   @JsonProperty("interestList")
+   private List<Interest> interestList; // í¥ë¯¸
+   
+   @JsonProperty("tagList")
+   private List<String> Tag; // ê´€ë ¨ íƒœê·¸
+   
+   @JsonProperty("researchList")
+   private List<Research> researchList; // ì§„ë¡œíƒìƒ‰í™œë™
+   
+   @JsonProperty("relVideoList")
+   private List<RelVideo> relVideo; // ë¹„ë””ì˜¤ ê´€ë ¨
+   
+   @JsonProperty("relSolList")
+   private List<RelSol> relSol; // ì§„ë¡œ ìƒë‹´
+   
+   @JsonProperty("relJinSolList")
+   private List<RelJinSol> relJinSol; // ì§„ë¡œ ê´€ë ¨ ìë£Œ
+   
+   @JsonProperty("jobReadyList")
+   private JobReady jobReady;
+   
+   @JsonProperty("jobRelOrgList")
+   private List<JobRelOrg> jobRelOrg; // ê´€ë ¨ ê¸°ê´€
+   
+   @JsonProperty("forecastList")
+   private List<Forecast> forecast; // ì§ì—… ì „ë§
+   
+   @JsonProperty("eduChart")
+   private List<EduChart> eduChart; // í•™ë ¥ë¶„í¬
+   
+   @JsonProperty("majorChart")
+   private List<MajorChart> majorChart; // ì „ê³µ ê³„ì—´
+   
+   @JsonProperty("indicatorChart")
+   private List<IndicatorChart> indicatorChart; // ì „ê³µ ê³„ì—´
+   
+   @JsonProperty("performList")
+   private Perform perform; // ì „ê³µ ê³„ì—´
+   
+   @Data
+   public static class BaseInfo{
+      private String aptit_name; // ì§ì—… ë¶„ë¥˜
+      private String INTRST_YON_YN; // ê´€ì‹¬ì§ì—… ì„¤ì • ì—¬ë¶€
+      private String emp_job_nm; // ê³ ìš©ì½”ë“œëª…
+      private String social; // ì‚¬íšŒ ê³µí—Œ
+      private int emp_job_cd; // ê³ ìš© ì½”ë“œ
+      private int job_cd; // ì§ì—… ì½”ë“œ
+      private double satisfication; // ì§ì—… ë§Œì¡±ë„
+      private String rel_job_nm; // ê´€ë ¨ ì§ì—…ëª…
+      private String job_nm; // ì§ì—…ëª…
+      private String std_job_nm; // í‘œì¤€ì§ì—… ì½”ë“œëª…
+      private String wlb; // ì›Œë¼ë²¨
+      private String std_job_cd; // í‘œì¤€ì§ì—…ì½”ë“œ
+      private String wage_source; // í‰ê· ì—°ë´‰ ì¶œì²˜
+      private String edit_dt; // ìˆ˜ì •ì¼
+      private String reg_dt; // ì‘ì„±ì¼
+      private String satisfi_source; // ì§ì—…ë§Œì¡±ë„ ì¶œì²˜
+      private String tag; // íƒœê·¸
+      private int seq; // ì§ì—… ë²ˆí˜¸
+      private int views; // ì¡°íšŒìˆ˜
+      private int likes; // ì¢‹ì•„ìš”
+      private String wage; // í‰ê·  ì—°ë´‰
+   }
+   
+   @Data
+   public static class Work{
+       private String work;
+   }
 
-	@Data
-	public static class Ability{
-		private String SORT_ORDR; // Á¤·Ä¼ø¼­
-		private String ability_name; // ÇÙ½É´É·Â
-	} 
-	@Data
-	public static class Depart{
-		private String depart_id; // °ü·ÃÇĞ°ú Id
-		private String depart_name; // °ü·ÃÇĞ°ú ¸í
-	}
-	
-	@Data
-	public static class Certi{
-		private String certi; // °ü·Ã ÀÚ°İÁõ
-		private String LINK; // °ü·Ã ÀÚ°İÁõ link
-	}
-	
-	@Data
-	public static class Aptitude{
-		private String aptitude; // Àû¼º
-	}
-	
-	@Data
-	public static class Interest{
-		private String interest; // Èï¹Ì
-	}
-	
-	@Data
-	public static class Research{
-		private String research; // Áø·ÎÅ½»öÈ°µ¿
-	}
-	
-	
-	@Data
-	public static class RelVideo{
-		private String video_name; // µ¿¿µ»ó Á¦¸ñ
-		private String THUMNAIL_FILE_SER; // ½æ³×ÀÏ ID
-		private String job_cd; // Á÷¾÷ÄÚµå
-		private String THUMNAIL_PATH; // ½æ³×ÀÏ URL
-		private String OUTPATH3; // µ¿¿µ»ó URL
-		private String video_id; // µ¿¿µ»ó id
-		private String CID; // ÄÜÅÙÃ÷ id
-	}
-	
-	@Data
-	public static class RelSol{
-		private String TRGET_SE; // Å¸°ÙÃş
-		private String cnslt; // Áø·Î»ó´ã ³»¿ë
-		private String SJ; // Á¦¸ñ
-		private String CN; // ³»¿ë
-		private String REGIST_DT; // µî·ÏÀÏ
-		private int cnslt_seq; // °ü·Ã Áø·Î »ó´ã id
-	}
-	
-	@Data
-	public static class RelJinSol{
-		private String SUBJECT; // °ü·Ã ÀÚ·á¸í
-		private String ALT; // °ü·Ã ÀÚ·áID
-		private String THUMBNAIL; // ½æ³×ÀÏ
-		private int SEQ; // °íÀ¯¹øÈ£
-	}
-	
-	@Data
-	public static class JobReady{
-		private List<Recruit> recruit; // ÀÔÁ÷ ¹× Ãë¾÷¹æ¹ı
-		private List<Certificate> certificate; //°ü·Ã ÀÚ°İÁõ
-		private List<Training> training; //Á÷¾÷ ÈÆ·Ã
-		private List<Curriculum> curriculum; // Á¤‚æ±³À°°úÁ¤
-	}
-	@Data
-	public static class Recruit{
-		private String recruit; 
-	}
-	@Data
-	public static class Certificate{
-		private String certificate;
-	}
-	@Data
-	public static class Training{
-		private String training;
-	}
-	@Data
-	public static class Curriculum{
-		private String curriculum;
-	}
-	
-	@Data
-	public static class JobRelOrg{
-		private String rel_org; // °ü·Ã±â°ü¸í
-		private String rel_org_url; // °ü·Ã±â°ü URL
-	}
-	
-	@Data
-	public static class Forecast{
-		private String forcast; // Á÷¾÷ Àü¸Á
-	}
-	@Data
-	public static class EduChart{
-		private String chart_name; // ÇĞ·ÂºĞÆ÷
-		private String chart_data; // ÇĞ·ÂºĞÆ÷ µ¥ÀÌÅÍ
-		private String source; // ÃâÃ³
-	}
-	
-	@Data
-	public static class MajorChart{ 
-		private String major; // Àü°ø°è¿­¸í
-		private String major_data; // Àü°ø°è¿­ µ¥ÀÌÅÍ
-		private String source; // ÃâÃ³
-	}
-	
-	@Data
-	public static class IndicatorChart{
-		private String indicator; //Á÷¾÷ÁöÇ¥¸í
-		private String indicator_data; // Á÷¾÷ÁöÇ¥µ¥ÀÌÅÍ
-		private String source; // ÃâÃ³
-	}
-	@Data
-	public static class Perform{
-		private List<Environment> environment; 
-		private List<Perform_> perform_;
-		private List<Knowledge> knowledge;
-	}
-	
-	@Data
-	public static class Environment{
-		private String environment; // ¾÷¹«È¯°æ ´É·Â¸í
-		private String inform; // ¼³¸í
-		private int importance; // Áß¿äµµ
-	}
-	
-	@Data
-	public static class Perform_{
-		private String perform; // ¾÷¹«¼öÇà´É·Â ´É·Â¸í
-		private String inform; // ¼³¸í
-		private String importance; // Áß¿äµµ
-	}
-	
-	@Data
-	public static class Knowledge{
-		private String knowledge; // Áö½ÄÁß¿äµµ ´É·Â¸í
-		private String inform; // ¼³¸í 
-		private String importance;//Áß¿äµµ
-	}
-	
+   @Data
+   public static class Ability{
+      private String SORT_ORDR; // ì •ë ¬ìˆœì„œ
+      private String ability_name; // í•µì‹¬ëŠ¥ë ¥
+   } 
+   @Data
+   public static class Depart{
+      private String depart_id; // ê´€ë ¨í•™ê³¼ Id
+      private String depart_name; // ê´€ë ¨í•™ê³¼ ëª…
+   }
+   
+   @Data
+   public static class Certi{
+      private String certi; // ê´€ë ¨ ìê²©ì¦
+      private String link; // ê´€ë ¨ ìê²©ì¦ link
+   }
+   
+   @Data
+   public static class Aptitude{
+      private String aptitude; // ì ì„±
+   }
+   
+   @Data
+   public static class Interest{
+      private String interest; // í¥ë¯¸
+   }
+   
+   @Data
+   public static class Research{
+      private String research; // ì§„ë¡œíƒìƒ‰í™œë™
+   }
+   
+   
+   @Data
+   public static class RelVideo{
+      private String video_name; // ë™ì˜ìƒ ì œëª©
+      private String THUMNAIL_FILE_SER; // ì¸ë„¤ì¼ ID
+      private String job_cd; // ì§ì—…ì½”ë“œ
+      private String THUMNAIL_PATH; // ì¸ë„¤ì¼ URL
+      private String OUTPATH3; // ë™ì˜ìƒ URL
+      private String video_id; // ë™ì˜ìƒ id
+      private String CID; // ì½˜í…ì¸  id
+   }
+   
+   @Data
+   public static class RelSol{
+      private String TRGET_SE; // íƒ€ê²Ÿì¸µ
+      private String cnslt; // ì§„ë¡œìƒë‹´ ë‚´ìš©
+      private String SJ; // ì œëª©
+      private String CN; // ë‚´ìš©
+      private String REGIST_DT; // ë“±ë¡ì¼
+      private int cnslt_seq; // ê´€ë ¨ ì§„ë¡œ ìƒë‹´ id
+   }
+   
+   @Data
+   public static class RelJinSol{
+      private String SUBJECT; // ê´€ë ¨ ìë£Œëª…
+      private String ALT; // ê´€ë ¨ ìë£ŒID
+      private String THUMBNAIL; // ì¸ë„¤ì¼
+      private String SEQ; // ê³ ìœ ë²ˆí˜¸
+   }
+   
+   @Data
+   public static class JobReady{ //ì¤€ë¹„ ë°©ë²•
+      private List<Recruit> recruit; // ì…ì§ ë° ì·¨ì—…ë°©ë²•
+      private List<Certificate> certificate; //ê´€ë ¨ ìê²©ì¦
+      private List<Training> training; //ì§ì—… í›ˆë ¨
+      private List<Curriculum> curriculum; // ì •ê·œêµìœ¡ê³¼ì •
+   }
+   @Data
+   public static class Recruit{
+      private String recruit; 
+   }
+   @Data
+   public static class Certificate{
+      private String certificate;
+   }
+   @Data
+   public static class Training{
+      private String training;
+   }
+   @Data
+   public static class Curriculum{
+      private String curriculum;
+   }
+   
+   @Data
+   public static class JobRelOrg{
+      private String rel_org; // ê´€ë ¨ê¸°ê´€ëª…
+      private String rel_org_url; // ê´€ë ¨ê¸°ê´€ URL
+   }
+   
+   @Data
+   public static class Forecast{
+      private String forecast; // ì§ì—… ì „ë§
+   }
+   @Data
+   public static class EduChart{
+      private String chart_name; // í•™ë ¥ë¶„í¬
+      private String chart_data; // í•™ë ¥ë¶„í¬ ë°ì´í„°
+      private String source; // ì¶œì²˜
+   }
+   
+   @Data
+   public static class MajorChart{ 
+      private String major; // ì „ê³µê³„ì—´ëª…
+      private String major_data; // ì „ê³µê³„ì—´ ë°ì´í„°
+      private String source; // ì¶œì²˜
+   }
+   
+   @Data
+   public static class IndicatorChart{
+      private String indicator; //ì§ì—…ì§€í‘œëª…
+      private String indicator_data; // ì§ì—…ì§€í‘œë°ì´í„°
+      private String source; // ì¶œì²˜
+   }
+   @Data
+   public static class Perform{
+      private List<Environment> environment; 
+      @JsonProperty("perform")
+      private List<Perform_> perform_;
+      private List<Knowledge> knowledge;
+   }
+   
+   @Data
+   public static class Environment{
+      private String environment; // ì—…ë¬´í™˜ê²½ ëŠ¥ë ¥ëª…
+      private String inform; // ì„¤ëª…
+      private int importance; // ì¤‘ìš”ë„
+      private String source; // ì¶œì²˜
+   }
+   
+   @Data
+   public static class Perform_{
+      private String perform; // ì—…ë¬´ìˆ˜í–‰ëŠ¥ë ¥ ëŠ¥ë ¥ëª…
+      private String inform; // ì„¤ëª…
+      private int importance; // ì¤‘ìš”ë„
+      private String source; // ì¶œì²˜
+   }
+   
+   @Data
+   public static class Knowledge{
+      private String knowledge; // ì§€ì‹ì¤‘ìš”ë„ ëŠ¥ë ¥ëª…
+      private String inform; // ì„¤ëª… 
+      private int importance;//ì¤‘ìš”ë„
+      private String source; // ì¶œì²˜
+   }
+   
 }

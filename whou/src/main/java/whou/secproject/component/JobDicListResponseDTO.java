@@ -9,7 +9,6 @@ import lombok.Data;
 @Data
 public class JobDicListResponseDTO {
 	
-	
 	@JsonProperty("count")
 	private int count;
 	
@@ -27,7 +26,7 @@ public class JobDicListResponseDTO {
 		private String aptit_name; // 직업군
 		private String social; // 사회적 기여 
 		private String work; // 하는 일
-		private String job_cd; // 직업 코드
+		private int job_cd; // 직업 코드
 		private String rel_job_nm; // 관련 직업
 	    private String job_nm; // 직업명
 	    private String top_nm; // 수정일
