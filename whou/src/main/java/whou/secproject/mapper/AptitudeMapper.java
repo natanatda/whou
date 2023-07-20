@@ -28,10 +28,21 @@ public interface AptitudeMapper {
 	public void interestUpdate(@Param("dtoRe") RecommandInfoDTO dtoRe, @Param("userNum") int userNum);//흥미 직업 번호저장
 	public void aptitudeUpdate(@Param("dtoRe") RecommandInfoDTO dtoRe, @Param("userNum") int userNum);//적성 직업 번호 저장
 	public void valuesUpdate(@Param("score") String score, @Param("userNum") int userNum); //가지관 차트 점수 저장
-	
+	public void aptitudeScoreUpdate(@Param("dtoRe") RecommandInfoDTO dtoRe, @Param("userNum") int userNum); //적성 차트 점수 저장
+	public void interestScoreUpdate(@Param("dtoRe") RecommandInfoDTO dtoRe, @Param("userNum") int userNum); //흥미 차트 점수 저장
+	public void saveAptitudeScoreName(@Param("dto") AptitudeTestValueDTO dto, @Param("qnum") String qnum);// 적성 차트 이름 저장
+	public void saveAptitudeScoreName(@Param("dto") AptitudeTestValueDTO dto, @Param("qnum") String qnum, @Param("userNum") int userNum);
+	 
 	public String getName(String memId);//세션으로 이름 꺼내기
 	
 	public void createUserTable(int userNum);// 회원가입시 테이블 생성
 	public void createSequence(int userNum);// 회원가입시 테이블 생성
 	public void createuSaveTable(int userNum);// 회원가입시 테이블 생성
+	
+	
+	// 마이페이지 차트 점수
+	public String getAptitudeScore(int userNum);
+	public String getInterestScore(int userNum);
+	public String getValuesScore(int userNum);
+	public String getAptitudeScoreName(int userNum); //적성 점수 이름
 }

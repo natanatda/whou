@@ -148,6 +148,7 @@ public class AptitudeController {
 					System.out.println("%%%%%%%%%%%%%%%%%%%%: "+ sb);
 					sb.delete(0, sb.length());
 				}
+				dtoRe.setInterest_score(dto.getTest31_2());
 				service.interestUpdate(dtoRe,userNum);
 			}
 			
@@ -174,7 +175,7 @@ public class AptitudeController {
 //						System.out.println(jParam.getPageIndex());
 						jdlrDTO = daoJob.getJobDicListSorted(jParam);
 						for(int j = 0; j < jdlrDTO.getJobs().size(); j++) {
-							jobListCd[(i-1)*10+j] = jdlrDTO.getJobs().get(j).getJob_cd();
+							jobListCd[(i-1)*10+j] = jdlrDTO.getJobs().get(j).getJob_cd()+"";
 						}
 					}
 					String jobListCode = String.join(",", jobListCd);
@@ -195,13 +196,14 @@ public class AptitudeController {
 //					System.out.println("@@@@@@@@@@@@@@@@@@@@ 적성 코드: "+ jobListCode);
 					num++;
 				}
+				dtoRe.setAptitude_score(dto.getTest21_2());
 				service.aptitudeUpdate(dtoRe,userNum);
 			}
 			
 			List<String> updatedList1 = new ArrayList<>();
 			List<String> updatedList2 = new ArrayList<>();
 			List<String> updatedList3 = new ArrayList<>();
-			String[] updatedList4 = new String[13];
+			String[] updatedList4 = new String[12];
 			if (qnum.equals("27")) {
 				// chart 값 추출		
 				for(int i = 4; i <= 10; i += 2) {
@@ -214,13 +216,8 @@ public class AptitudeController {
 				}
 			}
 			if (qnum.equals("25")) {
-				for(int j = 0; j <= 12;j++) {
-					for(int i = 3; i <= 14; i++ ) {
-						updatedList4[j] = reportResult.get(i);
-						continue;
-					}
-				}
-				for(int i = 3; i < 15;i++) {
+				for(int i = 3; i <= 14; i++ ) {
+					updatedList4[i-3] = reportResult.get(i);
 					String element = reportResult.get(i);
 					updatedList3.add(element);
 				}
@@ -236,6 +233,7 @@ public class AptitudeController {
 		model.addAttribute("reportResult", reportResult);
 		model.addAttribute("reportResultArr", reportResultArr);
 		model.addAttribute("percent",service.crawlingSplit(dto,qnum));
+		model.addAttribute("aptitudeName",service.crawlingSplitScoreName(dto,qnum,userNum));
 		model.addAttribute("rank",service.crawlingSplitRank(dto,qnum));
 		model.addAttribute("job",service.crawlingSplitJob(dto,qnum));
 
@@ -323,6 +321,7 @@ public class AptitudeController {
 		String temporarySave = request.getParameter("temporarySave");
 		model.addAttribute("temporarySave", temporarySave);
 		
+	
 		
     	return "/aptitude/aptitudeMain";
 	}

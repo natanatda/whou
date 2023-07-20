@@ -175,10 +175,40 @@
 	<update id="valuesUpdate">
 		UPDATE recommand_info SET values_score=#{score} WHERE num=#{userNum}
 	</update>
+	<!-- 적성 차트점수 저장 -->
+	<update id="aptitudeScoreUpdate">
+		UPDATE recommand_info SET aptitude_score=#{dtoRe.aptitude_score} WHERE num=#{userNum}
+	</update>
+	<!-- 적성 차트이름 저장 -->
+	<update id="saveAptitudeScoreName">
+		UPDATE recommand_info SET abc3=#{dto.test21_7} WHERE num=#{userNum}
+	</update>
+	
+	<!-- 흥미 차트점수 저장 -->
+	<update id="interestScoreUpdate">
+		UPDATE recommand_info SET interest_score=#{dtoRe.interest_score} WHERE num=#{userNum}
+	</update>
 	
 	<!-- 세션으로 이름 꺼내기 -->
 	<select id="getName" resultType="String">
 		SELECT name FROM whou_user WHERE email = #{memId}
+	</select>
+	
+	
+	
+	<!-- 마이페이지 차트 점수 -->
+	<select id="getAptitudeScore" resultType="String">
+		SELECT aptitude_score FROM recommand_info WHERE num = #{userNum}
+	</select>
+	<!-- 적성 차트 이름 -->
+	<select id="getAptitudeScoreName" resultType="String">
+		SELECT abc3 FROM recommand_info WHERE num = #{userNum}
+	</select>
+	<select id="getInterestScore" resultType="String">
+		SELECT interest_score FROM recommand_info WHERE num = #{userNum}
+	</select>
+	<select id="getValuesScore" resultType="String">
+		SELECT values_score FROM recommand_info WHERE num = #{userNum}
 	</select>
 	
 </mapper>

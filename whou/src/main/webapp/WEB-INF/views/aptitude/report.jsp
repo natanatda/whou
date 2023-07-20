@@ -461,7 +461,7 @@
 	                                    </tr>
 	                                    <tr>
 	                                       <td>의사소통</td>
-	                                       <td>${reportResult[32]}</td>                            
+	                                       <td>${reportResult[32]}${reportResult[33]}</td>                            
 	                                    </tr>
 	                                </tbody>
 	                            </table>
@@ -471,6 +471,7 @@
                     </div>
                 </div>
 			    </c:if>
+             <button onclick="location='마이페이지'">진로컨설팅 받으러가기</button>
              </div>
         </section>
    
@@ -490,13 +491,17 @@
             data3 = ${updatedList3}        
          
             qnum= ${qnum}
+            aptitudeName =['자연과학','AI·소프트웨어','공학','법률·행정','복지','교육','예술·미디어','스포츠','마케팅','금융·경영','여가·관광']
+            if(qnum === 21){
+	            aptitudeName =['${aptitudeName[0]}','${aptitudeName[1]}','${aptitudeName[2]}','${aptitudeName[3]}','${aptitudeName[4]}','${aptitudeName[5]}','${aptitudeName[6]}','${aptitudeName[7]}','${aptitudeName[8]}','${aptitudeName[9]}','${aptitudeName[10]}']            	
+            }
             
             if(qnum === 21 || qnum === 31){
             	 let data1 = ${percent};
-                 let labels = ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5', 'Label 6', 'Label 7', 'Label 8', 'Label 9', 'Label 10', 'Label 11'];
+                 let labels = aptitudeName;
 
                  if (data1.length === 17) {
-                     labels.push('Label 12', 'Label 13', 'Label 14', 'Label 15', 'Label 16', 'Label 17');
+                     labels.push('보건의료', '농생명', '환경', '제조', '물류·운송·유통', '설계·건축·토목');
                  }
                  var myChart21 = new Chart(ctx21, {
                      type: 'radar',

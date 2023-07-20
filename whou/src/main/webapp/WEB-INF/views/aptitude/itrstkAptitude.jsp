@@ -44,6 +44,10 @@
 
 			<div class="row aptitude-content">
 				<div class="col-lg-12 col-xl-12">
+				<div class="progress">
+				  <div class="progress-bar" role="progressbar" aria-label="Example with label" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+				</div>
+				 <div><span>0</span>%</div>
 					<h3 class="page-count">
 						<span>0</span> / <span>${fn:length(RESULT)}</span>
 					</h3>
@@ -51,6 +55,8 @@
 						<input type="hidden" name="qnum" value="${qnum}">
 						<input type="hidden" name="countQ" value="${fn:length(RESULT)}">
 						<input type="hidden" name="tempSave" value="${param.tempSave != null ? param.tempSave : ''}">
+						
+						
 						<c:if test="${qnum eq '27' || qnum == '27'}" >
 							<div class="top-question">
 								<span class="top-num"></span>
@@ -67,16 +73,16 @@
 										</div>
 										
 										<div class="btn-group radio-group" role="group" aria-label="Basic radio toggle button group">
-											<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 1}" value="1" ${arrList[status.index]=='1' ? 'checked' : ''} autocomplete="off">
+											<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 1}" value="1" ${arrList[status.index]=='1' ? 'checked' : ''} autocomplete="off" >
 											<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 1}">${item.answer01}</label>
 	
-											<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 2}" value="2" ${arrList[status.index]=='2' ? 'checked' : ''} autocomplete="off" checked>
+											<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 2}" value="2" ${arrList[status.index]=='2' ? 'checked' : ''} autocomplete="off" >
 											<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 2}">${item.answer02}</label>
 	
-											<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 3}" value="3" ${arrList[status.index]=='3' ? 'checked' : ''} autocomplete="off">
+											<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 3}" value="3" ${arrList[status.index]=='3' ? 'checked' : ''} autocomplete="off" >
 											<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 3}">${item.answer03}</label>
 	
-											<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 4}" value="4" ${arrList[status.index]=='4' ? 'checked' : ''} autocomplete="off">
+											<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 4}" value="4" ${arrList[status.index]=='4' ? 'checked' : ''} autocomplete="off" checked >
 											<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 4}">${item.answer04}</label>
 	
 											<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 5}" value="5" ${arrList[status.index]=='5' ? 'checked' : ''} autocomplete="off">
@@ -104,16 +110,16 @@
 		                                    <div class="question-dt-info">${item.tip1Desc}</div>
 		                                </div>
 		                                <div class="btn-group radio-group" role="group" aria-label="Basic radio toggle button group">
-		                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 1}" value="1" ${arrList[status.index]=='1' ? 'checked' : ''} autocomplete="off">
+		                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 1}" value="1" ${arrList[status.index]=='1' ? 'checked' : ''} autocomplete="off" >
 		                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 1}">1</label>
 		                                  
-		                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 2}" value="2" ${arrList[status.index]=='2' ? 'checked' : ''} autocomplete="off" >
+		                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 2}" value="2" ${arrList[status.index]=='2' ? 'checked' : ''} autocomplete="off">
 		                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 2}">2</label>
 		                                  
-		                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 3}" value="3" ${arrList[status.index]=='3' ? 'checked' : ''} autocomplete="off">
+		                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 3}" value="3" ${arrList[status.index]=='3' ? 'checked' : ''} autocomplete="off" checked>
 		                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 3}">3</label>
 		
-		                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 4}" value="4" ${arrList[status.index]=='4' ? 'checked' : ''} autocomplete="off" checked>
+		                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 4}" value="4" ${arrList[status.index]=='4' ? 'checked' : ''} autocomplete="off" >
 		                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 4}">4</label>
 		                                    
 		                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 5}" value="5" ${arrList[status.index]=='5' ? 'checked' : ''} autocomplete="off">
@@ -264,6 +270,13 @@
 	</section>
 
 	<script>
+	
+		// 진척률
+ 		const percent = ${100/fn:length(RESULT)};
+ 		const progressBar = document.querySelector('.progress-bar');
+ 	    const progressPercent = document.querySelector('.progress+div > span');
+ 	   	let percentCount =0;
+ 	   
 		// 답한 문항 개수
 	    const radioButtons = document.querySelectorAll('.btn-check');
 	    const countSpan = document.querySelector('.page-count span:first-child');
@@ -271,8 +284,17 @@
 	
 	    radioButtons.forEach(radioButton => {
 	        radioButton.addEventListener('click', () => {
+	        	// 답한 문항 개수
 	            count = document.querySelectorAll('.btn-check:checked').length;
 	            countSpan.textContent = count;
+	            
+	         	// 진척률
+	            percentCount = count * percent;
+	         	percentCountDown = Math.floor(percentCount);
+	            progressPercent.textContent = percentCountDown;
+	            progressBar.style.width = percentCount + '%';
+
+	           
 	        });
 	    });
 	    

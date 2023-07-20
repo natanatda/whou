@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import whou.secproject.component.AptitudeTestTemporarySaveDTO;
 import whou.secproject.component.AptitudeTestValueDTO;
+import whou.secproject.component.CrawingResult;
 import whou.secproject.component.RecommandInfoDTO;
 import whou.secproject.mapper.AptitudeMapper;
 
@@ -27,269 +28,245 @@ public class AptitudeServiceImpl implements AptitudeService{
 	@Autowired
 	private AptitudeMapper mapper;
     	
-	//크롤링 하기
 	@Override
-	public AptitudeTestValueDTO testCrawling(String testURL, String qnum) {
-		AptitudeTestValueDTO dto = new AptitudeTestValueDTO();
-        System.setProperty("webdriver.chrome.driver", "D:\\r\\selenium-server-standalone-master\\bin\\chromedriver.exe");
-
-        WebDriver driver = new ChromeDriver();
-        driver.get(testURL);
-        
-        // 역량
-        if(qnum.equals("27")) {
-        	List<WebElement> developElements = driver.findElements(By.cssSelector("div.develop-type > ul > li.on"));
-        	StringBuilder developType = new StringBuilder();
-            for (WebElement element : developElements) {
-                developType.append(element.getText().replaceAll("\\n", "+"));
-            }
-            System.out.println(developType);
-
-            // 개발 점수 정보 가져오기
-            List<WebElement> scoreElements = driver.findElements(By.cssSelector("div.aptitude-result-content.cont_result > div:nth-child(2) > div:nth-child(5) > table > tbody"));
-            StringBuilder developScore = new StringBuilder();
-            for (WebElement element : scoreElements) {
-                developScore.append(element.getText().replaceAll("\\n", " ").replaceAll("구분 점수 구분 점수 ", ""));
-            }
-            System.out.println(developScore);
-
-            // 기획 유형 정보 가져오기
-            StringBuilder planningSB = new StringBuilder();
-            String planning ="";
-            for (int i = 2; i <= 11; i += 3) {
-                String selector = "div.aptitude-result-content.cont_result > div:nth-child(2) > div:nth-child(12) > table > tbody > tr:nth-child(" + i + ") > td";
-                List<WebElement> planningElements = driver.findElements(By.cssSelector(selector));
-                StringBuilder temp1 = new StringBuilder();
-                for (WebElement element : planningElements) {
-                	temp1.append(element.getText());
-                }
-                planningSB.append(temp1).append(" ");
-            }
-            planning = planningSB.toString().replaceAll("\\n", "+");
-            System.out.println(planning);
-
-         // 준비 유형 정보 가져오기
-            List<WebElement> preparationElements = driver.findElements(By.cssSelector("div.aptitude-result-content.cont_result > div:nth-child(3) > div.box_graph > table > tbody"));
-            StringBuilder preparation = new StringBuilder();
-            String result = "";
-            for (WebElement element : preparationElements) {
-                preparation.append(element.getText());
-            }
-            String present=preparation.toString().replaceAll("\\n", "+");
-            
-            int startIndex = present.indexOf("검사결과+");
-            int endIndex = present.substring(startIndex + 6).indexOf("+");
-            
-            while (present.contains("검사결과+")) {
-                result += present.substring(startIndex, endIndex + startIndex + 6 + 1);
-                present = present.substring(endIndex + startIndex + 6);
-                startIndex = present.indexOf("검사결과+");
-                endIndex = present.substring(startIndex + 6).indexOf("+");
-            }
-            String preparation2=result;
-            String preparation3 = preparation2.substring(0,preparation2.length()/2);
-            preparation2=result;
-            String preparation4 = preparation2.substring(preparation2.length()/2);
-            
-            System.out.println(preparation2);
-            driver.quit();  // WebDriver 종료
-            
-            
-            //DB에 넣으려고 검사 크롤링 값 dto에 셋하기
-            dto.setTest27_1(developType.toString());
-    		dto.setTest27_2(developScore.toString());
-    		dto.setTest27_3(planning);
-    		dto.setTest27_4(preparation3);
-    		dto.setTest27_5(preparation4);
-        }
-        
-        
-        // 가치관
-        if(qnum.equals("25")) {
-        	// 가치 요약 정보 가져오기
-            List<WebElement> summaryElements = driver.findElements(By.cssSelector("div.aptitude-tbl-list.value.import > table > tbody > tr:nth-child(1) > td:nth-child(2)"));
-            String valueSummary = "";
-            for (WebElement element : summaryElements) {
-                valueSummary += element.getText() + " + ";
-            }
-            List<WebElement> categoryElements = driver.findElements(By.cssSelector("div.aptitude-tbl-list.value.import > table > tbody > tr:nth-child(2) > td:nth-child(1)"));
-            for (WebElement element : categoryElements) {
-                valueSummary += element.getText() + " + ";
-            }
-            List<WebElement> typeElements = driver.findElements(By.cssSelector("div.aptitude-tbl-list.value.import > table > tbody > tr:nth-child(2) > td.left.center.me"));
-            for (WebElement element : typeElements) {
-                valueSummary += element.getText() + " + ";
-            }
-            System.out.println(valueSummary);
-
-            // 가치 점수 정보 가져오기
-            List<WebElement> scoreElements = driver.findElements(By.cssSelector("#ct > div.aptitude_result_wrap > div.aptitude-result-content > div:nth-child(1) > div:nth-child(5) > table > tbody > tr > td:nth-child(3n+0)"));
-            String valueScore = "";
-            for (WebElement element : scoreElements) {
-                valueScore += element.getText() + " + ";
-            }
-            System.out.println(valueScore);
-
-            // 가치 유형 정보 가져오기
-            List<WebElement> valueTypeElements = driver.findElements(By.cssSelector("div.aptitude-result-content > div:nth-child(1) > div:nth-child(8) > table > tbody > tr:nth-child(2) > th"));
-            String valueType = "";
-            for (WebElement element : valueTypeElements) {
-                valueType += element.getText().replaceAll("\\n", "+");
-            }
-            System.out.println(valueType);
-            
-            // value_import 정보 가져오기
-            List<WebElement> valueImportElements = null;
-            String valueImport = "";
-            for (int i = 1; i <= 3; i++) {
-                String selector = "div.aptitude-tbl-list.value.best > table > tbody > tr:nth-child(2) > td:nth-child(" + i + ")";
-                valueImportElements = driver.findElements(By.cssSelector(selector));
-                for (WebElement element : valueImportElements) {
-                    valueImport += element.getText() + " + ";
-                }
-            }
-            System.out.println(valueImport);
-            
-            
-            
-            driver.quit();  // WebDriver 종료
-            
-            
-            //DB에 넣으려고 검사 크롤링 값 dto에 셋하기
-            dto.setTest25_1(valueSummary);
-    		dto.setTest25_2(valueScore);
-    		dto.setTest25_3(valueType);
-    		dto.setTest25_4(valueImport);
-    	
-        }
-		
-        // 적성
-        if (qnum.equals("21")) {
-		    // 페이지 로드가 코드 실행보다 느려서 지연 추가
-		    try {
-		        TimeUnit.SECONDS.sleep(1); // 3초 동안 대기
-		    } catch (InterruptedException e) {
-		        e.printStackTrace();
-		    }
-		    // TOP3
-	         List<WebElement> developElements = driver.findElements(By.cssSelector(
-	               "div.cont-wrap.page-break > ul > li > strong"));
-	         String text ="";
-	         for (WebElement element : developElements) {
-	            text += element.getText() + "+";
+	   public AptitudeTestValueDTO testCrawling(String testURL, String qnum) {
+	      AptitudeTestValueDTO dto = new AptitudeTestValueDTO();
+	      String tag;
+	      StringBuilder sb = new StringBuilder();
+	      System.setProperty("webdriver.chrome.driver",
+	            "D:\\r\\selenium-server-standalone-master\\bin\\chromedriver.exe");
+	      WebDriver driver = new ChromeDriver();
+	      driver.get(testURL);
+	      
+	      CrawingResult plus = new CrawingResult() {
+	         @Override
+	         public StringBuilder replSb(StringBuilder sb, WebElement element) {
+	            return sb.append(element.getText()).append("+");
 	         }
-	         // 백분위
-	         List<WebElement> scoreElements = driver.findElements(By.cssSelector(
-		               "div.cont-wrap.page-break > div:nth-child(5) > table > tbody > tr > td:nth-child(even)"));
-		         String scoreText ="";
-		         for (WebElement element : scoreElements) {
-		        	 scoreText += element.getText() + "+";
-		         }
-		         
-	         // 직업추천
-	         List<WebElement> jobElements = driver.findElements(By.cssSelector(
-		               "div.cont-wrap.page-break > div:nth-child(7) > table > tbody > tr > th"));
-		         String jobText ="";
-		         for (WebElement element : jobElements) {
-		        	 jobText += element.getText() + "+";
-		         }
-		         
-	         // 직업추천리스트1
-	         List<WebElement> jobList1 = driver.findElements(By.cssSelector(
-		               "div.aptitude-tbl-list.black-line.page-break > table > tbody:nth-child(4) > tr.line-top > td:nth-child(5)"));
-		         String jobListText1 ="";
-		         for (WebElement element : jobList1) {
-		        	 jobListText1 += element.getText() + "+";
-		         }
-		         
-	         // 직업추천리스트2
-	         List<WebElement> jobList2 = driver.findElements(By.cssSelector(
-		               "div.aptitude-tbl-list.black-line.page-break > table > tbody:nth-child(5) > tr.line-top > td:nth-child(5)"));
-		         String jobListText2 ="";
-		         for (WebElement element : jobList2) {
-		        	 jobListText2 += element.getText() + "+";
-		         }
-		         
-	         // 직업추천리스트2
-	         List<WebElement> jobList3 = driver.findElements(By.cssSelector(
-		               "div.aptitude-tbl-list.black-line.page-break > table > tbody:nth-child(6) > tr.line-top > td:nth-child(5)"));
-		         String jobListText3 ="";
-		         for (WebElement element : jobList3) {
-		        	 jobListText3 += element.getText() + "+";
-		         }
-		         
-		         
-	         driver.quit(); // WebDriver 종료
+	      };
+	      
+	      // 역량
+	      if (qnum.equals("27")) {
+	         //
+	         tag = "div.develop-type > ul > li.on";
+	         CrawingResult develop = new CrawingResult() {
+	            @Override
+	            public StringBuilder replSb(StringBuilder sb, WebElement element) {
+	               return sb.append(element.getText().replaceAll("\\n", "+"));
+	            }
+	         };
 
-	         // DB에 넣으려고 검사 크롤링 값 dto에 셋하기
-	         dto.setTest21_1(text);
-	         dto.setTest21_2(scoreText);
-	         dto.setTest21_3(jobText);
-	         dto.setTest21_4(jobListText1);
-	         dto.setTest21_5(jobListText2);
-	         dto.setTest21_6(jobListText3);
+	         dto.setTest27_1(develop.elementToSb(driver, tag, sb).toString());
+	         sb.delete(0, sb.length());
+
+	         // 개발 점수 정보 가져오기
+	         tag = "div.aptitude-result-content.cont_result > div:nth-child(2) > div:nth-child(5) > table > tbody";
+	         CrawingResult score = new CrawingResult() {
+	            @Override
+	            public StringBuilder replSb(StringBuilder sb, WebElement element) {
+	               return sb.append(element.getText().replaceAll("\\n", " ").replaceAll("구분 점수 구분 점수 ", ""));
+	            }
+	         };
+
+	         dto.setTest27_2(score.elementToSb(driver, tag, sb).toString());
+	         sb.delete(0, sb.length());
+
+	         //
+	         CrawingResult defaultCr = new CrawingResult();
+
+	         for (int i = 2; i <= 11; i += 3) {
+	            tag = "div.aptitude-result-content.cont_result > div:nth-child(2) > div:nth-child(12) > table > tbody > tr:nth-child(" + i + ") > td";
+	            sb = defaultCr.elementToSb(driver, tag, sb).append(" ");
+	         }
+
+	         dto.setTest27_3(sb.toString().replaceAll("\\n", "+"));
+	         sb.delete(0, sb.length());
+
+	         // 준비 유형 정보 가져오기
+//	         tag = "div.aptitude-result-content.cont_result > div:nth-child(3) > div.box_graph > table > tbody";
+//	         String present = defaultCr.elementToSb(driver, tag, new StringBuilder()).toString().replaceAll("\\n", "+")+"+";
+//	         
+//	         
+//	         System.out.println();
+//	         System.out.println("tobody 크롤링 "+present);
+//	         System.out.println();
+//	         int startIndex = present.indexOf("검사결과+");
+//	         int endIndex = present.substring(startIndex + 6).indexOf("+");
+//
+//	         while(present.contains("검사결과+")) {
+//	            sb.append(present.substring(startIndex, endIndex + startIndex + 6 + 1));
+//	            present = present.substring(endIndex + startIndex + 6);
+//	            System.out.println();
+//	            System.out.println("cutting한거"+sb);
+//	            System.out.println();
+//	            startIndex = present.indexOf("검사결과+");
+//	            endIndex = present.substring(startIndex + 6).indexOf("+");
+//	         }
+//
+//	         String preparation2 = sb.toString();
+//	         String preparation3 = preparation2.substring(0, preparation2.length() / 2);
+//	         String preparation4 = preparation2.substring(preparation2.length() / 2);
+//
+//	         System.out.println(preparation2);
+//	         driver.quit(); // WebDriver 종료
+//
+//	         dto.setTest27_4(preparation3);
+//	         dto.setTest27_5(preparation4);
+	         
+	            List<WebElement> preparationElements = driver.findElements(By.cssSelector("div.aptitude-result-content.cont_result > div:nth-child(3) > div.box_graph > table > tbody"));
+	            StringBuilder preparation = new StringBuilder();
+	            String result = "";
+	            for (WebElement element : preparationElements) {
+	                preparation.append(element.getText());
+	            }
+	            String present=preparation.toString().replaceAll("\\n", "+")+"+";
+	            System.out.println("크롤링 값    "+present);
+	            System.out.println();
+
+	            int startIndex = present.indexOf("검사결과+");
+	            int endIndex = present.substring(startIndex + 5).indexOf("+");
+	            int num=0;
+
+	            startIndex = present.indexOf("검사결과+");
+
+	            while (startIndex >= 0) {
+	                endIndex = present.substring(startIndex + 5).indexOf("+");
+	                
+	                // 검사결과+ 뒤에 +가 없는 경우, 즉 endIndex가 -1인 경우에 대한 예외 처리
+	                if (endIndex < 0) {
+	                    break; // while 루프를 종료합니다.
+	                }
+	                
+	                // 원하는 작업을 수행합니다.
+	                result += present.substring(startIndex, endIndex + startIndex + 5 + 1);
+	                System.out.println("&&&&& 자른 것 좀 보자 &&&&&&&" + present.substring(startIndex, endIndex + startIndex + 5 + 1));
+	                
+	                // present를 잘라냅니다.
+	                present = present.substring(endIndex + startIndex + 5);
+	                
+	                // 새로운 검사결과+의 시작 위치를 찾습니다.
+	                startIndex = present.indexOf("검사결과+");
+	            }
+	            String preparation2=result;
+	            String preparation3 = preparation2.substring(0,preparation2.length()/2);
+	            preparation2=result;
+	            String preparation4 = preparation2.substring(preparation2.length()/2);
+
+	            driver.quit();  // WebDriver 종료
+
+
+	            //DB에 넣으려고 검사 크롤링 값 dto에 셋하기
+	    		dto.setTest27_4(preparation3);
+	    		dto.setTest27_5(preparation4);
+	    		System.out.println(preparation4);
 	      }
-		
-        // 흥미
-		if (qnum.equals("31")) {
-			 // TOP3
-	         List<WebElement> developElements = driver.findElements(By.cssSelector(
-	               "#ct > div:nth-child(1) > div.aptitude-result-content > div:nth-child(1) > ul > li > span"));
-	         String text ="";
-	         for (WebElement element : developElements) {
-	            text += element.getText() + "+";
-	         }
-	         // 백분위
-	         List<WebElement> scoreElements = driver.findElements(By.cssSelector(
-		               "#ct > div:nth-child(2) > div > div > div > table > tbody > tr > td > div > div.scoreBar > span"));
-	         String scoreText ="";
-	         for (WebElement element : scoreElements) {
-	        	 scoreText += element.getText() + "+";
-	         }
+
+	      // 가치관
+	      if (qnum.equals("25")) {
 	         
-		      // 직업추천
-	         List<WebElement> jobElements = driver.findElements(By.cssSelector(
-	               "#ct > div:nth-child(1) > div.aptitude-result-content > div:nth-child(2) > div > table > thead > tr > th"));
-	         String jobText ="";
-	         for (WebElement element : jobElements) {
-	        	 jobText += element.getText() + "+";
+	         String[] tagList = { "div.aptitude-tbl-list.value.import > table > tbody > tr:nth-child(1) > td:nth-child(2)", // 가치요약1
+	               "div.aptitude-tbl-list.value.import > table > tbody > tr:nth-child(2) > td:nth-child(1)", // 가치요약2
+	               "div.aptitude-tbl-list.value.import > table > tbody > tr:nth-child(2) > td.left.center.me", // 가치요약3
+	               "#ct > div.aptitude_result_wrap > div.aptitude-result-content > div:nth-child(1) > div:nth-child(5) > table > tbody > tr > td:nth-child(3n+0)", // 가치 점수 정보 가져오기
+	               "div.aptitude-result-content > div:nth-child(1) > div:nth-child(8) > table > tbody > tr:nth-child(2) > th", // 가치 유형 정보 가져오기
+	               "div.aptitude-tbl-list.value.best > table > tbody > tr:nth-child(2) > td:nth-child(1)", // value_import 정보 가져오기1
+	               "div.aptitude-tbl-list.value.best > table > tbody > tr:nth-child(2) > td:nth-child(2)", // value_import 정보 가져오기2
+	               "div.aptitude-tbl-list.value.best > table > tbody > tr:nth-child(2) > td:nth-child(3)" // value_import 정보 가져오기3
+	         };
+
+	         sb.delete(0, sb.length());
+	         // 가치 요약 정보 가져오기
+	         for(int i = 0; i <3; i++) {
+	        	 sb = plus.elementToSb(driver, tagList[i], sb);
 	         }
+	         dto.setTest25_1(sb.toString());
+	         sb.delete(0, sb.length());
+
+	         // 가치 점수 정보 가져오기
+	         dto.setTest25_2(plus.elementToSb(driver, tagList[3], sb).toString());
+	         System.out.println(sb);
+	         sb.delete(0, sb.length());
+
+	         // 가치 유형 정보 가져오기
+	         dto.setTest25_3(plus.elementToSb(driver, tagList[4], sb).toString());
+	         sb.delete(0, sb.length());
+
+	         // value_import 정보 가져오기
+	         for (int i = 5; i < 8; i++) {
+	        	 sb.delete(0, sb.length());
+	        	 sb = plus.elementToSb(driver, tagList[i], sb);
+	         }
+	         dto.setTest25_4(sb.toString());
+	         sb.delete(0, sb.length());
+
+	         driver.quit(); // WebDriver 종료
 	         
-	         // 직업추천리스트1
-	         List<WebElement> jobList1 = driver.findElements(By.cssSelector(
-	               "#ct > div:nth-child(1) > div.aptitude-result-content > div:nth-child(2) > div > table > tbody > tr.td-background.span-block > td:nth-child(1) > span"));
-	         String jobListText1 ="";
-	         for (WebElement element : jobList1) {
-	        	 jobListText1 += element.getText() + "+";
+	      }
+
+	      // 적성
+	      if (qnum.equals("21")) {
+	         String[] tagList = { "div.cont-wrap.page-break > ul > li > strong", // TOP3
+	               "div.cont-wrap.page-break > div:nth-child(5) > table > tbody > tr > td:nth-child(even)", // 백분위
+	               "div.cont-wrap.page-break > div:nth-child(7) > table > tbody > tr > th", // 직업추천
+	               "div.aptitude-tbl-list.black-line.page-break > table > tbody:nth-child(4) > tr.line-top > td:nth-child(5)", // 직업추천리스트1
+	               "div.aptitude-tbl-list.black-line.page-break > table > tbody:nth-child(5) > tr.line-top > td:nth-child(5)", // 직업추천리스트2
+	               "div.aptitude-tbl-list.black-line.page-break > table > tbody:nth-child(6) > tr.line-top > td:nth-child(5)", // 직업추천리스트3
+	               "div.cont-wrap.page-break > div:nth-child(5) > table > tbody > tr > th", // 백분위 타이틀
+
+	         };
+	         int len = tagList.length;
+	         ArrayList<String> valueList = new ArrayList<String>(len);
+	         // 페이지 로드가 코드 실행보다 느려서 지연 추가
+	         try {
+	            TimeUnit.SECONDS.sleep(1); // 3초 동안 대기
+	         } catch (InterruptedException e) {
+	            e.printStackTrace();
 	         }
-	         // 직업추천리스트2
-	         List<WebElement> jobList2 = driver.findElements(By.cssSelector(
-	               "#ct > div:nth-child(1) > div.aptitude-result-content > div:nth-child(2) > div > table > tbody > tr.td-background.span-block > td:nth-child(2) > span"));
-	         String jobListText2 ="";
-	         for (WebElement element : jobList2) {
-	        	 jobListText2 += element.getText() + "+";
+
+	         for (int i = 0; i < len; i++) {
+	            valueList.add(plus.elementToSb(driver, tagList[i], sb).toString());
+	            sb.delete(0, sb.length());
 	         }
-	         // 직업추천리스트3
-	         List<WebElement> jobList3 = driver.findElements(By.cssSelector(
-	               "#ct > div:nth-child(1) > div.aptitude-result-content > div:nth-child(2) > div > table > tbody > tr.td-background.span-block > td:nth-child(3) > span"));
-	         String jobListText3 ="";
-	         for (WebElement element : jobList3) {
-	        	 jobListText3 += element.getText() + "+";
+	         dto.setTest21_1(valueList.get(0));
+	         dto.setTest21_2(valueList.get(1));
+	         dto.setTest21_3(valueList.get(2));
+	         dto.setTest21_4(valueList.get(3));
+	         dto.setTest21_5(valueList.get(4));
+	         dto.setTest21_6(valueList.get(5));
+	         dto.setTest21_7(valueList.get(6));
+
+	         driver.quit(); // WebDriver 종료
+	      }
+
+	      // 흥미
+	      if (qnum.equals("31")) {
+	         String[] tagList = {
+	               "#ct > div:nth-child(1) > div.aptitude-result-content > div:nth-child(1) > ul > li > span", // TOP3
+	               "#ct > div:nth-child(2) > div > div > div > table > tbody > tr > td > div > div.scoreBar > span", // 백분위
+	               "#ct > div:nth-child(1) > div.aptitude-result-content > div:nth-child(2) > div > table > thead > tr > th", // 직업추천
+	               "#ct > div:nth-child(1) > div.aptitude-result-content > div:nth-child(2) > div > table > tbody > tr.td-background.span-block > td:nth-child(1) > span", // 직업추천리스트1
+	               "#ct > div:nth-child(1) > div.aptitude-result-content > div:nth-child(2) > div > table > tbody > tr.td-background.span-block > td:nth-child(2) > span", // 직업추천리스트2
+	               "#ct > div:nth-child(1) > div.aptitude-result-content > div:nth-child(2) > div > table > tbody > tr.td-background.span-block > td:nth-child(3) > span" // 직업추천리스트3
+	         };
+	         int len = tagList.length;
+	         ArrayList<String> valueList = new ArrayList<String>(len);
+
+	         for (int i = 0; i < len; i++) {
+	            valueList.add(plus.elementToSb(driver, tagList[i], sb).toString());
+	            sb.delete(0, sb.length());
 	         }
 
 	         driver.quit(); // WebDriver 종료
 
-	         // DB에 넣으려고 검사 크롤링 값 dto에 셋하기
-	         dto.setTest31_1(text);
-	         dto.setTest31_2(scoreText);
-	         dto.setTest31_3(jobText);
-	         dto.setTest31_4(jobListText1);
-	         dto.setTest31_5(jobListText2);
-	         dto.setTest31_6(jobListText3);
+	         dto.setTest31_1(valueList.get(0));
+	         dto.setTest31_2(valueList.get(1));
+	         dto.setTest31_3(valueList.get(2));
+	         dto.setTest31_4(valueList.get(3));
+	         dto.setTest31_5(valueList.get(4));
+	         dto.setTest31_6(valueList.get(5));
 	      }
-        
-        return dto;
-	}
+	      return dto;
+	   }
 	
 	
 	
@@ -303,6 +280,7 @@ public class AptitudeServiceImpl implements AptitudeService{
 	        // dto 객체의 Test31_2 필드 값을 "+"를 기준으로 나눕니다.
 	        String[] array = dto.getTest21_2().toString().split("\\+");
 	        resultList = Arrays.asList(array);
+	        
 //	        // 나눈 각 값을 반복하여 처리합니다.
 //	        for(String num : array) {
 //	            // 문자열을 실수로 변환하고 10을 곱합니다.
@@ -330,6 +308,20 @@ public class AptitudeServiceImpl implements AptitudeService{
 	    // 결과 리스트를 반환합니다.
 	    return resultList;
 	}
+	
+	@Override
+	public List<String> crawlingSplitScoreName(AptitudeTestValueDTO dto, String qnum, int userNum) {
+	    List<String> resultListName = new ArrayList<>();	    
+	    // qnum이 "21"인 경우 실행합니다.
+	    if (qnum.equals("21")) {
+	        // dto 객체의 Test21_7 필드 값을 "+"를 기준으로 나눕니다.
+	        String[] arrayName = dto.getTest21_7().toString().split("\\+");	     
+	        resultListName = Arrays.asList(arrayName);
+	        mapper.saveAptitudeScoreName(dto, qnum, userNum);
+	    }	    
+	    return resultListName;
+	}
+	
 	
 	//31번 문항의 직업흥미군을 리스트로 반환하기 위한 메소드
 	@Override
@@ -447,6 +439,7 @@ public class AptitudeServiceImpl implements AptitudeService{
 		    .filter(value -> value != null && !value.isEmpty())
 		    .collect(Collectors.toList());
 		    System.out.println("27의 결과 리스트" + result);
+		    System.out.println("dto.getTest27_5()" + dto.getTest27_5());
 		}
 		
 		
@@ -796,14 +789,19 @@ public class AptitudeServiceImpl implements AptitudeService{
 	// 흥미 검사지 - 직업 번호 저장
 	@Override
 	public void interestUpdate(RecommandInfoDTO dtoRe, int userNum) {
-		mapper.interestUpdate(dtoRe, userNum);	
+		mapper.interestUpdate(dtoRe, userNum);
+		mapper.interestScoreUpdate(dtoRe, userNum);	
+
 	}
 	
 	// 적성 검사지 - 직업 번호 저장
 	@Override
 	public void aptitudeUpdate(RecommandInfoDTO dtoRe, int userNum) {
 		mapper.aptitudeUpdate(dtoRe, userNum);	
+		mapper.aptitudeScoreUpdate(dtoRe, userNum);	
 	}
+	
+	
 	// 가지관 검사지 - 차트 점수 저장
 	@Override
 	public void valuesUpdate(String score, int userNum) {
@@ -823,5 +821,29 @@ public class AptitudeServiceImpl implements AptitudeService{
 		mapper.createUserTable(userNum);
 		mapper.createSequence(userNum);
 		mapper.createuSaveTable(userNum);
+	}
+	
+	// 마이페이지 차트
+	// 적성 점수
+	@Override
+	public String getAptitudeScore(int userNum) {
+		return mapper.getAptitudeScore(userNum);
+	}
+	// 적성 점수 이름
+	@Override
+	public String getAptitudeScoreName(int userNum) {
+		return mapper.getAptitudeScoreName(userNum);
+	}
+	
+	// 흥미 점수
+	@Override
+	public String getInterestScore(int userNum) {
+		return mapper.getInterestScore(userNum);
+	}
+	
+	// 가치관 점수
+	@Override
+	public String getValuesScore(int userNum) {
+		return mapper.getValuesScore(userNum);
 	}
 }

@@ -10,6 +10,7 @@ import whou.secproject.component.TestVoDTO;
 public interface AptitudeService {
 	public AptitudeTestValueDTO testCrawling(String testURL, String qnum); //검사 결과를 크롤링
 	public List<String> crawlingSplit(AptitudeTestValueDTO dto, String qnum);
+	public List<String> crawlingSplitScoreName(AptitudeTestValueDTO dto, String qnum, int userNum);// 21 점수 이름 
 	public List<String []> crawlingSplitArr(AptitudeTestValueDTO dto, String qnum);
 	public List<String> crawlingSplitRank(AptitudeTestValueDTO dto, String qnum);
 	public List<String> crawlingSplitJob(AptitudeTestValueDTO dto, String qnum);
@@ -43,4 +44,10 @@ public interface AptitudeService {
 	
 	// 회원가입시 테이블 생성
 	public void createTableSet(int userNum);
+	
+	// 마이페이지 차트 점수
+	public String getAptitudeScore(int userNum);
+	public String getInterestScore(int userNum);
+	public String getValuesScore(int userNum);
+	public String getAptitudeScoreName(int userNum); //적성 점수 이름
 }
