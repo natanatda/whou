@@ -25,39 +25,7 @@
        #nav-addInfo .add-wrap{display:flex;gap:20px;}
        #nav-addInfo .add-wrap .left-box{width:50%}
        #nav-addInfo .add-wrap .right-box{width:50%}
-        #qualificationContainer div {
-            position: relative;
-        }
-
-        .qualificationList {
-            position: absolute;
-            left: 0;
-            top: 100%;
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-            padding: 5px;
-            list-style: none;
-            margin: 0;
-            display: none;
-            z-index:1;
-        }
-        
-        #majorContainer div {
-            position: relative;
-        }
-
-        .majorList {
-            position: absolute;
-            left: 0;
-            top: 100%;
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-            padding: 5px;
-            list-style: none;
-            margin: 0;
-            display: none;
-            z-index:1;
-        }
+     
     </style>
  
  
@@ -90,36 +58,51 @@
                             </div>
                             <div class="tab-pane fade" id="nav-addInfo" role="tabpanel" aria-labelledby="nav-add-tab" tabindex="0">
 								<form action="/spring/test/updateInfo" method="post">
-									<div class="add-wrap">
-										<div class="left-box">
-											<h4>자격증</h4>
-											<div id="qualificationContainer">
-									           <div>
-									               <input type="text" name="certi" required oninput="checkCerti(this)" /> <i class="fa-solid fa-circle-minus"></i>
-									               <ul class="qualificationList"></ul>
-									           </div>
-									       </div>
-									       <div>
-										       <i class="fa-solid fa-circle-plus"></i>
-										       <input type="button" value="자격증 추가" onclick="addQualification()"/>							       
-									       </div>
-										</div>
-										<div class="right-box">
-											<div id="majorContainer">
-									           <div>
-									               <input type="text" name="major" required oninput="checkMajor(this)" />
-									               <ul class="majorList"></ul>
-									           </div>
-									     	</div>
-							       
-									     	<input type="button" value="학과 추가" onclick="addMajor()"/>
-									     	<input type="submit" value="저장"/>
-										</div>
-									</div>
-									
-							      
-							       
-
+								     <div>
+                                    <div class="add-wrap">
+                                        <div class="left-box">
+                                           <h4>자격증</h4>
+                                           <div id="qualificationContainer">
+                                              
+                                                  <div class="input-wrap">
+                                                      <input type="text" name="certi" placeholder="자격증 명" required oninput="checkCerti(this)" /> <i class="fa-solid fa-circle-minus fa-lg"></i>
+                                                      <ul class="qualificationList"></ul>
+                                                  </div> 
+                                            
+                                           </div>
+                                           <div class="add-certi-wrap">
+                                              <div class="add-certi-btn">
+                                                  <i class="fa-solid fa-circle-plus fa-lg"></i>
+                                                  <p onclick="addQualification()">자격증 추가</p>
+                                              </div>
+                                          </div>
+                                        </div>
+                                        <div class="right-box">
+                                          <h4>학과정보</h4>
+                                            <div id="majorContainer">
+                                              <div class="input-wrap">
+                                                   <select class="depart-select">
+                                                      <option value="">대학</option>
+                                                      <option value="">전문대학</option>
+                                                   </select>
+                                                   <input type="text" name="major" placeholder="전공명" required oninput="checkMajor(this)" />
+                                                   <ul class="majorList"></ul>
+                                              </div>
+                                              <div class="input-wrap">
+                                                  <select class="depart-select">
+                                                     <option value="">대학</option>
+                                                     <option value="">전문대학</option>
+                                                  </select>
+                                                  <input type="text" name="major" placeholder="부전공명/복수전공명" required oninput="checkMajor(this)" />
+                                                  <ul class="majorList"></ul>
+                                             </div>
+                                             </div>
+                                            </div>
+                                    </div> 
+                                    <div class="button-wrap">
+                                        <button type="submit" class="purple-btn" >저장</button>  
+                                    </div>                                       
+                                </div>	
 							   </form>								
 							</div>
                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">...</div>
@@ -289,17 +272,18 @@
         }
 
         function addQualification() {
-            var newDiv = $("<div>");
+            var newDiv = $("<div>").addClass("input-wrap");
             var newInput = $("<input>").attr({
                 type: "text",
                 name: "certi",
                 required: true,
                 oninput: "checkCerti(this)",
-                placeholder: "새로운 자격증 입력",
+                placeholder: "자격증 명",
             });
+            var newIcon = $("<i>").addClass("fa-solid fa-circle-minus fa-lg");
             var newUl = $("<ul>").addClass("qualificationList");
-
-            newDiv.append(newInput).append(newUl);
+	
+            newDiv.append(newInput).append(newIcon).append(newUl);
 
             $("#qualificationContainer").append(newDiv);
             newUl.hide();
