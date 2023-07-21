@@ -377,6 +377,42 @@ public class MemberController {
         return result;
     }
   	
+  	@RequestMapping("/mypage")
+    public String mypage(){
+		return "/user/mypage";
+	}
+	
+	@RequestMapping("/getCerti")
+    public @ResponseBody List<String> getCerti(String certi){
+		List<String> certiList = service.getCerti(certi); 
+		System.out.println(certiList);
+		return certiList;
+	}
+	
+	@RequestMapping("/getMajor")
+    public @ResponseBody List<String> getMajor(String major){
+		List<String> majorList = service.getMajor(major); 
+		System.out.println(majorList);
+		return majorList;
+	}
+	
+	@RequestMapping("/updateInfo")
+	public String updateInfo(@RequestParam(value = "certi", required = false) List<String> certiList,
+	                         @RequestParam(value = "major", required = false) List<String> majorList) {
+		
+		String combinedCerti = null;
+		String combinedMajor = null;
+		
+		if (certiList != null && majorList != null) {
+			combinedCerti = String.join(",", certiList);
+	        System.out.println(combinedCerti);
+	        combinedMajor = String.join(",", majorList);
+	        System.out.println(combinedMajor);
+	        service.updateInfo(combinedCerti, combinedMajor);
+	        
+	    }
+	    return "/user/mypage";
+	}
   	
   	
   	

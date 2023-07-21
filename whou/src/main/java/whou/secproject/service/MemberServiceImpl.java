@@ -9,7 +9,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
-
+import java.util.List;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +82,21 @@ public class MemberServiceImpl implements MemberService {
    @Override
     public String getEmail(String name, String tel) {
       return mapper.getEmail(name, tel);
+   }
+   
+   @Override
+   public List<String> getCerti(String certi){
+		return mapper.getCerti(certi);
+   }
+   
+   @Override
+   public List<String> getMajor(String major){
+		return mapper.getMajor(major);
+   }
+   
+   @Override
+   public void updateInfo(String combinedCerti, String combinedMajor) {
+		mapper.updateInfo(combinedCerti, combinedMajor);
    }
 
     

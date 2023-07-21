@@ -22,10 +22,12 @@
      
  </head>
  <style>
-       #nav-addInfo .add-wrap{display:flex;gap:20px;}
-       #nav-addInfo .add-wrap .left-box{width:50%}
-       #nav-addInfo .add-wrap .right-box{width:50%}
-     
+     .qualificationList{padding-top:10px;left: 31px;width: 79%;top: 40px;}
+    .qualificationList li button{background-color:transparent}
+    .qualificationList li {margin-bottom:10px;text-align:left;padding-left:10px;}
+    .majorList{padding-top:10px;left: 180px;width: 57%;top: 40px;}
+    .majorList li button{background-color:transparent}
+    .majorList li {margin-bottom:10px;padding-left:10px;}
     </style>
  
  
@@ -57,7 +59,7 @@
                          		<canvas id="valuesChart"></canvas>
                             </div>
                             <div class="tab-pane fade" id="nav-addInfo" role="tabpanel" aria-labelledby="nav-add-tab" tabindex="0">
-								<form action="/spring/test/updateInfo" method="post">
+								<form action="/whou/member/updateInfo" method="post">
 								     <div>
                                     <div class="add-wrap">
                                         <div class="left-box">
@@ -65,7 +67,7 @@
                                            <div id="qualificationContainer">
                                               
                                                   <div class="input-wrap">
-                                                      <input type="text" name="certi" placeholder="자격증 명" required oninput="checkCerti(this)" /> <i class="fa-solid fa-circle-minus fa-lg"></i>
+                                                      <input type="text" name="certi" autocomplete="off" placeholder="자격증 명" oninput="checkCerti(this)" /> <i class="fa-solid fa-circle-minus fa-lg"></i>
                                                       <ul class="qualificationList"></ul>
                                                   </div> 
                                             
@@ -81,19 +83,19 @@
                                           <h4>학과정보</h4>
                                             <div id="majorContainer">
                                               <div class="input-wrap">
-                                                   <select class="depart-select">
-                                                      <option value="">대학</option>
-                                                      <option value="">전문대학</option>
+                                                   <select class="depart-select" name="depart">
+                                                      <option value="대학">대학</option>
+                                                      <option value="전문대학">전문대학</option>
                                                    </select>
-                                                   <input type="text" name="major" placeholder="전공명" required oninput="checkMajor(this)" />
+                                                   <input type="text" name="major" autocomplete="off" placeholder="전공명" oninput="checkMajor(this)" />
                                                    <ul class="majorList"></ul>
                                               </div>
                                               <div class="input-wrap">
                                                   <select class="depart-select">
-                                                     <option value="">대학</option>
-                                                     <option value="">전문대학</option>
+                                                     <option value="대학">대학</option>
+                                                     <option value="전문대학">전문대학</option>
                                                   </select>
-                                                  <input type="text" name="major" placeholder="부전공명/복수전공명" required oninput="checkMajor(this)" />
+                                                  <input type="text" name="major" autocomplete="off" placeholder="부전공명/복수전공명" oninput="checkMajor(this)" />
                                                   <ul class="majorList"></ul>
                                              </div>
                                              </div>
@@ -117,127 +119,141 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script>
          
-        	// 적성 차트
-			var aptitudeScoreArr = ${aptitudeScoreArr};
-			aptitudeNameArr = ${aptitudeNameArr};
-            const ctx21 = document.getElementById('aptitudeChart');
-           	var myChart21 = new Chart(ctx21, {
-                   type: 'radar',
-                   data: {
-                       labels:aptitudeNameArr,
-                       datasets: [
-                       {
-                           data: aptitudeScoreArr,
-                           backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                           borderColor: 'rgba(255, 99, 132, 1)',
-                           borderWidth: 1,
+//         	// 적성 차트
+// 			var aptitudeScoreArr = ${aptitudeScoreArr};
+// 			aptitudeNameArr = ${aptitudeNameArr};
+//             const ctx21 = document.getElementById('aptitudeChart');
+//            	var myChart21 = new Chart(ctx21, {
+//                    type: 'radar',
+//                    data: {
+//                        labels:aptitudeNameArr,
+//                        datasets: [
+//                        {
+//                            data: aptitudeScoreArr,
+//                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+//                            borderColor: 'rgba(255, 99, 132, 1)',
+//                            borderWidth: 1,
                           
-                       },              
-                       ]
-                   },
-                   options: {
-                       scale: {                                          
-                               min: 0,
-                               max: 100,
-                               ticks: {
-                                 stepSize:5
-                               }
+//                        },              
+//                        ]
+//                    },
+//                    options: {
+//                        scale: {                                          
+//                                min: 0,
+//                                max: 100,
+//                                ticks: {
+//                                  stepSize:5
+//                                }
                            
-                       }
-                   }
-                   });
+//                        }
+//                    }
+//                    });
            	
-           	// 흥미차트 
-           	var interestScoreArr = ${interestScoreArr};
-            const ctx31 = document.getElementById('interestChart');
-           	var myChart31 = new Chart(ctx31, {
-                   type: 'radar',
-                   data: {
-                       labels:['자연과학','AI·소프트웨어','공학','법률·행정','복지','교육','예술·미디어','스포츠','마케팅','금융·경영','여가·관광','보건의료', '농생명', '환경', '제조', '물류·운송·유통', '설계·건축·토목'],
-                       datasets: [
-                       {
-                           data: interestScoreArr,
-                           backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                           borderColor: 'rgba(255, 99, 132, 1)',
-                           borderWidth: 1,
+//            	// 흥미차트 
+//            	var interestScoreArr = ${interestScoreArr};
+//             const ctx31 = document.getElementById('interestChart');
+//            	var myChart31 = new Chart(ctx31, {
+//                    type: 'radar',
+//                    data: {
+//                        labels:['자연과학','AI·소프트웨어','공학','법률·행정','복지','교육','예술·미디어','스포츠','마케팅','금융·경영','여가·관광','보건의료', '농생명', '환경', '제조', '물류·운송·유통', '설계·건축·토목'],
+//                        datasets: [
+//                        {
+//                            data: interestScoreArr,
+//                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+//                            borderColor: 'rgba(255, 99, 132, 1)',
+//                            borderWidth: 1,
                           
-                       },              
-                       ]
-                   },
-                   options: {
-                       scale: {                                          
-                               min: 0,
-                               max: 100,
-                               ticks: {
-                                 stepSize:5
-                               }
+//                        },              
+//                        ]
+//                    },
+//                    options: {
+//                        scale: {                                          
+//                                min: 0,
+//                                max: 100,
+//                                ticks: {
+//                                  stepSize:5
+//                                }
                            
-                       }
-                   }
-                   });
+//                        }
+//                    }
+//                    });
            	
-        	// 가치관 
-           	var valuesScoreArr = ${valuesScoreArr};
-            const ctx25 = document.getElementById('valuesChart');
-           	var myChart25 = new Chart(ctx25, {
-                   type: 'radar',
-                   data: {
-                       labels:['안정성', '보수', '일과 삶의 균형', '즐거움','소속감','자기계발', '도전성', '영향력', '사회적 기여','성취','사회적 인정','자율성'],
-                       datasets: [
-                       {
-                           data: valuesScoreArr,
-                           backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                           borderColor: 'rgba(255, 99, 132, 1)',
-                           borderWidth: 1,
+//         	// 가치관 
+//            	var valuesScoreArr = ${valuesScoreArr};
+//             const ctx25 = document.getElementById('valuesChart');
+//            	var myChart25 = new Chart(ctx25, {
+//                    type: 'radar',
+//                    data: {
+//                        labels:['안정성', '보수', '일과 삶의 균형', '즐거움','소속감','자기계발', '도전성', '영향력', '사회적 기여','성취','사회적 인정','자율성'],
+//                        datasets: [
+//                        {
+//                            data: valuesScoreArr,
+//                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+//                            borderColor: 'rgba(255, 99, 132, 1)',
+//                            borderWidth: 1,
                           
-                       },              
-                       ]
-                   },
-                   options: {
-                       scale: {                                          
-                               min: 0,
-                               max: 100,
-                               ticks: {
-                                 stepSize:5
-                               }
+//                        },              
+//                        ]
+//                    },
+//                    options: {
+//                        scale: {                                          
+//                                min: 0,
+//                                max: 100,
+//                                ticks: {
+//                                  stepSize:5
+//                                }
                            
-                       }
-                   }
-                   });
+//                        }
+//                    }
+//                    });
            	
-           	// tab
-            const triggerTabList = document.querySelectorAll('#myTab button')
-			triggerTabList.forEach(triggerEl => {
-			  const tabTrigger = new bootstrap.Tab(triggerEl)
+//            	// tab
+//             const triggerTabList = document.querySelectorAll('#myTab button')
+// 			triggerTabList.forEach(triggerEl => {
+// 			  const tabTrigger = new bootstrap.Tab(triggerEl)
 			
-			  triggerEl.addEventListener('click', event => {
-			    event.preventDefault()
-			    tabTrigger.show()
-			  })
-			})
+// 			  triggerEl.addEventListener('click', event => {
+// 			    event.preventDefault()
+// 			    tabTrigger.show()
+// 			  })
+// 			})
 			
+			function removeGroup(groupElement) {
+			    $(groupElement).remove();
+			}
 			// 추가 정보 입력
 			function checkCerti(inputElement) {
             var certi = $(inputElement).val();
-            var qualificationList = $(inputElement).next(".qualificationList");
+            var qualificationList = $(inputElement).siblings(".qualificationList");
 
             $.ajax({
-                url: "/spring/test/check",
+                url: "/whou/member/getCerti",
                 data: { certi: certi },
                 success: function (result) {
                     qualificationList.empty();
-
-                    for (var i = 0; i < result.length; i++) {
-                        var qualification = result[i];
-                        var button = $("<button>").text(qualification);
-                        button.on("click", function () {
-                           event.preventDefault();
-                            var selectedQualification = $(this).text();
-                            $(inputElement).val(selectedQualification);
+                    if(result && result.length > 0){
+	                    for (var i = 0; i < result.length; i++) {
+	                        var qualification = result[i];
+	                        var button = $("<button>").text(qualification);
+	                     
+	                        button.on("click", function () {
+	                           event.preventDefault();
+	                            var selectedQualification = $(this).text();
+	                            $(inputElement).val(selectedQualification);
+	                            qualificationList.hide();
+	                        });
+	                        qualificationList.append($("<li>").append(button));
+	                    }
+                    }else{
+                        var message = "' " + certi + " '을(를) 찾을 수 없습니다.";
+                        var messageElement = $("<li>").text(message);
+                        messageElement.on("click", function () {
+                            // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
+                            $(inputElement).val("");
                             qualificationList.hide();
                         });
-                        qualificationList.append($("<li>").append(button));
-                    }
+                        qualificationList.append(messageElement);
+                    }    
 
                     qualificationList.show();
                 }
@@ -249,24 +265,35 @@
             var majorList = $(inputElement).next(".majorList");
 
             $.ajax({
-                url: "/spring/test/check2",
+                url: "/whou/member/getMajor",
                 data: { major: major },
                 success: function (result) {
                    majorList.empty();
-
-                    for (var i = 0; i < result.length; i++) {
-                        var major2 = result[i];
-                        var button = $("<button>").text(major2);
-                        button.on("click", function () {
-                           event.preventDefault();
-                            var selectedMajor = $(this).text();
-                            $(inputElement).val(selectedMajor);
-                            majorList.hide();
-                        });
-                        majorList.append($("<li>").append(button));
-                    }
-
-                    majorList.show();
+                   
+                   if(result && result.length > 0){
+	                    for (var i = 0; i < result.length; i++) {
+	                        var major2 = result[i];
+	                        var button = $("<button>").text(major2);
+	                        button.on("click", function () {
+	                           event.preventDefault();
+	                            var selectedMajor = $(this).text();
+	                            $(inputElement).val(selectedMajor);
+	                            majorList.hide();
+	                        });
+	                        majorList.append($("<li>").append(button));
+	                    }
+                   }else{
+                       var message = "' " + major + " '을(를) 찾을 수 없습니다.";
+                       var messageElement = $("<li>").text(message);
+                       messageElement.on("click", function () {
+                           // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
+                           $(inputElement).val("");
+                           majorList.hide();
+                       });
+                       majorList.append(messageElement);
+                   }
+                   
+                   majorList.show();
                 }
             });
         }
@@ -279,6 +306,7 @@
                 required: true,
                 oninput: "checkCerti(this)",
                 placeholder: "자격증 명",
+                autocomplete: "off",
             });
             var newIcon = $("<i>").addClass("fa-solid fa-circle-minus fa-lg");
             var newUl = $("<ul>").addClass("qualificationList");
@@ -296,6 +324,7 @@
                 name: "major",
                 required: true,
                 oninput: "checkMajor(this)",
+                autocomplete: "off",
             });
             var newUl = $("<ul>").addClass("majorList");
 
@@ -304,7 +333,9 @@
             $("#majorContainer").append(newDiv);
             newUl.hide();
         }
-
+        $(document).on('click', '.fa-solid.fa-circle-minus', function(){
+            $(this).parent(".input-wrap").remove();
+        });
         </script>
     
     </body>
