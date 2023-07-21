@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,6 +20,7 @@
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <%-- TOP 버튼 --%>
         <script>
 	        $(document).ready(function(){
         	$(window).scroll(function(){  //스크롤이 움직일때마다 이벤트 발생
@@ -31,6 +33,12 @@
     </head>
  
     <body>
+    <%-- 돋보기 아이콘눌러서 검색 --%>
+    <script>
+    	function submit(){
+    		document.getElementById('frm').submit();	
+    	}
+    </script>
         <!-- Responsive navbar-->
        <%@ include file="../header.jsp" %>        
         <!-- Header-->
@@ -39,7 +47,7 @@
                 <h2 class="page-title">공지사항</h2>
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-9">
-                      <form action="/whou/cs/noticeSearch">
+                      <form action="/whou/cs/notice" id="frm">
                         <div class="text-center my-4 d-flex">
 	                            <div class="select-form">
 	                                <select class="desc-select" name="option">
@@ -49,8 +57,8 @@
 	                                </select>
 	                            </div>
 	                            <div class="input-group search-form">
-                                <span class="search-btn"><i class="fa-solid fa-magnifying-glass fa-xl" style="color: #5a3fff;"></i></span>
                                 <input type="text" class="" name="word">
+                              <a href="#" onclick="submit()"> <span class="search-btn"><i class="fa-solid fa-magnifying-glass fa-xl" style="color: #5a3fff;"></i></span></a>
                                 <input type="submit" style="display: none;">
                             </div>
                         </div>
@@ -71,11 +79,14 @@
                 <c:if test="${count > 0 }">
                     <p class="result-top-txt">총 <span>${count}</span>건의 글이 있습니다</p>
                 </c:if>
-                <c:if test="${lv == 0}">
-	                 <div style="float: right;">
+	                <div style="float: right;">
+	                <c:if test="${word != null && option != null}" >
+	                	<button type="button" class="btn btn-light" onclick="location='/whou/cs/notice'">전체보기</button>
+	                </c:if>
+                <c:if test="${lv == 2}"> <%-- 관리자 레벨 검사 --%>
 	                	<button type="button" class="btn btn-light" onclick="location='/whou/cs/noticeWriteForm'">글작성</button>
-	                </div>
                 </c:if>
+	                </div>
                 </div>
                             <!-- <div class="result-img">img</div> -->
 					<table class="table table-hover" style="table-layout:fixed" >
@@ -84,7 +95,6 @@
 								<th scope="col">글번호</th>
 								<th scope="col">작성자</th>
 								<th scope="col">제목</th>
-								<th scope="col">내용</th>
 								<th scope="col">작성일</th>
 								<th scope="col">조회수</th>
 							</tr>
@@ -99,9 +109,6 @@
 									<td>관리자</td>
 									<td>
 										<a href="/whou/cs/noticeDetail?num=${notice.num}">${notice.subject}</a>
-									</td>
-									<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-										<a href="/whou/cs/noticeDetail?num=${notice.num}">${notice.content}</a>
 									</td>
 								    <td>
 								    	<fmt:formatDate value="${notice.reg}" pattern="yyyy-MM-dd" type="date"/>
@@ -118,21 +125,46 @@
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
                           <li class="page-item">
-                          <c:if test="${startPage > 1}">
-                            <a class="page-link" href="notice?pageNum=${startPage - 1 }" aria-label="Previous">
+                          <c:if test="${pageNum != 1}">
+                          
+                          <c:if test="${word != null && option != null}" >
+                            <a class="page-link" href="notice?pageNum=${pageNum - 1 }&word=${word}&option=${option}" aria-label="Previous">
                               <span aria-hidden="true">&laquo;</span>
                             </a>
+                           </c:if>
+                           
+                           <c:if test="${word == null && option == null}" >
+                            <a class="page-link" href="notice?pageNum=${pageNum - 1 }" aria-label="Previous">
+                              <span aria-hidden="true">&laquo;</span>
+                            </a>
+                           </c:if>
+                           
                           </c:if>
                           </li>
                           <c:forEach begin="${startPage}" end="${endPage}" var="i">
-                          	<li class="page-item"><a class="page-link" href="notice?pageNum=${i}">${i}</a></li>
+	                          <c:if test="${word != null && option != null }">
+								<li class="page-item"><a class="page-link" href="notice?pageNum=${i}&word=${word}&option=${option}">${i}</a></li>
+	                          </c:if>
+	                          
+	                          <c:if test="${word == null && option == null }">
+								<li class="page-item"><a class="page-link" href="notice?pageNum=${i}">${i}</a></li>
+	                          </c:if>
                           </c:forEach>
                           
                           <li class="page-item">
-                          <c:if test="${endPage < pageCount}">
-                            <a class="page-link" href="notice?pageNum=${startPage + 1}" aria-label="Next">
-                              <span aria-hidden="true">&raquo;</span>
-                            </a>
+                          <c:if test="${pageNum < endPage}">
+                          	<c:if test="${word != null && option != null}" >
+	                            <a class="page-link" href="notice?pageNum=${pageNum + 1}&word=${word}&option=${option}" aria-label="Next">
+	                              <span aria-hidden="true">&raquo;</span>
+	                            </a>
+                            </c:if>
+                            
+                          	<c:if test="${word == null && option == null}" >
+	                            <a class="page-link" href="notice?pageNum=${pageNum + 1}" aria-label="Next">
+	                              <span aria-hidden="true">&raquo;</span>
+	                            </a>
+                            </c:if>
+                            
                           </c:if>
                           </li>
                         </ul>
@@ -145,7 +177,6 @@
 				        </tr>
 				    </table>
 				</div>
-				                
             </div>
         </section>
         <!-- Footer-->
@@ -166,19 +197,5 @@
                 <p class="m-0">Copyright &copy; Your Website 2023</p>
             </div>
         </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-            const triggerTabList = document.querySelectorAll('#myTab button')
-				triggerTabList.forEach(triggerEl => {
-				  const tabTrigger = new bootstrap.Tab(triggerEl)
-				
-				  triggerEl.addEventListener('click', event => {
-				    event.preventDefault()
-				    tabTrigger.show()
-				  })
-				})
-        </script>
     </body>
-    
 </html>

@@ -40,7 +40,7 @@ public class AdminFaqServiceImpl implements AdminFaqService {
 	}
 
 	@Override
-	public int faqUserLvCheck(String email) { // 레벨 검사
-		return mapper.faqUserLvCheck(email);
+	public int adminUserLvCheck(String email) { // 레벨 검사
+		return mapper.adminUserLvCheck(email);
 	}
 }

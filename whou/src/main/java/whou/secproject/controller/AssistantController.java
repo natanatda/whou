@@ -28,7 +28,7 @@ public class AssistantController {
 		if(email == null) { 
 			return "redirect:/main"; // 세션이 없으면 메인으로 이동
 		}
-		int lv = assistantService.assistantUserLvCheck(email); // 세션으로 레벨만 검색
+		int lv = assistantService.adminUserLvCheck(email); // 세션으로 레벨만 검색
 		int count = assistantService.assistantCount(); // 모든 챗봇 리스트 개수 세기
 		if(count > 0) { // 챗봇이 있으면 리스트를 view로 보냄 (null방지)
 			model.addAttribute("list",assistantService.assistantList());
@@ -42,8 +42,8 @@ public class AssistantController {
 	public String aiUpdate(AssistantDTO dto, HttpSession session) {
 		String email = (String)session.getAttribute("memId");
 		if(email != null) {			
-			int lv = assistantService.assistantUserLvCheck(email);
-			if(lv == 0) { // 레벨 0 => 관리자
+			int lv = assistantService.adminUserLvCheck(email);
+			if(lv == 2) { // 레벨 2 => 관리자
 				assistantService.assistantUpdateList(dto); // 리스트 수정			
 			}
 		}
@@ -53,9 +53,9 @@ public class AssistantController {
 	public String aiDelete(HttpServletRequest request, HttpSession session) {
 		String email = (String)session.getAttribute("memId");
 		if(email != null) {			
-			int lv = assistantService.assistantUserLvCheck(email);
+			int lv = assistantService.adminUserLvCheck(email);
 			int num = Integer.parseInt(request.getParameter("num"));
-			if(lv == 0) {
+			if(lv == 2) {
 				assistantService.assistantDelete(num); // 리스트 삭제			
 			}
 		}
@@ -68,12 +68,12 @@ public class AssistantController {
 		if(email != null) {
 			int ref = Integer.parseInt(request.getParameter("ref"));
 			int ref_level = Integer.parseInt(request.getParameter("ref_level"));
-			int lv = assistantService.assistantUserLvCheck(email);
+			int lv = assistantService.adminUserLvCheck(email);
 			
 			dto.setRef(ref);
 			dto.setRef_level(ref_level);
 			
-			if(lv == 0) {
+			if(lv == 2) {
 	 			assistantService.assistantInsertList(dto); // 챗봇 입력			
 			}
 		}

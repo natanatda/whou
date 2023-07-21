@@ -7,10 +7,6 @@
 		select * from assistant
 	</sql>
 	
-	<select id="assistantUserLvCheck" resultType="int">
-		select lv from whou_user where email=#{email}
-	</select> 
-	
 	<select id="assistantList" resultType="whou.secproject.component.AssistantDTO" >
 		<include refid="assistant"/> order by ref asc
 	</select>

@@ -14,5 +14,5 @@ public interface AssistantService {
 	public void assistantUpdateList(AssistantDTO dto); // 챗봇 리스트 수정
 	public void assistantDelete(int num); // 챗봇 리스트 삭제
 	public int assistantCount(); // 모든 챗봇 리스트 개수 세기
-	public int assistantUserLvCheck(String email); // 현재 회원 레벨 체크
+	public int adminUserLvCheck(String email); // 현재 회원 레벨 체크
 }

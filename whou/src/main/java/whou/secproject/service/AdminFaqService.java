@@ -10,5 +10,5 @@ public interface AdminFaqService {
 	public void faqWrite(AdminFaqDTO dto); // 작성
 	public void faqDelete(int num); // 삭제
 	public void faqReadCount(int num); // 조회수 증가
-	public int faqUserLvCheck(String email); // 레벨 검사
+	public int adminUserLvCheck(String email); // 레벨 검사
 }

@@ -11,15 +11,11 @@
 		update notice		
 	</sql>
 	
-	<select id="noticeUserLvCheck" resultType="int">
-		select lv from whou_user where email=#{email}
-	</select> 
-	
 	<select id="noticeList" resultType="whou.secproject.component.AdminNoticeDTO">
-		<![CDATA[
-		select num,writer,subject,reg,content,readcount,r from 
+		select num,writer,subject,reg,content,readcount from 
 		(select num,writer,subject,reg,content,readcount,rownum r from 
-		notice order by reg desc ) where r >= #{start} and r <= #{end}
+		(select num, writer, subject, reg, content, readcount from 
+		notice order by reg desc )) where <![CDATA[r >= #{start} and r <= #{end} order by reg desc
 		]]>
 	</select>
 	
@@ -31,19 +27,21 @@
 		select count(*) from notice	
 	</select> 
 	
-	<select id="noticeSearch" resultType="whou.secproject.component.AdminNoticeDTO">
-		<include refid="notice"/> 
-			<choose>
-				<when test="option == 'all'">
-					where writer like '%'||#{word}||'%' 
-					or subject like '%'||#{word}||'%' 
-					or content like '%'||#{word}||'%'
-				</when>
-				<otherwise>
-					where ${option} like '%'||#{word}||'%'
-				</otherwise>
-			</choose>
+	<select id="noticeSearch" resultType="whou.secproject.component.AdminNoticeDTO" parameterType="map">
+    	select * from (select rownum r, notice.* from notice
+    <trim prefix="where">
+        <choose>
+            <when test="option == 'all'">
+                subject like '%'||#{word}||'%' or content like '%'||#{word}||'%'
+            </when>
+            <otherwise>
+                ${option} like '%'||#{word}||'%'
+            </otherwise>
+        </choose>
+    </trim>
+        order by reg desc) where <![CDATA[ r >= #{start} and r <= #{end}]]> 
 	</select>
+
 	
 	<insert id="noticeWrite" >
 		insert into notice values(notice_seq.NEXTVAL, #{writer}, #{subject}, #{content}, 0, sysdate)
@@ -66,7 +64,4 @@
 	<delete id="noticeDelete" >
 		delete from notice where num=#{num}	
 	</delete>	
-
-
-
 </mapper>

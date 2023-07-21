@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import whou.secproject.component.AdminFaqDTO;
 import whou.secproject.service.AdminFaqService;
@@ -24,7 +25,7 @@ public class AdminFaqController {
 		String category = request.getParameter("category");
 		
 		if(email != null) { // 작성 버튼때문에 레벨 검사
-			model.addAttribute("lv",adminFaqService.faqUserLvCheck(email));
+			model.addAttribute("lv",adminFaqService.adminUserLvCheck(email));
 		}
 		
 		if(category == null) { // 카테고리별 검색
@@ -38,8 +39,8 @@ public class AdminFaqController {
 	public String faqDelete(HttpServletRequest request, HttpSession session) {
 		String email = (String)session.getAttribute("memId");
 		if(email != null) {			
-			int lv = adminFaqService.faqUserLvCheck(email);
-			if(lv == 0) { // 관리자 일때만
+			int lv = adminFaqService.adminUserLvCheck(email);
+			if(lv == 2) { // 관리자 일때만
 				int num = Integer.parseInt(request.getParameter("num"));
 				adminFaqService.faqDelete(num); // 삭제
 			}
@@ -52,7 +53,7 @@ public class AdminFaqController {
 			return "redirect:/main";
 		}		
 		String email = (String)session.getAttribute("memId");
-		int lv = adminFaqService.faqUserLvCheck(email);
+		int lv = adminFaqService.adminUserLvCheck(email);
 		model.addAttribute("lv",lv);
 		return "/admin/faqWriteForm";
 	}
@@ -60,8 +61,8 @@ public class AdminFaqController {
 	public String faqWrite(AdminFaqDTO dto, HttpSession session) {
 		String email = (String)session.getAttribute("memId");
 		if(email != null ) {			
-			int lv = adminFaqService.faqUserLvCheck(email);
-			if(lv == 0) {
+			int lv = adminFaqService.adminUserLvCheck(email);
+			if(lv == 2) {
 				adminFaqService.faqWrite(dto); // faq 작성
 			}
 		}
@@ -69,8 +70,8 @@ public class AdminFaqController {
 	}
 	
 	@RequestMapping("faqReadCount")
-	public String faqReadCount(int num) {
+	public @ResponseBody String faqReadCount(int num) {
 		adminFaqService.faqReadCount(num); // 조회수 +1
-		return "redirect:/cs/faq";
+		return "";
 	}
 }

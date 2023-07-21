@@ -18,7 +18,10 @@
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
         <script src="../resources/js/adminInputcheck.js" ></script>
-        <c:if test="${lv != 0}">
+        <script type="text/javascript" src="../resources/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="../resources/js/smartEditor.js" ></script> <%-- 스마트 에디터 --%>
+        <c:if test="${lv != 2}"> <%-- 관리자 레벨 검사 --%>
         	<script>
         		alert("잘못된 경로입니다.");
         		history.back();
@@ -26,15 +29,12 @@
         </c:if>
     </head>
 <body>
-<%@ include file="../header.jsp" %>        
+<%@ include file="../header.jsp" %>
     <header class="py-5">
       <div class="container px-5">
      	 <h3 class="page-title">공지사항 작성</h3>
-      
-     
-      
       <div style="float: center; margin: 10px; padding: 20px; width: 1000px;">
-		<form action="/whou/cs/noticeWrite" onsubmit="return input();">
+		<form action="/whou/cs/noticeWrite" onsubmit="return submitPost();">
 		<div class="mb-3">
 		  <label for="exampleFormControlInput1" class="form-label">제목</label>
 		  <input type="text" name="subject" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력해 주세요">
@@ -46,6 +46,8 @@
 			<button type="submit" class="btn btn-light" style="float: right;">글작성</button>
 			<button onclick="history.back();" type="button" class="btn btn-light" style="float: right;">돌아가기</button>
 		</form>
+		<script>
+		</script>
 	</div>
 	</div>
 	</header>

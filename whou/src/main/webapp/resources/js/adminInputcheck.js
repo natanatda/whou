@@ -1,18 +1,6 @@
 /**
  * 
  */
- function input(){
-	var subject = document.getElementById("exampleFormControlInput1").value;
-	var content = document.getElementById("exampleFormControlTextarea1").value;
-	if(!subject){
-		alert("제목을 입력해주세요");
-		return false;
-	}
-	if(!content){
-		alert("내용을 입력해주세요");
-		return false;
-	}
-}
  function aiInput(){
 	var qes = document.getElementById("qes").value;
 	var con = document.getElementById("con").value;

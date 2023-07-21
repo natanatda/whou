@@ -1,6 +1,7 @@
 package whou.secproject.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -10,7 +11,7 @@ public interface AdminNoticeService {
 	// 공지사항 리스트
 	public List<AdminNoticeDTO> noticeList(@Param("start")int start, @Param("end")int end);
 	// 검색
-	public List<AdminNoticeDTO> noticeSearch(@Param("option")String option,@Param("word")String word);
+	public List<AdminNoticeDTO> noticeSearch(Map<String,Object> noticeSearch);
 	// 상세보기
 	public AdminNoticeDTO noticeDetail(int num);
 	// 글작성
@@ -24,5 +25,5 @@ public interface AdminNoticeService {
 	// 삭제
 	public void noticeDelete(int num);
 	// 레벨 검사
-	public int noticeUserLvCheck(String email);
+	public int adminUserLvCheck(String email);
 }
