@@ -16,7 +16,7 @@
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <a class="navbar-brand main-logo" href="/whou/main"><img src="/whou/resources/img/logo.svg"></a>
                         <li class="nav-item"><a class="nav-link" href="#!">직업정보</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">진로검사</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/whou/aptitude/aptitudeMain">진로검사</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">고객지원</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">알림</a></li>
                     </ul>

@@ -12,12 +12,12 @@
 	</insert>
 	
 	<insert id="insertPro">
-		insert into whou_user (num, email, pw, name, birth_year, tel, gender, join_type) values(user_seq.NEXTVAL, #{email}, #{pw}, #{name}, #{birth_year}, #{tel}, #{gender},
-		<if test = "join_type != null">
-			 #{join_type})
+		insert into whou_user (num, email, pw, name, birth_year, tel, gender, join_type) 
+		<if test = "join_type != ''">
+			 values(user_seq.NEXTVAL, #{email}, 'null', #{name}, #{birth_year}, #{tel}, #{gender}, #{join_type})
 		</if>
-		<if test = "join_type == null">
-			'whoU')
+		<if test = "join_type == ''">
+			values(user_seq.NEXTVAL, #{email}, #{pw}, #{name}, #{birth_year}, #{tel}, #{gender}, 'whoU')
 		</if>
 	</insert>
 	

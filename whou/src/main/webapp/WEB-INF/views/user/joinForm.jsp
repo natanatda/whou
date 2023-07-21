@@ -30,7 +30,7 @@
               	<div class="input-item">
 	              <label for="joinInput" class="form-label">이메일</label>
 	              	<c:if test="${email != null}">
-	              		<input type="text" class="form-control" name = "email" value = "${email}">
+	              		<input type="text" class="form-control" name = "email" id="email" value = "${email}">
 	            	</c:if>
 	            	<c:if test="${email == null}">
 	            		<input type="text" class="form-control" name = "email" id="email" placeholder="name@example.com" required oninput = "checkEmail()">
@@ -50,7 +50,7 @@
 	            <div class="input-item">
 	              <label for="joinInput" class="form-label">이름</label>
 	              <input type="text" class="form-control" name = "name" id="name" placeholder="이름(실명) 입력">
-	              <input type="hidden" class="form-control" name = "join_type" value ="${join_type}">
+	              <input type="hidden" class="form-control" id = "join_type" value ="${join_type}">
 	            </div>
 	            <div class="input-item">
 	              <label for="joinInput" class="form-label">연도</label>
@@ -489,7 +489,7 @@
 		    	var birth_year = $("#birth_year").val();
 		    	var tel = $("#tel").val();
 		    	var gender = $("input[name='gender']:checked").val();
-		    	var join = $("#join").val();
+		    	var join_type = $("#join_type").val();
 		        if (email == '' || pw == '' || name == '' || birth_year == '' || tel == '' || gender == '') {
 		            alert("모든 항목을 입력해주세요.");
 		            return false; // Prevent form submission
@@ -522,7 +522,7 @@
 		            birth_year: birth_year,
 		            tel: tel,
 		            gender: gender,
-		            join_type: join
+		            join_type: join_type
 		        };
 		        $.ajax({
 		            url: "/whou/member/check",
