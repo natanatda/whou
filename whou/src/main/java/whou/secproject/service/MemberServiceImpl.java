@@ -34,6 +34,7 @@ import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.service.DefaultMessageService;
 import whou.secproject.component.MemberDTO;
+import whou.secproject.component.RecommandInfoDTO;
 import whou.secproject.mapper.MemberMapper;
 
 @Service
@@ -41,6 +42,13 @@ public class MemberServiceImpl implements MemberService {
 
    @Autowired
    private MemberMapper mapper;
+   
+   
+   //마이페이지 rank 검색
+   @Override
+   public RecommandInfoDTO getAptitudeRank(int userNum) {
+       return mapper.getAptitudeRank(userNum);
+    }
    
    //가입했는지 확인
    @Override

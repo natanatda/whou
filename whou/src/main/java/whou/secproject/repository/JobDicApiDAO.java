@@ -29,7 +29,7 @@ public class JobDicApiDAO {
 				
 	    jParam.setPageIndex("1");
 	    // jParam.setPageIndex(pageNum);
-	    jParam.setSearchAptdCodes(new String [] {"104740"});
+//	    jParam.setSearchAptdCodes(new String [] {"104740"});
 	    jParam.setSearchJobNm("");
 
 	    URI uri = null;

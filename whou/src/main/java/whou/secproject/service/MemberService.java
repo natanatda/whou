@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import whou.secproject.component.MemberDTO;
+import whou.secproject.component.RecommandInfoDTO;
 
 public interface MemberService {
     public int count(String tel);
@@ -22,5 +23,9 @@ public interface MemberService {
 	public List<String> getCerti(String certi);
 	public List<String> getMajor(String major);
 	public void updateInfo(String combinedCerti, String combinedMajor);
+	
+	
+	// 마이페이지
+	public RecommandInfoDTO getAptitudeRank(int userNum);
 }
 

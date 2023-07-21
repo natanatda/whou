@@ -807,6 +807,11 @@ public class AptitudeServiceImpl implements AptitudeService{
 	public void valuesUpdate(String score, int userNum) {
 		mapper.valuesUpdate(score, userNum);	
 	}
+	// 역량 점수 저장
+	@Override
+	public void saveAbilityScore(String abilityScore, int userNum) {
+		 mapper.saveAbilityScore(abilityScore, userNum);
+	}
 	
 
 	// 세션으로 이름 꺼내기
@@ -845,5 +850,12 @@ public class AptitudeServiceImpl implements AptitudeService{
 	@Override
 	public String getValuesScore(int userNum) {
 		return mapper.getValuesScore(userNum);
+	}
+
+	
+	// 역량 점수
+	@Override
+	public String getAbilityScore(int userNum) {
+		return mapper.getAbilityScore(userNum);
 	}
 }

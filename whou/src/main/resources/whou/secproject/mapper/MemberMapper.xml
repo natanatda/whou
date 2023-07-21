@@ -52,4 +52,11 @@
 	<update id="updateInfo">
 		update user_info set CERTIFICATE=#{combinedCerti}, SCHOOL_MAJOR=#{combinedMajor} where email = '22yunji@naver.com'
 	</update>
+	
+	
+	<!-- 마이페이지 -->
+	<select id="getAptitudeRank" resultType="whou.secproject.component.RecommandInfoDTO">
+		select * from recommand_info where num = ${userNum}
+	</select>
+	
 </mapper>

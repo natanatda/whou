@@ -188,6 +188,10 @@
 	<update id="interestScoreUpdate">
 		UPDATE recommand_info SET interest_score=#{dtoRe.interest_score} WHERE num=#{userNum}
 	</update>
+	<!-- 역량 차트점수 저장 -->
+	<update id="saveAbilityScore">
+		UPDATE recommand_info SET abc4=#{abilityScore} WHERE num=#{userNum}
+	</update>
 	
 	<!-- 세션으로 이름 꺼내기 -->
 	<select id="getName" resultType="String">
@@ -209,6 +213,9 @@
 	</select>
 	<select id="getValuesScore" resultType="String">
 		SELECT values_score FROM recommand_info WHERE num = #{userNum}
+	</select>
+	<select id="getAbilityScore" resultType="String">
+		SELECT abc4 FROM recommand_info WHERE num = #{userNum}
 	</select>
 	
 </mapper>

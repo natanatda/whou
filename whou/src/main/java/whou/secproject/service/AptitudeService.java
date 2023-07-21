@@ -38,6 +38,7 @@ public interface AptitudeService {
 	public void interestUpdate(RecommandInfoDTO dtoRe, int userNum);//흥미 직업 번호 저장
 	public void aptitudeUpdate(RecommandInfoDTO dtoRe, int userNum);//적성 직업 번호 저장
 	public void valuesUpdate(String score, int userNum); //가지관 차트 점수 저장
+	public void saveAbilityScore(String abilityScore, int userNum); //역량점수저장
 	
 	
 	public String getName(String memId);//세션으로 이름 꺼내기
@@ -50,4 +51,5 @@ public interface AptitudeService {
 	public String getInterestScore(int userNum);
 	public String getValuesScore(int userNum);
 	public String getAptitudeScoreName(int userNum); //적성 점수 이름
+	public String getAbilityScore(int userNum);//역량점수
 }

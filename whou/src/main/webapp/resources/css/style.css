@@ -444,36 +444,15 @@ input::placeholder{font-size: 14px;color:#999;}
 #nav-addInfo .add-wrap .add-certi-btn{width:fit-content;display: flex;align-items: center;gap:10px;justify-content: center;cursor: pointer;}
 #nav-addInfo .add-wrap .add-certi-btn p{font-weight: 500;}
 #nav-addInfo .add-wrap .right-box{width:50%;}
-   #qualificationContainer div {
-            position: relative;
-        }
+#qualificationContainer div {position: relative;}
+.qualificationList {position: absolute;left: 30px;top: 100%;width:79%;background-color: #f9f9f9;border: 1px solid #ccc;padding: 5px;list-style: none;margin: 0;display: none;z-index:1;}
+#majorContainer div {position: relative;}
+.majorList {position: absolute;left: 179px;top: 100%;width:57%;background-color: #f9f9f9;border: 1px solid #ccc;padding: 5px;list-style: none;margin: 0;display: none;z-index:1;}
+ #item-interest{display:none;}
+ #item-values{display:none;}
+ #item-ability{display:none;}
 
-        .qualificationList {
-            position: absolute;
-            left: 0;
-            top: 100%;
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-            padding: 5px;
-            list-style: none;
-            margin: 0;
-            display: none;
-            z-index:1;
-        }
-        
-        #majorContainer div {
-            position: relative;
-        }
 
-        .majorList {
-            position: absolute;
-            left: 0;
-            top: 100%;
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-            padding: 5px;
-            list-style: none;
-            margin: 0;
-            display: none;
-            z-index:1;
-        }
+.book-wrap{display:flex;gap:20px;flex-wrap:wrap;padding:0 30px;cursor:pointer;}
+.book-wrap .card{width:200px;height:200px;  }
+.book-wrap .result-cont{ padding: 20px;height:180px;text-overflow:ellipsis;word-wrap:break-word;display: -webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}

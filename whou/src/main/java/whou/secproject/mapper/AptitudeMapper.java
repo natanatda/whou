@@ -32,7 +32,8 @@ public interface AptitudeMapper {
 	public void interestScoreUpdate(@Param("dtoRe") RecommandInfoDTO dtoRe, @Param("userNum") int userNum); //흥미 차트 점수 저장
 	public void saveAptitudeScoreName(@Param("dto") AptitudeTestValueDTO dto, @Param("qnum") String qnum);// 적성 차트 이름 저장
 	public void saveAptitudeScoreName(@Param("dto") AptitudeTestValueDTO dto, @Param("qnum") String qnum, @Param("userNum") int userNum);
-	 
+	public void saveAbilityScore(@Param("abilityScore") String abilityScore, @Param("userNum") int userNum); //역량점수저장
+
 	public String getName(String memId);//세션으로 이름 꺼내기
 	
 	public void createUserTable(int userNum);// 회원가입시 테이블 생성
@@ -45,4 +46,5 @@ public interface AptitudeMapper {
 	public String getInterestScore(int userNum);
 	public String getValuesScore(int userNum);
 	public String getAptitudeScoreName(int userNum); //적성 점수 이름
+	public String getAbilityScore(int userNum);//역량점수
 }

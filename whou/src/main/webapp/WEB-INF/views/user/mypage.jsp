@@ -22,19 +22,14 @@
      
  </head>
  <style>
-     .qualificationList{padding-top:10px;left: 31px;width: 79%;top: 40px;}
-    .qualificationList li button{background-color:transparent}
-    .qualificationList li {margin-bottom:10px;text-align:left;padding-left:10px;}
-    .majorList{padding-top:10px;left: 180px;width: 57%;top: 40px;}
-    .majorList li button{background-color:transparent}
-    .majorList li {margin-bottom:10px;padding-left:10px;}
+
     </style>
  
  
 <body>
     <%@ include file="../header.jsp" %> 
     <section class="py-2 mypage-section">
-            <div class="container">
+            <div class="container px-5">
                 <h2 class="page-title">마이페이지</h2>
                 <div class="desc-wrap">
                     <div class="left-wrap">
@@ -43,7 +38,7 @@
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                   <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">검사결과보기</button>
                                   <button class="nav-link" id="nav-add-tab" data-bs-toggle="tab" data-bs-target="#nav-addInfo" type="button" role="tab" aria-controls="nav-addInfo" aria-selected="false">추가정보입력</button>
-                                  <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">개인정보수정</button>
+                                  <button class="nav-link" id="nav-modify-tab" data-bs-toggle="tab" data-bs-target="#nav-modifyInfo" type="button" role="tab" aria-controls="nav-modifyInfo" aria-selected="false">개인정보수정</button>
                                   <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">나의 북마크</button>
                                   <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">컨설팅하러가기</button>
                                 </div>
@@ -54,9 +49,35 @@
                     <div class="right-wrap">
                           <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-                               <canvas id="aptitudeChart"></canvas>
-                               <canvas id="interestChart"></canvas>
-                               <canvas id="valuesChart"></canvas>
+	                            <select id="testResultSelect">
+	                                <option value="21">적성</option>
+	                                <option value="25">가치관</option>
+	                                <option value="27">역량</option>
+	                                <option value="31">흥미</option>
+	                            </select>
+	                            <div id="item-aptitude">
+	                                <canvas id="aptitudeChart"></canvas>
+	                                <ul>
+		                               	<li>${aptitudeRank.aptitude_name1}</li>                         
+		                               	<li>${aptitudeRank.aptitude_name2}</li>                         
+		                               	<li>${aptitudeRank.aptitude_name3}</li>                         
+	                                </ul>
+	                            </div>
+	                            <div id="item-values">
+	                                <canvas id="valuesChart"></canvas>
+	                            </div>
+	                            <div id="item-interest">
+	                                <canvas id="interestChart"></canvas>
+	                                <ul>
+		                               	<li>${aptitudeRank.interest_name1}</li>                         
+		                               	<li>${aptitudeRank.interest_name2}</li>                         
+		                               	<li>${aptitudeRank.interest_name3}</li>                         
+	                                </ul>
+	                            </div>
+	                            <div id="item-ability">
+	                                <canvas id="abilityChart1"></canvas>
+	                                <canvas id="abilityChart2"></canvas>
+	                            </div>
                             </div>
                             <div class="tab-pane fade" id="nav-addInfo" role="tabpanel" aria-labelledby="nav-add-tab" tabindex="0">
                         <form action="/whou/member/updateInfo" method="post">
@@ -107,7 +128,45 @@
                                 </div>   
                         </form>                        
                      </div>
-                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">...</div>
+                     <div class="tab-pane fade" id="nav-modifyInfo" role="tabpanel" aria-labelledby="nav-modify-tab" tabindex="0">
+                     	개인정보
+                     </div>
+                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+								<div class="book-wrap">
+			                        <div class="card mb-5 mb-xl-0">
+			                            <div class="result-cont">
+			                                <h4>직업이름 <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
+			                                <p>직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명</p>
+			                            </div>
+			                        </div>
+			                         <div class="card mb-5 mb-xl-0">
+			                            <div class="result-cont">
+			                                <h4>직업이름 <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
+			                                <p>산업카운슬러는 기업의 환경에 따라 직원들의 정신적 문제를 파악하고 정신건강을 위한 전문적인 도움을 받을 수 있도록 상담하는 일을 합니다.</p>
+			                            </div>
+			                        </div>
+			                         <div class="card mb-5 mb-xl-0">
+			                            <div class="result-cont">
+			                                <h4>직업이름 <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
+			                                <p>직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명</p>
+			                            </div>
+			                        </div>
+			                         <div class="card mb-5 mb-xl-0">
+			                            <div class="result-cont">
+			                                <h4>직업이름 <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
+			                                <p>직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명</p>
+			                            </div>
+			                        </div>
+			                             <div class="card mb-5 mb-xl-0">
+			                            <div class="result-cont">
+			                                <h4>직업이름 <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
+			                                <p>직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명</p>
+			                            </div>
+			                        </div>
+				              
+				                   
+								</div>
+							</div>
                             
                           </div>
                     </div>
@@ -119,7 +178,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script>
          
-           // 적성 차트
+         // 적성 차트
          var aptitudeScoreArr = ${aptitudeScoreArr};
          aptitudeNameArr = ${aptitudeNameArr};
             const ctx21 = document.getElementById('aptitudeChart');
@@ -206,6 +265,65 @@
                        }
                    }
                    });
+           // 역량 
+             var abilityScoreArr1 = [${firstThree}];
+             var abilityScoreArr2 = [${lastSix}];
+            const ctx271 = document.getElementById('abilityChart1');
+              var myChart271 = new Chart(ctx271, {
+                   type: 'radar',
+                   data: {
+                       labels:['자기이해', '직업이해', '진로탐색', '진로계획'],
+                       datasets: [
+                       {
+                           data: abilityScoreArr1,
+                           backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                           borderColor: 'rgba(255, 99, 132, 1)',
+                           borderWidth: 1,
+                          
+                       },              
+                       ]
+                   },
+                   options: {
+                       scale: {                                          
+                               min: 0,
+                               max: 100,
+                               ticks: {
+                                 stepSize:5
+                               }
+                           
+                       }
+                   }
+                   });
+              
+              
+            
+              const ctx272 = document.getElementById('abilityChart2');
+                var myChart272 = new Chart(ctx272, {
+                     type: 'radar',
+                     data: {
+                         labels:['낙관성', '지속성', '호기심', '유연성', '도전성', '의사소통'],
+                         datasets: [
+                         {
+                             data: abilityScoreArr2,
+                             backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                             borderColor: 'rgba(255, 99, 132, 1)',
+                             borderWidth: 1,
+                            
+                         },              
+                         ]
+                     },
+                     options: {
+                         scale: {                                          
+                                 min: 0,
+                                 max: 100,
+                                 ticks: {
+                                   stepSize:5
+                                 }
+                             
+                         }
+                     }
+                     });
+
               
               // tab
             const triggerTabList = document.querySelectorAll('#myTab button')
@@ -335,6 +453,28 @@
         }
         $(document).on('click', '.fa-solid.fa-circle-minus', function(){
             $(this).parent(".input-wrap").remove();
+        });
+        
+        // select 요소의 값 변경 감지
+        $('#testResultSelect').change(function() {
+            var selectedValue = $(this).val();
+            
+            // 모든 아이템을 숨김 처리
+            $('#item-aptitude').hide();
+            $('#item-interest').hide();
+            $('#item-values').hide();
+            $('#item-ability').hide();
+
+            // 선택된 값에 따라 해당 아이템을 보여줌
+            if (selectedValue === '21') {
+                $('#item-aptitude').show();
+            } else if (selectedValue === '31') {
+                $('#item-interest').show();
+            } else if (selectedValue === '25') {
+                $('#item-values').show();
+            }else if (selectedValue === '27') {
+                $('#item-ability').show();
+            }
         });
         </script>
     

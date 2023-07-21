@@ -70,7 +70,9 @@ public class AptitudeController {
 	    
 	    return "/aptitude/itrstkAptitude";
 	}
-	
+	   public static String listToString(List<String> list, String delimiter) {
+	        return String.join(delimiter, list);
+	    }
 	//크롤링 결과 집어넣기
 	@RequestMapping("/report")
 	public String getAptitudeTestResult(Model model, String countQ, HttpServletRequest request, HttpServletResponse response, JobDicParamDTO jParam, RecommandInfoDTO dtoRe) {
@@ -214,6 +216,11 @@ public class AptitudeController {
 					String element = reportResult.get(i);
 					updatedList2.add(element);
 				}
+				
+				// 역량 점수만 저장
+				String abilityScore = listToString(updatedList1, ",");
+				abilityScore += "," + listToString(updatedList2, ",");
+				service.saveAbilityScore(abilityScore, userNum);
 			}
 			if (qnum.equals("25")) {
 				for(int i = 3; i <= 14; i++ ) {

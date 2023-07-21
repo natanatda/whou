@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import whou.secproject.component.MemberDTO;
+import whou.secproject.component.RecommandInfoDTO;
 
 public interface MemberMapper {
 	public int count(String tel);
@@ -17,4 +18,7 @@ public interface MemberMapper {
 	public List<String> getCerti(String certi);
 	public List<String> getMajor(String major);
 	public void updateInfo(@Param("combinedCerti")String combinedCerti, @Param("combinedMajor")String combinedMajor);
+	
+	// 마이페이지
+	public RecommandInfoDTO getAptitudeRank(int userNum);
 }
