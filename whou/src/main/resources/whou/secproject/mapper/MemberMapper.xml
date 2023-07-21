@@ -40,4 +40,16 @@
 	<select id="getEmail" resultType="String">
 		select email from whou_user where name = #{name} and tel = #{tel}
 	</select>
+	
+	<select id="getCerti" resultType="String">
+	    select jmfldnm from certificate where jmfldnm like '%' || #{txt} || '%'
+	</select>
+	
+	<select id="getMajor" resultType="String">
+		select MCLASS from major where MCLASS like '%' || #{major} || '%'
+	</select>
+	
+	<update id="updateInfo">
+		update user_info set CERTIFICATE=#{combinedCerti}, SCHOOL_MAJOR=#{combinedMajor} where email = '22yunji@naver.com'
+	</update>
 </mapper>

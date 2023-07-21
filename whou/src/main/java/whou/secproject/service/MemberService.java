@@ -19,5 +19,8 @@ public interface MemberService {
     public String getUserInfo (String access_Token);
 	public ResponseEntity<String> getInfo(String ACCESS_TOKEN) throws IOException;
 	public void telChk(String tel, String numStr);
+	public List<String> getCerti(String certi);
+	public List<String> getMajor(String major);
+	public void updateInfo(String combinedCerti, String combinedMajor);
 }
 
