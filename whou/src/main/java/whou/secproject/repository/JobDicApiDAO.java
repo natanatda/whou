@@ -1,6 +1,6 @@
 package whou.secproject.repository;
 
-import java.io.IOException; 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -15,6 +15,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import whou.secproject.component.JobDicDetailResponseDTO;
 import whou.secproject.component.JobDicListResponseDTO;
 import whou.secproject.component.JobDicParamDTO;
 
@@ -76,40 +77,43 @@ public class JobDicApiDAO {
 		}
 	    return jobDicResponse; 
 	}
-	public JobDicListResponseDTO getJobDicDetail(int seq) {  
-		
-		URI uri = null;
-		try {
-			uri = UriComponentsBuilder.fromHttpUrl(url)
-					.queryParam("apiKey", URLEncoder.encode(apiKey, "UTF-8"))
-					.queryParam("seq", URLEncoder.encode(String.valueOf(seq), "UTF-8"))
-					.build(true)
-					.toUri();
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-		
-		JobDicListResponseDTO jobDicResponse = null;
-		
-		// 객체 byte 배열로 받은 후 utf처리
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<byte[]> response = restTemplate.getForEntity(uri, byte[].class);
-		byte[] responseBodyBytes = response.getBody();
-		String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
-		
-		// 로깅을 활용한 디버깅
-		System.out.println("API 응답: " + responseBody.substring(0,60));
-		
-		try {
-			ObjectMapper objectMapper = new ObjectMapper();
-			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-			jobDicResponse = objectMapper.readValue(responseBody, JobDicListResponseDTO.class);
-			
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return jobDicResponse; 
-	}
+	
+	public JobDicDetailResponseDTO getJobDicDetail(int seq) {  
+	      String url = "https://www.career.go.kr/cnet/front/openapi/job.json";
+	      URI uri = null;
+	      try {
+	         uri = UriComponentsBuilder.fromHttpUrl(url)
+	               .queryParam("apiKey", URLEncoder.encode(apiKey, "UTF-8"))
+	               .queryParam("seq", URLEncoder.encode(String.valueOf(seq), "UTF-8"))
+	               .build(true)
+	               .toUri();
+	         System.out.println(uri);
+	      } catch (UnsupportedEncodingException e1) {
+	         e1.printStackTrace();
+	      }
+	      
+	      JobDicDetailResponseDTO jobDicResponse = null;
+	      
+	      // 객체 byte 배열로 받은 후 utf처리
+	      RestTemplate restTemplate = new RestTemplate();
+	      ResponseEntity<byte[]> response = restTemplate.getForEntity(uri, byte[].class);
+	      byte[] responseBodyBytes = response.getBody();
+	      String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
+	      
+	      // 로깅을 활용한 디버깅
+	      System.out.println("API 응답: " + responseBody.substring(0,60));
+	      
+	      try {
+	         ObjectMapper objectMapper = new ObjectMapper();
+	         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+	         jobDicResponse = objectMapper.readValue(responseBody, JobDicDetailResponseDTO.class);
+	         System.out.println("///////////1 "+ jobDicResponse);
+	         
+	      } catch (JsonProcessingException e) {
+	         e.printStackTrace();
+	      } catch (IOException e) {
+	         e.printStackTrace();
+	      }
+	      return jobDicResponse; 
+	   }
 }

@@ -1,6 +1,8 @@
 package whou.secproject.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.apis.NaverApi;
@@ -37,8 +40,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import whou.secproject.component.JobDicDetailResponseDTO;
-import whou.secproject.component.JobDicDetailResponseDTO.Knowledge;
-import whou.secproject.component.JobDicDetailResponseDTO.Perform_;
 import whou.secproject.component.MemberDTO;
 import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.service.MemberService;
@@ -395,18 +396,40 @@ public class MemberController {
        
        System.out.println("seq == " +seq);
        jobDetail= dao.getJobDicDetail(seq);
-       //System.out.println("////////// " + jobDetail);// dto.work
-       List<JobDicDetailResponseDTO.Work> workList = jobDetail.getWorkList(); 
-       String link = jobDetail.getCertiList().get(0).getLink();
-       List<Knowledge> knowledge = jobDetail.getPerform().getKnowledge();
-       //Object p = jobDetail.getPerform().getPerform_();
+       
+       String data = jobDetail.getIndicatorChart().get(0).getIndicator_data();
+       String major_data = jobDetail.getMajorChart().get(0).getMajor_data();
+       String edu_data = jobDetail.getEduChart().get(0).getChart_data();
+       System.out.println(data);
 
-      
-      //System.out.println(knowledge);
-      //      JobDicDetailResponseDTO.BaseInfo baseInfo = jobDetail.getBaseInfo(); 
-//       for(int i=0; i<jobDetail.getWorkList().size(); i++)
-//          System.out.println(jobDetail.getWorkList().get(i).getWork());
+       List<String> indicator = new ArrayList<String>();
+       List<String> major = new ArrayList<String>();
+       List<String> edu = new ArrayList<String>();
+       
+       String[] dataParts = data.split(",");
+       String[] major_dataParts = major_data.split(",");
+       String[] edu_dataParts = edu_data.split(",");
+       
+       indicator.addAll(Arrays.asList(dataParts));
+       major.addAll(Arrays.asList(major_dataParts));
+       edu.addAll(Arrays.asList(edu_dataParts));
+       
+       String indicatorData = "null";
+       String majorData = "null";
+       String eduData = "null";
+       ObjectMapper objectMapper = new ObjectMapper();
+       try {
+    	   indicatorData = objectMapper.writeValueAsString(indicator);
+    	   majorData = objectMapper.writeValueAsString(major);
+    	   eduData = objectMapper.writeValueAsString(edu);
+       } catch (JsonProcessingException e) {
+           e.printStackTrace();
+       }
+
        model.addAttribute("jobDetail", jobDetail);
+       model.addAttribute("indicatorData", indicatorData);
+       model.addAttribute("majorData", majorData);
+       model.addAttribute("eduData", eduData);
        return "/job/description-detail";
     }
     

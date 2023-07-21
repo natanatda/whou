@@ -365,3 +365,33 @@ input[type="checkbox"]:checked + label:after {
 
 
 .terms-box{overflow-y: scroll; height: 130px; font-size: 14px;}
+
+
+/*****************************************************************************
+  ************************************* description-detail ***********************************
+  *****************************************************************************/
+.desc-container{margin-left: 350px;margin-top: 48px;}
+.desc-wrap{display: flex;margin-top: 50px;}
+.desc-wrap .left-wrap{width:20%;padding-right: 20px;}
+.desc-wrap .left-wrap h5{font-weight: 600;margin-bottom: 20px;text-align: center;}
+.desc-wrap .left-wrap .desc-item{margin-right: 20px;margin-bottom: 10px;}
+.desc-wrap .left-wrap .desc-item span{font-size: 14px;}
+.desc-wrap .left-wrap .desc-item + div{font-weight: 600;}
+
+.desc-icon-box{display: flex;align-items: center;border:1px solid #593fff77;border-radius: 4px;margin-bottom: 20px;}
+.desc-icon-box li{width:100%;border-right: 1px solid #593fff77;text-align: center;padding:10px;}
+.desc-icon-box li:last-child{border-right: 0;}
+
+
+.desc-wrap .right-wrap{width:80%;margin-left: 20px;}
+.desc-wrap .right-wrap .nav-tabs{border:0;margin-left: 10px;}
+.desc-wrap .right-wrap .nav-tabs .nav-link{border:0;color:#111;}
+.desc-wrap .right-wrap .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{color:#111;background-color: #593fff2a;font-weight: 600;}
+.desc-wrap .right-wrap .tab-content{background-color:#593fff2a;border-top-left-radius: 12px;border-bottom-left-radius: 12px;text-align: left;padding:20px;}
+.desc-wrap .content-item{margin-bottom: 30px;}
+.desc-wrap .icon-title{text-align: left;margin-bottom: 10px;font-weight: 600; font-size:18px;}
+.desc-wrap .icon-title::before{content: '';background: url(/whou/resources/img/ic-star.svg)no-repeat center/contain;width: 26px; height: 26px; display: inline-block; margin-bottom: -6px;margin-right: 10px;}
+.desc-wrap .content-box{padding-left: 26px; margin-bottom: 10px;}
+
+.desc-wrap .flex-box{display:flex;gap:10px;}
+.desc-wrap .semi-title{color:blue; margin-left: 30px; margin-bottom: 10px;font-weight: 600;}

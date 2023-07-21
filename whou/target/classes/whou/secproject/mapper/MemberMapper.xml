@@ -12,7 +12,13 @@
 	</insert>
 	
 	<insert id="insertPro">
-		insert into whou_user (num, email, pw, name, birth_year, tel, gender, join_type) values(user_seq.NEXTVAL, #{email}, #{pw}, #{name}, #{birth_year}, #{tel}, #{gender}, #{join_type})
+		insert into whou_user (num, email, pw, name, birth_year, tel, gender, join_type) values(user_seq.NEXTVAL, #{email}, #{pw}, #{name}, #{birth_year}, #{tel}, #{gender},
+		<if test = "join_type != null">
+			 #{join_type})
+		</if>
+		<if test = "join_type == null">
+			'whoU')
+		</if>
 	</insert>
 	
 	<select id="count" resultType="int">
