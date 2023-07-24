@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +21,10 @@ import whou.secproject.component.JobDicDetailResponseDTO;
 import whou.secproject.component.JobDicListResponseDTO;
 import whou.secproject.component.JobDicParamDTO;
 import whou.secproject.component.JobDicValueListDTO;
+import whou.secproject.mapper.MemberMapper;
 import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.service.JobDicService;
+import whou.secproject.service.MemberService;
 
 @Controller
 @RequestMapping("/job")
@@ -33,6 +36,8 @@ public class JobController {
 	@Autowired
 	private JobDicService service;
 	
+	@Autowired
+	private MemberMapper mapperMem;
 
 	@RequestMapping("/dic")
 	public String goJobDic(Model model,HttpServletRequest request) {
@@ -162,6 +167,8 @@ public class JobController {
 	
 	@RequestMapping("/info")
     public String JobDicInfo(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		String memId = (String)session.getAttribute("memId");
        int seq = -1;
        String strSeq= request.getParameter("job_cd");
        JobDicDetailResponseDTO jobDetail = null;
@@ -200,6 +207,16 @@ public class JobController {
            e.printStackTrace();
        }
 
+      String temp = mapperMem.getBook(memId);
+		String[] arr = temp.split(",");
+		boolean contain = false;
+		for (String str : arr) {
+			if (str.equals(strSeq)) {
+				contain = true;
+			}
+		}
+       
+       model.addAttribute("contain", contain);
        model.addAttribute("jobDetail", jobDetail);
        model.addAttribute("indicatorData", indicatorData);
        model.addAttribute("majorData", majorData);

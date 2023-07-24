@@ -60,6 +60,22 @@ public class MemberController {
 	@Autowired
 	private JobDicApiDAO dao;
 	
+	
+	// 북마크
+	@RequestMapping("/bookmark")
+	public String bookmark(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String memId = (String)session.getAttribute("memId");
+		String job_cd = request.getParameter("job_cd");
+		int num = Integer.parseInt(request.getParameter("contain"));
+		boolean contain = false;
+		if(num == 1) {
+			contain = true;
+		}		
+		service.updateBook(job_cd, memId, contain);
+        return "redirect:/job/info?job_cd=" + job_cd;
+	}
+	
 	//회원가입 폼
 	@RequestMapping("/joinForm")
 	public String  joinForm() {

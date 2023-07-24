@@ -21,4 +21,6 @@ public interface MemberMapper {
 	
 	// 마이페이지
 	public RecommandInfoDTO getAptitudeRank(int userNum);
+	public void updateBook(@Param("memId")String memId, @Param("books")String books);
+	public String getBook(String memId);
 }

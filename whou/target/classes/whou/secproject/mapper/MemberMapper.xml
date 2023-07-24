@@ -59,4 +59,12 @@
 		select * from recommand_info where num = ${userNum}
 	</select>
 	
+	<select id="getBook" resultType="String">
+		select books from user_info where email = #{memId}
+	</select>
+	
+	<update id="updateBook">
+		update user_info set books = #{books} where email =#{memId}
+	</update>
+	
 </mapper>

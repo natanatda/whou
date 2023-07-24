@@ -54,7 +54,12 @@
                     <div class="left-wrap">
                         <h5>${BaseInfo.job_nm}</h5>
                         <ul class="desc-icon-box">
-                            <li><i class="fa-regular fa-star" style="color: #5c5c5c;"></i></li>
+                        	<c:if test="${contain}">
+	                            <li onclick="location='/whou/member/bookmark?job_cd=${BaseInfo.job_cd}&contain=1'"><i class="fa-solid fa-star" style="color: purple;"></i></li>
+                        	</c:if>
+                        	<c:if test="${!contain}">
+	                            <li onclick="location='/whou/member/bookmark?job_cd=${BaseInfo.job_cd}&contain=0'"><i class="fa-regular fa-star" style="color: #5c5c5c;"></i></li>
+                        	</c:if>
                             <li><i class="fa-regular fa-thumbs-up" style="color: #5c5c5c;"></i></li>
                             <li><i class="fa-solid fa-print" style="color: #5c5c5c;"></i></li>
                         </ul>
