@@ -335,92 +335,89 @@
              tabTrigger.show()
            })
          })
-         
-         function removeGroup(groupElement) {
-             $(groupElement).remove();
-         }
+  
          // 추가 정보 입력
-         function checkCerti(inputElement) {
-            var certi = $(inputElement).val();
-            var qualificationList = $(inputElement).siblings(".qualificationList");
-
-            $.ajax({
-                url: "/whou/member/getCerti",
-                data: { certi: certi },
-                success: function (result) {
-                    qualificationList.empty();
-                    qualificationList.hide();
-                    if(certi.length > 0){
-                        if(result && result.length > 0){
-                            for (var i = 0; i < result.length; i++) {
-                                var qualification = result[i];
-                                var button = $("<button>").text(qualification);
-                             
-                                button.on("click", function () {
-                                   event.preventDefault();
-                                    var selectedQualification = $(this).text();
-                                    $(inputElement).val(selectedQualification);
-                                    alert()
-                                    qualificationList.hide();
-                                });
-                                qualificationList.append($("<li>").append(button));
-                            }
-                        }else{
-                            var message = "' " + certi + " '을(를) 찾을 수 없습니다.";
-                            var messageElement = $("<li>").text(message);
-                            messageElement.on("click", function () {
-                                // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
-                                $(inputElement).val("");
-                                qualificationList.hide();
-                            });
-                            qualificationList.append(messageElement);
-                        }    
-
-                    qualificationList.show();
-                }
-            });
-        }
-        
-        function checkMajor(inputElement) {
-            var major = $(inputElement).val();
-            var majorList = $(inputElement).next(".majorList");
-
-            $.ajax({
-                url: "/whou/member/getMajor",
-                data: { major: major },
-                success: function (result) {
-                   majorList.empty();
-                   if(major.length > 0){
-                       if(result && result.length > 0){
-                           for (var i = 0; i < result.length; i++) {
-                               var major2 = result[i];
-                               var button = $("<button>").text(major2);
-                               button.on("click", function () {
-                                  event.preventDefault();
-                                   var selectedMajor = $(this).text();
-                                   $(inputElement).val(selectedMajor);
-                                   majorList.hide();
+            function checkCerti(inputElement) {
+               var certi = $(inputElement).val();
+               var qualificationList = $(inputElement).siblings(".qualificationList");
+               $.ajax({
+                   url: "/whou/member/getCerti",
+                   data: { certi: certi },
+                   success: function (result) {
+                       qualificationList.empty();
+                       qualificationList.hide();
+                       if(certi.length > 0){
+                          if(result && result.length > 0){
+                              for (var i = 0; i < result.length; i++) {
+                                  var qualification = result[i];
+                                  var button = $("<button>").text(qualification);
+                               
+                                  button.on("click", function () {
+                                     event.preventDefault();
+                                      var selectedQualification = $(this).text();
+                                      $(inputElement).val(selectedQualification);
+                                      qualificationList.hide();
+                                  });
+                                  qualificationList.append($("<li>").append(button));
+                              }
+                           }else{
+                               var message = "' " + certi + " '을(를) 찾을 수 없습니다.";
+                               var messageElement = $("<li>").text(message);
+                               messageElement.on("click", function () {
+                                   // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
+                                   $(inputElement).val("");
+                                   qualificationList.hide();
                                });
-                               majorList.append($("<li>").append(button));
-                           }
-                      }else{
-                          var message = "' " + major + " '을(를) 찾을 수 없습니다.";
-                          var messageElement = $("<li>").text(message);
-                          messageElement.on("click", function () {
-                              // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
-                              $(inputElement).val("");
-                              majorList.hide();
-                          });
-                          majorList.append(messageElement);
-                      }
-                      
-                      majorList.show();
+                               qualificationList.append(messageElement);
+                           }    
+
+                           qualificationList.show();
+                       }
                    }
-               
-             
-                }
-            });
-        }
+               });
+           }
+           
+           function checkMajor(inputElement) {
+               var major = $(inputElement).val();
+               var univSe = $("#departSelect").val();
+               var majorList = $(inputElement).next(".majorList");
+
+               $.ajax({
+                   url: "/whou/member/getMajor",
+                   data: { major: major, univSe:univSe },
+                   success: function (result) {
+                      majorList.empty();
+                      majorList.hide();
+                      
+                      if(major.length > 0){
+                         if(result && result.length > 0){
+                             for (var i = 0; i < result.length; i++) {
+                                 var major2 = result[i];
+                                 var button = $("<button>").text(major2);
+                                 button.on("click", function () {
+                                    event.preventDefault();
+                                     var selectedMajor = $(this).text();
+                                     $(inputElement).val(selectedMajor);
+                                     majorList.hide();
+                                 });
+                                 majorList.append($("<li>").append(button));
+                             }
+                         }else{
+                             var message = "' " + major + " '을(를) 찾을 수 없습니다.";
+                             var messageElement = $("<li>").text(message);
+                             messageElement.on("click", function () {
+                                 // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
+                                 $(inputElement).val("");
+                                 majorList.hide();
+                             });
+                             majorList.append(messageElement);
+                         }
+                         
+                         majorList.show();
+                      }
+                   }
+               });
+           }
 
         function addQualification() {
             var newDiv = $("<div>").addClass("input-wrap");
