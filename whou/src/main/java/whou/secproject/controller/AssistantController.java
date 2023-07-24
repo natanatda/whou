@@ -22,6 +22,19 @@ public class AssistantController {
 	@Autowired
 	private AssistantService assistantService;
 	
+	@RequestMapping("ai")
+	public String viewAi(Model model, HttpServletRequest request) {
+		int count = assistantService.assistantCount();
+		
+		if(count > 0) {
+			// 레벨 그룹 1(첫 번째 질문인 리스트)
+			List<AssistantDTO> aiList = assistantService.assistantRef_level1();
+			model.addAttribute("list",aiList);
+		}
+		return "/assistant/ai";
+	}
+
+	
 	@RequestMapping("aiList")
 	public String aiList(Model model, HttpSession session) {
 		String email = (String)session.getAttribute("memId"); // 회원 세션 검사
@@ -80,17 +93,6 @@ public class AssistantController {
 		return "redirect:/assistant/aiList";
 	}
 	
-	@RequestMapping("ai")
-	public String viewAi(Model model, HttpServletRequest request) {
-		int count = assistantService.assistantCount();
-		
-		if(count > 0) {
-			// 레벨 그룹 1(첫 번째 질문인 리스트)
-			List<AssistantDTO> aiList = assistantService.assistantRef_level1();
-			model.addAttribute("list",aiList);
-		}
-		return "/assistant/ai";
-	}
 										// produces => ajax 한글 인코딩
 	@RequestMapping(value = "aiContent", produces = "application/text; charset=utf8")
 	public @ResponseBody String aiContent(HttpServletRequest request) {

@@ -47,6 +47,28 @@
  	var modelRotation_z = ${model.rotation_z};
  	
  	var modelMotion = ${model.motion};
+ 	
+ 	if('${modelColor.headColor}' === ''){
+		var headColor = '#FF0080';
+	}else{
+		headColor = '${modelColor.headColor}';
+	}
+	if('${modelColor.armColor}' === ''){
+		var armColor = '#FF0080';
+	}else{
+		armColor = '${modelColor.armColor}';
+	}
+	if('${modelColor.cheekColor}' === ''){
+		var cheekColor = '#FF0080';
+	}else{
+		cheekColor = '${modelColor.cheekColor}';
+	}
+	if('${modelColor.legColor}' === ''){
+		var legColor = '#FF0080';
+	}else{
+		legColor = '${modelColor.legColor}';
+	}
+ 	
  </script>
  
 <script type="module" src="../resources/js/whouModel.js?ver=1"></script>

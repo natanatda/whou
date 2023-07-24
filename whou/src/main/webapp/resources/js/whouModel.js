@@ -14,8 +14,8 @@
         }
 
         const sizes = {
-            width: window.innerWidth,
-            height: window.innerHeight
+            width: 200,
+            height: 400
         }
 
         // Helpers
@@ -128,9 +128,9 @@
 
                 // 색깔 `hsl(290, 85%, 50%)`
                 // 투명도 0x00ff00, transparent: true, opacity: 0
-                this.headMaterial = new THREE.MeshLambertMaterial({ color: 0xFF0080 })
+                this.headMaterial = new THREE.MeshLambertMaterial({ color: armColor }) // 팔 색
                 // this.bodyMaterial = new THREE.MeshLambertMaterial({ color: `hsl(290, 85%, 50%)` })
-                this.bodyMaterial = new THREE.MeshLambertMaterial({ color: 0xFF0080})
+                this.bodyMaterial = new THREE.MeshLambertMaterial({ color: headColor}) // 얼굴 색
                 // 
                 this.arms = []
             }
@@ -156,7 +156,7 @@
             createCheek() {
                 const cheeks = new THREE.Group();
                 const geometry = new THREE.SphereGeometry(0.13, 12, 20);
-                const material = new THREE.MeshLambertMaterial({ color: 0xFF0080 });
+                const material = new THREE.MeshLambertMaterial({ color: cheekColor }); // 볼 색
 
                 for (let i = 0; i < 2; i++) {
                     const cheek = new THREE.Mesh(geometry, material);
@@ -318,7 +318,7 @@
                 );
 
                 const legMaterial = new THREE.MeshLambertMaterial({
-                    color: 0xFF0080
+                    color: legColor // 다리 색
                 });
 
                 // 다리 간격
