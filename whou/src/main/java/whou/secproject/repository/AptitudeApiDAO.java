@@ -24,17 +24,14 @@ import whou.secproject.component.AptitudeTestResponseDTO;
 import whou.secproject.component.AptitudeTestResultRequestDTO;
 import whou.secproject.component.AptitudeTestResultResponseDTO;
 
-public class AptitudeApiTestSJDAO{
+public class AptitudeApiDAO {
 	
 	@Autowired
 	private String apiKey;
-
 	
 	public AptitudeTestResponseDTO getAptitudeTestByNum(String qnum) {
 		String url = "http://www.career.go.kr/inspct/openapi/test/questions";
-		
-//	    AptitudeParamDTO aptitudeParam = new AptitudeParamDTO();
-//	    aptitudeParam.setQ(qnum); //검사 번호 역량27 가치관25 흥미31 적성21
+//	    aptitudeParam.setQ(qnum); //검사 번호 역량27 가치관6 흥미31 적성21
 	    
 	    URI uri = null;
 		try {
@@ -69,18 +66,19 @@ public class AptitudeApiTestSJDAO{
 	    return aptitudeResponse; // 예제임 수정하셈
 	}
 	
-	// 추가로 개인정보 dto 넣어줘야됨
+	
+
 	public AptitudeTestResultResponseDTO getAptitudeTestResult(List<String>answers, String qnum) {
 	    AptitudeTestResultResponseDTO aptiTestResultResponse = null;
 	    AptitudeTestResultRequestDTO atrr = new AptitudeTestResultRequestDTO();
 	    
-	    
+
 	    atrr.setQestrnSeq(qnum);
-	    atrr.setTrgetSe("100207"); // 고등학생
-	    atrr.setName("홍길동");
+	    atrr.setTrgetSe("100207"); 
+	    atrr.setName("홍길동"); 
 	    atrr.setGender("100323");
-	    atrr.setSchool("");
-	    atrr.setGrade("3");
+	    atrr.setSchool("율도 중학교");
+	    atrr.setGrade("2"); 
 	    atrr.setEmail(""); 
 	    atrr.setStartDtm(1550466291034L);
 	    StringBuilder answer = new StringBuilder();
@@ -90,7 +88,6 @@ public class AptitudeApiTestSJDAO{
 	    System.out.println(answer);
 	    atrr.setAnswers(answer.toString());
 	    
-	    //atrr.setAnswers(answer.toString());
 		try {
 			URL url = new URL("http://www.career.go.kr/inspct/openapi/test/report");
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -144,7 +141,4 @@ public class AptitudeApiTestSJDAO{
 		}
 		return aptiTestResultResponse;
 	}
-	
-	
-	
 }
