@@ -399,9 +399,8 @@ public class MemberController {
 	
 	@RequestMapping("/updateInfo")
 	public String updateInfo(@RequestParam(value = "certi", required = false) List<String> certiList,
-	                         @RequestParam(value = "major", required = false) List<String> majorList, HttpServletRequest request) throws UnsupportedEncodingException {
+	                         @RequestParam(value = "major", required = false) List<String> majorList){
 		
-		request.setCharacterEncoding("utf-8");
 		String combinedCerti = null;
 		String combinedMajor = null;
 		System.out.println("Certi "+certiList);

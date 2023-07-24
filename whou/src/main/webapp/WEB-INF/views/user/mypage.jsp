@@ -241,7 +241,6 @@
     	                           event.preventDefault();
     	                            var selectedQualification = $(this).text();
     	                            $(inputElement).val(selectedQualification);
-    	                            alert()
     	                            qualificationList.hide();
     	                        });
     	                        qualificationList.append($("<li>").append(button));
