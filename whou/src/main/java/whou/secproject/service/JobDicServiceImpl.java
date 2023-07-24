@@ -1,19 +1,17 @@
 package whou.secproject.service;
 
 
-import java.util.List;
+import java.util.List; 
 
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Service;
 
-import whou.secproject.component.JobCreateDTO;
 import whou.secproject.component.JobDicAptdValueListDTO;
 import whou.secproject.component.JobDicDetailResponseDTO;
 import whou.secproject.component.JobDicValueListDTO;
 import whou.secproject.component.JobInsertDTO;
 import whou.secproject.component.Job_infoDTO;
 import whou.secproject.component.Job_unique_numDTO;
-import whou.secproject.component.JobDicDetailResponseDTO.IndicatorChart;
 import whou.secproject.mapper.JobDicMapper;
 
 @Service
@@ -38,12 +36,12 @@ public class JobDicServiceImpl implements JobDicService {
 	public void insert(JobDicDetailResponseDTO dto) {
 		Job_infoDTO jidto = new Job_infoDTO();
 		
-		StringBuilder sb = new StringBuilder();
-		List<JobDicDetailResponseDTO.Work> workList = dto.getWorkList();
-		List<JobDicDetailResponseDTO.Interest> interestList = dto.getInterestList();
-		List<JobDicDetailResponseDTO.Research> researchList = dto.getResearchList();
-		JobDicDetailResponseDTO.JobReady jobReadyList = dto.getJobReady();
-		JobDicDetailResponseDTO.Perform performList = dto.getPerform();
+//		StringBuilder sb = new StringBuilder();
+//		List<JobDicDetailResponseDTO.Work> workList = dto.getWorkList();
+//		List<JobDicDetailResponseDTO.Interest> interestList = dto.getInterestList();
+//		List<JobDicDetailResponseDTO.Research> researchList = dto.getResearchList();
+//		JobDicDetailResponseDTO.JobReady jobReadyList = dto.getJobReady();
+//		JobDicDetailResponseDTO.Perform performList = dto.getPerform();
 
 		JobDicDetailResponseDTO.BaseInfo bi= dto.getBaseInfo();
 //		if(workList.get(0)!=null) {
@@ -356,6 +354,10 @@ public class JobDicServiceImpl implements JobDicService {
 						}
 					}
 				}
+	}
+	@Override
+	public void insertJCC(int sort_value, String job_cds) {
+		mapper.insertJCC(sort_value, job_cds);
 	}
 }
 

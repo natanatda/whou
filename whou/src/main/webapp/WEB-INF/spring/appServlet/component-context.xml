@@ -12,6 +12,7 @@
 	
 	<beans:bean id="JobInfoApiDAO" class="whou.secproject.repository.JobInfoApiDAO"/>
 	<beans:bean id="JobDicApiDAO" class="whou.secproject.repository.JobDicApiDAO"/>
+	<beans:bean id="RecommendDAO" class="whou.secproject.repository.RecommendDAO"/>
 	
 	<beans:bean id="apiKey" class="java.lang.String">
 		<beans:constructor-arg value="c5d2abc17ab413db9d836aa7fcd81714"/>

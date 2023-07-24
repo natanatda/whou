@@ -358,7 +358,7 @@ public class MemberController {
   	        session.setAttribute("memId", memId);
   	        // 회원가입 성공 시 테이블 3개 생성
   	        int userNum = serviceAt.userNumSelect(memId);
-  	        serviceAt.createTableSet(userNum);
+  	        //serviceAt.createTableSet(userNum);
   	    }
   	    System.out.println(result);
   	    return result;

@@ -1,12 +1,10 @@
 package whou.secproject.repository;
 
-import java.io.IOException; 
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.math3.distribution.NormalDistribution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -44,7 +42,7 @@ public class JobDicApiDAO {
 	        if (jParam.getSearchJobCd() != null) 
 	        	builder.queryParam("searchJobCd", URLEncoder.encode(jParam.getSearchJobCd(), "UTF-8"));
 	        uri = builder.build(true).toUri();
-	        //System.out.println(uri);
+	        System.out.println(uri);
 	    } catch (UnsupportedEncodingException e1) {
 	        e1.printStackTrace();
 	    }
