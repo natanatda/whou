@@ -97,6 +97,42 @@ public class MemberController {
 		return "/main";
 	}
 	
+	@RequestMapping("/getCerti")
+    public @ResponseBody List<String> getCerti(String certi){
+		List<String> certiList = service.getCerti(certi); 
+		System.out.println(certiList);
+		return certiList;
+	}
+	
+	@RequestMapping("/getMajor")
+    public @ResponseBody List<String> getMajor(String major){
+		List<String> majorList = service.getMajor(major); 
+		System.out.println(majorList);
+		return majorList;
+	}
+	
+	@RequestMapping("/updateInfo")
+	public String updateInfo(@RequestParam(value = "certi", required = false) List<String> certiList,
+	                         @RequestParam(value = "major", required = false) List<String> majorList, HttpServletRequest request){
+		
+		HttpSession session = request.getSession();
+		String memId = (String)session.getAttribute("memId");
+		String combinedCerti = null;
+		String combinedMajor = null;
+		System.out.println("Certi "+certiList);
+		System.out.println("Major "+majorList);
+		
+		if (certiList != null && majorList != null) {
+			combinedCerti = String.join(",", certiList);
+	        System.out.println("Certi2 "+combinedCerti);
+	        combinedMajor = String.join(",", majorList);
+	        System.out.println("Major2 "+combinedMajor);
+	        service.updateInfo(combinedCerti, combinedMajor, memId);
+	        
+	    }
+	    return "redirect:/member/mypage";
+	}
+	
 	//로그아웃
   	@RequestMapping("/logout")
   	public String logout(HttpSession session, HttpServletRequest request, Model model ) {
@@ -122,7 +158,7 @@ public class MemberController {
   		}
   		if(email == null) { //가입한적 없음
   	  		return "0";
-  		}else if(email != null && type != null) { //소셜가입
+  		}else if(email != null && !type.equals("whoU")) { //소셜가입
   			return "1";
   		}else{ //자체가입함
   	  		return email;
@@ -394,6 +430,7 @@ public class MemberController {
 		System.out.println("userNum왜안댐? "+userNum);
 		// 적성 차트 점수
 		String scoreA = serviceAt.getAptitudeScore(userNum);
+		// 여기서 if처리 해야할듯 scoreA 얘가 null인경우
 		String [] scoreArr= scoreA.split("\\+");
 		ObjectMapper objectMapper = new ObjectMapper();
         String scoresA = null;
@@ -461,40 +498,7 @@ public class MemberController {
 		return "/user/mypage";
 	}
 	
-	@RequestMapping("/getCerti")
-    public @ResponseBody List<String> getCerti(String certi){
-		List<String> certiList = service.getCerti(certi); 
-		System.out.println(certiList);
-		return certiList;
-	}
 	
-	@RequestMapping("/getMajor")
-    public @ResponseBody List<String> getMajor(String major){
-		List<String> majorList = service.getMajor(major); 
-		System.out.println(majorList);
-		return majorList;
-	}
-	
-	@RequestMapping("/updateInfo")
-	public String updateInfo(@RequestParam(value = "certi", required = false) List<String> certiList,
-	                         @RequestParam(value = "major", required = false) List<String> majorList, HttpServletRequest request) throws UnsupportedEncodingException {
-		
-		request.setCharacterEncoding("utf-8");
-		String combinedCerti = null;
-		String combinedMajor = null;
-		System.out.println("Certi "+certiList);
-		System.out.println("Major "+majorList);
-		
-		if (certiList != null && majorList != null) {
-			combinedCerti = String.join(",", certiList);
-	        System.out.println("Certi2 "+combinedCerti);
-	        combinedMajor = String.join(",", majorList);
-	        System.out.println("Major2 "+combinedMajor);
-	        service.updateInfo(combinedCerti, combinedMajor);
-	        
-	    }
-	    return "redirect:/member/mypage";
-	}
   	
   	
   	
