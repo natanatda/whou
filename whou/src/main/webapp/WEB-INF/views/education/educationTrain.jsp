@@ -55,7 +55,7 @@
 								<div class="search-cont">
 									<div class="input-group mb-3">
 										<label class="input-group-text" for="inputGroupSelect01">훈련유형</label>
-										<select name="trainGb" class="form-select" id="inputGroupSelect01">
+										<select name="trainGb" class="form-select" id="inputGroupSelect01"  autofocus>
 											<option>선택 필수 입니다.</option>
 											<option value="11" ${hrdParam.getTrainGb()=='11'? 'selected':''}>국민내일배움카드 훈련</option>
 											<option value="12" ${hrdParam.getTrainGb()=='12'? 'selected':''}>사업주훈련 훈련</option>
