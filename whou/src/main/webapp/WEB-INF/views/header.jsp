@@ -26,7 +26,7 @@
                         <li class="nav-item"><a class="nav-link" href="#!">My 비서</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">진로컨설팅</a></li>
                         <c:if test="${memId != null}">
-                        	<li class="nav-item"><a class="nav-link" href="#!">${memId}마이페이지</a></li>
+                        	<li class="nav-item"><a class="nav-link" href="/whou/member/mypage">${memId}마이페이지</a></li>
                         	<li class="nav-item"><a class="nav-link" href="/whou/member/logout">로그아웃</a></li>
                         </c:if>
                         <c:if test="${memId == null}">

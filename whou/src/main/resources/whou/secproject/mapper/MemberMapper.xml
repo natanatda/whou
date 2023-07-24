@@ -50,7 +50,7 @@
 	</select>
 	
 	<update id="updateInfo">
-		update user_info set CERTIFICATE=#{combinedCerti}, SCHOOL_MAJOR=#{combinedMajor} where email = '22yunji@naver.com'
+		update user_info set CERTIFICATE=#{combinedCerti}, SCHOOL_MAJOR=#{combinedMajor} where email = #{memId}
 	</update>
 	
 	

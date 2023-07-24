@@ -103,8 +103,8 @@ public class MemberServiceImpl implements MemberService {
    }
    
    @Override
-   public void updateInfo(String combinedCerti, String combinedMajor) {
-		mapper.updateInfo(combinedCerti, combinedMajor);
+   public void updateInfo(String combinedCerti, String combinedMajor, String memId) {
+		mapper.updateInfo(combinedCerti, combinedMajor, memId);
    }
 
     
