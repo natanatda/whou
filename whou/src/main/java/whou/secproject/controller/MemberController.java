@@ -42,7 +42,9 @@ import com.google.gson.JsonParser;
 
 import whou.secproject.component.JobDicDetailResponseDTO;
 import whou.secproject.component.MemberDTO;
+import whou.secproject.component.RecommandInfoDTO;
 import whou.secproject.repository.JobDicApiDAO;
+import whou.secproject.service.AptitudeService;
 import whou.secproject.service.MemberService;
 
 @Controller
@@ -51,6 +53,9 @@ public class MemberController {
 
 	@Autowired
 	private MemberService service;
+	
+	@Autowired
+	private AptitudeService serviceAt;
 	
 	@Autowired
 	private JobDicApiDAO dao;
@@ -379,7 +384,80 @@ public class MemberController {
     }
   	
   	@RequestMapping("/mypage")
-    public String mypage(){
+    public String mypage(Model model, HttpServletRequest request){
+  		HttpSession session = request.getSession();
+		String memId = (String)session.getAttribute("memId");
+		// user_info 테이블에서 세션에 해당하는 num 추출
+		System.out.println("세션있냐?"+memId);
+		int userNum = serviceAt.userNumSelect(memId);
+		
+		System.out.println("userNum왜안댐? "+userNum);
+		// 적성 차트 점수
+		String scoreA = serviceAt.getAptitudeScore(userNum);
+		String [] scoreArr= scoreA.split("\\+");
+		ObjectMapper objectMapper = new ObjectMapper();
+        String scoresA = null;
+		try {
+			scoresA = objectMapper.writeValueAsString(scoreArr);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// 적성 차트 이름
+		String scoreName = serviceAt.getAptitudeScoreName(userNum);
+		String [] scoreNameArr= scoreName.split("\\+");
+		ObjectMapper objectMapperName = new ObjectMapper();
+		String scoresName = null;
+		try {
+			scoresName = objectMapperName.writeValueAsString(scoreNameArr);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// 흥미 차트 점수
+		String scoreI = serviceAt.getInterestScore(userNum);
+		String [] scoreArrI= scoreI.split("\\+");
+		ObjectMapper objectMapperI = new ObjectMapper();
+        String scoresI = null;
+		try {
+			scoresI = objectMapperI.writeValueAsString(scoreArrI);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// 가치관 차트 점수
+		String scoreV = serviceAt.getValuesScore(userNum);
+		String [] scoreArrV= scoreV.split("\\,");
+		ObjectMapper objectMapperV = new ObjectMapper();
+        String scoresV = null;
+		try {
+			scoresV = objectMapperV.writeValueAsString(scoreArrV);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String scoreAb = serviceAt.getAbilityScore(userNum);
+	    // 쉼표(,)를 기준으로 문자열을 분리하여 배열로 얻기
+        String[] elements = scoreAb.split(",", 10); // 최대 10개로 제한
+
+        // 앞 3개와 뒤 6개를 String으로 합치기
+        String firstThree = String.join(",", Arrays.copyOfRange(elements, 0, 4));
+        String lastSix = String.join(",", Arrays.copyOfRange(elements, 4, elements.length));
+
+        // 마이페이지 top 검색
+        RecommandInfoDTO aptitudeRank = service.getAptitudeRank(userNum);
+        
+        model.addAttribute("aptitudeRank", aptitudeRank);
+        model.addAttribute("firstThree", firstThree);
+        model.addAttribute("lastSix", lastSix);
+		model.addAttribute("interestScoreArr", scoresI);
+		model.addAttribute("aptitudeScoreArr", scoresA);
+		model.addAttribute("aptitudeNameArr", scoresName);
+		model.addAttribute("valuesScoreArr", scoresV);
 		return "/user/mypage";
 	}
 	
