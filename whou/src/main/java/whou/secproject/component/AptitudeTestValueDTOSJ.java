@@ -2,7 +2,7 @@ package whou.secproject.component;
 
 import java.sql.Timestamp;
 
-public class AptitudeTestValueDTO {
+public class AptitudeTestValueDTOSJ {
 	private int index_num;
 	private int test_num;
 	private String test_answers;
@@ -53,7 +53,6 @@ public class AptitudeTestValueDTO {
 	private String test31_8="";
 	private String test31_9="";
 	private String test31_10="";
-	
 	public int getIndex_num() {
 		return index_num;
 	}
@@ -77,18 +76,6 @@ public class AptitudeTestValueDTO {
 	}
 	public void setTest_date(Timestamp test_date) {
 		this.test_date = test_date;
-	}
-	public Timestamp getMax_test_date() {
-		return max_test_date;
-	}
-	public void setMax_test_date(Timestamp max_test_date) {
-		this.max_test_date = max_test_date;
-	}
-	public int getCount() {
-		return count;
-	}
-	public void setCount(int count) {
-		this.count = count;
 	}
 	public String getTest21_1() {
 		return test21_1;
@@ -330,5 +317,19 @@ public class AptitudeTestValueDTO {
 	public void setTest31_10(String test31_10) {
 		this.test31_10 = test31_10;
 	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public Timestamp getMax_test_date() {
+		return max_test_date;
+	}
+	public void setMax_test_date(Timestamp max_test_date) {
+		this.max_test_date = max_test_date;
+	}
+	
+	
 	
 }

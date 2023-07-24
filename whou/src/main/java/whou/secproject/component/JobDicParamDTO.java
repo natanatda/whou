@@ -9,7 +9,7 @@ public class JobDicParamDTO {
     private String pageIndex;
     private String searchJobNm;
     private String searchThemeCode;
-    private String searchAptdCodes;
+    private String [] searchAptdCodes;
     private String searchJobCd;
     
 }
