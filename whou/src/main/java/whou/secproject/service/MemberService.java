@@ -21,8 +21,8 @@ public interface MemberService {
 	public ResponseEntity<String> getInfo(String ACCESS_TOKEN) throws IOException;
 	public void telChk(String tel, String numStr);
 	public List<String> getCerti(String certi);
-	public List<String> getMajor(String major);
-	public void updateInfo(String combinedCerti, String combinedMajor);
+	public List<String> getMajor(String major, String univSe);
+	public void updateInfo(String combinedCerti, String combinedMajor, String memId);
 	
 	
 	// 마이페이지

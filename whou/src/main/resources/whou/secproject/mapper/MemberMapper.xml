@@ -46,11 +46,11 @@
 	</select>
 	
 	<select id="getMajor" resultType="String">
-		select MCLASS from major where MCLASS like '%' || #{major} || '%'
+		select MCLASS from major where MCLASS like '%' || #{major} || '%' and univSe = #{univSe}
 	</select>
 	
 	<update id="updateInfo">
-		update user_info set CERTIFICATE=#{combinedCerti}, SCHOOL_MAJOR=#{combinedMajor} where email = '22yunji@naver.com'
+		update user_info set CERTIFICATE=#{combinedCerti}, SCHOOL_MAJOR=#{combinedMajor} where email = #{memId}
 	</update>
 	
 	

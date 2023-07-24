@@ -48,6 +48,14 @@
 	            	</c:if>
 	            </div>
 	            <div class="input-item">
+	            	<c:if test="${email == null}">
+		              	<label for="joinInput" class="form-label">비밀번호 확인</label>
+		              	<input type="password" class="form-control" name = "pw" id="pw2" placeholder="4자리 이상" required oninput = "checkPw2()">
+		              	<span class="pw_ok" style="color:green; display:none;">비밀번호가 일치합니다.</span>
+		              	<span class="pw_x" style="color:red; display:none;">비밀번호가 일치하지 않습니다.</span>
+	            	</c:if>
+	            </div>
+	            <div class="input-item">
 	              <label for="joinInput" class="form-label">이름</label>
 	              <input type="text" class="form-control" name = "name" id="name" placeholder="이름(실명) 입력">
 	              <input type="hidden" class="form-control" id = "join_type" value ="${join_type}">
@@ -411,6 +419,17 @@
    		        }
    		    });
    		}
+   		function checkPw2() {
+   		    var pw = $("#pw").val();
+   		    var pw2 = $("#pw2").val();
+   		    if(pw == pw2){
+   		       $('.pw_ok').css("display", "inline-block");
+   		       $('.pw_x').css("display", "none");
+   		    }else{
+   		       $('.pw_ok').css("display", "none");
+   		       $('.pw_x').css("display", "inline-block");
+   		    }
+   		}
    		//이메일 중복 체크
    		$(function(){
 	   		$("#emailChk").click(function(){
@@ -513,6 +532,11 @@
 		
 		        if (!isAllChecked) {
 		            return false; // 필수 동의 사항이 체크되지 않았으므로 함수 종료
+		        }
+		        
+		        if ($('.pw_x').css("display") == "inline-block") {
+		            alert("비밀번호를 다시 확인해주세요.");
+		            return false;
 		        }
 	        
 		        var data = {

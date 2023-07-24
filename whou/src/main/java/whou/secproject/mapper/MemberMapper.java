@@ -16,8 +16,8 @@ public interface MemberMapper {
 	public void insert2(String email);
 	public void insertPro(MemberDTO dto);
 	public List<String> getCerti(String certi);
-	public List<String> getMajor(String major);
-	public void updateInfo(@Param("combinedCerti")String combinedCerti, @Param("combinedMajor")String combinedMajor);
+	public List<String> getMajor(@Param("major")String major, @Param("univSe")String univSe);
+	public void updateInfo(@Param("combinedCerti")String combinedCerti, @Param("combinedMajor")String combinedMajor, @Param("memId")String memId);
 	
 	// 마이페이지
 	public RecommandInfoDTO getAptitudeRank(int userNum);

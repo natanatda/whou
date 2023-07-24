@@ -104,7 +104,7 @@
                                           <h4>학과정보</h4>
                                             <div id="majorContainer">
                                               <div class="input-wrap">
-                                                   <select class="depart-select" name="depart">
+                                                   <select class="depart-select" name="depart" id="depart">
                                                       <option value="대학">대학</option>
                                                       <option value="전문대학">전문대학</option>
                                                    </select>
@@ -112,10 +112,6 @@
                                                    <ul class="majorList"></ul>
                                               </div>
                                               <div class="input-wrap">
-                                                  <select class="depart-select">
-                                                     <option value="대학">대학</option>
-                                                     <option value="전문대학">전문대학</option>
-                                                  </select>
                                                   <input type="text" name="major" autocomplete="off" placeholder="부전공명/복수전공명" oninput="checkMajor(this)" />
                                                   <ul class="majorList"></ul>
                                              </div>
@@ -379,12 +375,13 @@
            
            function checkMajor(inputElement) {
                var major = $(inputElement).val();
-               var univSe = $("#departSelect").val();
+               var univSe = $("#depart").val();
+               //var univSe2 = $("#depart2").val();
                var majorList = $(inputElement).next(".majorList");
 
                $.ajax({
                    url: "/whou/member/getMajor",
-                   data: { major: major, univSe:univSe },
+                   data: { major: major, univSe:univSe},
                    success: function (result) {
                       majorList.empty();
                       majorList.hide();
