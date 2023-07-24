@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+<mapper namespace="whou.secproject.mapper.AssistantMapper">
+	<sql id="assistant">
+		select * from assistant
+	</sql>
+	
+	<select id="assistantList" resultType="whou.secproject.component.AssistantDTO" >
+		<include refid="assistant"/> order by ref asc
+	</select>
+	
+	<select id="assistantRef_level1" resultType="whou.secproject.component.AssistantDTO" >
+		<include refid="assistant"/> where ref_level=1
+	</select>
+	
+	<select id="assistantRef" resultType="int" >
+		select ref from assistant where qes=#{qes}
+	</select>
+	
+	<select id="assistantSelectLevel" resultType="whou.secproject.component.AssistantDTO" >
+		<include refid="assistant"/> where ref_level=2 and ref=#{ref}
+	</select>
+	
+	<select id="assistantSelectCon" resultType="String" >
+		select con from assistant where qes=#{qes}
+	</select>
+	
+	<select id="assistantCount" resultType="int">
+		select count(*) from assistant
+	</select>
+	
+	<insert id="assistantInsertList">
+		insert into assistant values(assistant_seq.NEXTVAL,#{qes},#{con},#{ref},#{ref_level})
+	</insert>
+
+	<update id="assistantUpdateList">
+		update assistant 
+		<set>
+			<if test="qes != null">qes=#{qes},</if>
+			<if test="con != null">con=#{con},</if>
+			<if test="ref != null">ref=#{ref},</if>
+			<if test="ref_level != null">ref_level=#{ref_level},</if>
+		</set>
+		where num=#{num}  	
+	</update>
+	
+	<delete id="assistantDelete">
+		delete from assistant where num=#{num}
+	</delete>
+
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+<mapper namespace="whou.secproject.mapper.AdminFaqMapper">
+	<sql id="faq">
+		select * from faq
+	</sql>
+	
+	<select id="adminUserLvCheck" resultType="int">
+		select lv from whou_user where email=#{email}
+	</select> 
+	
+	<select id="faqList" resultType="whou.secproject.component.AdminFaqDTO">
+		<include refid="faq"/> order by readcount desc
+	</select>
+	
+	<select id="faqCategory" resultType="whou.secproject.component.AdminFaqDTO">
+		<include refid="faq"/> where category=#{category} order by readcount desc
+	</select>
+	
+	<insert id="faqWrite">
+		insert into faq values(faq_seq.NEXTVAL, #{category}, #{subject}, #{content}, sysdate, 0)
+	</insert>
+	
+	<delete id="faqDelete">
+		delete from faq where num=#{num}
+	</delete>
+	
+	<update id="faqReadCount">
+		update faq set readcount = readcount + 1 where num=#{num} 
+	</update>
+	
+</mapper>
