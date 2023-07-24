@@ -2,7 +2,6 @@ package whou.secproject.repository;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -10,6 +9,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,29 +28,29 @@ public class AptitudeApiDAO {
 	
 	@Autowired
 	private String apiKey;
-
 	
-	public AptitudeTestResponseDTO getAptitudeTestByNum(String q) {
+	public AptitudeTestResponseDTO getAptitudeTestByNum(String qnum) {
 		String url = "http://www.career.go.kr/inspct/openapi/test/questions";
+//	    aptitudeParam.setQ(qnum); //검사 번호 역량27 가치관6 흥미31 적성21
 	    
 	    URI uri = null;
 		try {
 			uri = UriComponentsBuilder.fromHttpUrl(url)
 			        .queryParam("apikey", URLEncoder.encode(apiKey, "UTF-8"))
-			        .queryParam("q", URLEncoder.encode(q, "UTF-8"))
+			        .queryParam("q", URLEncoder.encode(qnum, "UTF-8"))
 			        .build(true)
 			        .toUri();
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
 	    
-		// 객체 byte 배열로 받은 후 utf처리
+	    // 객체 byte 배열로 받은 후 utf처리
 	    RestTemplate restTemplate = new RestTemplate();
 	    ResponseEntity<byte[]> response = restTemplate.getForEntity(uri, byte[].class);
 	    byte[] responseBodyBytes = response.getBody();
 	    String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
 
-	 // 로깅을 활용한 디버깅
+	    // 로깅을 활용한 디버깅
 	    System.out.println("API 응답: " + responseBody.substring(0,60));
 	    
 	    AptitudeTestResponseDTO aptitudeResponse = null;
@@ -62,30 +62,32 @@ public class AptitudeApiDAO {
 	        System.out.println("에러 이유"+aptitudeResponse.getERROR_REASON());
 	    } catch (JsonProcessingException e) {
 	        e.printStackTrace();
-	    } catch (IOException e) {
-			e.printStackTrace();
-		}
+	    }
 	    return aptitudeResponse; // 예제임 수정하셈
 	}
-	// 추가로 개인정보 dto 넣어줘야됨
-	public AptitudeTestResultResponseDTO getAptitudeTestResult(String [] answers, AptitudeTestResultRequestDTO atrr) {
+	
+	
+
+	public AptitudeTestResultResponseDTO getAptitudeTestResult(List<String>answers, String qnum) {
 	    AptitudeTestResultResponseDTO aptiTestResultResponse = null;
-//	    
-//	    atrr.setQestrnSeq(q);
-//	    atrr.setTrgetSe("100206"); // 초등학생 등 타겟
-//	    atrr.setName("홍길동"); 
-//	    atrr.setGender("100323"); // 성별?
-//	    atrr.setSchool("율도 중학교"); // 
-//	    atrr.setGrade("2"); 
-//	    atrr.setEmail(""); 
-//	    atrr.setStartDtm(1550466291034L);
-//	    atrr.setAnswers("1=5 2=7 3=3 4=7 5=1 6=2 7=1 8=5 9=5 10=1 11=4 12=4 13=5 14=4 15=4 16=4 17=4 18=5 19=1 20=1 21=1 22=5 23=3 24=6 25=3 26=2 27=2 28=6 29=3 30=2 31=4 32=3 33=5 34=2 35=3 36=2 37=7 38=2 39=5 40=5 41=5 42=1 43=7 44=6 45=5 46=4 47=2 48=5 49=4 50=5 51=5 52=5 53=7 54=2 55=6 56=4 57=6 58=4 59=3 60=5 61=5 62=5 63=7 64=4 65=7 66=5");
-	    StringBuilder answer = new StringBuilder();
-	    for(int i = 0; i<answers.length; i++)
-	    	answer.append(i+1).append("=").append(answers[i]).append(" ");
-	    answer.setLength(answer.length() - 1); 
+	    AptitudeTestResultRequestDTO atrr = new AptitudeTestResultRequestDTO();
 	    
-	    //atrr.setAnswers(answer.toString());
+
+	    atrr.setQestrnSeq(qnum);
+	    atrr.setTrgetSe("100207"); 
+	    atrr.setName("홍길동"); 
+	    atrr.setGender("100323");
+	    atrr.setSchool("율도 중학교");
+	    atrr.setGrade("2"); 
+	    atrr.setEmail(""); 
+	    atrr.setStartDtm(1550466291034L);
+	    StringBuilder answer = new StringBuilder();
+	    for(int i = 0; i<answers.size(); i++)
+	    	answer.append(i+1).append("=").append(answers.get(i)).append(" ");
+	    answer.setLength(answer.length() - 1); 
+	    System.out.println(answer);
+	    atrr.setAnswers(answer.toString());
+	    
 		try {
 			URL url = new URL("http://www.career.go.kr/inspct/openapi/test/report");
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -130,13 +132,13 @@ public class AptitudeApiDAO {
 			response.toString();
 			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
+			
 			aptiTestResultResponse = objectMapper.readValue(response.toString(), AptitudeTestResultResponseDTO.class);
 			System.out.println(aptiTestResultResponse.getRESULT().getUrl());
+			//https://www.career.go.kr/inspct/web/psycho/able/report?seq=NjMzODQxNDA
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return aptiTestResultResponse;
 	}
-	
 }

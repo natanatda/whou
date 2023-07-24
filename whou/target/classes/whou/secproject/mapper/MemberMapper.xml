@@ -3,4 +3,60 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
 <mapper namespace="whou.secproject.mapper.MemberMapper">
+	<insert id="insert">
+		insert into whou_user (num, email) values(user_seq.NEXTVAL, #{email})
+	</insert>
+	
+	<insert id="insert2">
+		insert into user_info (num, email) values(userInfo_seq.NEXTVAL, #{email})
+	</insert>
+	
+	<insert id="insertPro">
+		insert into whou_user (num, email, pw, name, birth_year, tel, gender, join_type) 
+		<if test = "join_type != ''">
+			 values(user_seq.NEXTVAL, #{email}, 'null', #{name}, #{birth_year}, #{tel}, #{gender}, #{join_type})
+		</if>
+		<if test = "join_type == ''">
+			values(user_seq.NEXTVAL, #{email}, #{pw}, #{name}, #{birth_year}, #{tel}, #{gender}, 'whoU')
+		</if>
+	</insert>
+	
+	<select id="count" resultType="int">
+		select count(*) from whou_user where tel = #{tel}
+	</select>
+	
+	<select id="check" resultType="int">
+		select count(*) from whou_user where email = #{email}
+	</select>
+	
+	<select id="join_type" resultType="String">
+		select join_type from whou_user where email = #{email}
+	</select>
+	
+	<select id="login" resultType="String">
+		select pw from whou_user where email = #{email}
+	</select>
+	
+	<select id="getEmail" resultType="String">
+		select email from whou_user where name = #{name} and tel = #{tel}
+	</select>
+	
+	<select id="getCerti" resultType="String">
+	    select jmfldnm from certificate where jmfldnm like '%' || #{txt} || '%'
+	</select>
+	
+	<select id="getMajor" resultType="String">
+		select MCLASS from major where MCLASS like '%' || #{major} || '%'
+	</select>
+	
+	<update id="updateInfo">
+		update user_info set CERTIFICATE=#{combinedCerti}, SCHOOL_MAJOR=#{combinedMajor} where email = '22yunji@naver.com'
+	</update>
+	
+	
+	<!-- 마이페이지 -->
+	<select id="getAptitudeRank" resultType="whou.secproject.component.RecommandInfoDTO">
+		select * from recommand_info where num = ${userNum}
+	</select>
+	
 </mapper>

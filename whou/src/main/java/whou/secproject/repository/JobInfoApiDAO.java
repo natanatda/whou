@@ -57,14 +57,14 @@ public class JobInfoApiDAO {
 		}
 		
 	    JobInfoListResponseDTO jobInfoResponse = null;
-	    // °´Ã¼ byte ¹è¿­·Î ¹ŞÀº ÈÄ utfÃ³¸®
+	    // ê°ì²´ byte ë°°ì—´ë¡œ ë°›ì€ í›„ utfì²˜ë¦¬
 	    RestTemplate restTemplate = new RestTemplate();
 	    ResponseEntity<byte[]> response = restTemplate.getForEntity(uri, byte[].class);
 	    byte[] responseBodyBytes = response.getBody();
 	    String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
 
-	    // ·Î±ëÀ» È°¿ëÇÑ µğ¹ö±ë
-	    System.out.println("API ÀÀ´ä: " + responseBody.substring(0,60));
+	    // ë¡œê¹…ì„ í™œìš©í•œ ë””ë²„ê¹…
+	    System.out.println("API ì‘ë‹µ: " + responseBody.substring(0,60));
 	    
 	    try {
 	        ObjectMapper objectMapper = new ObjectMapper();
@@ -103,14 +103,14 @@ public class JobInfoApiDAO {
 			e1.printStackTrace();
 		}
 		JobDicDetailResponseDTO jobInfoResponse = null;
-		// °´Ã¼ byte ¹è¿­·Î ¹ŞÀº ÈÄ utfÃ³¸®
+		// ê°ì²´ byte ë°°ì—´ë¡œ ë°›ì€ í›„ utfì²˜ë¦¬
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<byte[]> response = restTemplate.getForEntity(uri, byte[].class);
 		byte[] responseBodyBytes = response.getBody();
 		String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
 		
-		// ·Î±ëÀ» È°¿ëÇÑ µğ¹ö±ë
-		System.out.println("API ÀÀ´ä: " + responseBody.substring(0,60));
+		// ë¡œê¹…ì„ í™œìš©í•œ ë””ë²„ê¹…
+		System.out.println("API ì‘ë‹µ: " + responseBody.substring(0,60));
 		
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -145,14 +145,14 @@ public class JobInfoApiDAO {
 			e1.printStackTrace();
 		}
 		JobTypeListResponseDTO jobInfoResponse = null;
-		// °´Ã¼ byte ¹è¿­·Î ¹ŞÀº ÈÄ utfÃ³¸®
+		// ê°ì²´ byte ë°°ì—´ë¡œ ë°›ì€ í›„ utfì²˜ë¦¬
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<byte[]> response = restTemplate.getForEntity(uri, byte[].class);
 		byte[] responseBodyBytes = response.getBody();
 		String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
 		
-		// ·Î±ëÀ» È°¿ëÇÑ µğ¹ö±ë
-		System.out.println("API ÀÀ´ä: " + responseBody.substring(0,60));
+		// ë¡œê¹…ì„ í™œìš©í•œ ë””ë²„ê¹…
+		System.out.println("API ì‘ë‹µ: " + responseBody.substring(0,60));
 		
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
