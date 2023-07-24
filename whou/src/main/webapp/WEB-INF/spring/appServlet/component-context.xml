@@ -8,12 +8,20 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	
-	<beans:bean id="AptiDAO" class="whou.secproject.repository.AptitudeApiDAO"/>
-	<beans:bean id="AptitudeApiTestSJDAO" class="whou.secproject.repository.AptitudeApiTestSJDAO"/>
+
+	<beans:bean id="AptitudeApiDAO" class="whou.secproject.repository.AptitudeApiDAO"/>
+	<beans:bean id="EducationApiDAO" class="whou.secproject.repository.EducationApiDAO"/>
 	<beans:bean id="JobInfoDAO" class="whou.secproject.repository.JobInfoApiDAO"/>
 	<beans:bean id="JobDicDAO" class="whou.secproject.repository.JobDicApiDAO"/>
+	
+	<!-- career net key -->
 	<beans:bean id="apiKey" class="java.lang.String">
 		<beans:constructor-arg value="c5d2abc17ab413db9d836aa7fcd81714"/>
+	</beans:bean>
+	
+	<!-- hrd net key -->
+	<beans:bean id="authKey" class="java.lang.String">
+		<beans:constructor-arg value="El44cyw7dt52nUjXcWl902ZjSGy4AQGc"/>
 	</beans:bean>
 </beans:beans>
 

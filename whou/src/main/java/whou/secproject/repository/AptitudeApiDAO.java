@@ -2,7 +2,6 @@ package whou.secproject.repository;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -29,12 +28,10 @@ public class AptitudeApiDAO {
 	
 	@Autowired
 	private String apiKey;
-
 	
 	public AptitudeTestResponseDTO getAptitudeTestByNum(String qnum) {
 		String url = "http://www.career.go.kr/inspct/openapi/test/questions";
-				
-//	    aptitudeParam.setQ(qnum); //검사 번호 역량27 가치관25 흥미31 적성21
+//	    aptitudeParam.setQ(qnum); //검사 번호 역량27 가치관6 흥미31 적성21
 	    
 	    URI uri = null;
 		try {
@@ -65,31 +62,30 @@ public class AptitudeApiDAO {
 	        System.out.println("에러 이유"+aptitudeResponse.getERROR_REASON());
 	    } catch (JsonProcessingException e) {
 	        e.printStackTrace();
-	    } catch (IOException e) {
-			e.printStackTrace();
-		}
-	    return aptitudeResponse;
+	    }
+	    return aptitudeResponse; // 예제임 수정하셈
 	}
 	
 	
 
 	public AptitudeTestResultResponseDTO getAptitudeTestResult(List<String>answers, String qnum) {
-		AptitudeTestResultResponseDTO aptiTestResultResponse = null;
+	    AptitudeTestResultResponseDTO aptiTestResultResponse = null;
 	    AptitudeTestResultRequestDTO atrr = new AptitudeTestResultRequestDTO();
 	    
-	    
+
 	    atrr.setQestrnSeq(qnum);
-	    atrr.setTrgetSe("100207"); // 고등학생
-	    atrr.setName("홍길동");
+	    atrr.setTrgetSe("100207"); 
+	    atrr.setName("홍길동"); 
 	    atrr.setGender("100323");
-	    atrr.setSchool("");
-	    atrr.setGrade("3");
+	    atrr.setSchool("율도 중학교");
+	    atrr.setGrade("2"); 
 	    atrr.setEmail(""); 
 	    atrr.setStartDtm(1550466291034L);
 	    StringBuilder answer = new StringBuilder();
 	    for(int i = 0; i<answers.size(); i++)
 	    	answer.append(i+1).append("=").append(answers.get(i)).append(" ");
 	    answer.setLength(answer.length() - 1); 
+	    System.out.println(answer);
 	    atrr.setAnswers(answer.toString());
 	    
 		try {
@@ -139,6 +135,7 @@ public class AptitudeApiDAO {
 			
 			aptiTestResultResponse = objectMapper.readValue(response.toString(), AptitudeTestResultResponseDTO.class);
 			System.out.println(aptiTestResultResponse.getRESULT().getUrl());
+			//https://www.career.go.kr/inspct/web/psycho/able/report?seq=NjMzODQxNDA
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

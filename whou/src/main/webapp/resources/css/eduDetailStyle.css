@@ -1,0 +1,41 @@
+ /*****************************************************************************
+  ************************************* education ***********************************
+  *****************************************************************************/
+  
+  .edu-detail-div1{margin:15px 15px; text-align:left;}
+  .edu-detail-div2{margin:40px 0px;}
+  .edu-detail-div2 p{font-weight: 700; margin:10px 0px;}
+  .edu-detail-div2 i{margin:0px 10px;}
+  .edu-detail-div2 div{margin:0px 0px 0px 45px;}
+  .edu-detail-graduate{font-weight: 600;}
+  .edu-detail-description{color:#666666;}
+  .edu-detail-table table,th,td,tr{border-collapse: collapse; border:1px solid #0d6efd; padding:5px 10px;}
+  .edu-detail-table table{width:70%;}
+  .edu-detail-table th{text-align:center; background-color:#D1D9FF; font-weight: 700;}
+  .edu-detail-table-td{background-color:#F5F5F5;}
+  .edu-detail-table-td:hover{text-decoration: underline;}
+  
+  .edu-train-search-form div{width:100%;}
+  .edu-train-search-form div div{display:flex; justify-content:center; width:49%; flex-wrap:nowrap;}
+  .edu-train-search-form div div:first-child{margin-right:2%;}
+  .edu-train-search-form div div span{border-radius: 0.375em 0em 0em 0.375em}
+  .edu-train-search-form div div input{border-radius: 0em 0.375em 0.375em 0em}
+  .edu-train-date-input input{margin:0px 5px;}
+
+  .edu-train-cart{font-size: 14px;margin-top: 20px; padding: 10px 10px; border-top:1px solid #593fffc0; align-items: center}
+  .edu-train-cart > div { display: flex; align-items: center; }
+  .edu-train-cart div >a {width:100%;background: #EDE4FF; color:#4A55A2; border:1px solid #EDE4FF;}
+  .edu-train-cart div >a:hover {background: #4A55A2; color:#fff;}
+  .edu-train-cart>div>div>h5{font-weight: 500;}
+  
+  .edu-train-detail h6 {font-weight: 500;
+  white-space: nowrap; /* 줄 바꿈 방지 */
+  overflow: hidden; /* 넘친 텍스트 숨기기 */
+  text-overflow: ellipsis; /* 생략 부호(...) 사용 */
+  width: 40ch; /* 최대 40글자까지 표시 */
+  }
+  .edu-train-detail div { text-align: left; align-items: flex-start; height: 100%; }
+  .edu-train-detail span{background: #ECF8F9; padding:0px 10px;}
+  
+  .edu-train-cart-subject{font-size: 1.3em; font-weight:700; padding:10px 10px;background: #4A55A2; color:#fff;}
+  
