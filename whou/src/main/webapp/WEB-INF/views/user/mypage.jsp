@@ -59,7 +59,7 @@
                          		<canvas id="valuesChart"></canvas>
                             </div>
                             <div class="tab-pane fade" id="nav-addInfo" role="tabpanel" aria-labelledby="nav-add-tab" tabindex="0">
-								<form action="/whou/member/updateInfo" method="post">
+								<form action="/whou/member/updateInfo" method="post" accept-charset="UTF-8">
 								     <div>
                                     <div class="add-wrap">
                                         <div class="left-box">
@@ -225,37 +225,40 @@
 			function checkCerti(inputElement) {
             var certi = $(inputElement).val();
             var qualificationList = $(inputElement).siblings(".qualificationList");
-
             $.ajax({
                 url: "/whou/member/getCerti",
                 data: { certi: certi },
                 success: function (result) {
                     qualificationList.empty();
-                    if(result && result.length > 0){
-	                    for (var i = 0; i < result.length; i++) {
-	                        var qualification = result[i];
-	                        var button = $("<button>").text(qualification);
-	                     
-	                        button.on("click", function () {
-	                           event.preventDefault();
-	                            var selectedQualification = $(this).text();
-	                            $(inputElement).val(selectedQualification);
-	                            qualificationList.hide();
-	                        });
-	                        qualificationList.append($("<li>").append(button));
-	                    }
-                    }else{
-                        var message = "' " + certi + " '을(를) 찾을 수 없습니다.";
-                        var messageElement = $("<li>").text(message);
-                        messageElement.on("click", function () {
-                            // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
-                            $(inputElement).val("");
-                            qualificationList.hide();
-                        });
-                        qualificationList.append(messageElement);
-                    }    
+                    qualificationList.hide();
+                    if(certi.length > 0){
+                    	if(result && result.length > 0){
+    	                    for (var i = 0; i < result.length; i++) {
+    	                        var qualification = result[i];
+    	                        var button = $("<button>").text(qualification);
+    	                     
+    	                        button.on("click", function () {
+    	                           event.preventDefault();
+    	                            var selectedQualification = $(this).text();
+    	                            $(inputElement).val(selectedQualification);
+    	                            alert()
+    	                            qualificationList.hide();
+    	                        });
+    	                        qualificationList.append($("<li>").append(button));
+    	                    }
+                        }else{
+                            var message = "' " + certi + " '을(를) 찾을 수 없습니다.";
+                            var messageElement = $("<li>").text(message);
+                            messageElement.on("click", function () {
+                                // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
+                                $(inputElement).val("");
+                                qualificationList.hide();
+                            });
+                            qualificationList.append(messageElement);
+                        }    
 
-                    qualificationList.show();
+                        qualificationList.show();
+                    }
                 }
             });
         }
@@ -269,31 +272,34 @@
                 data: { major: major },
                 success: function (result) {
                    majorList.empty();
+                   majorList.hide();
                    
-                   if(result && result.length > 0){
-	                    for (var i = 0; i < result.length; i++) {
-	                        var major2 = result[i];
-	                        var button = $("<button>").text(major2);
-	                        button.on("click", function () {
-	                           event.preventDefault();
-	                            var selectedMajor = $(this).text();
-	                            $(inputElement).val(selectedMajor);
-	                            majorList.hide();
-	                        });
-	                        majorList.append($("<li>").append(button));
-	                    }
-                   }else{
-                       var message = "' " + major + " '을(를) 찾을 수 없습니다.";
-                       var messageElement = $("<li>").text(message);
-                       messageElement.on("click", function () {
-                           // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
-                           $(inputElement).val("");
-                           majorList.hide();
-                       });
-                       majorList.append(messageElement);
+                   if(major.length > 0){
+                	   if(result && result.length > 0){
+   	                    for (var i = 0; i < result.length; i++) {
+   	                        var major2 = result[i];
+   	                        var button = $("<button>").text(major2);
+   	                        button.on("click", function () {
+   	                           event.preventDefault();
+   	                            var selectedMajor = $(this).text();
+   	                            $(inputElement).val(selectedMajor);
+   	                            majorList.hide();
+   	                        });
+   	                        majorList.append($("<li>").append(button));
+   	                    }
+                      }else{
+                          var message = "' " + major + " '을(를) 찾을 수 없습니다.";
+                          var messageElement = $("<li>").text(message);
+                          messageElement.on("click", function () {
+                              // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
+                              $(inputElement).val("");
+                              majorList.hide();
+                          });
+                          majorList.append(messageElement);
+                      }
+                      
+                      majorList.show();
                    }
-                   
-                   majorList.show();
                 }
             });
         }
