@@ -27,7 +27,6 @@ public class JobDicApiDAO {
 	
 	public JobDicListResponseDTO getJobDicListSorted(JobDicParamDTO jParam) {  
 				
-	    jParam.setPageIndex("1");
 	    // jParam.setPageIndex(pageNum);
 //	    jParam.setSearchAptdCodes(new String [] {"104740"});
 	    jParam.setSearchJobNm("");
@@ -38,7 +37,7 @@ public class JobDicApiDAO {
 	                .queryParam("apiKey", URLEncoder.encode(apiKey, "UTF-8"));
 
 	        if (jParam.getPageIndex() != null) 
-	            builder.queryParam("perIndex", URLEncoder.encode(jParam.getPageIndex(), "UTF-8"));
+	            builder.queryParam("pageIndex", URLEncoder.encode(jParam.getPageIndex(), "UTF-8"));
 	        if (jParam.getSearchJobNm() != null) 
 	        	builder.queryParam("searchJobNm", URLEncoder.encode(jParam.getSearchJobNm(), "UTF-8"));
 	        if (jParam.getSearchThemeCode() != null) 

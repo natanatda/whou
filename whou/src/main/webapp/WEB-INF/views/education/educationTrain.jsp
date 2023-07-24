@@ -54,8 +54,8 @@
 								</div>
 								<div class="search-cont">
 									<div class="input-group mb-3">
-										<label class="input-group-text" for="inputGroupSelect01">훈련유형</label>
-										<select name="trainGb" class="form-select" id="inputGroupSelect01">
+										<label class="input-group-text" id="train-select-label" style="background:#5A3FFF; color:#fff " for="inputGroupSelect01">훈련유형</label>
+										<select name="trainGb" class="form-select" id="inputGroupSelect01" autofocus>
 											<option>선택 필수 입니다.</option>
 											<option value="11" ${hrdParam.getTrainGb()=='11'? 'selected':''}>국민내일배움카드 훈련</option>
 											<option value="12" ${hrdParam.getTrainGb()=='12'? 'selected':''}>사업주훈련 훈련</option>
@@ -233,14 +233,14 @@
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">잘못된 검색입니다.</h1>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
 	        훈련유형을 선택해주세요.
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >닫기</button>
 	      </div>
 	    </div>
 	  </div>

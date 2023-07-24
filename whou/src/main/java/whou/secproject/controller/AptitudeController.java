@@ -168,16 +168,18 @@ public class AptitudeController {
 					jParam.setPageIndex("1");
 					JobDicListResponseDTO jdlrDTO = daoJob.getJobDicListSorted(jParam);	
 					int total = jdlrDTO.getCount();
+					System.out.println("@@@토탈입ㄴㅣ다"+total);
 					int count = total / 10;
 					String [] jobListCd = new String[total];
 
 					
 					for(int i = 1; i <= count+1; i++) {
 						jParam.setPageIndex(i+"");
-//						System.out.println(jParam.getPageIndex());
+						System.out.println(jParam.getPageIndex());
 						jdlrDTO = daoJob.getJobDicListSorted(jParam);
 						for(int j = 0; j < jdlrDTO.getJobs().size(); j++) {
 							jobListCd[(i-1)*10+j] = jdlrDTO.getJobs().get(j).getJob_cd()+"";
+							System.out.println("토탈입디다 @@@@@! : "+jobListCd[(i-1)*10+j]);
 						}
 					}
 					String jobListCode = String.join(",", jobListCd);

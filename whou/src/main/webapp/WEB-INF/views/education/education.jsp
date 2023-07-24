@@ -202,8 +202,8 @@
 						    <c:set var="currentPage" value="${paramDTO.getThisPage()!=null && !paramDTO.getThisPage().isEmpty() ? Integer.parseInt(paramDTO.getThisPage()) : 1}" />
 						    <ul class="pagination">
 						        <c:if test="${totalPages > 1 && currentPage!=1}">
-						            <li class="page-item">
-						                <a class="page-link" href="majorListSubmit?thisPage=${currentPage - 1}" onclick="handlePageLinkClick(${currentPage - 1})" aria-label="Previous">
+						            <li class="page-item" onclick="handlePageLinkClick(${currentPage - 1})">
+						                <a class="page-link"  href="javascript:void(0)" aria-label="Previous">
 						                    <span aria-hidden="true">&laquo;</span>
 						                </a>
 						            </li>
@@ -243,8 +243,8 @@
 						            </c:otherwise>
 						        </c:choose>
 						        <c:if test="${totalPages > 1 && currentPage!=totalPages}">
-						            <li class="page-item">
-						                <a class="page-link" href="majorListSubmit?thisPage=${currentPage + 1}" onclick="handlePageLinkClick(${currentPage + 1})" aria-label="Next">
+						            <li class="page-item" onclick="handlePageLinkClick(${currentPage + 1})" >
+						                <a class="page-link"  href="javascript:void(0)" aria-label="Next">
 						                    <span aria-hidden="true">&raquo;</span>
 						                </a>
 						            </li>
