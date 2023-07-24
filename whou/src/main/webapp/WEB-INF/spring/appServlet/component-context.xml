@@ -9,7 +9,7 @@
 
 	
 	<beans:bean id="AptiDAO" class="whou.secproject.repository.AptitudeApiDAO"/>
-	
+	<beans:bean id="EducationApiDAO" class="whou.secproject.repository.EducationApiDAO"/>
 	<beans:bean id="JobInfoApiDAO" class="whou.secproject.repository.JobInfoApiDAO"/>
 	<beans:bean id="JobDicApiDAO" class="whou.secproject.repository.JobDicApiDAO"/>
 	<beans:bean id="RecommendDAO" class="whou.secproject.repository.RecommendDAO"/>
