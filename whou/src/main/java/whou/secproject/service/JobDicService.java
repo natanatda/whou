@@ -12,4 +12,5 @@ public interface JobDicService {
 	public List<JobDicAptdValueListDTO> getAptdValue(String tb_name);
 	public List<Job_unique_numDTO> getJobNum(String tb_name);
 	public void insert(JobDicDetailResponseDTO dto);
+	public void insertJCC(int sort_value, String job_cds);
 }
