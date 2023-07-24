@@ -2,7 +2,6 @@ package whou.secproject.repository;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -24,7 +23,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import whou.secproject.component.AptitudeTestResponseDTO;
 import whou.secproject.component.AptitudeTestResultRequestDTO;
 import whou.secproject.component.AptitudeTestResultResponseDTO;
-import whou.secproject.service.aptService;
 
 public class AptitudeApiDAO {
 	
@@ -64,9 +62,7 @@ public class AptitudeApiDAO {
 	        System.out.println("에러 이유"+aptitudeResponse.getERROR_REASON());
 	    } catch (JsonProcessingException e) {
 	        e.printStackTrace();
-	    } catch (IOException e) {
-			e.printStackTrace();
-		}
+	    }
 	    return aptitudeResponse; // 예제임 수정하셈
 	}
 	
