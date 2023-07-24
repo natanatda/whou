@@ -35,7 +35,7 @@
     <%@ include file="../header.jsp" %> 
     <section class="py-2 mypage-section">
             <div class="container">
-                <h2 class="page-title">마이페이지</h2>
+                <h2 class="page-title">${memId}마이페이지</h2>
                 <div class="desc-wrap">
                     <div class="left-wrap">
                         <div>
@@ -83,7 +83,7 @@
                                           <h4>학과정보</h4>
                                             <div id="majorContainer">
                                               <div class="input-wrap">
-                                                   <select class="depart-select" name="depart">
+                                                   <select class="depart-select" name="depart" id="depart">
                                                       <option value="대학">대학</option>
                                                       <option value="전문대학">전문대학</option>
                                                    </select>
@@ -91,7 +91,7 @@
                                                    <ul class="majorList"></ul>
                                               </div>
                                               <div class="input-wrap">
-                                                  <select class="depart-select">
+                                                  <select class="depart-select" name="depart" id="depart">
                                                      <option value="대학">대학</option>
                                                      <option value="전문대학">전문대학</option>
                                                   </select>
@@ -264,11 +264,12 @@
         
         function checkMajor(inputElement) {
             var major = $(inputElement).val();
+            var univSe = $("#departSelect").val();
             var majorList = $(inputElement).next(".majorList");
 
             $.ajax({
                 url: "/whou/member/getMajor",
-                data: { major: major },
+                data: { major: major, univSe:univSe },
                 success: function (result) {
                    majorList.empty();
                    majorList.hide();

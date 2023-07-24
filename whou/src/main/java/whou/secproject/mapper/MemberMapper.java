@@ -16,5 +16,5 @@ public interface MemberMapper {
 	public void insertPro(MemberDTO dto);
 	public List<String> getCerti(String certi);
 	public List<String> getMajor(String major);
-	public void updateInfo(@Param("combinedCerti")String combinedCerti, @Param("combinedMajor")String combinedMajor);
+	public void updateInfo(@Param("combinedCerti")String combinedCerti, @Param("combinedMajor")String combinedMajor,  @Param("memId")String memId);
 }

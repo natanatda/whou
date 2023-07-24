@@ -92,6 +92,56 @@ public class MemberController {
 		return "/main";
 	}
 	
+	//마이페이지
+	@RequestMapping("/mypage")
+    public String mypage(Model model, HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String memId = (String)session.getAttribute("memId");
+		System.out.println(memId);
+		return "/user/mypage";
+	}
+	
+	//자격증 리스트 가져오기
+	@RequestMapping("/getCerti")
+    public @ResponseBody List<String> getCerti(String certi){
+		List<String> certiList = service.getCerti(certi); 
+		System.out.println(certiList);
+		return certiList;
+	}
+	
+	//학과 리스트 가져오기
+	@RequestMapping("/getMajor")
+    public @ResponseBody List<String> getMajor(String major, String univSe){
+		System.out.println("//////////"+univSe);
+		List<String> majorList = service.getMajor(major); 
+		System.out.println(majorList);
+		return majorList;
+	}
+	
+	//추가정보 수정(자격증, 학과)
+	@RequestMapping("/updateInfo")
+	public String updateInfo(@RequestParam(value = "certi", required = false) List<String> certiList,
+	                         @RequestParam(value = "major", required = false) List<String> majorList, HttpServletRequest request){
+		
+		HttpSession session = request.getSession();
+		String memId = (String)session.getAttribute("memId");
+		
+		String combinedCerti = null;
+		String combinedMajor = null;
+		System.out.println("Certi "+certiList);
+		System.out.println("Major "+majorList);
+		
+		if (certiList != null && majorList != null) {
+			combinedCerti = String.join(",", certiList);
+	        System.out.println("Certi2 "+combinedCerti);
+	        combinedMajor = String.join(",", majorList);
+	        System.out.println("Major2 "+combinedMajor);
+	        service.updateInfo(combinedCerti, combinedMajor, memId);
+	        
+	    }
+	    return "redirect:/member/mypage";
+	}
+	
 	//로그아웃
   	@RequestMapping("/logout")
   	public String logout(HttpSession session, HttpServletRequest request, Model model ) {
@@ -117,7 +167,7 @@ public class MemberController {
   		}
   		if(email == null) { //가입한적 없음
   	  		return "0";
-  		}else if(email != null && type != null) { //소셜가입
+  		}else if(email != null && !type.equals("whoU")) { //소셜가입
   			return "1";
   		}else{ //자체가입함
   	  		return email;
@@ -335,6 +385,7 @@ public class MemberController {
 	              return "redirect:/error"; // 인증이 실패한 경우 리디렉션할 페이지
 	       }
   	}
+  	
   	//중복확인 & 추가정보
   	@PostMapping("/check")
   	public @ResponseBody int check(MemberDTO dto, HttpSession session) {
@@ -378,44 +429,7 @@ public class MemberController {
         return result;
     }
   	
-  	@RequestMapping("/mypage")
-    public String mypage(){
-		return "/user/mypage";
-	}
-	
-	@RequestMapping("/getCerti")
-    public @ResponseBody List<String> getCerti(String certi){
-		List<String> certiList = service.getCerti(certi); 
-		System.out.println(certiList);
-		return certiList;
-	}
-	
-	@RequestMapping("/getMajor")
-    public @ResponseBody List<String> getMajor(String major){
-		List<String> majorList = service.getMajor(major); 
-		System.out.println(majorList);
-		return majorList;
-	}
-	
-	@RequestMapping("/updateInfo")
-	public String updateInfo(@RequestParam(value = "certi", required = false) List<String> certiList,
-	                         @RequestParam(value = "major", required = false) List<String> majorList){
-		
-		String combinedCerti = null;
-		String combinedMajor = null;
-		System.out.println("Certi "+certiList);
-		System.out.println("Major "+majorList);
-		
-		if (certiList != null && majorList != null) {
-			combinedCerti = String.join(",", certiList);
-	        System.out.println("Certi2 "+combinedCerti);
-	        combinedMajor = String.join(",", majorList);
-	        System.out.println("Major2 "+combinedMajor);
-	        service.updateInfo(combinedCerti, combinedMajor);
-	        
-	    }
-	    return "redirect:/member/mypage";
-	}
+  	
   	
   	
   	
