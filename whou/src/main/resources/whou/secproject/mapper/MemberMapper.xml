@@ -46,7 +46,7 @@
 	</select>
 	
 	<select id="getMajor" resultType="String">
-		select MCLASS from major where MCLASS like '%' || #{major} || '%'
+		select MCLASS from major where MCLASS like '%' || #{major} || '%' and univSe = #{univSe}
 	</select>
 	
 	<update id="updateInfo">

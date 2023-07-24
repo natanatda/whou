@@ -98,8 +98,8 @@ public class MemberServiceImpl implements MemberService {
    }
    
    @Override
-   public List<String> getMajor(String major){
-		return mapper.getMajor(major);
+   public List<String> getMajor(String major, String univSe){
+		return mapper.getMajor(major, univSe);
    }
    
    @Override
