@@ -1,0 +1,11 @@
+Model Information:
+* title:	PUBG Mobile First Aid Kit
+* source:	https://sketchfab.com/3d-models/pubg-mobile-first-aid-kit-7790bf59c43e47f99d8c538ccf2ac6f8
+* author:	Rex (https://sketchfab.com/rex_7)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "PUBG Mobile First Aid Kit" (https://sketchfab.com/3d-models/pubg-mobile-first-aid-kit-7790bf59c43e47f99d8c538ccf2ac6f8) by Rex (https://sketchfab.com/rex_7) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

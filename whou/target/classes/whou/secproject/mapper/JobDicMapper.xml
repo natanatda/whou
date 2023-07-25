@@ -33,5 +33,8 @@
 	<insert id="insertJD">
 		insert into job_detail values(job_detail_seq.nextval,#{num},#{factor},#{factor_value},#{value})
 	</insert>
+	<insert id ="insertJCC">
+		insert into job_category_cd values(#{sort_value},#{job_cds})
+	</insert>
 </mapper>
 

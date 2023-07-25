@@ -19,6 +19,7 @@
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
+
  
     <body>
     <c:set var="workList" value="${jobDetail.workList}" />
@@ -40,7 +41,12 @@
     <c:set var="knowledge" value="${jobDetail.perform.knowledge}" />
     <c:set var="environment" value="${jobDetail.perform.environment}" />
         <!-- Responsive navbar-->
-       <%@ include file="../header.jsp" %>        
+       <%@ include file="../header.jsp" %>      
+       <div class="ai-wrap">
+       	<div>캐릭터</div>
+       	<div>설명</div>
+       	<button onclick="checkAndClose()">상세가기</button>
+       </div>  
         <section class="py-2 desc-dtl-section">
             <div class="desc-container">
                 <h2 class="page-title">직업백과</h2>
@@ -48,7 +54,12 @@
                     <div class="left-wrap">
                         <h5>${BaseInfo.job_nm}</h5>
                         <ul class="desc-icon-box">
-                            <li><i class="fa-regular fa-star" style="color: #5c5c5c;"></i></li>
+                        	<c:if test="${contain}">
+	                            <li onclick="location='/whou/member/bookmark?job_cd=${BaseInfo.job_cd}&contain=1'"><i class="fa-solid fa-star" style="color: purple;"></i></li>
+                        	</c:if>
+                        	<c:if test="${!contain}">
+	                            <li onclick="location='/whou/member/bookmark?job_cd=${BaseInfo.job_cd}&contain=0'"><i class="fa-regular fa-star" style="color: #5c5c5c;"></i></li>
+                        	</c:if>
                             <li><i class="fa-regular fa-thumbs-up" style="color: #5c5c5c;"></i></li>
                             <li><i class="fa-solid fa-print" style="color: #5c5c5c;"></i></li>
                         </ul>
@@ -483,6 +494,18 @@
 	                }
 	            }
 	        });
+	        
+	        function checkAndClose() {
+	        	  var aiWrapElement = document.querySelector('.ai-wrap');
+	        	  if (aiWrapElement) {
+	        	    aiWrapElement.style.transition = 'max-width 0.5s ease-out'; // 슬라이드 애니메이션 설정
+	        	    aiWrapElement.style.maxWidth = '0'; // 요소를 왼쪽으로 슬라이드하여 사라지게 함
+	        	    setTimeout(function() {
+	        	      aiWrapElement.style.display = 'none'; // 슬라이드 애니메이션이 완료되면 요소를 숨김
+	        	    }, 500); // 0.5초(500ms) 후에 요소를 숨김 (transition 속성과 동일한 시간)
+	        	  }
+	        	 
+	        	}
 	    </script>
     </body>
     

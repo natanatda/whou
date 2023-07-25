@@ -310,21 +310,25 @@ public class AptitudeController {
 		
 		HttpSession session = request.getSession();
 		String memId = (String)session.getAttribute("memId");
-		// user_info 테이블에서 세션에 해당하는 num 추출
-		int userNum = service.userNumSelect(memId);
-		
-		// 세션으로 이름 꺼내기
-		String name = service.getName(memId);
-		model.addAttribute("name",name);
-		
-		//진행한 검사
-		List<AptitudeTestValueDTO> valueList = service.getRecentTest(dto1, userNum);
-		model.addAttribute("valueList", valueList);
-		
-		//임시 저장한 모든 값 가져오기
-		dto2.setUserNum(userNum);
-		List<AptitudeTestTemporarySaveDTO> tempList = service.getTemporarySave(dto2);
-		model.addAttribute("tempList", tempList);
+		if(memId != null) {
+			// user_info 테이블에서 세션에 해당하는 num 추출
+			int userNum = service.userNumSelect(memId);
+			
+			// 세션으로 이름 꺼내기
+			String name = service.getName(memId);
+			model.addAttribute("name",name);
+			System.out.println(name);
+			
+			//진행한 검사
+			List<AptitudeTestValueDTO> valueList = service.getRecentTest(dto1, userNum);
+			model.addAttribute("valueList", valueList);
+			
+			//임시 저장한 모든 값 가져오기
+			dto2.setUserNum(userNum);
+			List<AptitudeTestTemporarySaveDTO> tempList = service.getTemporarySave(dto2);
+			model.addAttribute("tempList", tempList);
+		}
+	
 		
 		//임시 저장하고 메인화면으로 온건지 판별
 		String temporarySave = request.getParameter("temporarySave");

@@ -1,0 +1,11 @@
+Model Information:
+* title:	Hand Luggage
+* source:	https://sketchfab.com/3d-models/hand-luggage-c976c7342d0849d2bb66a66ed07192c5
+* author:	F3NCR (https://sketchfab.com/F3NCR)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Hand Luggage" (https://sketchfab.com/3d-models/hand-luggage-c976c7342d0849d2bb66a66ed07192c5) by F3NCR (https://sketchfab.com/F3NCR) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

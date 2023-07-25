@@ -22,4 +22,5 @@ public interface JobDicMapper {
 	public void insertJR(JobInsertDTO dto);
 	public void insertJP(JobInsertDTO dto);
 	public void insertJD(JobInsertDTO dto);
+	public void insertJCC(@Param("sort_value") int sort_value, @Param("job_cds") String job_cds);
 }

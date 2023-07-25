@@ -12,18 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import whou.secproject.component.AptitudeTestValueDTO;
 import whou.secproject.service.AptitudeService;
-import whou.secproject.service.MemberService;
+import whou.secproject.service.MainService;
+
 
 @Controller
 public class MainController {
-
+	
 	@Autowired
-	private AptitudeService service;
+	private MainService service;
 
 	@RequestMapping("/main")
 	public String main() {

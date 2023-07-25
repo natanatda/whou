@@ -1,10 +1,12 @@
 package whou.secproject.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,13 +19,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import whou.secproject.component.JobDicAptdValueListDTO;
 import whou.secproject.component.JobDicDetailResponseDTO;
 import whou.secproject.component.JobDicListResponseDTO;
-import whou.secproject.component.JobDicListResponseDTO.Jobs;
 import whou.secproject.component.JobDicParamDTO;
 import whou.secproject.component.JobDicValueListDTO;
-import whou.secproject.component.Job_infoDTO;
-import whou.secproject.component.Job_unique_numDTO;
+import whou.secproject.mapper.MemberMapper;
 import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.service.JobDicService;
+import whou.secproject.service.MemberService;
 
 @Controller
 @RequestMapping("/job")
@@ -34,6 +35,9 @@ public class JobController {
 	
 	@Autowired
 	private JobDicService service;
+	
+	@Autowired
+	private MemberMapper mapperMem;
 
 	@RequestMapping("/dic")
 	public String goJobDic(Model model,HttpServletRequest request) {
@@ -162,42 +166,114 @@ public class JobController {
 //	}
 	
 	@RequestMapping("/info")
-	public String JobDicInfo(HttpServletRequest request, Model model) {
-		int seq = -1;
-		String strSeq= request.getParameter("seq");
-		JobDicDetailResponseDTO jobDetail = null;
-		if(strSeq!=null) 
-			seq = Integer.parseInt(strSeq);
-		
-		jobDetail= dao.getJobDicDetail(150);
-		for(int i=0; i<jobDetail.getWorkList().size(); i++)
-			System.out.println(jobDetail.getWorkList().get(i).getWork());
-		model.addAttribute("jobDetail", jobDetail);
-		return "/job/descriptionDetail";
-	}
+    public String JobDicInfo(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		String memId = (String)session.getAttribute("memId");
+       int seq = -1;
+       String strSeq= request.getParameter("job_cd");
+       JobDicDetailResponseDTO jobDetail = null;
+       if(strSeq!=null) 
+          seq = Integer.parseInt(strSeq);
+       
+       System.out.println("seq == " +seq);
+       jobDetail= dao.getJobDicDetail(seq);
+       
+       String data = jobDetail.getIndicatorChart().get(0).getIndicator_data();
+       String major_data = jobDetail.getMajorChart().get(0).getMajor_data();
+       String edu_data = jobDetail.getEduChart().get(0).getChart_data();
+       System.out.println(data);
+
+       List<String> indicator = new ArrayList<String>();
+       List<String> major = new ArrayList<String>();
+       List<String> edu = new ArrayList<String>();
+       
+       String[] dataParts = data.split(",");
+       String[] major_dataParts = major_data.split(",");
+       String[] edu_dataParts = edu_data.split(",");
+       
+       indicator.addAll(Arrays.asList(dataParts));
+       major.addAll(Arrays.asList(major_dataParts));
+       edu.addAll(Arrays.asList(edu_dataParts));
+       
+       String indicatorData = "null";
+       String majorData = "null";
+       String eduData = "null";
+       ObjectMapper objectMapper = new ObjectMapper();
+       try {
+          indicatorData = objectMapper.writeValueAsString(indicator);
+          majorData = objectMapper.writeValueAsString(major);
+          eduData = objectMapper.writeValueAsString(edu);
+       } catch (JsonProcessingException e) {
+           e.printStackTrace();
+       }
+
+      String temp = mapperMem.getBook(memId);
+      boolean contain = false;
+      if(temp!=null) {
+    	  String [] arr = temp.split(",");
+    	  for (String str : arr) {
+    		  if (str.equals(strSeq)) {
+    			  contain = true;
+    		  }
+    	  }
+      }
+       
+       model.addAttribute("contain", contain);
+       model.addAttribute("jobDetail", jobDetail);
+       model.addAttribute("indicatorData", indicatorData);
+       model.addAttribute("majorData", majorData);
+       model.addAttribute("eduData", eduData);
+       return "/job/description-detail";
+    }
 	
-	@RequestMapping("/ijd")
-	public String insertJobDetail() {
-		JobDicParamDTO jparam = new JobDicParamDTO();
-		JobDicListResponseDTO dto = null;
-		JobDicDetailResponseDTO jddrdto =null;
-		for(int i = 1; i < 55; i++) {
-			jparam.setPageIndex(i+"");
-			dto = dao.getJobDicListSorted(jparam);
-			for(int j = 0; j < dto.getJobs().size(); j++) {
-				int jcd= dto.getJobs().get(j).getJob_cd();
-				jddrdto =  dao.getJobDicDetail(jcd);
-				service.insert(jddrdto);
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-//		jddrdto =  dao.getJobDicDetail(10040);
-//		service.insert(jddrdto);
-		return null;
-	}
+//	@RequestMapping("/ijd")
+//	public String insertJobDetail() {
+//		JobDicParamDTO jparam = new JobDicParamDTO();
+//		JobDicListResponseDTO dto = null;
+//		JobDicDetailResponseDTO jddrdto =null;
+//		for(int i = 1; i < 55; i++) {
+//			jparam.setPageIndex(i+"");
+//			dto = dao.getJobDicListSorted(jparam);
+//			for(int j = 0; j < dto.getJobs().size(); j++) {
+//				int jcd= dto.getJobs().get(j).getJob_cd();
+//				jddrdto =  dao.getJobDicDetail(jcd);
+//				service.insert(jddrdto);
+//				try {
+//					Thread.sleep(1000);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		
+////		jddrdto =  dao.getJobDicDetail(10040);
+////		service.insert(jddrdto);
+//		return null;
+//	}
+	
+//	@RequestMapping("/aa")
+//	public String JobDic() {
+//		for(int j = 0; j < 10; j++) {
+//			JobDicParamDTO jParam = new JobDicParamDTO();
+//			jParam.setSearchJobCd(j+"");
+//			JobDicListResponseDTO jdlrDTO = dao.getJobDicListSorted(jParam);
+//			int a = jdlrDTO.getCount()/10;
+//			System.out.println(a);
+//			String [] list = new String[jdlrDTO.getCount()];
+//			for(int i = 1; i <= a+1; i++) {
+//				System.out.println(i);
+//				jParam.setPageIndex(i+"");
+//				jdlrDTO = dao.getJobDicListSorted(jParam);
+//				List<JobDicListResponseDTO.Jobs> jobs= jdlrDTO.getJobs();
+//				for(int k = 0 ; k < jobs.size(); k++) {
+//					list [((i-1)*10)+k] = jobs.get(k).getJob_cd()+"";
+//				}
+//			}
+//			String str = String.join(",", list);
+//			System.out.println(str);
+//			service.insertJCC(j, str);
+//		}
+//		return null;
+//	}
+	
 }

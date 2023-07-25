@@ -35,7 +35,7 @@
                     <div class="card-body">
                         <div class="info-box">
                             <p>검사 시작 전에 정보를 입력해주세요!</p>
-                            <button class="purple-btn">정보입력하기</button>
+                        
                         </div>
                     </div>
                 </div> -->
@@ -46,75 +46,83 @@
                            <div>
                                 <p class="status-title">진행(임시저장) 중 인 검사</p>
                                 <div>
-                                   <c:if test="${fn:length(tempList) == 0}">
-                                       <i class="fa-regular fa-circle-xmark fa-2xl" style="color: #363636;"></i>
-                                       <p>진행중인 검사가 없습니다.</p>
-                                    </c:if>
-                                    <c:if test="${fn:length(tempList) > 0}">
-                                       <c:forEach items="${tempList}" var="templist">
-                                       <div>
-                                          <a href="/whou/aptitude/itrstkAptitude?qnum=${templist.test_num}&tempSave=tempSave">${templist.test_name}</a>
-                                       </div>
-                                       </c:forEach>
-                                    </c:if>
+	                               
+	                                   <c:if test="${fn:length(tempList) == 0}">
+	                                       <i class="fa-regular fa-circle-xmark fa-2xl" style="color: #363636;"></i>
+	                                       <p>진행중인 검사가 없습니다.</p>
+	                                    </c:if>
+	                                    <c:if test="${fn:length(tempList) > 0}">
+	                                       <c:forEach items="${tempList}" var="templist">
+	                                       <div>
+	                                          <a href="/whou/aptitude/itrstkAptitude?qnum=${templist.test_num}&tempSave=tempSave">${templist.test_name}</a>
+	                                       </div>
+	                                       </c:forEach>
+	                                    </c:if>
+	                                
                                 </div>
                            </div>
                            <div>
-                                <p class="status-title">${name}님의 심리검사 현황</p>
-                                <div class="table-wrap status-table">
-                                    <table>
-                                        <colgroup>
-                                            <!-- <col style="width:20%;">
-                                            <col style="width:90%;"> -->
-                                        </colgroup>
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>직업적성검사</th>
-                                                <th>직업가치관검사</th>
-                                                <th>진로개발역량검사</th>
-                                                <th>직업흥미검사</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    검사횟수
-                                                </td>
-                                                <td>
-                                                    ${valueList[0].getCount()}
-                                                </td>
-                                                <td>
-                                                    ${valueList[1].getCount()}
-                                                </td>
-                                                <td>
-                                                    ${valueList[2].getCount()}
-                                                </td>
-                                                <td>
-                                                    ${valueList[3].getCount()}
-                                                </td>                                    
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    최근검사일
-                                                </td>
-                                                <td>
-                                                    ${valueList[0].getMax_test_date()}
-                                                </td>
-                                                <td>
-                                                    ${valueList[1].getMax_test_date()}
-                                                </td>
-                                                <td>
-                                                    ${valueList[2].getMax_test_date()}
-                                                </td>
-                                                <td>
-                                                    ${valueList[3].getMax_test_date()}
-                                                </td>                                    
-                                            </tr>
-                                        </tbody>
-                                    </table>
-        
-                                </div>  
+	                           <c:if test="${name != null}">
+                                	<p class="status-title">${name}님의 심리검사 현황</p>
+	                                <div class="table-wrap status-table">
+	                                    <table>
+	                                        <colgroup>
+	                                            <!-- <col style="width:20%;">
+	                                            <col style="width:90%;"> -->
+	                                        </colgroup>
+	                                        <thead>
+	                                            <tr>
+	                                                <th></th>
+	                                                <th>직업적성검사</th>
+	                                                <th>직업가치관검사</th>
+	                                                <th>진로개발역량검사</th>
+	                                                <th>직업흥미검사</th>
+	                                            </tr>
+	                                        </thead>
+	                                        <tbody>
+	                                            <tr>
+	                                                <td>
+	                                                    검사횟수
+	                                                </td>
+	                                                <td>
+	                                                    ${valueList[0].getCount()}
+	                                                </td>
+	                                                <td>
+	                                                    ${valueList[1].getCount()}
+	                                                </td>
+	                                                <td>
+	                                                    ${valueList[2].getCount()}
+	                                                </td>
+	                                                <td>
+	                                                    ${valueList[3].getCount()}
+	                                                </td>                                    
+	                                            </tr>
+	                                            <tr>
+	                                                <td>
+	                                                    최근검사일
+	                                                </td>
+	                                                <td>
+	                                                    ${valueList[0].getMax_test_date()}
+	                                                </td>
+	                                                <td>
+	                                                    ${valueList[1].getMax_test_date()}
+	                                                </td>
+	                                                <td>
+	                                                    ${valueList[2].getMax_test_date()}
+	                                                </td>
+	                                                <td>
+	                                                    ${valueList[3].getMax_test_date()}
+	                                                </td>                                    
+	                                            </tr>
+	                                        </tbody>
+	                                    </table>
+	                                </div>  
+			                  </c:if>
+								<c:if test="${name == null}">
+								   <div class="info-box">
+	                            		<p>로그인 후 이용 가능합니다.</p>	
+	                        		</div>                                	
+			                  </c:if>
                            </div>
                         </div>
                     </div>
@@ -225,7 +233,7 @@
 									</div>
                                     <button class="black-btn">검사결과 예시</button>
                                 </div>
-                                <button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=21'">검사시작</button>
+                                <button class="purple-btn" onclick="aptitudeStart()">검사시작</button>
                             </div>
                         </div>
                     </div>
@@ -262,7 +270,7 @@
                                     <button class="black-btn">검사소개</button>
                                     <button class="black-btn">검사결과 예시</button>
                                 </div>
-                                <button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=25'">검사시작</button>
+                                <button class="purple-btn" onclick="valuesStart()">검사시작</button>
                             </div>
                         </div>
                     </div>
@@ -298,7 +306,7 @@
                                     <button class="black-btn">검사소개</button>
                                     <button class="black-btn">검사결과 예시</button>
                                 </div>
-                                <button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=27'">검사시작</button>
+                                <button class="purple-btn" onclick="abilityStart()">검사시작</button>
                             </div>
                         </div>
                     </div>
@@ -334,7 +342,7 @@
                                     <button class="black-btn">검사소개</button>
                                     <button class="black-btn">검사결과 예시</button>
                                 </div>
-                                <button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=31'">검사시작</button>
+                                <button class="purple-btn" onclick="interestStart()">검사시작</button>
                             </div>
                         </div>
                     </div>
@@ -346,5 +354,31 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
+    <script>
+    function sessionChk(){
+    	  // `${name}`이 존재하지 않는 경우
+        if (!"${name}") {
+            alert("로그인 후 이용해주세요!");
+            location.href = '/whou/aptitude/aptitudeMain';
+        }
+    }
+    
+    function aptitudeStart() {
+	  	 location.href = '/whou/aptitude/itrstkAptitude?qnum=21';
+	  	 sessionChk();      
+    }
+    function valuesStart() {
+	  	 location.href = '/whou/aptitude/itrstkAptitude?qnum=25';
+	  	 sessionChk();      
+   }
+    function abilityStart() {
+	  	 location.href = '/whou/aptitude/itrstkAptitude?qnum=27';
+	  	 sessionChk();      
+   }
+    function interestStart() {
+	  	 location.href = '/whou/aptitude/itrstkAptitude?qnum=31';
+	  	 sessionChk();      
+   }
+    </script>
     
 </html>

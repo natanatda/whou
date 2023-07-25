@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+<mapper namespace="whou.secproject.mapper.AdminNoticeMapper">
+	<sql id="notice">
+		select * from notice
+	</sql>
+	
+	<sql id="noticeUpdate">
+		update notice		
+	</sql>
+	
+	<select id="noticeList" resultType="whou.secproject.component.AdminNoticeDTO">
+		select num,writer,subject,reg,content,readcount from 
+		(select num,writer,subject,reg,content,readcount,rownum r from 
+		(select num, writer, subject, reg, content, readcount from 
+		notice order by reg desc )) where <![CDATA[r >= #{start} and r <= #{end} order by reg desc
+		]]>
+	</select>
+	
+	<select id="noticeDetail" resultType="whou.secproject.component.AdminNoticeDTO">
+		<include refid="notice"/> where num=#{num}	
+	</select> 
+	
+	<select id="noticeCount" resultType="int">
+		select count(*) from notice	
+	</select> 
+	
+	<select id="noticeSearch" resultType="whou.secproject.component.AdminNoticeDTO" parameterType="map">
+    	select * from (select rownum r, notice.* from notice
+    <trim prefix="where">
+        <choose>
+            <when test="option == 'all'">
+                subject like '%'||#{word}||'%' or content like '%'||#{word}||'%'
+            </when>
+            <otherwise>
+                ${option} like '%'||#{word}||'%'
+            </otherwise>
+        </choose>
+    </trim>
+        order by reg desc) where <![CDATA[ r >= #{start} and r <= #{end}]]> 
+	</select>
+
+	
+	<insert id="noticeWrite" >
+		insert into notice values(notice_seq.NEXTVAL, #{writer}, #{subject}, #{content}, 0, sysdate)
+	</insert>
+	
+	<update id="noticeReadCount">
+		<include refid="noticeUpdate"/> set readcount=readcount + 1 where num=#{num} 
+	</update>
+	
+	<update id="noticeModify" >
+		<include refid="noticeUpdate"/>
+		<set>
+			<if test="writer != null">wrtier=#{writer},</if>
+			<if test="subject != null">subject=#{subject},</if>
+			<if test="content != null">content=#{content}</if>		
+		</set>
+		where num=#{num}
+	</update>
+
+	<delete id="noticeDelete" >
+		delete from notice where num=#{num}	
+	</delete>	
+</mapper>
