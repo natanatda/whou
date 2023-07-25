@@ -36,31 +36,18 @@
 			<h2 class="page-title">custom</h2>
 		</div>
 	</header>
-<script type="module" src="../resources/js/whouModel.js?ver=3"></script>
+<script type="module" src="../resources/js/whouModel.js?ver=2"></script>
 <div>
 	<div style="display: flex; justify-content: center;">
 		<div id="picker"> </div>
 	</div>
 	
 	<div style="display: flex; justify-content: center;">
-	
-	<form action="/whou/whouModel/modelCustomInsert">
-		<input type="text" id="head" name="headColor" value="${model.headColor}" />
 		<input type="button" id="headColor"  value="얼굴 색 변경"/> 
-		
-		<input type="hidden" id="arm" name="armColor" value="${model.armColor}" />
 		<input type="button" id="armColor"  value="팔 색 변경"/> 
-		
-		<input type="hidden" id="cheek" name="cheekColor" value="${model.cheekColor}" />
 		<input type="button" id="cheekColor"  value="볼 색 변경"/> 
-		
-		<input type="hidden" id="leg" name="legColor" value="${model.legColor}" />
-		<input type="button" id="legColor"  value="다리 색 변경"/> <br/>
-		<div style="display: flex; justify-content: center;">
-		<input type="submit" value="저장"/>
+		<input type="button" id="legColor"  value="다리 색 변경"/> 
 		<input type="button" value="초기화" onclick="location='/whou/whouModel/modelCustomDelete'"/> <br/>
-		</div>
-	</form>
 	</div>
 </div>
 <hr/>
@@ -109,11 +96,11 @@ if('${model.legColor}' === ''){
 		 // log the current color as a HEX string
 			 $("#headColor").click(function(){ 
 			    $.ajax({
-			      url: "/whou/whouModel/inputText",
+			      url: "/whou/whouModel/modelCustomInsert",
 			      method: "POST",
-			      data: { selectedColor: selectedColor },
+			      data: { head: selectedColor, arm: '${model.armColor}', cheek: '${model.cheekColor}', leg: '${model.legColor}' },
 			      success: function(response) {
-			        $("#head").val(response);
+			    	  window.location.reload();
 			      },
 			      error: function(error) {
 			        console.error("오류:", error); // 오류 처리
@@ -123,12 +110,11 @@ if('${model.legColor}' === ''){
 			});
 			 $("#armColor").click(function(){
 			    $.ajax({
-			      url: "/whou/whouModel/inputText",
+			      url: "/whou/whouModel/modelCustomInsert",
 			      method: "POST",
-			      data: { selectedColor: selectedColor },
+			      data: { head: '${model.headColor}', arm: selectedColor, cheek: '${model.cheekColor}', leg: '${model.legColor}' },
 			      success: function(response) {
-			    	armColor = response;
-			        $("#arm").val(response);
+			    	  window.location.reload();
 			      },
 			      error: function(error) {
 			        console.error("오류:", error); // 오류 처리
@@ -137,11 +123,11 @@ if('${model.legColor}' === ''){
 			});
 			 $("#cheekColor").click(function(){
 			    $.ajax({
-			      url: "/whou/whouModel/inputText",
+			      url: "/whou/whouModel/modelCustomInsert",
 			      method: "POST",
-			      data: { selectedColor: selectedColor },
+			      data: { head: '${model.headColor}', arm: '${model.armColor}', cheek: selectedColor, leg: '${model.legColor}' },
 			      success: function(response) {
-			        $("#cheek").val(response);
+			    	  window.location.reload();
 			      },
 			      error: function(error) {
 			        console.error("오류:", error); // 오류 처리
@@ -150,11 +136,11 @@ if('${model.legColor}' === ''){
 			});
 			 $("#legColor").click(function(){
 			    $.ajax({
-			      url: "/whou/whouModel/inputText",
+			      url: "/whou/whouModel/modelCustomInsert",
 			      method: "POST",
-			      data: { selectedColor: selectedColor },
+			      data: { head: '${model.headColor}', arm: '${model.armColor}', cheek: '${model.cheekColor}', leg: selectedColor },
 			      success: function(response) {
-			        $("#leg").val(response);
+			    	  location.reload();
 			      },
 			      error: function(error) {
 			        console.error("오류:", error); // 오류 처리

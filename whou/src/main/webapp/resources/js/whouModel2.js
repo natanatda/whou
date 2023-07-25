@@ -14,15 +14,16 @@
         }
 
         const sizes = {
-             width: window.innerWidth,
+              width: window.innerWidth,
             height: window.innerHeight
         }
 
          // Renderer
-        const renderer = new THREE.WebGLRenderer({ canvas })
-		scene.background = new THREE.Color('0xFFFFFF');
+
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true })
+		renderer.background = new THREE.Color(0x00000000);
+		
         const render = () => {
-	
             renderer.setSize(sizes.width, sizes.height)
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
             renderer.render(scene, camera)
@@ -30,11 +31,13 @@
 
         // Camera
    
-        const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000)
+        const camera = new THREE.PerspectiveCamera(50, sizes.width / sizes.height, 0.1, 1000)
         // 카메라 위치 조정 ( 작을수록 가까워짐 )
-        camera.position.set(modelCamera,0,10);
+        camera.position.set(modelCamera,1,3);
         scene.add(camera)
-		// Update sizes
+
+        
+            // Update sizes
             sizes.width = 200
             sizes.height = 200
 
@@ -62,7 +65,6 @@
         }
 
         // Material
-        // const material = new THREE.MeshLambertMaterial({ color: 0xffffff })
 
         // Lighting
         const lightAmbient = new THREE.AmbientLight(0x9eaeff,0.8)
@@ -94,8 +96,6 @@
                 this.group.position.x = this.params.x
                 this.group.position.y = this.params.y
                 this.group.position.z = this.params.z
-                // this.group.rotation.y = this.params.ry
-                // this.group.scale.set(5, 5, 5)
                 
                 // Material
                 // 색을 바꿀 수 있는 변수
@@ -106,9 +106,7 @@
                 // 색깔 `hsl(290, 85%, 50%)`
                 // 투명도 0x00ff00, transparent: true, opacity: 0
                 this.headMaterial = new THREE.MeshLambertMaterial({ color: armColor }) // 팔 색
-                // this.bodyMaterial = new THREE.MeshLambertMaterial({ color: `hsl(290, 85%, 50%)` })
                 this.bodyMaterial = new THREE.MeshLambertMaterial({ color: headColor}) // 얼굴 색
-                // 
                 this.arms = []
             }
    
@@ -221,30 +219,7 @@
 
                     // Push to the array
                     this.arms.push(armGroup)
-                    if(i === 1){
-                    	let loader = new GLTFLoader();
-						loader.load(modelPath, function(gltf){
-						const model = gltf.scene; // 로드한 glTF 모델
-					
-						if(modelColor != null){
-							model.traverse(function(child) {
-        						if (child.isMesh) {
-            					const material = child.material;
-            					material.color.set(modelColor); // 색상 변경
-            					material.needsUpdate = true; // 변경 사항 업데이트
-        					}
-    					});
-					}
-   						model.scale.set(modelScale_x, modelScale_y, modelScale_z); // x, y, z 크기 조절
-	    				model.position.set(modelPosition_x, modelPosition_y, modelPosition_z); // x = 좌우, y = 위아래, z = 앞뒤 이동
-						model.rotation.set(modelRotation_x, modelRotation_y, modelRotation_z);
-				    	if(modelMotion == 0){
-				    		scene.add(model);
-						}else{
-							arm.add(model);
-						}
-						});
-                	} // for end
+                    
                 }
 					
             }
@@ -318,72 +293,7 @@
                 legs.position.y = -1.15             
 
             }
-                    // createStar() {
-                    // // 별을 구성하는 점들의 형상을 정의합니다.
-                    // const starShape = new THREE.Shape().fromPoints(this.getStarShape());
 
-                    // // 별을 구성하는 점들의 소재를 생성합니다.
-                    // const starMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 }); // 별의 색상을 설정합니다.
-
-                    // // 별의 굵기를 조정합니다.
-                    // const depth = -1; // 굵기 조절을 위한 깊이 값
-
-                    // // 별을 생성하기 위해 형상을 입체로 변환합니다.
-                    // const extrudeSettings = { depth: depth, bevelEnabled: true };
-                    // const starGeometry = new THREE.ExtrudeBufferGeometry(starShape, extrudeSettings);
-
-                    // // 별을 생성합니다.
-                    // const star = new THREE.Mesh(starGeometry, starMaterial);
-
-                    //   // 별의 크기를 조정합니다.
-                    // const scale = 0.2; // 크기 조절을 위한 스케일 값
-                    // star.scale.set(scale, scale, scale);
-
-                    // // 별을 기울입니다.        
-                    // const rotationX = 2; // X 축 회전값 (라디안)
-                    // const rotationY = 0; // Y 축 회전값 (라디안)
-                    // const rotationZ = 0; // Z 축 회전값 (라디안)
-                    // star.rotation.set(rotationX, rotationY, rotationZ);
-
-                    // // 별을 원하는 위치로 이동시킬 수 있습니다.
-                    // const x = 0; // x 좌표
-                    // const y = -2.5; // y 좌표
-                    // const z = -1; // z 좌표
-                    // star.position.set(x, y, z);
-
-                    // // 별을 3D 공간에 추가합니다.
-                    // scene.add(star);
-                    // }
-
-                    // getStarShape() {
-                    // const shape = new THREE.Shape();
-                    // const x = 0, y = 0;
-                    // const radius = 10;
-                    // const innerRadius = 2;
-                    // const spikes = 5;
-
-                    // const step = Math.PI / spikes;
-
-                    // let rot = -Math.PI / 2;
-                    // let xCoord, yCoord;
-
-                    // shape.moveTo(x + radius * Math.cos(rot), y + radius * Math.sin(rot));
-
-                    // for (let i = 0; i < spikes; i++) {
-                    //     xCoord = x + radius * Math.cos(rot);
-                    //     yCoord = y + radius * Math.sin(rot);
-                    //     shape.lineTo(xCoord, yCoord);
-                    //     rot += step;
-
-                    //     xCoord = x + innerRadius * Math.cos(rot);
-                    //     yCoord = y + innerRadius * Math.sin(rot);
-                    //     shape.lineTo(xCoord, yCoord);
-                    //     rot += step;
-                    // }
-
-                    // shape.closePath();
-                    // return shape.getPoints();
-                    // }
             bounce() {
                 this.group.rotation.y = this.params.ry
                 this.group.position.y = this.params.y
@@ -407,13 +317,6 @@
         gsap.set(figure.params, {
             // y: -1.5
         })
-
-        // 몸 회전
-        // gsap.to(figure.params, {
-        //     ry: degreesToRadians(360),
-        //     repeat: -1,
-        //     duration: 20
-        // })
 
         // 팔회전
         gsap.to(figure.params, {

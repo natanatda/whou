@@ -159,7 +159,7 @@
 	
 	function checkReadStatus(){
 		if(read){ // 읽기 버튼을 눌렀을때 텍스트에 마우스 갖다대면 tts함수 실행
-			$(document).on('mouseenter', '.user, .bot', readBot);
+			$(document).on('mouseenter', 'p', readBot);
 		}	
 	}
 
