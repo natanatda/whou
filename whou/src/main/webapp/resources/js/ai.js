@@ -1,24 +1,54 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<meta name="description" content="" />
-	<meta name="author" content="" />
-	<title>whou</title>
-	<!-- Favicon-->
-	<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-	<!-- Bootstrap icons-->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
-	<!-- Core theme CSS (includes Bootstrap)-->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-	<link rel="stylesheet" href="/whou/resources/css/style.css">
-	<script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
-<script>
-	$(function(){
+
+// top-ai.js
+document.addEventListener('DOMContentLoaded', function() {
+ 
+ // ai띄우기
+  var topAiElement = document.createElement('div');
+  topAiElement.className = 'top-ai';
+  
+  topAiElement.innerHTML = `
+	  <div class="ai-text">후니에게 이용 방법을 문의하세요!</div>
+	  <div class="img-box">
+	  	<i class="fa-solid fa-robot fa-xl" style="color: #743cb9;"></i>
+	  </div>
+  `;
+  
+  document.body.appendChild(topAiElement);
+  var isChatBoxOpen = false;
+   topAiElement.addEventListener('click', function() {
+      if (!isChatBoxOpen) { // 채팅 상자가 닫혀있으면 열도록 합니다.
+    isChatBoxOpen = true;
+
+    // AJAX 요청 보내기
+    fetch('/whou/assistant/ai') // 채팅창 내용이 있는 JSP 파일 경로
+      .then(function(response) {
+        return response.text(); // 응답 데이터를 텍스트로 변환
+      })
+      .then(function(data) {
+        // AJAX 응답 처리 - 채팅창 표시할 영역에 내용 삽입
+        var chatBoxContainer = document.querySelector('.chat-box-container');
+        chatBoxContainer.innerHTML = data;
+        chatBoxContainer.style.display = 'block';
+      })
+      .catch(function(error) {
+        console.error('AJAX request failed: ', error);
+      });
+  } else { // 채팅 상자가 열려있으면 닫도록 합니다.
+    isChatBoxOpen = false;
+
+    // 채팅창 닫기
+    var chatBoxContainer = document.querySelector('.chat-box-container');
+    chatBoxContainer.innerHTML = '';
+    chatBoxContainer.style.display = 'none';
+  }
+  });
+});
+
+
+
 		var chat = "";
 		function appendChat(user, bot) { // 채팅 내용 출력하는 함수
-			chat += '<p class="chat user" id="user">유저: ' + user + '<p/>' + '<p class="chat bot" id="bot">챗봇: ' + bot + '<p/>'; 
+			chat += '<p class="chat user" id="user">' + user + '<p/>' + '<p class="chat bot" id="bot">' + bot + '<p/>'; 
 			$(".editable").html(chat);
 			scrollToBottom(); 
 		}
@@ -83,8 +113,7 @@
 	
 		$(document).on('click', '.mainbtn, .otherBtn', handleButtonClick); // 해당 클래스 버튼 클릭했을 때 함수 호출
 		$(document).on('click', '#back', handleBackButtonClick); // 해당 id 버튼 클릭했을 때 함수 호출
-	});
-	
+
 	
 	var audioFile = new Audio();
 	function readBot(){
@@ -162,27 +191,5 @@
 			$(document).on('mouseenter', 'p', readBot);
 		}	
 	}
-
-</script>
-<html>
-	<head>
-	 
-	</head>
-	<body>
-		<div class="chat-box">
-			<div class="editable" id="editable" contenteditable="false">
-				<p class="chat"> 문의하실 내용을 선택해주세요. </p>
-			</div>
-			<div class="chat-btn-wrap">
-				<div id="btnContain">
-					<c:forEach items="${list}" var="ailist">
-						<input type="button" class="btn btn-light mainbtn" value="${ailist.qes}"/>
-					</c:forEach>
-				</div>
-				<div id="readArea" >
-					<button class="btn btn-light" id="readbtn">읽기</button>
-				</div>
-			</div>
-		</div>
-	</body>
-</html>
+	
+	
