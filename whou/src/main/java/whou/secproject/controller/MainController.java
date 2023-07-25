@@ -18,15 +18,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import whou.secproject.component.AptitudeTestValueDTO;
 import whou.secproject.service.AptitudeService;
 import whou.secproject.service.MemberService;
+import whou.secproject.service.WhouModelCustomService;
 
 @Controller
 public class MainController {
 
 	@Autowired
 	private AptitudeService service;
-
+	
+	@Autowired
+	private WhouModelCustomService whouModelCustomService;
+	
 	@RequestMapping("/main")
-	public String main() {
+	public String main(Model model, HttpSession session) {
+		String email = (String)session.getAttribute("memId");
+		if(email != null) {
+			model.addAttribute("model", whouModelCustomService.customModel(email));
+		}
 	    return "/main"; 
 	}
 	

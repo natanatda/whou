@@ -15,7 +15,39 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
         <link rel="stylesheet" href="/whou/resources/css/style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+		<script src="resources/js/unpkg.com_gsap@3.12.1_dist_gsap.min.js"></script>
+		<script src="resources/js/ThreeCSG.js"></script>
+		<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+        <script type="module" src="resources/js/whouModel2.js?ver=3"></script>
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
+        <script>
+        	var modelCamera = 0;
+        	var modelPath= '';
+        	if('${model.headColor}' === ''){
+        		var headColor = '#FF0080';
+        	}else{
+        		headColor = '${model.headColor}';
+        	}
+        	if('${model.armColor}' === ''){
+        		var armColor = '#FF0080';
+        	}else{
+        		armColor = '${model.armColor}';
+        	}
+        	if('${model.cheekColor}' === ''){
+        		var cheekColor = '#FF0080';
+        	}else{
+        		cheekColor = '${model.cheekColor}';
+        	}
+        	if('${model.legColor}' === ''){
+        		var legColor = '#FF0080';
+        	}else{
+        		legColor = '${model.legColor}';
+        	}
+        </script>
+
+        
     </head>
  
     <body>
@@ -35,9 +67,11 @@
 	                            </div>
                             </form>
                             <div class="d-grid gap-3 d-sm-flex justify-content-sm-start mt-5">
-                              <div class="row">
-                                <div class="col main-ai-wrap">
-                                    <div class="main-ai">비서</div>
+                              <div class="row" >
+                                <div class="col main-ai-wrap" style="position: relative;">
+                                    <div class="main-ai" style="width: 120px;">
+                                 	   <canvas class="webgl" style="position: absolute; top: -55px; left: 0;" ></canvas> <%-- ai --%>
+                                    </div>
                                     <div class="icon-box">
                                         <span class="icon-box-ic">아이콘</span>
                                     </div>
