@@ -454,6 +454,11 @@ public class MemberController {
         // 마이페이지 top 검색
         RecommandInfoDTO aptitudeRank = service.getAptitudeRank(userNum);
         
+        
+        //회원정보 가져오기
+        MemberDTO mem = service.getUser(userNum);
+       
+        
         model.addAttribute("aptitudeRank", aptitudeRank);
         model.addAttribute("firstThree", firstThree);
         model.addAttribute("lastSix", lastSix);
@@ -461,6 +466,7 @@ public class MemberController {
 		model.addAttribute("aptitudeScoreArr", scoresA);
 		model.addAttribute("aptitudeNameArr", scoresName);
 		model.addAttribute("valuesScoreArr", scoresV);
+		model.addAttribute("mem", mem);
 		return "/user/mypage";
 	}
   	

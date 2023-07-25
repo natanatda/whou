@@ -48,7 +48,13 @@ public class MemberServiceImpl implements MemberService {
    @Override
    public RecommandInfoDTO getAptitudeRank(int userNum) {
        return mapper.getAptitudeRank(userNum);
-    }
+   }
+   
+   //마이페이지 회원정보 가져오기
+   @Override
+   public MemberDTO getUser(int userNum) {
+	   return mapper.getUser(userNum);
+   }
    
    //가입했는지 확인
    @Override

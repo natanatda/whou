@@ -59,4 +59,8 @@
 		select * from recommand_info where num = ${userNum}
 	</select>
 	
+	<select id="getUser" resultType="whou.secproject.component.MemberDTO">
+		select * from whou_user where num = ${userNum}
+	</select>
+	
 </mapper>

@@ -27,5 +27,6 @@ public interface MemberService {
 	
 	// 마이페이지
 	public RecommandInfoDTO getAptitudeRank(int userNum);
+	public MemberDTO getUser(int userNum);
 }
 

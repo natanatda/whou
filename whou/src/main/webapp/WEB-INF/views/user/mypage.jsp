@@ -79,7 +79,7 @@
 	                                <canvas id="abilityChart2"></canvas>
 	                            </div>
                             </div>
-                            <div class="tab-pane fade" id="nav-addInfo" role="tabpanel" aria-labelledby="nav-add-tab" tabindex="0">
+                     <div class="tab-pane fade" id="nav-addInfo" role="tabpanel" aria-labelledby="nav-add-tab" tabindex="0">
                         <form action="/whou/member/updateInfo" method="post">
                              <div>
                                     <div class="add-wrap">
@@ -124,45 +124,100 @@
                                 </div>   
                         </form>                        
                      </div>
+                     
                      <div class="tab-pane fade" id="nav-modifyInfo" role="tabpanel" aria-labelledby="nav-modify-tab" tabindex="0">
                      	개인정보
+                     	<div class="join-container">
+					        <div class="join-wrap">
+					          <div class="input-group">
+					            <form name="joinForm" method="post">
+					              	<div class="input-item">
+						              <label for="joinInput" class="form-label">이메일</label>
+						              <input type="hidden" class="form-control" name = "email" id="email" value="${mem.email}">
+						              <p>${mem.email}</p>
+						            </div>
+						            <div class="input-item">
+						              <label for="joinInput" class="form-label">가입 유형</label>
+						              <input type="hidden" class="form-control" name = "join_type" id="join_type" value="${mem.join_type}">
+						              <p>${mem.join_type}</p>
+						            </div>
+						            
+						            <div class="input-item">
+						              <label for="joinInput" class="form-label">이름</label>
+						              <input type="text" class="form-control" name = "name" id="name" value="${mem.name}">
+						            </div>
+						            <div class="input-item">
+						              <label for="joinInput" class="form-label">연도</label>
+						              <input type="text" class="form-control" name = "birth_year" id="birth_year" value="${mem.birth_year}">
+						            </div>
+						            <div class="input-item">
+						              <label for="joinInput" class="form-label">휴대폰</label>
+						              <div class="input-box">
+							              <input type="text" class="form-control" id="tel" name = "tel" value="${mem.tel}">
+							              <button type="button" class="purple-btn" name="phoneChk" id="phoneChk">인증 요청</button>
+						              </div>
+						              <div class="input-box">
+							              <input type="text" style="display:none;" class="form-control" id="tel2" name = "tel2" placeholder="인증번호 입력">
+							              <button type="button" style="display:none;" class="purple-btn" name="phoneChk2" id="phoneChk2">인증 확인</button>
+									  </div>
+						            </div>
+									<div class="input-item">
+						            	<c:if test="${mem.join_type == 'whoU'}">
+							              	<label for="joinInput" class="form-label">비밀번호</label>
+							              	<input type="password" class="form-control" name = "pw" id="pw" placeholder="4자리 이상">
+						            	</c:if>
+						            </div>
+						            <div class="input-item">
+						            	<c:if test="${mem.join_type == 'whoU'}">
+							              	<label for="joinInput" class="form-label">비밀번호 확인</label>
+							              	<input type="password" class="form-control" name = "pw" id="pw2" placeholder="4자리 이상" required oninput = "checkPw2()">
+							              	<span class="pw_ok" style="color:green; display:none;">비밀번호가 일치합니다.</span>
+							              	<span class="pw_x" style="color:red; display:none;">비밀번호가 일치하지 않습니다.</span>
+						            	</c:if>
+						            </div>
+						            <div class="input-wrap">
+						            	<button type="button" class="purple-btn btn-xs" id="btn1" onclick="checkAgreement()">회원가입</button>
+						          	</div>
+					          	</form>
+					          </div>
+					        </div>
+					      </div>
                      </div>
-                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-								<div class="book-wrap">
-			                        <div class="card mb-5 mb-xl-0">
-			                            <div class="result-cont">
-			                                <h4>직업이름 <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
-			                                <p>직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명</p>
-			                            </div>
-			                        </div>
-			                         <div class="card mb-5 mb-xl-0">
-			                            <div class="result-cont">
-			                                <h4>직업이름 <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
-			                                <p>산업카운슬러는 기업의 환경에 따라 직원들의 정신적 문제를 파악하고 정신건강을 위한 전문적인 도움을 받을 수 있도록 상담하는 일을 합니다.</p>
-			                            </div>
-			                        </div>
-			                         <div class="card mb-5 mb-xl-0">
-			                            <div class="result-cont">
-			                                <h4>직업이름 <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
-			                                <p>직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명</p>
-			                            </div>
-			                        </div>
-			                         <div class="card mb-5 mb-xl-0">
-			                            <div class="result-cont">
-			                                <h4>직업이름 <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
-			                                <p>직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명</p>
-			                            </div>
-			                        </div>
-			                             <div class="card mb-5 mb-xl-0">
-			                            <div class="result-cont">
-			                                <h4>직업이름 <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
-			                                <p>직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명</p>
-			                            </div>
-			                        </div>
-				              
-				                   
-								</div>
-							</div>
+                     
+                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+						<div class="book-wrap">
+		                    <div class="card mb-5 mb-xl-0">
+		                        <div class="result-cont">
+		                            <h4>직업이름 <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
+		                            <p>직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명</p>
+		                        </div>
+		                    </div>
+		                    <div class="card mb-5 mb-xl-0">
+		                        <div class="result-cont">
+		                            <h4>직업이름 <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
+		                            <p>산업카운슬러는 기업의 환경에 따라 직원들의 정신적 문제를 파악하고 정신건강을 위한 전문적인 도움을 받을 수 있도록 상담하는 일을 합니다.</p>
+		                        </div>
+		                    </div>
+		                    <div class="card mb-5 mb-xl-0">
+		                        <div class="result-cont">
+		                            <h4>직업이름 <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
+		                            <p>직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명</p>
+		                        </div>
+		                    </div>
+		                    <div class="card mb-5 mb-xl-0">
+		                        <div class="result-cont">
+		                            <h4>직업이름 <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
+		                            <p>직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명</p>
+		                        </div>
+		                    </div>
+		                    <div class="card mb-5 mb-xl-0">
+		                        <div class="result-cont">
+		                            <h4>직업이름 <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
+		                            <p>직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명직업설명</p>
+		                        </div>
+			                </div>
+						</div>
+					</div>
                             
                           </div>
                     </div>
@@ -332,89 +387,138 @@
            })
          })
   
-         // 추가 정보 입력
-            function checkCerti(inputElement) {
-               var certi = $(inputElement).val();
-               var qualificationList = $(inputElement).siblings(".qualificationList");
-               $.ajax({
-                   url: "/whou/member/getCerti",
-                   data: { certi: certi },
-                   success: function (result) {
-                       qualificationList.empty();
-                       qualificationList.hide();
-                       if(certi.length > 0){
-                          if(result && result.length > 0){
-                              for (var i = 0; i < result.length; i++) {
-                                  var qualification = result[i];
-                                  var button = $("<button>").text(qualification);
-                               
-                                  button.on("click", function () {
-                                     event.preventDefault();
-                                      var selectedQualification = $(this).text();
-                                      $(inputElement).val(selectedQualification);
-                                      qualificationList.hide();
-                                  });
-                                  qualificationList.append($("<li>").append(button));
-                              }
-                           }else{
-                               var message = "' " + certi + " '을(를) 찾을 수 없습니다.";
-                               var messageElement = $("<li>").text(message);
-                               messageElement.on("click", function () {
-                                   // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
-                                   $(inputElement).val("");
-                                   qualificationList.hide();
-                               });
-                               qualificationList.append(messageElement);
-                           }    
-
-                           qualificationList.show();
-                       }
-                   }
-               });
-           }
-           
-           function checkMajor(inputElement) {
-               var major = $(inputElement).val();
-               var univSe = $("#depart").val();
-               //var univSe2 = $("#depart2").val();
-               var majorList = $(inputElement).next(".majorList");
-
-               $.ajax({
-                   url: "/whou/member/getMajor",
-                   data: { major: major, univSe:univSe},
-                   success: function (result) {
-                      majorList.empty();
-                      majorList.hide();
-                      
-                      if(major.length > 0){
-                         if(result && result.length > 0){
-                             for (var i = 0; i < result.length; i++) {
-                                 var major2 = result[i];
-                                 var button = $("<button>").text(major2);
-                                 button.on("click", function () {
-                                    event.preventDefault();
-                                     var selectedMajor = $(this).text();
-                                     $(inputElement).val(selectedMajor);
-                                     majorList.hide();
-                                 });
-                                 majorList.append($("<li>").append(button));
-                             }
+        // 추가 정보 입력
+       	function checkCerti(inputElement) {
+             var certi = $(inputElement).val();
+             var qualificationList = $(inputElement).siblings(".qualificationList");
+             
+             $.ajax({
+                 url: "/whou/member/getCerti",
+                 data: { certi: certi },
+                 success: function (result) {
+                     qualificationList.empty();
+                     qualificationList.hide();
+                     if(certi.length > 0){
+                        if(result && result.length > 0){
+                            for (var i = 0; i < result.length; i++) {
+                                var qualification = result[i];
+                                var button = $("<button>").text(qualification);
+                             
+                                button.on("click", function () {
+                                   event.preventDefault();
+                                    var selectedQualification = $(this).text();
+                                    $(inputElement).val(selectedQualification);
+                                    qualificationList.hide();
+                                });
+                                qualificationList.append($("<li>").append(button));
+                            }
                          }else{
-                             var message = "' " + major + " '을(를) 찾을 수 없습니다.";
+                             var message = "' " + certi + " '을(를) 찾을 수 없습니다.";
                              var messageElement = $("<li>").text(message);
                              messageElement.on("click", function () {
                                  // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
                                  $(inputElement).val("");
-                                 majorList.hide();
+                                 qualificationList.hide();
                              });
-                             majorList.append(messageElement);
-                         }
-                         
-                         majorList.show();
-                      }
-                   }
-               });
-           }
+                             qualificationList.append(messageElement);
+                         }    
+
+                         qualificationList.show();
+                     }
+                 }
+             });
+             
+         }
+            $(document).on("click", function(event) {
+                var clickedElement = event.target;
+                var qualificationLists = $(".qualificationList");
+                var isQualificationListVisible = qualificationLists.is(":visible");
+
+                // qualificationList가 보일 때만 작동
+                if (isQualificationListVisible) {
+			        // 클릭된 요소가 majorList 또는 majorList 하위 요소인 경우 아무 동작 없이 리턴
+			        if ($(clickedElement).closest(".qualificationList").length) {
+			            return;
+			        }
+			
+			        // 인풋 요소들의 값을 비웁니다. 단, majorList 보이고 있던 인풋창만 비우고 나머지는 그대로 유지
+			        $("input[name='certi']").each(function() {
+			            if ($(this).siblings(".qualificationList").is(":visible")) {
+			                $(this).val("");
+			            }
+			        });
+			
+			        // majorList를 숨깁니다.
+			        qualificationLists.empty().hide();
+			    }
+            });
+
+         function checkMajor(inputElement) {
+             var major = $(inputElement).val();
+             var univSe = $("#depart").val();
+             //var univSe2 = $("#depart2").val();
+             var majorList = $(inputElement).next(".majorList");
+
+             $.ajax({
+                 url: "/whou/member/getMajor",
+                 data: { major: major, univSe:univSe},
+                 success: function (result) {
+                    majorList.empty();
+                    majorList.hide();
+                    
+                    if(major.length > 0){
+                       if(result && result.length > 0){
+                           for (var i = 0; i < result.length; i++) {
+                               var major2 = result[i];
+                               var button = $("<button>").text(major2);
+                               button.on("click", function () {
+                                  event.preventDefault();
+                                   var selectedMajor = $(this).text();
+                                   $(inputElement).val(selectedMajor);
+                                   majorList.hide();
+                               });
+                               majorList.append($("<li>").append(button));
+                           }
+                       }else{
+                           var message = "' " + major + " '을(를) 찾을 수 없습니다.";
+                           var messageElement = $("<li>").text(message);
+                           messageElement.on("click", function () {
+                               // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
+                               $(inputElement).val("");
+                               majorList.hide();
+                           });
+                           majorList.append(messageElement);
+                       }
+                       
+                       majorList.show();
+                    }
+                 }
+             });
+         }
+         $(document).on("click", function(event) {
+        	    var clickedElement = event.target;
+        	    var majorLists = $(".majorList");
+        	    var isMajorListVisible = majorLists.is(":visible");
+
+        	    // majorList가 보일 때만 작동
+        	    if (isMajorListVisible) {
+			        // 클릭된 요소가 majorList 또는 majorList 하위 요소인 경우 아무 동작 없이 리턴
+			        if ($(clickedElement).closest(".majorList").length) {
+			            return;
+			        }
+			
+			        // 인풋 요소들의 값을 비웁니다. 단, majorList 보이고 있던 인풋창만 비우고 나머지는 그대로 유지
+			        $("input[name='major']").each(function() {
+			            if ($(this).siblings(".majorList").is(":visible")) {
+			                $(this).val("");
+			            }
+			        });
+			
+			        // majorList를 숨깁니다.
+			        majorLists.empty().hide();
+			    }
+        	});
+
 
         function addQualification() {
             var newDiv = $("<div>").addClass("input-wrap");
