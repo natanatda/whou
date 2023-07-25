@@ -13,13 +13,12 @@ public class MainServiceImpl implements MainService {
 	@Autowired
 	private MainMapper mapper;
 
-	
-	
-	// 마이페이지 rank 검색
-//	@Override
-//	public RecommandInfoDTO getAptitudeRank(int userNum) {
-//		
-//	}
+	// icon 가져오기
+	@Override
+	public String selectIcon(int code) {
+		return mapper.selectIcon(code);
+	}
+
 
 	
 }

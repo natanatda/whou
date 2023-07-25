@@ -23,7 +23,10 @@ public class MainController {
 	private MainService service;
 
 	@RequestMapping("/main")
-	public String main() {
+	public String main(Model model) {
+		int code = 165;
+		String icon = service.selectIcon(code);
+		model.addAttribute("icon", icon);
 	    return "/main"; 
 	}
 	
