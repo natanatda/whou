@@ -36,7 +36,6 @@ import whou.secproject.component.EducationHrdParamDTO;
 import whou.secproject.component.EducationHrdResponseDTO;
 import whou.secproject.component.EducationMajorResponseDTO;
 
-@Component
 public class EducationApiDAO {
 	
 	@Value("${api.key}")

@@ -21,11 +21,8 @@ import whou.secproject.repository.EducationApiDAO;
 @RequestMapping("/education")
 public class EducationController {
 	
-	private final EducationApiDAO dao;
 	@Autowired
-	public EducationController(EducationApiDAO dao) {
-        this.dao = dao;
-    }
+	private EducationApiDAO dao;
 	
 	@RequestMapping("/majorList")
 	public String majorList(Model model, HttpServletRequest request, Integer univCount, 

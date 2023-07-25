@@ -13,9 +13,14 @@
 	<beans:bean id="JobInfoApiDAO" class="whou.secproject.repository.JobInfoApiDAO"/>
 	<beans:bean id="JobDicApiDAO" class="whou.secproject.repository.JobDicApiDAO"/>
 	<beans:bean id="RecommendDAO" class="whou.secproject.repository.RecommendDAO"/>
-	
-	<beans:bean id="apiKey" class="java.lang.String">
-		<beans:constructor-arg value="c5d2abc17ab413db9d836aa7fcd81714"/>
+	<!-- career net key -->
+   <beans:bean id="apiKey" class="java.lang.String">
+      <beans:constructor-arg value="c5d2abc17ab413db9d836aa7fcd81714"/>
+   </beans:bean>
+   
+   <!-- hrd net key -->
+   <beans:bean id="authKey" class="java.lang.String">
+      <beans:constructor-arg value="El44cyw7dt52nUjXcWl902ZjSGy4AQGc"/>
 	</beans:bean>
 </beans:beans>
 
