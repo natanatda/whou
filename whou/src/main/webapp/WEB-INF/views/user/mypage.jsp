@@ -175,8 +175,13 @@
         <script>
          
          // 적성 차트
-         var aptitudeScoreArr = ${aptitudeScoreArr};
-         aptitudeNameArr = ${aptitudeNameArr};
+         	let aptitudeScoreArr = 0;
+         	let aptitudeNameArr = ["음악능력","수리·논리력","창의력","자연친화력","예술시각능력","공간지각력","대인관계능력","손재능","언어능력","자기성찰능력","신체·운동능력"];
+        	if (typeof aptitudeScoreArr !== 'undefined' && aptitudeScoreArr !== null && aptitudeScoreArr !== '') {
+        		aptitudeScoreArr = ${aptitudeScoreArr};
+        		aptitudeNameArr =${aptitudeNameArr};
+			}
+        	
             const ctx21 = document.getElementById('aptitudeChart');
               var myChart21 = new Chart(ctx21, {
                    type: 'radar',
@@ -205,7 +210,11 @@
                    });
               
               // 흥미차트 
-              var interestScoreArr = ${interestScoreArr};
+	           let  interestScoreArr = 0;
+				if (typeof interestScoreArr !== 'undefined' && interestScoreArr !== null && interestScoreArr !== '') {
+					interestScoreArr = ${interestScoreArr};
+				} 
+             
             const ctx31 = document.getElementById('interestChart');
               var myChart31 = new Chart(ctx31, {
                    type: 'radar',
@@ -234,7 +243,11 @@
                    });
               
            // 가치관 
-              var valuesScoreArr = ${valuesScoreArr};
+           let valuesScoreArr=0;
+			if (typeof valuesScoreArr !== 'undefined' && valuesScoreArr !== null && valuesScoreArr !== '') {
+				valuesScoreArr = ${valuesScoreArr};
+			}
+          
             const ctx25 = document.getElementById('valuesChart');
               var myChart25 = new Chart(ctx25, {
                    type: 'radar',
@@ -262,8 +275,13 @@
                    }
                    });
            // 역량 
-             var abilityScoreArr1 = [${firstThree}];
-             var abilityScoreArr2 = [${lastSix}];
+             let abilityScoreArr1=0;
+             let abilityScoreArr2=0;
+			if (typeof abilityScoreArr1 !== 'undefined' && abilityScoreArr1 !== null && abilityScoreArr1 !== '') {
+				abilityScoreArr1 = [${firstThree}];
+				abilityScoreArr2 = [${lastSix}];
+			}
+            
             const ctx271 = document.getElementById('abilityChart1');
               var myChart271 = new Chart(ctx271, {
                    type: 'radar',
