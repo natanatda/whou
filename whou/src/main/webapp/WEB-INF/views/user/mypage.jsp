@@ -124,9 +124,9 @@
                                 </div>   
                         </form>                        
                      </div>
-                     <div class="tab-pane fade" id="nav-modifyInfo" role="tabpanel" aria-labelledby="nav-modify-tab" tabindex="0">
-                     	개인정보
-                     </div>
+		                     <div class="tab-pane fade" id="nav-modifyInfo" role="tabpanel" aria-labelledby="nav-modify-tab" tabindex="0">
+		                     	개인정보
+		                     </div>
                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
 								<div class="book-wrap">
 			                        <div class="card mb-5 mb-xl-0">

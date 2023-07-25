@@ -208,13 +208,15 @@ public class JobController {
        }
 
       String temp = mapperMem.getBook(memId);
-		String[] arr = temp.split(",");
-		boolean contain = false;
-		for (String str : arr) {
-			if (str.equals(strSeq)) {
-				contain = true;
-			}
-		}
+      boolean contain = false;
+      if(temp!=null) {
+    	  String [] arr = temp.split(",");
+    	  for (String str : arr) {
+    		  if (str.equals(strSeq)) {
+    			  contain = true;
+    		  }
+    	  }
+      }
        
        model.addAttribute("contain", contain);
        model.addAttribute("jobDetail", jobDetail);

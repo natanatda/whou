@@ -7,8 +7,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,17 +51,16 @@ public class MemberServiceImpl implements MemberService {
 			temp = "";
 		}
 		
-		String books;
+		String books="";
 
 		if (contain) {
-			String[] arr = temp.split(",");
-			String[] arr2 = new String [arr.length-1];
-			for (int i =0 ; i < arr.length; i++) {
-				int count = 0;
-				if (arr[i].equals(job_cd)) count++;
-				if(i-count>-1)arr2[i-count] = arr[i];
+			ArrayList<String> list = new ArrayList<String>();
+			StringTokenizer st = new StringTokenizer(temp, ",");
+			while(st.hasMoreTokens()) {
+				String token = st.nextToken();
+				if(!token.equals(job_cd)) list.add(token);
 			}
-			books = String.join(",", arr2)+",";
+			for(String s : list) books+= s+",";
 		} else {
 			books = temp + job_cd + ",";
 		}
