@@ -148,7 +148,7 @@
                 <div class="row gx-5 gy-5 justify-content-center">
                   	<c:forEach var="job" items="${jobs}">
                     <div class="col-lg-6 col-xl-4">
-                        <div class="card mb-5 mb-xl-0">
+                        <div class="card mb-5 mb-xl-0" onclick="location='/whou/job/info?job_cd=${job.job_cd}'">
                             <div class="result-img">img</div>
                             <div class="result-cont">
                                 <h4>${job.job_nm } <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>

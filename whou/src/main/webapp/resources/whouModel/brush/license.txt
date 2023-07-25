@@ -1,0 +1,11 @@
+Model Information:
+* title:	Brush
+* source:	https://sketchfab.com/3d-models/brush-53a3641006ac48cdb883467c54b9cb95
+* author:	Mikhail Antonov (https://sketchfab.com/xeofox)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Brush" (https://sketchfab.com/3d-models/brush-53a3641006ac48cdb883467c54b9cb95) by Mikhail Antonov (https://sketchfab.com/xeofox) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

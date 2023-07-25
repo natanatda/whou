@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+<mapper namespace="whou.secproject.mapper.WhouModelCustomMapper">
+	
+	<select id="customModel" resultType="whou.secproject.component.WhouModelCustomDTO">
+		select * from whou_model_custom where email=#{email}
+	</select>
+	
+	<select id="customCount" resultType="int">
+		select count(*) from whou_model_custom where email=#{email}
+	</select>
+	<insert id="customInsert">
+		insert into whou_model_custom values(#{email},#{headColor},#{armColor},#{cheekColor},#{legColor},0)
+	</insert>
+	
+	<update id="customUpdate">
+		update whou_model_custom
+		<set>
+			<if test="headColor != null">headColor=#{headColor},</if>
+			<if test="armColor != null">armColor=#{armColor},</if>
+			<if test="cheekColor != null">cheekColor=#{cheekColor},</if>
+			<if test="legColor != null">legColor=#{legColor}</if>
+		</set>
+		where email=#{email}
+	</update>
+	
+	<delete id="customDelete">
+		delete from whou_model_custom where email=#{email}
+	</delete>
+	
+	
+</mapper>

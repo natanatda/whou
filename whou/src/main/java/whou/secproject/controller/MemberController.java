@@ -60,6 +60,22 @@ public class MemberController {
 	@Autowired
 	private JobDicApiDAO dao;
 	
+	
+	// 북마크
+	@RequestMapping("/bookmark")
+	public String bookmark(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String memId = (String)session.getAttribute("memId");
+		String job_cd = request.getParameter("job_cd");
+		int num = Integer.parseInt(request.getParameter("contain"));
+		boolean contain = false;
+		if(num == 1) {
+			contain = true;
+		}		
+		service.updateBook(job_cd, memId, contain);
+        return "redirect:/job/info?job_cd=" + job_cd;
+	}
+	
 	//회원가입 폼
 	@RequestMapping("/joinForm")
 	public String  joinForm() {
@@ -97,6 +113,7 @@ public class MemberController {
 		return "/main";
 	}
 	
+	
 	//로그아웃
   	@RequestMapping("/logout")
   	public String logout(HttpSession session, HttpServletRequest request, Model model ) {
@@ -122,7 +139,7 @@ public class MemberController {
   		}
   		if(email == null) { //가입한적 없음
   	  		return "0";
-  		}else if(email != null && type != null) { //소셜가입
+  		}else if(email != null && !type.equals("whoU")) { //소셜가입
   			return "1";
   		}else{ //자체가입함
   	  		return email;
@@ -383,6 +400,7 @@ public class MemberController {
         return result;
     }
   	
+  	//마이페이지
   	@RequestMapping("/mypage")
     public String mypage(Model model, HttpServletRequest request){
   		HttpSession session = request.getSession();
@@ -394,73 +412,95 @@ public class MemberController {
 		System.out.println("userNum왜안댐? "+userNum);
 		// 적성 차트 점수
 		String scoreA = serviceAt.getAptitudeScore(userNum);
-		String [] scoreArr= scoreA.split("\\+");
-		ObjectMapper objectMapper = new ObjectMapper();
-        String scoresA = null;
-		try {
-			scoresA = objectMapper.writeValueAsString(scoreArr);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	
+		if(scoreA != null) {			
+			String [] scoreArr= scoreA.split("\\+");
+			ObjectMapper objectMapper = new ObjectMapper();
+			String scoresA = null;
+			try {
+				scoresA = objectMapper.writeValueAsString(scoreArr);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			model.addAttribute("aptitudeScoreArr", scoresA);
+		}else {
+			model.addAttribute("aptitudeScoreArr", 0);
 		}
 		
 		// 적성 차트 이름
 		String scoreName = serviceAt.getAptitudeScoreName(userNum);
-		String [] scoreNameArr= scoreName.split("\\+");
-		ObjectMapper objectMapperName = new ObjectMapper();
-		String scoresName = null;
-		try {
-			scoresName = objectMapperName.writeValueAsString(scoreNameArr);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(scoreName != null) {
+			String [] scoreNameArr= scoreName.split("\\+");
+			ObjectMapper objectMapperName = new ObjectMapper();
+			String scoresName = null;
+			try {
+				scoresName = objectMapperName.writeValueAsString(scoreNameArr);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			model.addAttribute("aptitudeNameArr", scoresName);
+		}else {
+			model.addAttribute("aptitudeNameArr", "[]");
 		}
 		
 		// 흥미 차트 점수
 		String scoreI = serviceAt.getInterestScore(userNum);
-		String [] scoreArrI= scoreI.split("\\+");
-		ObjectMapper objectMapperI = new ObjectMapper();
-        String scoresI = null;
-		try {
-			scoresI = objectMapperI.writeValueAsString(scoreArrI);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(scoreI != null) {
+			String [] scoreArrI= scoreI.split("\\+");
+			ObjectMapper objectMapperI = new ObjectMapper();
+			String scoresI = null;
+			try {
+				scoresI = objectMapperI.writeValueAsString(scoreArrI);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			model.addAttribute("interestScoreArr", scoresI);
+		}else {
+			model.addAttribute("interestScoreArr", 0);
 		}
 		
 		// 가치관 차트 점수
 		String scoreV = serviceAt.getValuesScore(userNum);
-		String [] scoreArrV= scoreV.split("\\,");
-		ObjectMapper objectMapperV = new ObjectMapper();
-        String scoresV = null;
-		try {
-			scoresV = objectMapperV.writeValueAsString(scoreArrV);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(scoreV != null) {
+			String [] scoreArrV= scoreV.split("\\,");
+			ObjectMapper objectMapperV = new ObjectMapper();
+			String scoresV = null;
+			try {
+				scoresV = objectMapperV.writeValueAsString(scoreArrV);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			model.addAttribute("valuesScoreArr", scoresV);
+		}else {
+			model.addAttribute("valuesScoreArr", 0);
 		}
-		
 		String scoreAb = serviceAt.getAbilityScore(userNum);
-	    // 쉼표(,)를 기준으로 문자열을 분리하여 배열로 얻기
-        String[] elements = scoreAb.split(",", 10); // 최대 10개로 제한
-
-        // 앞 3개와 뒤 6개를 String으로 합치기
-        String firstThree = String.join(",", Arrays.copyOfRange(elements, 0, 4));
-        String lastSix = String.join(",", Arrays.copyOfRange(elements, 4, elements.length));
+		if(scoreAb != null) {			
+			// 쉼표(,)를 기준으로 문자열을 분리하여 배열로 얻기
+			String[] elements = scoreAb.split(",", 10); // 최대 10개로 제한
+			
+			// 앞 3개와 뒤 6개를 String으로 합치기
+			String firstThree = String.join(",", Arrays.copyOfRange(elements, 0, 4));
+			String lastSix = String.join(",", Arrays.copyOfRange(elements, 4, elements.length));
+		    model.addAttribute("firstThree", firstThree);
+		    model.addAttribute("lastSix", lastSix);
+		}else {
+			model.addAttribute("firstThree", 0);
+		    model.addAttribute("lastSix", 0);
+		}
 
         // 마이페이지 top 검색
         RecommandInfoDTO aptitudeRank = service.getAptitudeRank(userNum);
-        
         model.addAttribute("aptitudeRank", aptitudeRank);
-        model.addAttribute("firstThree", firstThree);
-        model.addAttribute("lastSix", lastSix);
-		model.addAttribute("interestScoreArr", scoresI);
-		model.addAttribute("aptitudeScoreArr", scoresA);
-		model.addAttribute("aptitudeNameArr", scoresName);
-		model.addAttribute("valuesScoreArr", scoresV);
+ 
 		return "/user/mypage";
 	}
-	
+  	
+  	//자격증 리스트 가져오기
 	@RequestMapping("/getCerti")
     public @ResponseBody List<String> getCerti(String certi){
 		List<String> certiList = service.getCerti(certi); 
@@ -468,18 +508,22 @@ public class MemberController {
 		return certiList;
 	}
 	
+	//학과 리스트 가져오기
 	@RequestMapping("/getMajor")
-    public @ResponseBody List<String> getMajor(String major){
-		List<String> majorList = service.getMajor(major); 
+    public @ResponseBody List<String> getMajor(@RequestParam("major") String major,
+            									@RequestParam("univSe") String univSe){
+		List<String> majorList = service.getMajor(major, univSe); 
 		System.out.println(majorList);
 		return majorList;
 	}
 	
+	//회원 추가 정보 수정(자격증, 학과)
 	@RequestMapping("/updateInfo")
 	public String updateInfo(@RequestParam(value = "certi", required = false) List<String> certiList,
-	                         @RequestParam(value = "major", required = false) List<String> majorList, HttpServletRequest request) throws UnsupportedEncodingException {
+	                         @RequestParam(value = "major", required = false) List<String> majorList, HttpServletRequest request){
 		
-		request.setCharacterEncoding("utf-8");
+		HttpSession session = request.getSession();
+		String memId = (String)session.getAttribute("memId");
 		String combinedCerti = null;
 		String combinedMajor = null;
 		System.out.println("Certi "+certiList);
@@ -490,66 +534,10 @@ public class MemberController {
 	        System.out.println("Certi2 "+combinedCerti);
 	        combinedMajor = String.join(",", majorList);
 	        System.out.println("Major2 "+combinedMajor);
-	        service.updateInfo(combinedCerti, combinedMajor);
+	        service.updateInfo(combinedCerti, combinedMajor, memId);
 	        
 	    }
 	    return "redirect:/member/mypage";
 	}
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-    @RequestMapping("/info")
-    public String JobDicInfo(HttpServletRequest request, Model model) {
-       int seq = -1;
-       String strSeq= request.getParameter("job_cd");
-       JobDicDetailResponseDTO jobDetail = null;
-       if(strSeq!=null) 
-          seq = Integer.parseInt(strSeq);
-       
-       System.out.println("seq == " +seq);
-       jobDetail= dao.getJobDicDetail(seq);
-       
-       String data = jobDetail.getIndicatorChart().get(0).getIndicator_data();
-       String major_data = jobDetail.getMajorChart().get(0).getMajor_data();
-       String edu_data = jobDetail.getEduChart().get(0).getChart_data();
-       System.out.println(data);
 
-       List<String> indicator = new ArrayList<String>();
-       List<String> major = new ArrayList<String>();
-       List<String> edu = new ArrayList<String>();
-       
-       String[] dataParts = data.split(",");
-       String[] major_dataParts = major_data.split(",");
-       String[] edu_dataParts = edu_data.split(",");
-       
-       indicator.addAll(Arrays.asList(dataParts));
-       major.addAll(Arrays.asList(major_dataParts));
-       edu.addAll(Arrays.asList(edu_dataParts));
-       
-       String indicatorData = "null";
-       String majorData = "null";
-       String eduData = "null";
-       ObjectMapper objectMapper = new ObjectMapper();
-       try {
-    	   indicatorData = objectMapper.writeValueAsString(indicator);
-    	   majorData = objectMapper.writeValueAsString(major);
-    	   eduData = objectMapper.writeValueAsString(edu);
-       } catch (JsonProcessingException e) {
-           e.printStackTrace();
-       }
-
-       model.addAttribute("jobDetail", jobDetail);
-       model.addAttribute("indicatorData", indicatorData);
-       model.addAttribute("majorData", majorData);
-       model.addAttribute("eduData", eduData);
-       return "/job/description-detail";
-    }
-    
-  
 }

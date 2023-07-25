@@ -46,11 +46,11 @@
 	</select>
 	
 	<select id="getMajor" resultType="String">
-		select MCLASS from major where MCLASS like '%' || #{major} || '%'
+		select MCLASS from major where MCLASS like '%' || #{major} || '%' and univSe = #{univSe}
 	</select>
 	
 	<update id="updateInfo">
-		update user_info set CERTIFICATE=#{combinedCerti}, SCHOOL_MAJOR=#{combinedMajor} where email = '22yunji@naver.com'
+		update user_info set CERTIFICATE=#{combinedCerti}, SCHOOL_MAJOR=#{combinedMajor} where email = #{memId}
 	</update>
 	
 	
@@ -58,5 +58,13 @@
 	<select id="getAptitudeRank" resultType="whou.secproject.component.RecommandInfoDTO">
 		select * from recommand_info where num = ${userNum}
 	</select>
+	
+	<select id="getBook" resultType="String">
+		select books from user_info where email = #{memId}
+	</select>
+	
+	<update id="updateBook">
+		update user_info set books = #{books} where email =#{memId}
+	</update>
 	
 </mapper>

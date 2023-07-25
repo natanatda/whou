@@ -104,7 +104,7 @@
                                           <h4>학과정보</h4>
                                             <div id="majorContainer">
                                               <div class="input-wrap">
-                                                   <select class="depart-select" name="depart">
+                                                   <select class="depart-select" name="depart" id="depart">
                                                       <option value="대학">대학</option>
                                                       <option value="전문대학">전문대학</option>
                                                    </select>
@@ -112,10 +112,6 @@
                                                    <ul class="majorList"></ul>
                                               </div>
                                               <div class="input-wrap">
-                                                  <select class="depart-select">
-                                                     <option value="대학">대학</option>
-                                                     <option value="전문대학">전문대학</option>
-                                                  </select>
                                                   <input type="text" name="major" autocomplete="off" placeholder="부전공명/복수전공명" oninput="checkMajor(this)" />
                                                   <ul class="majorList"></ul>
                                              </div>
@@ -128,9 +124,9 @@
                                 </div>   
                         </form>                        
                      </div>
-                     <div class="tab-pane fade" id="nav-modifyInfo" role="tabpanel" aria-labelledby="nav-modify-tab" tabindex="0">
-                     	개인정보
-                     </div>
+		                     <div class="tab-pane fade" id="nav-modifyInfo" role="tabpanel" aria-labelledby="nav-modify-tab" tabindex="0">
+		                     	개인정보
+		                     </div>
                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
 								<div class="book-wrap">
 			                        <div class="card mb-5 mb-xl-0">
@@ -179,8 +175,13 @@
         <script>
          
          // 적성 차트
-         var aptitudeScoreArr = ${aptitudeScoreArr};
-         aptitudeNameArr = ${aptitudeNameArr};
+         	let aptitudeScoreArr = 0;
+         	let aptitudeNameArr = ["음악능력","수리·논리력","창의력","자연친화력","예술시각능력","공간지각력","대인관계능력","손재능","언어능력","자기성찰능력","신체·운동능력"];
+        	if (typeof aptitudeScoreArr !== 'undefined' && aptitudeScoreArr !== null && aptitudeScoreArr !== '') {
+        		aptitudeScoreArr = ${aptitudeScoreArr};
+        		aptitudeNameArr =${aptitudeNameArr};
+			}
+        	
             const ctx21 = document.getElementById('aptitudeChart');
               var myChart21 = new Chart(ctx21, {
                    type: 'radar',
@@ -209,7 +210,11 @@
                    });
               
               // 흥미차트 
-              var interestScoreArr = ${interestScoreArr};
+	           let  interestScoreArr = 0;
+				if (typeof interestScoreArr !== 'undefined' && interestScoreArr !== null && interestScoreArr !== '') {
+					interestScoreArr = ${interestScoreArr};
+				} 
+             
             const ctx31 = document.getElementById('interestChart');
               var myChart31 = new Chart(ctx31, {
                    type: 'radar',
@@ -238,7 +243,11 @@
                    });
               
            // 가치관 
-              var valuesScoreArr = ${valuesScoreArr};
+           let valuesScoreArr=0;
+			if (typeof valuesScoreArr !== 'undefined' && valuesScoreArr !== null && valuesScoreArr !== '') {
+				valuesScoreArr = ${valuesScoreArr};
+			}
+          
             const ctx25 = document.getElementById('valuesChart');
               var myChart25 = new Chart(ctx25, {
                    type: 'radar',
@@ -266,8 +275,13 @@
                    }
                    });
            // 역량 
-             var abilityScoreArr1 = [${firstThree}];
-             var abilityScoreArr2 = [${lastSix}];
+             let abilityScoreArr1=0;
+             let abilityScoreArr2=0;
+			if (typeof abilityScoreArr1 !== 'undefined' && abilityScoreArr1 !== null && abilityScoreArr1 !== '') {
+				abilityScoreArr1 = [${firstThree}];
+				abilityScoreArr2 = [${lastSix}];
+			}
+            
             const ctx271 = document.getElementById('abilityChart1');
               var myChart271 = new Chart(ctx271, {
                    type: 'radar',
@@ -335,92 +349,90 @@
              tabTrigger.show()
            })
          })
-         
-         function removeGroup(groupElement) {
-             $(groupElement).remove();
-         }
+  
          // 추가 정보 입력
-         function checkCerti(inputElement) {
-            var certi = $(inputElement).val();
-            var qualificationList = $(inputElement).siblings(".qualificationList");
-
-            $.ajax({
-                url: "/whou/member/getCerti",
-                data: { certi: certi },
-                success: function (result) {
-                    qualificationList.empty();
-                    qualificationList.hide();
-                    if(certi.length > 0){
-                        if(result && result.length > 0){
-                            for (var i = 0; i < result.length; i++) {
-                                var qualification = result[i];
-                                var button = $("<button>").text(qualification);
-                             
-                                button.on("click", function () {
-                                   event.preventDefault();
-                                    var selectedQualification = $(this).text();
-                                    $(inputElement).val(selectedQualification);
-                                    alert()
-                                    qualificationList.hide();
-                                });
-                                qualificationList.append($("<li>").append(button));
-                            }
-                        }else{
-                            var message = "' " + certi + " '을(를) 찾을 수 없습니다.";
-                            var messageElement = $("<li>").text(message);
-                            messageElement.on("click", function () {
-                                // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
-                                $(inputElement).val("");
-                                qualificationList.hide();
-                            });
-                            qualificationList.append(messageElement);
-                        }    
-
-                    qualificationList.show();
-                }
-            });
-        }
-        
-        function checkMajor(inputElement) {
-            var major = $(inputElement).val();
-            var majorList = $(inputElement).next(".majorList");
-
-            $.ajax({
-                url: "/whou/member/getMajor",
-                data: { major: major },
-                success: function (result) {
-                   majorList.empty();
-                   if(major.length > 0){
-                       if(result && result.length > 0){
-                           for (var i = 0; i < result.length; i++) {
-                               var major2 = result[i];
-                               var button = $("<button>").text(major2);
-                               button.on("click", function () {
-                                  event.preventDefault();
-                                   var selectedMajor = $(this).text();
-                                   $(inputElement).val(selectedMajor);
-                                   majorList.hide();
+            function checkCerti(inputElement) {
+               var certi = $(inputElement).val();
+               var qualificationList = $(inputElement).siblings(".qualificationList");
+               $.ajax({
+                   url: "/whou/member/getCerti",
+                   data: { certi: certi },
+                   success: function (result) {
+                       qualificationList.empty();
+                       qualificationList.hide();
+                       if(certi.length > 0){
+                          if(result && result.length > 0){
+                              for (var i = 0; i < result.length; i++) {
+                                  var qualification = result[i];
+                                  var button = $("<button>").text(qualification);
+                               
+                                  button.on("click", function () {
+                                     event.preventDefault();
+                                      var selectedQualification = $(this).text();
+                                      $(inputElement).val(selectedQualification);
+                                      qualificationList.hide();
+                                  });
+                                  qualificationList.append($("<li>").append(button));
+                              }
+                           }else{
+                               var message = "' " + certi + " '을(를) 찾을 수 없습니다.";
+                               var messageElement = $("<li>").text(message);
+                               messageElement.on("click", function () {
+                                   // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
+                                   $(inputElement).val("");
+                                   qualificationList.hide();
                                });
-                               majorList.append($("<li>").append(button));
-                           }
-                      }else{
-                          var message = "' " + major + " '을(를) 찾을 수 없습니다.";
-                          var messageElement = $("<li>").text(message);
-                          messageElement.on("click", function () {
-                              // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
-                              $(inputElement).val("");
-                              majorList.hide();
-                          });
-                          majorList.append(messageElement);
-                      }
-                      
-                      majorList.show();
+                               qualificationList.append(messageElement);
+                           }    
+
+                           qualificationList.show();
+                       }
                    }
-               
-             
-                }
-            });
-        }
+               });
+           }
+           
+           function checkMajor(inputElement) {
+               var major = $(inputElement).val();
+               var univSe = $("#depart").val();
+               //var univSe2 = $("#depart2").val();
+               var majorList = $(inputElement).next(".majorList");
+
+               $.ajax({
+                   url: "/whou/member/getMajor",
+                   data: { major: major, univSe:univSe},
+                   success: function (result) {
+                      majorList.empty();
+                      majorList.hide();
+                      
+                      if(major.length > 0){
+                         if(result && result.length > 0){
+                             for (var i = 0; i < result.length; i++) {
+                                 var major2 = result[i];
+                                 var button = $("<button>").text(major2);
+                                 button.on("click", function () {
+                                    event.preventDefault();
+                                     var selectedMajor = $(this).text();
+                                     $(inputElement).val(selectedMajor);
+                                     majorList.hide();
+                                 });
+                                 majorList.append($("<li>").append(button));
+                             }
+                         }else{
+                             var message = "' " + major + " '을(를) 찾을 수 없습니다.";
+                             var messageElement = $("<li>").text(message);
+                             messageElement.on("click", function () {
+                                 // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
+                                 $(inputElement).val("");
+                                 majorList.hide();
+                             });
+                             majorList.append(messageElement);
+                         }
+                         
+                         majorList.show();
+                      }
+                   }
+               });
+           }
 
         function addQualification() {
             var newDiv = $("<div>").addClass("input-wrap");

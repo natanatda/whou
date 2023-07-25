@@ -15,7 +15,39 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
         <link rel="stylesheet" href="/whou/resources/css/style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+		<script src="resources/js/unpkg.com_gsap@3.12.1_dist_gsap.min.js"></script>
+		<script src="resources/js/ThreeCSG.js"></script>
+		<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+        <script type="module" src="resources/js/whouModel2.js?ver=3"></script>
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
+        <script>
+        	var modelCamera = 0;
+        	var modelPath= '';
+        	if('${model.headColor}' === ''){
+        		var headColor = '#FF0080';
+        	}else{
+        		headColor = '${model.headColor}';
+        	}
+        	if('${model.armColor}' === ''){
+        		var armColor = '#FF0080';
+        	}else{
+        		armColor = '${model.armColor}';
+        	}
+        	if('${model.cheekColor}' === ''){
+        		var cheekColor = '#FF0080';
+        	}else{
+        		cheekColor = '${model.cheekColor}';
+        	}
+        	if('${model.legColor}' === ''){
+        		var legColor = '#FF0080';
+        	}else{
+        		legColor = '${model.legColor}';
+        	}
+        </script>
+
+        
     </head>
  
     <body>
@@ -28,14 +60,18 @@
                     <div class="col-lg-6">
                         <div class="text-center my-5">
                             <h1 class="display-5 mb-4 main-color weight900">어떤 직업을 찾고 있나요?</h1>
-                            <div class="input-group search-form">
-                                <span class="search-btn"><i class="fa-solid fa-magnifying-glass fa-xl" style="color: #5a3fff;"></i></span>
-                                <input type="text" class="">
-                            </div>
+                              <form action="/whou/job/dic" name="form" method="post">
+	                            <div class="input-group search-form">
+	                                <span class="search-btn"><i class="fa-solid fa-magnifying-glass fa-xl" style="color: #5a3fff;"></i></span>
+	                                <input type="text" class="">
+	                            </div>
+                            </form>
                             <div class="d-grid gap-3 d-sm-flex justify-content-sm-start mt-5">
-                              <div class="row">
-                                <div class="col main-ai-wrap">
-                                    <div class="main-ai">비서</div>
+                              <div class="row" >
+                                <div class="col main-ai-wrap" style="position: relative;">
+                                    <div class="main-ai" style="width: 120px;">
+                                 	   <canvas class="webgl" style="position: absolute; top: -55px; left: 0;" ></canvas> <%-- ai --%>
+                                    </div>
                                     <div class="icon-box">
                                         <span class="icon-box-ic">아이콘</span>
                                     </div>
@@ -95,7 +131,7 @@
                     <p class="fw-bolder">당신만을 위한 검사가 기다리고 있어요.</p>
                     <p class="main-text">직업 검사를 받아보세요.</p>
                 </div>
-                <p class="add-btn mb-5"><a href="#!">추가 검사 보기 </a><i class="fa-solid fa-chevron-right fa-xs" style="color: #f9fafa;"></i></p>
+                <p class="add-btn mb-5"><a href="/whou/aptitude/aptitudeMain">추가 검사 보기 </a><i class="fa-solid fa-chevron-right fa-xs" style="color: #f9fafa;"></i></p>
                 <div class="row gx-4 justify-content-center">
                     <!-- 직업적성검사 -->
                     <div class="col-lg-6 col-xl-3">
