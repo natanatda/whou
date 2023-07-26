@@ -21,10 +21,13 @@ import whou.secproject.component.JobDicDetailResponseDTO;
 import whou.secproject.component.JobDicListResponseDTO;
 import whou.secproject.component.JobDicParamDTO;
 import whou.secproject.component.JobDicValueListDTO;
+import whou.secproject.component.WhouModelCustomDTO;
+import whou.secproject.component.WhouModelDTO;
 import whou.secproject.mapper.MemberMapper;
 import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.service.JobDicService;
-import whou.secproject.service.MemberService;
+import whou.secproject.service.WhouModelCustomService;
+import whou.secproject.service.WhouModelService;
 
 @Controller
 @RequestMapping("/job")
@@ -39,9 +42,14 @@ public class JobController {
 	@Autowired
 	private MemberMapper mapperMem;
 
+	@Autowired
+	private WhouModelService whouModelService;
+	
+	@Autowired
+	private WhouModelCustomService whouModelCustomService;
 	@RequestMapping("/dic")
 	public String goJobDic(Model model,HttpServletRequest request) {
-		
+
 		List<JobDicValueListDTO> valueList= service.getSortValue("search_factor");
 		List<JobDicAptdValueListDTO> aptdValueList= service.getAptdValue("aptd_factor");
 		String clickTabId= request.getParameter("clickTabId");
@@ -175,6 +183,11 @@ public class JobController {
        if(strSeq!=null) 
           seq = Integer.parseInt(strSeq);
        
+       // 직업분류별 모델
+       int modelNum = whouModelService.selectSortValue(seq);
+       WhouModelDTO whouModel = whouModelService.selectModel(modelNum);
+       if(whouModel.getColor() == null) {whouModel.setColor("noColor");}
+       
        System.out.println("seq == " +seq);
        jobDetail= dao.getJobDicDetail(seq);
        
@@ -206,14 +219,19 @@ public class JobController {
        } catch (JsonProcessingException e) {
            e.printStackTrace();
        }
-
-      String temp = mapperMem.getBook(memId);
+      
       boolean contain = false;
-      if(temp!=null) {
-    	  String [] arr = temp.split(",");
-    	  for (String str : arr) {
-    		  if (str.equals(strSeq)) {
-    			  contain = true;
+      String temp = "";
+      if(memId != null) {
+    	  WhouModelCustomDTO modelColor = whouModelCustomService.customModel(memId); // 커스텀한 모델 색
+    	  model.addAttribute("modelColor",modelColor);
+    	  temp = mapperMem.getBook(memId);
+    	  if(temp!=null) {
+    		  String [] arr = temp.split(",");
+    		  for (String str : arr) {
+    			  if (str.equals(strSeq)) {
+    				  contain = true;
+    			  }
     		  }
     	  }
       }
@@ -223,6 +241,7 @@ public class JobController {
        model.addAttribute("indicatorData", indicatorData);
        model.addAttribute("majorData", majorData);
        model.addAttribute("eduData", eduData);
+       model.addAttribute("model", whouModel);
        return "/job/description-detail";
     }
 	

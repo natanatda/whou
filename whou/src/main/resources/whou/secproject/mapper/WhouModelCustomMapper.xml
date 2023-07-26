@@ -11,8 +11,9 @@
 	<select id="customCount" resultType="int">
 		select count(*) from whou_model_custom where email=#{email}
 	</select>
+	
 	<insert id="customInsert">
-		insert into whou_model_custom values(#{email},#{headColor},#{armColor},#{cheekColor},#{legColor},0)
+		insert into whou_model_custom values(#{email},#{headColor},#{armColor},#{cheekColor},#{legColor})
 	</insert>
 	
 	<update id="customUpdate">

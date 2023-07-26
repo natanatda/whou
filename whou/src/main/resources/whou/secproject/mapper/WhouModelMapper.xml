@@ -4,9 +4,15 @@
   "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
 <mapper namespace="whou.secproject.mapper.WhouModelMapper">
 	<select id="selectModel" resultType="whou.secproject.component.WhouModelDTO">
-		select * from whou_model where num=#{num}
+		select * from whou_model where num=#{modelNum}
 	</select>
+	
 	<select id="selectModel2" resultType="whou.secproject.component.WhouModelDTO">
 		select * from whou_model order by num
 	</select>
+	
+	<select id="selectSortValue" resultType="int">
+		select sort_value from job_category_cd where job_cds=#{seq}
+	</select>
+	
 </mapper>

@@ -18,6 +18,12 @@
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <!-- three.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="../resources/js/unpkg.com_gsap@3.12.1_dist_gsap.min.js"></script>
+		<script src="../resources/js/ThreeCSG.js"></script>
+		<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+		<script type="module" src="../resources/js/whouModel.js?ver=1"></script>
     </head>
 
  
@@ -43,7 +49,9 @@
         <!-- Responsive navbar-->
        <%@ include file="../header.jsp" %>      
        <div class="ai-wrap">
-       	<div>캐릭터</div>
+		<div style="position: relative; width: 400px; height: 400px; top: 30%;">
+       		<canvas class="webgl"></canvas>
+       	</div> 
        	<div>설명</div>
        	<button onclick="checkAndClose()">상세가기</button>
        </div>  
@@ -507,6 +515,55 @@
 	        	 
 	        	}
 	    </script>
+	    <%-- 모델 --%>
+	    <script>
+		 	var modelCamera_x = ${model.camera};
+		 	var modelCamera_y = 6;
+		 	var modelCamera_z = 10;
+		 	var modelPath = '../resources/whouModel/${model.path_folder}/${model.path_gltf}';
+		 	
+		 	var modelWidth = 500;
+        	var modelHeight = 500;
+		 	
+		 	if('${model.color}' != 'noColor'){
+		 		var modelColor = ${model.color};
+		 	}
+		 	var modelScale_x = ${model.scale_x};
+		 	var modelScale_y = ${model.scale_y};
+		 	var modelScale_z = ${model.scale_z};
+		 	
+		 	var modelPosition_x = ${model.position_x};
+		 	var modelPosition_y = ${model.position_y};
+		 	var modelPosition_z = ${model.position_z};
+		 	
+		 	var modelRotation_x = ${model.rotation_x};
+		 	var modelRotation_y = ${model.rotation_y};
+		 	var modelRotation_z = ${model.rotation_z};
+		 	
+		 	var modelMotion = ${model.motion};
+		 	
+		 	if('${modelColor.headColor}' === ''){
+        		var headColor = '#F781F3';
+        	}else{
+        		headColor = '${modelColor.headColor}';
+        	}
+        	if('${modelColor.armColor}' === ''){
+        		var armColor = '#F781F3';
+        	}else{
+        		armColor = '${modelColor.armColor}';
+        	}
+        	if('${modelColor.cheekColor}' === ''){
+        		var cheekColor = '#DF0101';
+        	}else{
+        		cheekColor = '${modelColor.cheekColor}';
+        	}
+        	if('${modelColor.legColor}' === ''){
+        		var legColor = '#585858';
+        	}else{
+        		legColor = '${modelColor.legColor}';
+        	}
+	 	
+	 </script>
     </body>
     
 </html>

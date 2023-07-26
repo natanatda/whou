@@ -9,5 +9,4 @@ public class WhouModelCustomDTO {
 	private String armColor;
 	private String cheekColor;
 	private String legColor;
-	private int num;
 }

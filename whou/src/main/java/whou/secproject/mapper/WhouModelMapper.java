@@ -7,4 +7,5 @@ import whou.secproject.component.WhouModelDTO;
 public interface WhouModelMapper {
 	public WhouModelDTO selectModel(int num);
 	public List<WhouModelDTO> selectModel2();
+	public int selectSortValue(int seq);
 }

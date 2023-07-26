@@ -15,8 +15,18 @@
 	<script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
 <script>
+	var read = false;
 	$(function(){
 		var chat = "";
+		function clearChat(){
+			chat = ""; // 채팅 내역 초기화
+			$(".editable").html('<p class="chat"> 문의하실 내용을 선택해주세요. </p>'); // div에 출력
+			$("#readArea").html('<button id="readbtn" class="btn btn-light">읽기</button>'
+								+'<button class="btn btn-light" id="clear">초기화</button>');
+			read = false; // tts 종료
+			handleBackButtonClick(); // 돌아가기 함수
+		}
+		
 		function appendChat(user, bot) { // 채팅 내용 출력하는 함수
 			chat += '<p class="chat user" id="user">유저: ' + user + '<p/>' + '<p class="chat bot" id="bot">챗봇: ' + bot + '<p/>'; 
 			$(".editable").html(chat);
@@ -76,13 +86,14 @@
 		}
 	
 		function handleBackButtonClick() { // 돌아가기 버튼 함수
-			$("#btnContain").html('<c:forEach items="${list}" var="aiList">' // 그룹이 1인 리스트들로 버튼 생성
+			$("#btnContain").html('<c:forEach items="${assistantList}" var="aiList">' // 그룹이 1인 리스트들로 버튼 생성
 								+'<input type="button" class="btn btn-light mainbtn" value="${aiList.qes}"/>'
 								+'</c:forEach>');
 		}
 	
 		$(document).on('click', '.mainbtn, .otherBtn', handleButtonClick); // 해당 클래스 버튼 클릭했을 때 함수 호출
 		$(document).on('click', '#back', handleBackButtonClick); // 해당 id 버튼 클릭했을 때 함수 호출
+		$(document).on('click', '#clear', clearChat); // 해당 id 버튼 클릭했을 때 함수 호출
 	});
 	
 	
@@ -144,15 +155,17 @@
 		});
 	}
 	
-	var read = false;
+	
 	$(document).on("click", "#readbtn", function(){ // 읽기버튼 눌렀을 때 동작
-		$("#readArea").html('<input type="button" id="csbtn" class="btn btn-light" value="취소" />');
+		$("#readArea").html('<button id="csbtn" class="btn btn-light">취소</button>'
+							+'<button class="btn btn-light" id="clear">초기화</button>');
 		read = true; 
 		checkReadStatus(); // 함수 호출해서 read값 반영
 	});
 		
-	$(document).on("click", "#csbtn", function(){
-		$("#readArea").html('<input type="button" id="readbtn" class="btn btn-light" value="읽기" />');
+	$(document).on("click", "#csbtn", function(){ // 취소버튼 눌렀을 때 동작
+		$("#readArea").html('<button id="readbtn" class="btn btn-light">읽기</button>'
+							+'<button class="btn btn-light" id="clear">초기화</button>');
 		read = false;
 		checkReadStatus();
 	});
@@ -194,37 +207,24 @@
 				<h2 class="page-title">ai</h2>
 			</div>
 		</header>
-		<div style="width: 900px; height: 1000px; border: 1px solid #dcdcdc; margin:0 auto;">
-			<div class="editable" id="editable" contenteditable="false" style="width: 900px; height: 1000px;">
+		<div style="width: 900px; height: 400px; border: 1px solid #dcdcdc; margin:0 auto;">
+			<div class="editable" id="editable" contenteditable="false" style="width: 900px; height: 400px;">
 			<p class="chat"> 문의하실 내용을 선택해주세요. </p>
 		</div>
 			<div style="display: flex; justify-content: right; align-items: right;">
-				<div id="btnContain">
-					<c:forEach items="${list}" var="ailist">
+				<div id="btnContain" >
+					<c:forEach items="${assistantList}" var="ailist">
 						<input type="button" class="btn btn-light mainbtn" value="${ailist.qes}"/>
 					</c:forEach>
 				</div>
 				<div id="readArea" style="display: flex; justify-content: right; align-items: right;">
 					<button class="btn btn-light" id="readbtn">읽기</button>
+					<button class="btn btn-light" id="clear">초기화</button>
 				</div>
 			</div>
 		</div>
-		<footer class="container py-5">
-			<div class="border-top border-bottom py-3">
-				<ul class="footer-content">
-					<li><a href="#!">개인정보처리방침</a></li>
-					<li><a href="#!">이메일주소무단수집거부</a></li>
-					<li><a href="#!">이용안내</a></li>
-					<li><a href="#!">이용문의 및 오류제보</a></li>
-					<li><a href="#!">English</a></li>
-					<li><a href="#!">오픈API</a></li>
-				</ul>
-			</div>
-			<div class="footer-address py-3">
-				<p class="m-0">주소 : 서울특별시 관악구 봉천동 에그옐로우 14층</p>
-				<p class="m-0">운영 : 한국직업능력연구원 국가진로교육연구센터</p>
-				<p class="m-0">Copyright &copy; Your Website 2023</p>
-			</div>
-		</footer>
+		<div style="height: 200px;"></div>
+		
+		<%@ include file="../footer.jsp" %>
 	</body>
 </html>

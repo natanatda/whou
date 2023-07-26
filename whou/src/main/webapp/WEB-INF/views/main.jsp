@@ -20,35 +20,9 @@
 		<script src="resources/js/unpkg.com_gsap@3.12.1_dist_gsap.min.js"></script>
 		<script src="resources/js/ThreeCSG.js"></script>
 		<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-        <script type="module" src="resources/js/whouModel2.js?ver=3"></script>
+        <script type="module" src="resources/js/whouModel.js?ver=2"></script>
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
-        <script>
-        	var modelCamera = 0;
-        	var modelPath= '';
-        	if('${model.headColor}' === ''){
-        		var headColor = '#FF0080';
-        	}else{
-        		headColor = '${model.headColor}';
-        	}
-        	if('${model.armColor}' === ''){
-        		var armColor = '#FF0080';
-        	}else{
-        		armColor = '${model.armColor}';
-        	}
-        	if('${model.cheekColor}' === ''){
-        		var cheekColor = '#FF0080';
-        	}else{
-        		cheekColor = '${model.cheekColor}';
-        	}
-        	if('${model.legColor}' === ''){
-        		var legColor = '#FF0080';
-        	}else{
-        		legColor = '${model.legColor}';
-        	}
-        </script>
-
-        
-    </head>
+            </head>
  
     <body>
         <!-- Responsive navbar-->
@@ -70,7 +44,7 @@
                               <div class="row" >
                                 <div class="col main-ai-wrap" style="position: relative;">
                                     <div class="main-ai" style="width: 120px;">
-                                 	   <canvas class="webgl" style="position: absolute; top: -55px; left: 0;" ></canvas> <%-- ai --%>
+                                 	   <canvas class="webgl" style="position: absolute; top: -55px; left: -70px;" ></canvas> <%-- ai --%>
                                     </div>
                                     <div class="icon-box">
                                         <span class="icon-box-ic">아이콘</span>
@@ -302,7 +276,6 @@
                 </div>
             </div>
         </section>
-
         <!-- Footer-->
         <footer class="container py-5">
             <div class="border-top border-bottom py-3">
@@ -323,5 +296,53 @@
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <%-- 모델 --%>
+        <script>
+        	var modelCamera_x = ${brush.camera};
+        	var modelCamera_y = 1;
+        	var modelCamera_z = 3;
+		 	var modelPath = '/whou/resources/whouModel/${brush.path_folder}/${brush.path_gltf}';
+		 	
+		 	var modelWidth = 350;
+        	var modelHeight = 200;
+		 	
+		 	if('${brush.color}' != 'noColor'){
+		 		var modelColor = '${brush.color}';
+		 	}
+		 	var modelScale_x = ${brush.scale_x};
+		 	var modelScale_y = ${brush.scale_y};
+		 	var modelScale_z = ${brush.scale_z};
+		 	
+		 	var modelPosition_x = ${brush.position_x};
+		 	var modelPosition_y = ${brush.position_y};
+		 	var modelPosition_z = ${brush.position_z};
+		 	
+		 	var modelRotation_x = ${brush.rotation_x};
+		 	var modelRotation_y = ${brush.rotation_y};
+		 	var modelRotation_z = ${brush.rotation_z};
+		 	
+		 	var modelMotion = ${brush.motion};
+        	
+        	if('${model.headColor}' === ''){
+        		var headColor = '#F781F3';
+        	}else{
+        		headColor = '${model.headColor}';
+        	}
+        	if('${model.armColor}' === ''){
+        		var armColor = '#F781F3';
+        	}else{
+        		armColor = '${model.armColor}';
+        	}
+        	if('${model.cheekColor}' === ''){
+        		var cheekColor = '#DF0101';
+        	}else{
+        		cheekColor = '${model.cheekColor}';
+        	}
+        	if('${model.legColor}' === ''){
+        		var legColor = '#585858';
+        	}else{
+        		legColor = '${model.legColor}';
+        	}
+        </script>
     </body>
 </html>
