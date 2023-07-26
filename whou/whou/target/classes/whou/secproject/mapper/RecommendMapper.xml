@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+<mapper namespace="whou.secproject.mapper.RecommendMapper">
+	<!--  
+		<sql id="baseResultMap">
+		    <id property="qnum" column="seq"/>
+		    <result property="jobName" column="job_nm"/>
+		</sql>
+		
+		<resultMap id="dynamicResultMap" type="${packageName}.${className}DTO" extends="baseResultMap">
+		</resultMap>
+	-->
+	
+	<select id = "getTestResult" resultType="whou.secproject.component.RecommandInfoDTO">
+		SELECT
+	    *
+	    FROM RECOMMAND_INFO
+	    <where>
+	    	num = ${userNum}
+	    </where>
+	</select>
+	<select id ="allJobCd" resultType="int">
+		select Job_Cd from ${tb_name} Order by Job_cd 
+	</select>
+	<select id ="getValueCd" resultType="String">
+		select * from ${tb_name}
+	</select>
+	<select id ="selectInfo" resultType="java.util.HashMap">
+		select ${col} from ${tb_name}
+		<if test = "conditions!= null">
+		<where>
+			<foreach collection = "conditions" separator= " and " item = "condition" >
+				${condition}
+			</foreach>
+		</where>
+		</if>
+		<if test = "order!= null">
+			${order}
+		</if>
+		<if test = "etc!= null">
+			${etc}
+		</if>
+	</select>
+	<insert id = "createJobPoint">
+		create table job_point_${num} (
+			job_cd number primary key, 
+			total number,
+			aptitude1 number,
+			aptitude2 number,
+			aptitude3 number,
+			interest1 number,
+			interest2 number,
+			interest3 number,
+			value1 number,
+			value2 number,
+			value3 number,
+			value4 number,
+			<foreach collection = "majors" item = "major" >
+				${major},
+			</foreach>
+			<foreach collection = "certis" separator= "," item = "certi" >
+				${certi}
+			</foreach>
+		)
+	</insert>
+	<insert id = "insertJobPoint">
+		insert into job_point_${num} 
+		values(
+			#{job_cd},
+			#{total},
+			#{aptitude1},
+			#{aptitude2},
+			#{aptitude3},
+			#{interest1},
+			#{interest2},
+			#{interest3},
+			#{value1},
+			#{value2},
+			#{value3},
+			#{value4},
+			<foreach collection = "majors" item = "major" >
+				#{major},
+			</foreach>
+			<foreach collection = "certis" separator= "," item = "certi" >
+				#{certi}
+			</foreach>
+		)
+	</insert>
+</mapper>
+  
