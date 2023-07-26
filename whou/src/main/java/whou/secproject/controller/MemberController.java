@@ -412,91 +412,98 @@ public class MemberController {
 		
 		System.out.println("userNum왜안댐? "+userNum);
 		// 적성 차트 점수
-		String scoreA = serviceAt.getAptitudeScore(userNum);
-	
-		if(scoreA != null) {			
-			String [] scoreArr= scoreA.split("\\+");
-			ObjectMapper objectMapper = new ObjectMapper();
-			String scoresA = null;
-			try {
-				scoresA = objectMapper.writeValueAsString(scoreArr);
-			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			model.addAttribute("aptitudeScoreArr", scoresA);
-		}else {
-			model.addAttribute("aptitudeScoreArr", 0);
-		}
-		
-		// 적성 차트 이름
-		String scoreName = serviceAt.getAptitudeScoreName(userNum);
-		if(scoreName != null) {
-			String [] scoreNameArr= scoreName.split("\\+");
-			ObjectMapper objectMapperName = new ObjectMapper();
-			String scoresName = null;
-			try {
-				scoresName = objectMapperName.writeValueAsString(scoreNameArr);
-			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			model.addAttribute("aptitudeNameArr", scoresName);
-		}else {
-			model.addAttribute("aptitudeNameArr", "[]");
-		}
-		
-		// 흥미 차트 점수
-		String scoreI = serviceAt.getInterestScore(userNum);
-		if(scoreI != null) {
-			String [] scoreArrI= scoreI.split("\\+");
-			ObjectMapper objectMapperI = new ObjectMapper();
-			String scoresI = null;
-			try {
-				scoresI = objectMapperI.writeValueAsString(scoreArrI);
-			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			model.addAttribute("interestScoreArr", scoresI);
-		}else {
-			model.addAttribute("interestScoreArr", 0);
-		}
-		
-		// 가치관 차트 점수
-		String scoreV = serviceAt.getValuesScore(userNum);
-		if(scoreV != null) {
-			String [] scoreArrV= scoreV.split("\\,");
-			ObjectMapper objectMapperV = new ObjectMapper();
-			String scoresV = null;
-			try {
-				scoresV = objectMapperV.writeValueAsString(scoreArrV);
-			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			model.addAttribute("valuesScoreArr", scoresV);
-		}else {
-			model.addAttribute("valuesScoreArr", 0);
-		}
-		String scoreAb = serviceAt.getAbilityScore(userNum);
-		if(scoreAb != null) {			
-			// 쉼표(,)를 기준으로 문자열을 분리하여 배열로 얻기
-			String[] elements = scoreAb.split(",", 10); // 최대 10개로 제한
-			
-			// 앞 3개와 뒤 6개를 String으로 합치기
-			String firstThree = String.join(",", Arrays.copyOfRange(elements, 0, 4));
-			String lastSix = String.join(",", Arrays.copyOfRange(elements, 4, elements.length));
-		    model.addAttribute("firstThree", firstThree);
-		    model.addAttribute("lastSix", lastSix);
-		}else {
-			model.addAttribute("firstThree", 0);
-		    model.addAttribute("lastSix", 0);
-		}
+	      String scoreA = serviceAt.getAptitudeScore(userNum);
+	      Boolean scoreTrue = false;
+	      if(scoreA != null) {         
+	         String [] scoreArr= scoreA.split("\\+");
+	         ObjectMapper objectMapper = new ObjectMapper();
+	         String scoresA = null;
+	         try {
+	            scoresA = objectMapper.writeValueAsString(scoreArr);
+	         } catch (JsonProcessingException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         }
+	         model.addAttribute("aptitudeScoreArr", scoresA);
+	         scoreTrue = true;
+	      }else {
+	         model.addAttribute("aptitudeScoreArr", 0);
+	      }
+	      
+	      // 적성 차트 이름
+	      String scoreName = serviceAt.getAptitudeScoreName(userNum);
+	      if(scoreName != null) {
+	         String [] scoreNameArr= scoreName.split("\\+");
+	         ObjectMapper objectMapperName = new ObjectMapper();
+	         String scoresName = null;
+	         try {
+	            scoresName = objectMapperName.writeValueAsString(scoreNameArr);
+	         } catch (JsonProcessingException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         }
+	         model.addAttribute("aptitudeNameArr", scoresName);
+	         scoreTrue = true;
 
-        // 마이페이지 top 검색
-        RecommandInfoDTO aptitudeRank = service.getAptitudeRank(userNum);
-        model.addAttribute("aptitudeRank", aptitudeRank);
+	      }else {
+	         model.addAttribute("aptitudeNameArr", "[]");
+	      }
+	      
+	      // 흥미 차트 점수
+	      String scoreI = serviceAt.getInterestScore(userNum);
+	      if(scoreI != null) {
+	         String [] scoreArrI= scoreI.split("\\+");
+	         ObjectMapper objectMapperI = new ObjectMapper();
+	         String scoresI = null;
+	         try {
+	            scoresI = objectMapperI.writeValueAsString(scoreArrI);
+	         } catch (JsonProcessingException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         }
+	         model.addAttribute("interestScoreArr", scoresI);
+	         scoreTrue = true;
+
+	      }else {
+	         model.addAttribute("interestScoreArr", 0);
+	      }
+	      
+	      // 가치관 차트 점수
+	      String scoreV = serviceAt.getValuesScore(userNum);
+	      if(scoreV != null) {
+	         String [] scoreArrV= scoreV.split("\\,");
+	         ObjectMapper objectMapperV = new ObjectMapper();
+	         String scoresV = null;
+	         try {
+	            scoresV = objectMapperV.writeValueAsString(scoreArrV);
+	         } catch (JsonProcessingException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         }
+	         model.addAttribute("valuesScoreArr", scoresV);
+	         scoreTrue = true;
+	      }else {
+	         model.addAttribute("valuesScoreArr", 0);
+	      }
+	      String scoreAb = serviceAt.getAbilityScore(userNum);
+	      if(scoreAb != null) {         
+	         // 쉼표(,)를 기준으로 문자열을 분리하여 배열로 얻기
+	         String[] elements = scoreAb.split(",", 10); // 최대 10개로 제한
+	         
+	         // 앞 3개와 뒤 6개를 String으로 합치기
+	         String firstThree = String.join(",", Arrays.copyOfRange(elements, 0, 4));
+	         String lastSix = String.join(",", Arrays.copyOfRange(elements, 4, elements.length));
+	          model.addAttribute("firstThree", firstThree);
+	          model.addAttribute("lastSix", lastSix);
+	      }else {
+	         model.addAttribute("firstThree", 0);
+	          model.addAttribute("lastSix", 0);
+	      }
+
+	        // 마이페이지 top 검색
+	        RecommandInfoDTO aptitudeRank = service.getAptitudeRank(userNum);
+	        model.addAttribute("aptitudeRank", aptitudeRank);
+	      model.addAttribute("scoreTrue", scoreTrue);
         
         
         

@@ -52,49 +52,56 @@
                     <div class="right-wrap">
                           <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-	                            <select id="testResultSelect">
-	                                <option value="21">적성</option>
-	                                <option value="25">가치관</option>
-	                                <option value="27">역량</option>
-	                                <option value="31">흥미</option>
-	                            </select>
-	                            <c:if test="${aptitudeRank.aptitude_name1 == null || aptitudeRank.aptitude_name1 eq '' }">
-	                            	검사 이력이 없습니다. 검사 후 결과를 받아보세요!
-                            		<a href="/whou/aptitude/aptitudeMain">검사하러가기</a>
-	                            </c:if>
-	                            <c:if test="${aptitudeRank.aptitude_name1 != null}">
-		                            <div id="item-aptitude">
-		                                <canvas id="aptitudeChart"></canvas>
-		                                <ul>
-			                               	<li>${aptitudeRank.aptitude_name1}</li>                         
-			                               	<li>${aptitudeRank.aptitude_name2}</li>                         
-			                               	<li>${aptitudeRank.aptitude_name3}</li>                         
-		                                </ul>
-		                            </div>
-	                            </c:if>
-	                            <div id="item-values">
-	                                <canvas id="valuesChart"></canvas>
-	                            </div>
-	                            
-	                             <c:if test="${aptitudeRank.interest_name1 == null || aptitudeRank.interest_name1 eq '' }">
-	                            	검사 이력이 없습니다. 검사 후 결과를 받아보세요!
-                            		<a href="/whou/aptitude/aptitudeMain">검사하러가기</a>
-	                            </c:if>
-	                            <c:if test="${aptitudeRank.interest_name1 != null}">
-		                            <div id="item-interest">
-		                                <canvas id="interestChart"></canvas>
-		                                <ul>
-			                               	<li>${aptitudeRank.interest_name1}</li>                         
-			                               	<li>${aptitudeRank.interest_name2}</li>                         
-			                               	<li>${aptitudeRank.interest_name3}</li>                         
-		                                </ul>
-		                            </div>
-	                            </c:if>
-	                            
-	                            <div id="item-ability">
-	                                <canvas id="abilityChart1"></canvas>
-	                                <canvas id="abilityChart2"></canvas>
-	                            </div>
+                               <select id="testResultSelect">
+                                   <option value="21">적성</option>
+                                   <option value="25">가치관</option>
+                                   <option value="27">역량</option>
+                                   <option value="31">흥미</option>
+                               </select>
+                               <div id="item-aptitude">
+                                  <c:if test="${!scoreTrue}">
+                                     검사하고왕
+                                  </c:if>
+                                  <c:if test="${scoreTrue}">
+                                      <canvas id="aptitudeChart"></canvas>
+                                      <ul>
+                                           <li>${aptitudeRank.aptitude_name1}</li>                         
+                                           <li>${aptitudeRank.aptitude_name2}</li>                         
+                                           <li>${aptitudeRank.aptitude_name3}</li>                         
+                                      </ul>
+                                  </c:if>                                  
+                               </div>
+                               <div id="item-values">
+                                  <c:if test="${!scoreTrue}">
+                                     검사하고왕
+                                  </c:if>
+                                  <c:if test="${scoreTrue}">
+                                     <canvas id="valuesChart"></canvas>
+                                  </c:if>
+                               </div>
+                               <div id="item-interest">
+                                  <c:if test="${!scoreTrue}">
+                                     검사하고왕
+                                  </c:if>
+                                  <c:if test="${scoreTrue}">
+                                     <canvas id="interestChart"></canvas>
+                                      <ul>
+                                           <li>${aptitudeRank.interest_name1}</li>                         
+                                           <li>${aptitudeRank.interest_name2}</li>                         
+                                           <li>${aptitudeRank.interest_name3}</li>                         
+                                      </ul>
+                                  </c:if>
+                               </div>
+                               <div id="item-ability">
+                                  <c:if test="${!scoreTrue}">
+                                     검사하고왕
+                                  </c:if>
+                                  <c:if test="${scoreTrue}">
+                                       <canvas id="abilityChart1"></canvas>
+                                      <canvas id="abilityChart2"></canvas>
+                                  </c:if>
+                                 
+                               </div>
                             </div>
                             <div class="tab-pane fade" id="nav-addInfo" role="tabpanel" aria-labelledby="nav-add-tab" tabindex="0">
                         <form action="/whou/member/updateInfo" method="post">
