@@ -16,15 +16,19 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+		<script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
 		<script src="resources/js/unpkg.com_gsap@3.12.1_dist_gsap.min.js"></script>
 		<script src="resources/js/ThreeCSG.js"></script>
 		<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-        <script type="module" src="resources/js/whouModel.js?ver=2"></script>
+        <script type="module" src="/whou/resources/js/whouModel2.js?ver=3"></script>
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
-            </head>
- 
+		<script src="resources/js/ai.js"></script>
+       
+        
+    </head>
+
     <body>
+    <div class="chat-box-container"></div>
         <!-- Responsive navbar-->
        <%@ include file="header.jsp" %> 
         <!-- Header-->
@@ -37,17 +41,17 @@
                               <form action="/whou/job/dic" name="form" method="post">
 	                            <div class="input-group search-form">
 	                                <span class="search-btn"><i class="fa-solid fa-magnifying-glass fa-xl" style="color: #5a3fff;"></i></span>
-	                                <input type="text" class="">
+	                                <input type="text" name="jobNM">
 	                            </div>
                             </form>
                             <div class="d-grid gap-3 d-sm-flex justify-content-sm-start mt-5">
                               <div class="row" >
                                 <div class="col main-ai-wrap" style="position: relative;">
                                     <div class="main-ai" style="width: 120px;">
-                                 	   <canvas class="webgl" style="position: absolute; top: -55px; left: -70px;" ></canvas> <%-- ai --%>
+                                 	   <canvas class="webgl" style="position: absolute; top: -83px; left: -15px;" ></canvas> <%-- ai --%>
                                     </div>
                                     <div class="icon-box">
-                                        <span class="icon-box-ic">아이콘</span>
+                                        <span class="icon-box-ic"><i class="${icon} fa-2xl"></i></span>
                                     </div>
                                 </div>
                                 <div class="col auto-text">자동추천글자동추천글자동추천글자동추천글</div>
@@ -276,6 +280,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Footer-->
         <footer class="container py-5">
             <div class="border-top border-bottom py-3">
@@ -296,53 +301,30 @@
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <%-- 모델 --%>
-        <script>
-        	var modelCamera_x = ${brush.camera};
-        	var modelCamera_y = 1;
-        	var modelCamera_z = 3;
-		 	var modelPath = '/whou/resources/whouModel/${brush.path_folder}/${brush.path_gltf}';
-		 	
-		 	var modelWidth = 350;
-        	var modelHeight = 200;
-		 	
-		 	if('${brush.color}' != 'noColor'){
-		 		var modelColor = '${brush.color}';
-		 	}
-		 	var modelScale_x = ${brush.scale_x};
-		 	var modelScale_y = ${brush.scale_y};
-		 	var modelScale_z = ${brush.scale_z};
-		 	
-		 	var modelPosition_x = ${brush.position_x};
-		 	var modelPosition_y = ${brush.position_y};
-		 	var modelPosition_z = ${brush.position_z};
-		 	
-		 	var modelRotation_x = ${brush.rotation_x};
-		 	var modelRotation_y = ${brush.rotation_y};
-		 	var modelRotation_z = ${brush.rotation_z};
-		 	
-		 	var modelMotion = ${brush.motion};
-        	
+         <script>
+        	var modelCamera = 0;
+        	var modelPath= '';
         	if('${model.headColor}' === ''){
-        		var headColor = '#F781F3';
+        		var headColor = '#FF0080';
         	}else{
         		headColor = '${model.headColor}';
         	}
         	if('${model.armColor}' === ''){
-        		var armColor = '#F781F3';
+        		var armColor = '#FF0080';
         	}else{
         		armColor = '${model.armColor}';
         	}
         	if('${model.cheekColor}' === ''){
-        		var cheekColor = '#DF0101';
+        		var cheekColor = '#FF0080';
         	}else{
         		cheekColor = '${model.cheekColor}';
         	}
         	if('${model.legColor}' === ''){
-        		var legColor = '#585858';
+        		var legColor = '#FF0080';
         	}else{
         		legColor = '${model.legColor}';
         	}
         </script>
+        
     </body>
 </html>
