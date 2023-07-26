@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
  <head>
@@ -27,6 +28,12 @@
  
  
 <body>
+
+<%-- <c:set var="aptitudeScoreArr" value='["15.7","8.5","5.6","12.5","6.6","5.5","8.9","6.5","5.1","8.5","6.1"]' /> --%>
+<%-- <c:set var="valuesScoreArr" value='["15.7","8.5","5.6","12.5","6.6","5.5","8.9","6.5","5.1","8.5","6.1"]' /> --%>
+<%-- <c:set var="interestScoreArr" value='["15.7","8.5","5.6","12.5","6.6","5.5","8.9","6.5","5.1","8.5","6.1"]' /> --%>
+<%-- <c:set var="abilityScoreArr1" value='["15.7","8.5","5.6","12.5","6.6","5.5","8.9","6.5","5.1","8.5","6.1"]' /> --%>
+
     <%@ include file="../header.jsp" %> 
     <section class="py-2 mypage-section">
             <div class="container px-5">
@@ -56,27 +63,48 @@
 	                                <option value="31">흥미</option>
 	                            </select>
 	                            <div id="item-aptitude">
-	                                <canvas id="aptitudeChart"></canvas>
-	                                <ul>
-		                               	<li>${aptitudeRank.aptitude_name1}</li>                         
-		                               	<li>${aptitudeRank.aptitude_name2}</li>                         
-		                               	<li>${aptitudeRank.aptitude_name3}</li>                         
-	                                </ul>
+		                            <c:if test="${!scoreTrue}">
+		                            	검사하고왕
+		                            </c:if>
+		                            <c:if test="${scoreTrue}">
+		                            	 <canvas id="aptitudeChart"></canvas>
+		                                <ul>
+			                               	<li>${aptitudeRank.aptitude_name1}</li>                         
+			                               	<li>${aptitudeRank.aptitude_name2}</li>                         
+			                               	<li>${aptitudeRank.aptitude_name3}</li>                         
+		                                </ul>
+		                            </c:if>	                               
 	                            </div>
 	                            <div id="item-values">
-	                                <canvas id="valuesChart"></canvas>
+		                            <c:if test="${!scoreTrue}">
+		                            	검사하고왕
+		                            </c:if>
+		                            <c:if test="${scoreTrue}">
+		                            	<canvas id="valuesChart"></canvas>
+		                            </c:if>
 	                            </div>
 	                            <div id="item-interest">
-	                                <canvas id="interestChart"></canvas>
-	                                <ul>
-		                               	<li>${aptitudeRank.interest_name1}</li>                         
-		                               	<li>${aptitudeRank.interest_name2}</li>                         
-		                               	<li>${aptitudeRank.interest_name3}</li>                         
-	                                </ul>
+		                            <c:if test="${!scoreTrue}">
+		                            	검사하고왕
+		                            </c:if>
+		                            <c:if test="${scoreTrue}">
+		                            	<canvas id="interestChart"></canvas>
+		                                <ul>
+			                               	<li>${aptitudeRank.interest_name1}</li>                         
+			                               	<li>${aptitudeRank.interest_name2}</li>                         
+			                               	<li>${aptitudeRank.interest_name3}</li>                         
+		                                </ul>
+		                            </c:if>
 	                            </div>
 	                            <div id="item-ability">
-	                                <canvas id="abilityChart1"></canvas>
-	                                <canvas id="abilityChart2"></canvas>
+		                            <c:if test="${!scoreTrue}">
+		                            	검사하고왕
+		                            </c:if>
+		                            <c:if test="${scoreTrue}">
+		                              	<canvas id="abilityChart1"></canvas>
+	                                	<canvas id="abilityChart2"></canvas>
+		                            </c:if>
+	                              
 	                            </div>
                             </div>
                             <div class="tab-pane fade" id="nav-addInfo" role="tabpanel" aria-labelledby="nav-add-tab" tabindex="0">

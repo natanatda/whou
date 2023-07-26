@@ -412,7 +412,7 @@ public class MemberController {
 		System.out.println("userNum왜안댐? "+userNum);
 		// 적성 차트 점수
 		String scoreA = serviceAt.getAptitudeScore(userNum);
-	
+		Boolean scoreTrue = false;
 		if(scoreA != null) {			
 			String [] scoreArr= scoreA.split("\\+");
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -424,6 +424,7 @@ public class MemberController {
 				e.printStackTrace();
 			}
 			model.addAttribute("aptitudeScoreArr", scoresA);
+			scoreTrue = true;
 		}else {
 			model.addAttribute("aptitudeScoreArr", 0);
 		}
@@ -441,6 +442,8 @@ public class MemberController {
 				e.printStackTrace();
 			}
 			model.addAttribute("aptitudeNameArr", scoresName);
+			scoreTrue = true;
+
 		}else {
 			model.addAttribute("aptitudeNameArr", "[]");
 		}
@@ -458,6 +461,8 @@ public class MemberController {
 				e.printStackTrace();
 			}
 			model.addAttribute("interestScoreArr", scoresI);
+			scoreTrue = true;
+
 		}else {
 			model.addAttribute("interestScoreArr", 0);
 		}
@@ -475,6 +480,7 @@ public class MemberController {
 				e.printStackTrace();
 			}
 			model.addAttribute("valuesScoreArr", scoresV);
+			scoreTrue = true;
 		}else {
 			model.addAttribute("valuesScoreArr", 0);
 		}
@@ -496,7 +502,8 @@ public class MemberController {
         // 마이페이지 top 검색
         RecommandInfoDTO aptitudeRank = service.getAptitudeRank(userNum);
         model.addAttribute("aptitudeRank", aptitudeRank);
- 
+		model.addAttribute("scoreTrue", scoreTrue);
+
 		return "/user/mypage";
 	}
   	
