@@ -19,35 +19,11 @@
 		<script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
 		<script src="resources/js/unpkg.com_gsap@3.12.1_dist_gsap.min.js"></script>
 		<script src="resources/js/ThreeCSG.js"></script>
-		<script src="resources/js/ai.js"></script>
 		<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
         <script type="module" src="/whou/resources/js/whouModel2.js?ver=3"></script>
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
-        <script>
-        	var modelCamera = 0;
-        	var modelPath= '';
-        	if('${model.headColor}' === ''){
-        		var headColor = '#FF0080';
-        	}else{
-        		headColor = '${model.headColor}';
-        	}
-        	if('${model.armColor}' === ''){
-        		var armColor = '#FF0080';
-        	}else{
-        		armColor = '${model.armColor}';
-        	}
-        	if('${model.cheekColor}' === ''){
-        		var cheekColor = '#FF0080';
-        	}else{
-        		cheekColor = '${model.cheekColor}';
-        	}
-        	if('${model.legColor}' === ''){
-        		var legColor = '#FF0080';
-        	}else{
-        		legColor = '${model.legColor}';
-        	}
-        </script>
-
+		<script src="resources/js/ai.js"></script>
+       
         
     </head>
 
@@ -325,5 +301,30 @@
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+         <script>
+        	var modelCamera = 0;
+        	var modelPath= '';
+        	if('${model.headColor}' === ''){
+        		var headColor = '#FF0080';
+        	}else{
+        		headColor = '${model.headColor}';
+        	}
+        	if('${model.armColor}' === ''){
+        		var armColor = '#FF0080';
+        	}else{
+        		armColor = '${model.armColor}';
+        	}
+        	if('${model.cheekColor}' === ''){
+        		var cheekColor = '#FF0080';
+        	}else{
+        		cheekColor = '${model.cheekColor}';
+        	}
+        	if('${model.legColor}' === ''){
+        		var legColor = '#FF0080';
+        	}else{
+        		legColor = '${model.legColor}';
+        	}
+        </script>
+        
     </body>
 </html>
