@@ -16,9 +16,8 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.w3c.dom.Document;
@@ -38,10 +37,10 @@ import whou.secproject.component.EducationMajorResponseDTO;
 
 public class EducationApiDAO {
 	
-	@Value("${api.key}")
+	@Autowired
 	private String apiKey;
     
-    @Value("${auth.key}")
+	@Autowired
 	private String authKey;
 	
 	//커리어넷 학과 리스트 API

@@ -43,6 +43,7 @@ import com.google.gson.JsonParser;
 import whou.secproject.component.JobDicDetailResponseDTO;
 import whou.secproject.component.MemberDTO;
 import whou.secproject.component.RecommandInfoDTO;
+import whou.secproject.component.TestReinforcementDTO;
 import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.service.AptitudeService;
 import whou.secproject.service.MemberService;
@@ -496,6 +497,79 @@ public class MemberController {
         // 마이페이지 top 검색
         RecommandInfoDTO aptitudeRank = service.getAptitudeRank(userNum);
         model.addAttribute("aptitudeRank", aptitudeRank);
+        
+        
+        
+        
+        
+        //sojin write
+        // user_info의 num을 이용하여 cunsulting_num(직업백과 job_cd) 컬럼 값 get
+        int cunsultingNum = 0;
+        cunsultingNum = service.getCunsultingNum(userNum);
+        List<String> needAvil = new ArrayList<>();//직업의 능력
+        if(cunsultingNum>0) {
+        	// 직업 백과에서 정보 뜯어오기
+        	JobDicDetailResponseDTO jobDetailCunsuling = dao.getJobDicDetail(userNum);
+        	String [] majorChartMajor = jobDetailCunsuling.getMajorChart().get(0).getMajor().split(","); // 종사자 전공 비율 항목
+        	String [] majorChartMajorData = jobDetailCunsuling.getMajorChart().get(0).getMajor_data().split(","); //종사전 전공 비율 값
+        	model.addAttribute("majorChartMajor", majorChartMajor);
+        	model.addAttribute("majorChartMajorData", majorChartMajorData);
+        	model.addAttribute("jobDetailCunsuling", jobDetailCunsuling);
+        	
+        	for(int i=0; i<jobDetailCunsuling.getAbilityList().size();i++) {
+        		needAvil.add(jobDetailCunsuling.getAbilityList().get(i).getAbility_name());
+        	}
+        }
+        model.addAttribute("cunsultingNum", cunsultingNum);
+        model.addAttribute("needAvil", needAvil);
+        
+        
+        
+        //역량 보완법을 위해 크롤링한 결과에서 21번 테스트의 역량별 수치 가져옴
+        String avilReinforce="";
+        avilReinforce = service.getRecentTest21(userNum);
+        double [] avilArrDouble = new double [11];
+        if(avilReinforce.length()>10) {
+        	String [] avilArrString = avilReinforce.split("\\+");
+        	for(int i=0; i<11; i++) {
+        		avilArrDouble[i]=Double.parseDouble(avilArrString[i]);
+        		//0음악능력  1예술시각능력  2언어능력  3수리·논리력  4공간지각력
+        		//5자기성찰능력  6창의력  7대인관계능력  8신체·운동능력  9자연친화력  10손재능
+        	}
+        	
+        	// 해당 직업에서 요구하는 능력치의 value
+        	double [] avilArrValue = new double [needAvil.size()];
+        	int avilNum = -1;
+        	List<TestReinforcementDTO> reinDTO=new ArrayList<>();
+        	for(int i=0; i<needAvil.size(); i++) {
+	        	switch(needAvil.get(i)) {
+	        		case "음악능력": avilArrValue[i]=avilArrDouble[0]; avilNum=0; break;
+//	        		case "예술시각능력": avilArrValue[i]=avilArrDouble[1]; avilNum=1; break;
+	        		case "예술시각능력": avilArrValue[i]=1000; avilNum=1; break;
+//	        		case "언어능력": avilArrValue[i]=avilArrDouble[2]; avilNum=2; break;
+	        		case "언어능력": avilArrValue[i]=1000; avilNum=2; break;
+	        		case "수리·논리력": avilArrValue[i]=avilArrDouble[3]; avilNum=3; break;
+	        		case "공간지각력": avilArrValue[i]=avilArrDouble[4]; avilNum=4; break;
+//	        		case "자기성찰능력": avilArrValue[i]=avilArrDouble[5]; avilNum=5; break;
+	        		case "자기성찰능력": avilArrValue[i]=1000; avilNum=5; break;
+	        		case "창의력": avilArrValue[i]=avilArrDouble[6]; avilNum=6; break;
+//	        		case "대인관계능력": avilArrValue[i]=avilArrDouble[7]; avilNum=7; break;
+	        		case "대인관계능력": avilArrValue[i]=1000; avilNum=7; break;
+	        		case "신체·운동능력": avilArrValue[i]=avilArrDouble[8]; avilNum=8; break;
+	        		case "자연친화력": avilArrValue[i]=avilArrDouble[9]; avilNum=9; break;
+	        		case "손재능": avilArrValue[i]=avilArrDouble[10]; avilNum=10; break;
+	        	}
+	        	reinDTO.add(service.getTestReinforcement(avilNum));
+        	}
+        	model.addAttribute("reinDTO",reinDTO);
+        	model.addAttribute("avilArrValue",avilArrValue);
+        }
+        model.addAttribute("avilReinforce",avilReinforce);
+        
+        
+        
+        
+        
  
 		return "/user/mypage";
 	}
