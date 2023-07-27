@@ -85,16 +85,16 @@
 	                                                    검사횟수
 	                                                </td>
 	                                                <td>
-	                                                    ${valueList[0].getCount()}
+	                                                    ${valueCountArr[0]}
 	                                                </td>
 	                                                <td>
-	                                                    ${valueList[1].getCount()}
+	                                                    ${valueCountArr[1]}
 	                                                </td>
 	                                                <td>
-	                                                    ${valueList[2].getCount()}
+	                                                    ${valueCountArr[2]}
 	                                                </td>
 	                                                <td>
-	                                                    ${valueList[3].getCount()}
+	                                                    ${valueCountArr[3]}
 	                                                </td>                                    
 	                                            </tr>
 	                                            <tr>
@@ -102,16 +102,16 @@
 	                                                    최근검사일
 	                                                </td>
 	                                                <td>
-	                                                    ${valueList[0].getMax_test_date()}
+	                                                    ${valueDateArr[0]}
 	                                                </td>
 	                                                <td>
-	                                                    ${valueList[1].getMax_test_date()}
+	                                                    ${valueDateArr[1]}
 	                                                </td>
 	                                                <td>
-	                                                    ${valueList[2].getMax_test_date()}
+	                                                    ${valueDateArr[2]}
 	                                                </td>
 	                                                <td>
-	                                                    ${valueList[3].getMax_test_date()}
+	                                                    ${valueDateArr[3]}
 	                                                </td>                                    
 	                                            </tr>
 	                                        </tbody>
