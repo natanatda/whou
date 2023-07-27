@@ -50,6 +50,7 @@ import whou.secproject.component.CertiDTO;
 import whou.secproject.component.JobDicDetailResponseDTO;
 import whou.secproject.component.Job_infoDTO;
 import whou.secproject.component.MemberDTO;
+import whou.secproject.component.RecoResultDTO;
 import whou.secproject.component.RecommandInfoDTO;
 import whou.secproject.component.SelectDTO;
 import whou.secproject.component.TestReinforcementDTO;
@@ -683,22 +684,20 @@ public class MemberController {
         List<Integer> importances = Arrays.asList(1,2,3); // 중요도
         
         LinkedHashMap<ArrayList<Double>,Double> scores = redao.DoubleTokener(scoreStrs, limitStrs);
-        System.out.println(jobNumList);
          List<Double> jobScore = new ArrayList<>(Collections.nCopies(jC, 1.0)); // 직업당 점수
          
         System.out.println(10+majorC+certiC);
-         double [][] jobScorePoint = new double [jC][10+majorC+certiC];
-         if(serviceRe.tbTrue(userNum)==1) serviceRe.dropTable(userNum);
-         serviceRe.createJobPoint(userNum, majorC, certiC);
+        double [][] jobScorePoint = new double [jC][10+majorC+certiC];
+        if(serviceRe.tbTrue(userNum)==1) serviceRe.dropTable(userNum);
+        serviceRe.createJobPoint(userNum, majorC, certiC);
 
         int i = 0;
         for (Map.Entry<ArrayList<Double>, Double> entry : scores.entrySet()) {
-           List<String> jobNum = jobNumList.get(i); // 해당하는 직업의 jcd
-              List<Double> normalize= redao.normalizePer(entry.getKey(), entry.getValue(), importances.get(i++)).subList(0, 3); // 3개만 적용
-              System.out.println(normalize);
-              if(jobNum.size()!=0) {
-                 for(int j = 0 ; j < normalize.size(); j++) {
-                    double d = normalize.get(j); // 1.38~~
+        	List<String> jobNum = jobNumList.get(i); // 해당하는 직업의 jcd
+        	List<Double> normalize= redao.normalizePer(entry.getKey(), entry.getValue(), importances.get(i++)).subList(0, 3); // 3개만 적용
+        	if(jobNum.size()!=0) {
+        		for(int j = 0 ; j < normalize.size(); j++) {
+        			double d = normalize.get(j); // 1.38~~
                     StringTokenizer st = new StringTokenizer(jobNum.get(j),",");
                     while(st.hasMoreTokens( )) {
                        int f = jList.indexOf(Integer.parseInt(st.nextToken()));
@@ -707,7 +706,6 @@ public class MemberController {
                     }
                  }
               }
-              System.out.println(jobScore);
           }
         
         List<Integer> valueList = null;
@@ -748,7 +746,8 @@ public class MemberController {
               for(Integer l : li) {
                  l = jList.indexOf(l);
                  jobScore.set(l, jobScore.get(l)*1.1);
-                   jobScorePoint[l][m] = 1.1;
+                 jobScorePoint[l][m] = 1.1;
+                 System.out.println("certitreu"+jobScorePoint[l][m]+" "+l+" "+m);
               }
               m++;
            }
@@ -795,28 +794,49 @@ public class MemberController {
         ArrayList<LinkedHashMap<String, BigDecimal>> NMByPoint = new ArrayList<LinkedHashMap<String,BigDecimal>>();
         //serviceRe;
         for(int h = 0 ;  h < recoLi.size(); h++) {
-           LinkedHashMap<String,BigDecimal> arr = new LinkedHashMap<String,BigDecimal>();
-           for(int c = 0; c < 11+majorC+certiC; c++) {
-              String factor = null;
-              if(c == 0) factor = "직업 일련번호";
-              else if(c == 1) factor = "총점";
-              else if(c < 8) {
-                 factor = top3NM.get(colNM.get(c-2));
-                 if(factor==null) factor=(c-1)+"?";
-              }
-              else if(c==8) factor = "안전지향";
-              else if(c==9) factor = "의미지향";
-              else if(c==10) factor = "변화지향";
-              else if(c==11) factor = "성취지향";
-              else if(c<11+majorC) factor = majors.get(c-11);
-              else if(c<11+majorC+certiC) factor = certis.get(c-11-majorC);
-              System.out.println(factor + " " +recoLi.get(0).get(colNM2.get(c)));
-              arr.put(factor, recoLi.get(h).get(colNM2.get(c)));
-           }
-           NMByPoint.add(arr);
-        }
+            LinkedHashMap<String,BigDecimal> arr = new LinkedHashMap<String,BigDecimal>();
+            RecoResultDTO reredto = new RecoResultDTO();
+            reredto.setJob_nm("");
+            for(int c = 0; c < 11+majorC+certiC; c++) {
+               String factor = null, detail = null;
+               if(c == 0) factor = "직업 일련번호";
+               else if(c == 1) factor = "총점";
+               else if(c < 8) {
+                  factor = top3NM.get(colNM.get(c-2));
+                  if(factor==null) factor=(c-1)+"?";
+                  if(1<c&& c<5) detail ="적성";
+                  else detail ="흥미";
+               }
+               else if(c==8) factor = "안전지향";
+               else if(c==9) factor = "의미지향";
+               else if(c==10) factor = "변화지향";
+               else if(c==11) factor = "성취지향";
+               else if(c<11+majorC) factor = majors.get(c-11);
+               else if(c<11+majorC+certiC) factor = certis.get(c-11-majorC);
+               arr.put(factor, recoLi.get(h).get(colNM2.get(c)));
+               if(1<c&&c<8) {
+ 	              if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+ 	            	  reredto.setDescription(
+ 	            		"당신의 "+detail+" 중 " +factor+"은 당신의 표준 "+detail+" 점수에 비해 약 "+
+ 	            		Math.round(recoLi.get(h).get(colNM2.get(c)).doubleValue()*100)+"% 높");
+ 	              }
+               }else if(7<c&&c<12) {
+            	   if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+  	            	  reredto.setDescription(
+  	            		" 표준 "+factor+" 점수에 비해 약 "+
+  	            		Math.round(recoLi.get(h).get(colNM2.get(c)).doubleValue()*100)+"% 높");
+  	              }
+               }else if(11<c) {
+            	   if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+   	            	  reredto.setDescription(
+   	            		" 자격증 "+factor+" 는 도움이 되");
+   	              }
+               }
+            }
+            System.out.println(reredto.getDescriptions());
+            NMByPoint.add(arr);
+         }
         System.out.println(NMByPoint);
-        
         model.addAttribute("NMByPoint", NMByPoint);
 
         
