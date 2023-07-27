@@ -36,6 +36,7 @@
 	            		<input type="text" class="form-control" name = "email" id="email" placeholder="name@example.com" required oninput = "checkEmail()">
 	            		<span class="email_ok" style="color:green; display:none;">사용 가능한 이메일입니다.</span>
 	            		<span class="email_already" style="color:red; display:none;">중복된 이메일입니다.</span>
+	            		<span class="email_error" style="color:red; display:none;">이메일 형식에 맞게 입력해주세요.</span>
 	            		<!--
 	            		<button type="button" class="btn btn-outline-secondary" name="emailChk" id="emailChk">중복 확인</button>
 	            		-->
@@ -45,6 +46,7 @@
 	            	<c:if test="${email == null}">
 		              	<label for="joinInput" class="form-label">비밀번호</label>
 		              	<input type="password" class="form-control" name = "pw" id="pw" placeholder="4자리 이상">
+		              	<span class="pw_error" style="color:red; display:none;">형식에 맞게 입력해주세요.</span>
 	            	</c:if>
 	            </div>
 	            <div class="input-item">
@@ -62,7 +64,8 @@
 	            </div>
 	            <div class="input-item">
 	              <label for="joinInput" class="form-label">연도</label>
-	              <input type="text" class="form-control" name = "birth_year" id="birth_year" placeholder="YYYY">
+	              <input type="text" class="form-control" name = "birth_year" id="birth_year" placeholder="YYYY" required oninput = "checkYear()">
+	              <span class="year_error" style="color:red; display:none;">형식에 맞게 4자리로 입력해주세요.</span>
 	            </div>
 	            <div class="input-item">
 	              <label for="joinInput" class="form-label">휴대폰</label>
@@ -70,22 +73,15 @@
 		              <input type="text" class="form-control" id="tel" name = "tel" placeholder="'-' 빼고 숫자만 입력">
 		              <button type="button" class="purple-btn" name="phoneChk" id="phoneChk">인증 요청</button>
 	              </div>
+		              <span class="tel_error" style="color:red; display:none;">형식에 맞게 휴대폰번호를 정확히 입력해주세요.</span>
+		              <span class="tel_ok" style="color:green; display:none;">인증번호 발송이 완료되었습니다.</br> 휴대폰에서 인증번호를 확인해주십시오.</span>
 	              <div class="input-box">
 		              <input type="text" style="display:none;" class="form-control" id="tel2" name = "tel2" placeholder="인증번호 입력">
 		              <button type="button" style="display:none;" class="purple-btn" name="phoneChk2" id="phoneChk2">인증 확인</button>
 				  </div>
+				  	  <span class="tel2_ok" style="color:green; display:none;">인증에 성공하셨습니다.</span>
+		              <span class="tel2_error" style="color:red; display:none;">인증에 실패하셨습니다</br>인증번호를 다시 확인해주십시오.</span>
 	            </div>
-	            <div class="input-item">
-				  	<input type="radio" class="" id="gender_F" name="gender" id="gender" value="F">
-					<label for="gender_F" class="form-label">
-					    여성
-					</label>
-					<input type="radio" class="" id="gender_M" name="gender" id="gender" value="M">
-					<label for="gender_M" class="form-label">
-					    남성
-					</label>
-				</div>
-				
 	            <div class="input-item">
 	              <label for="joinInput" class="form-label">약관</label>
 	              <div class="agree_box">
@@ -122,16 +118,15 @@
 							      <div class="accordion-body terms-box">
 							        <div>
                                 	제1조 (목적)
-									본 약관은 ㈜사람인(이하 "회사"라 합니다)이 운영하는 웹사이트(이하 “사이트”라 합니다) 및 모바일 애플리케이션(이하 “애플리케이션”이라 하며, 사이트와 애플리케이션을 총칭하여 “사이트 등”이라 합니다)을 통해 서비스를 제공함에 있어 회사와 이용자의 이용조건 및 제반 절차, 기타 필요한 사항의 규정을 목적으로 합니다.
+									본 약관은 ㈜whoU(이하 "회사"라 합니다)이 운영하는 웹사이트(이하 “사이트”라 합니다) 및 모바일 애플리케이션(이하 “애플리케이션”이라 하며, 사이트와 애플리케이션을 총칭하여 “사이트 등”이라 합니다)을 통해 서비스를 제공함에 있어 회사와 이용자의 이용조건 및 제반 절차, 기타 필요한 사항의 규정을 목적으로 합니다.
 									
 									제2조 (용어의 정의)
 									본 약관에서 사용하는 용어의 정의는 아래와 같습니다.
 									
 									① “사이트”라 함은 회사가 서비스를 이용자에게 제공하기 위하여 제작, 운영하는 사이트를 말합니다. 현재 회사가 운영하는 사이트의 접속 주소는 아래와 같습니다.
-									- www.saramin.co.kr
-									- m.saramin.co.kr
+									- www.whoU.co.kr
+									- m.whoU.co.kr
 									② "애플리케이션"이라 함은 회사와 계열사가 이용자에게 서비스를 제공하기 위하여IOS, 안드로이드 등 운영체제와 관계없이 스마트폰 또는 기타 휴대용 단말기에서 이용할 수 있도록 제작, 운영하는 프로그램을 말합니다. 현재 회사가 운영하는 애플리케이션의 이름은 아래와 같습니다.
-									- 사람인, 아이엠그라운드, 연봉계산기 등
 									③ "서비스"라 함은 채용정보, 이력서 및 기업정보 제공 기타의 서비스를 통하여 구직•채용시장에서 구직자와 기업의 연결을 돕는 플랫폼 서비스입니다. 구체적으로는 회사가 기업 또는 구직자가 구인, 구직과 교육을 목적으로 등록하는 각종 자료를 DB화하여 각각의 목적에 맞게 분류 가공, 집계하여 정보를 제공하는 서비스 및 기타 구인 및 구직이 원활히 이루어지도록 하기 위하여 사이트 등에서 제공하는 모든 서비스를 말합니다. 회사가 제공하는 서비스는 유형에 따라 무료 또는 유료로 제공됩니다. 서비스의 자세한 내용은 제8조에서 정하는 바에 따릅니다.
 									④ "이용자"라 함은 사이트 등에 접속하여 본 약관에 따라 회사가 제공하는 서비스를 이용하는 회원(기업회원 및 개인회원을 포함) 및 비회원을 말합니다.
 									⑤ "개인회원"이라 함은 본 서비스를 이용하기 위하여 본 약관에 동의하고 회사와 서비스 이용계약을 체결하여 개인회원ID를 부여받은 이용자를 말합니다.
@@ -212,7 +207,7 @@
 							      <div class="accordion-body terms-box">
 							      	<div>
 										제1조(목적)
-										본 약관은 (주)사람인(이하 “회사”라고 합니다.)이 제공하는 위치기반서비스(이하 “서비스”라고 합니다.)와 관련하여, 회사와 회원(서비스 약관에 동의한 자, 이하 “회원”)의 권리·의무 및 책임사항을 규정함을 목적으로 합니다.
+										본 약관은 (주)whoU(이하 “회사”라고 합니다.)이 제공하는 위치기반서비스(이하 “서비스”라고 합니다.)와 관련하여, 회사와 회원(서비스 약관에 동의한 자, 이하 “회원”)의 권리·의무 및 책임사항을 규정함을 목적으로 합니다.
 										
 										제2조 (용어의 정의)
 										본 약관에서 사용하는 용어의 정의는 다음 각호와 같으며, 정의되지 않은 용어에 대한 해석은 관계법령 및 서비스 안내에서 정하는 바에 따릅니다.
@@ -319,9 +314,9 @@
 										
 										수집방법	수집항목	수집 및 이용목적
 										회원가입	(선택)
-										마케팅 정보 수신 동의(이메일)	회사가 제공하는 상품 및 서비스(사람인, 사람인긱, 점핏, 더플랩, 리버스)의 안내, 설문, 이벤트 관련 정보 및 참여 기회 제공, (제휴)광고 및 마케팅 정보 제공
+										마케팅 정보 수신 동의(이메일)	회사가 제공하는 상품 및 서비스의 안내, 설문, 이벤트 관련 정보 및 참여 기회 제공, (제휴)광고 및 마케팅 정보 제공
 										
-										귀하께서는 회사가 위와 같이 수집하는 개인정보에 대해 동의하지 않거나 개인정보를 기재하지 않음으로써 거부할 수 있습니다. 다만, 동의하지 아니한 경우에도 사람인 서비스는 이용하실 수 있습니다.
+										귀하께서는 회사가 위와 같이 수집하는 개인정보에 대해 동의하지 않거나 개인정보를 기재하지 않음으로써 거부할 수 있습니다. 다만, 동의하지 아니한 경우에도 서비스는 이용하실 수 있습니다.
 										
 										
 										2. 개인정보 보유 및 이용기간
@@ -361,9 +356,9 @@
 										
 										수집방법	수집항목	수집 및 이용목적
 										회원가입	(선택)
-										마케팅 정보 수신 동의(SMS/MMS, push)	회사가 제공하는 상품 및 서비스(사람인, 사람인긱, 점핏, 더플랩, 리버스)의 안내, 설문, 이벤트 관련 정보 및 참여 기회 제공, (제휴)광고 및 마케팅 정보 제공
+										마케팅 정보 수신 동의(SMS/MMS, push)	회사가 제공하는 상품 및 서비스의 안내, 설문, 이벤트 관련 정보 및 참여 기회 제공, (제휴)광고 및 마케팅 정보 제공
 										
-										귀하께서는 회사가 위와 같이 수집하는 개인정보에 대해 동의하지 않거나 개인정보를 기재하지 않음으로써 거부할 수 있습니다. 다만, 동의하지 아니한 경우에도 사람인 서비스는 이용하실 수 있습니다.
+										귀하께서는 회사가 위와 같이 수집하는 개인정보에 대해 동의하지 않거나 개인정보를 기재하지 않음으로써 거부할 수 있습니다. 다만, 동의하지 아니한 경우에도 서비스는 이용하실 수 있습니다.
 										
 										
 										2. 개인정보 보유 및 이용기간
@@ -400,25 +395,37 @@
    		<script>
    		var code2 = null;
    		var telchk = null;
+   		var check = /^[0-9]+$/; 
+   		
+   		//이메일 유효성 검사
    		function checkEmail() {
    		    var email = $("#email").val();
    		    $.ajax({
    		        url: "/whou/member/emailChk",
    		        data: { email: email },
    		        success: function (result) {
-   		            if (email.length > 0 && result == 0) {
+   		            if (email.length > 0 && result == 0 && email.includes('@') && email.includes('.com')) {
    		                $('.email_ok').css("display", "inline-block");
    		                $('.email_already').css("display", "none");
-   		            } else if (email.length > 0 && result != 0) {
+   		                $('.email_error').css("display", "none");
+   		            } else if (email.length > 0 && result != 0 && email.includes('@') && email.includes('.com')) {
    		                $('.email_ok').css("display", "none");
    		                $('.email_already').css("display", "inline-block");
-   		            } else if (email.length == 0) {
+   		             	$('.email_error').css("display", "none");
+   		            } else if (email.length == 0 && !email.includes('@') && !email.includes('.com')) {
    		                $('.email_ok').css("display", "none");
    		                $('.email_already').css("display", "none");
+   		             	$('.email_error').css("display", "none");	
+   		            } else if (!email.includes('@') && !email.includes('.com')) {
+   		                $('.email_ok').css("display", "none");
+   		                $('.email_already').css("display", "none");
+   		             	$('.email_error').css("display", "inline-block");
    		            }
    		        }
    		    });
    		}
+   		
+   		//비밀번호 확인
    		function checkPw2() {
    		    var pw = $("#pw").val();
    		    var pw2 = $("#pw2").val();
@@ -430,7 +437,8 @@
    		       $('.pw_x').css("display", "inline-block");
    		    }
    		}
-   		//이메일 중복 체크
+   		
+   		/*//이메일 중복 체크
    		$(function(){
 	   		$("#emailChk").click(function(){
 	   		    //alert('이메일 체크');
@@ -452,30 +460,67 @@
 	   		        }
 	   		    });
 	   		});
-   		});
+   		}); */
+   		
+   		/* //휴대폰 번호 유효성 검사
+   		function checkTel() {
+   			var tel = $("#tel").val();
+   			if(tel.length === 10){
+   				$("#tel_ok").css("display", "inline-block");
+   				$("#tel_error").css("display", "none");
+   				
+   			}else{
+   				$("#tel_ok").css("display", "none");
+   				$("#tel_error").css("display", "inline-block");
+   			}
+   		} */
+   		
+   		//연도 유효성 검사
+   		function checkYear() {
+   			var birth_year = $("#birth_year").val();
+   			if (birth_year.length === 4 && check.test(birth_year)) {
+   		        $('.year_error').css("display", "none");
+   		    } else if (birth_year.length > 0 && check.test(birth_year)) {
+   		        $('.year_error').css("display", "inline-block");
+   		    } else if (birth_year.length > 0 && !check.test(birth_year)) {
+   		        $('.year_error').css("display", "inline-block");
+   		    } else if (birth_year.length === 0) {
+   		        $('.year_error').css("display", "none");
+   		    }
+   		}
    		
    		//휴대폰 번호 인증
    		$(function(){
 	   		$("#phoneChk").click(function(){
-	   		    //alert('인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.');
 	   		    var tel = $("#tel").val();
-	   			$("#tel2").css("display", "inline-block");
-                $("#phoneChk2").css("display", "inline-block");
-	   		    $.ajax({
-	   		        type:"POST",
-	   		        url:"/whou/member/telChk",
-	   		        data: {tel:tel},
-	   		        cache : false,
-	   		        success:function(numStr){
-	   		            if(numStr == "error"){ //실패시 
-	   		                alert("휴대폰 번호가 올바르지 않습니다.")
-	   		            }else{            //성공시        
-	   		                alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.")
-	   		                code2 = numStr; // 성공하면 데이터저장
-	   		            }
-	   		        }
-	   		        
-	   		    });
+	   		    
+	   		    //유효성검사
+	   			if(tel.length === 11 && check.test(tel)){
+	   				$('.tel_ok').css("display", "inline-block");
+	   				$('.tel_error').css("display", "none");
+	   				
+	   				$("#tel2").css("display", "inline-block");
+	                $("#phoneChk2").css("display", "inline-block");
+		   		    $.ajax({
+		   		        type:"POST",
+		   		        url:"/whou/member/telChk",
+		   		        data: {tel:tel},
+		   		        cache : false,
+		   		        success:function(numStr){
+		   		            if(numStr == "error"){ //실패시 
+		   		                alert("휴대폰 번호가 올바르지 않습니다.")
+		   		            }else{            //성공시        
+		   		                alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.")
+		   		                code2 = numStr; // 성공하면 데이터저장
+		   		            }
+		   		        }
+		   		        
+		   		    });
+	   			}else{
+	   				$('.tel_ok').css("display", "none");
+	   				$('.tel_error').css("display", "inline-block");
+	   			}
+	   		    
 	   		});
    		});
 	 
@@ -483,35 +528,105 @@
 		$("#phoneChk2").click(function(){
 		    if($("#tel2").val() == code2){ // 위에서 저장한값을 비교
 		         alert("인증에 성공하셨습니다.")
+		         $('.tel2_ok').css("display", "inline-block");
+	   			 $('.tel2_error').css("display", "none");
 		         telchk = "성공";
 		    }else{
 		        alert("인증에 실패하셨습니다.\n인증번호를 다시 입력해주세요.")
+		        $('.tel2_ok').css("display", "none");
+   				$('.tel2_error').css("display", "inline-block");
 		    }
 		});
    		
    		//전체 동의
-   		document.getElementById("agreeAllPersonal").addEventListener("click", function() {
-   		  var checkboxes = document.querySelectorAll(".agree_article input[type='checkbox']");
-   		  var checkAll = this.checked;
+   		
 
-   		  for (var i = 0; i < checkboxes.length; i++) {
-   		    checkboxes[i].checked = checkAll;
-   		  }
-   		});
-
-
+   		
    		$(function() {
+   		    // 초기에 버튼 비활성화
+   		    $("#btn1").prop("disabled", true);
+   		 	var checkAll = false;
+   		 	document.getElementById("agreeAllPersonal").addEventListener("click", function() {
+      		  var checkboxes = document.querySelectorAll(".agree_article input[type='checkbox']");
+      		  checkAll = this.checked;
+      		  
+      		  for (var i = 0; i < checkboxes.length; i++) {
+      		    checkboxes[i].checked = checkAll;
+      		  }
+      		//
+      		});
+
+   		    function updateButtonStatus() {
+   		    	//alert(checkAll);
+   		        var email = $("#email").val();
+   		        var pw = $("#pw").val();
+   		        var name = $("#name").val();
+   		        var birth_year = $("#birth_year").val();
+   		        var tel = $("#tel").val();
+   		        var join_type = $("#join_type").val();
+
+   		        var emailValid = $('.email_already').css("display") === "none" && $('.email_error').css("display") === "none" && $('.email_ok').css("display") === "inline-block";
+   		        var pwValid = $('.pw_x').css("display") === "none" && $('.pw_error').css("display") === "none" && $('.pw_ok').css("display") === "inline-block";
+   		        var yearValid = $('.year_error').css("display") === "none";
+   		        var telValid = $('.tel2_error').css("display") === "none" && $('.tel_error').css("display") === "none" && $('.tel2_ok').css("display") === "inline-block" && $('.tel_ok').css("display") === "inline-block";
+
+   		        // 필수 동의사항 체크
+   		        var requiredAgreements = document.querySelectorAll('#agree_rule1, #agree_take1');
+		        var isAllChecked = true;
+		        
+		        
+		        for (var i = 0; i < requiredAgreements.length; i++) {
+		            if (!requiredAgreements[i].checked) {
+		                isAllChecked = false;
+		                break;
+		            }
+		        }
+   		        //alert(isAllChecked);
+   		        
+   		        // 모든 조건이 만족할 때 버튼 활성화
+   		        if (email !== '' && pw !== '' && name !== '' && birth_year !== '' && tel !== '' &&
+   		            pwValid && yearValid && telValid && isAllChecked) {
+   		            $("#btn1").prop("disabled", false);
+   		        }else if (email !== '' && pw !== '' && name !== '' && birth_year !== '' && tel !== '' &&
+   		            pwValid && yearValid && telValid && checkAll) {
+   		            $("#btn1").prop("disabled", false);
+   		        }else {
+   		            $("#btn1").prop("disabled", true);
+   		        }
+   		    }
+
+   		    // 인풋 필드들의 입력값 변경 시에 이벤트 핸들러 할당
+   		    $("#email, #pw, #name, #birth_year, #tel").on("input", function() {
+   		        updateButtonStatus();
+   		    });
+
+   		    // 필수 동의사항 체크박스의 상태가 변경될 때마다 버튼 상태 업데이트
+   		    $("#agreeAllPersonal, #agree_rule1, #agree_take1").on("input", function() {
+   		        updateButtonStatus();
+   		    });
+   		}); 
+
+   		/* $(function() {
 		    $("#btn1").click(function() {
-		    	var email = $("#email").val();
-		    	var pw = $("#pw").val();
-		    	var name = $("#name").val();
-		    	var birth_year = $("#birth_year").val();
-		    	var tel = $("#tel").val();
-		    	var gender = $("input[name='gender']:checked").val();
-		    	var join_type = $("#join_type").val();
-		        if (email == '' || pw == '' || name == '' || birth_year == '' || tel == '' || gender == '') {
+		    	var email = $("#email").val().replace(/ /g, '');
+		        var pw = $("#pw").val().replace(/ /g, '');
+		        var name = $("#name").val().replace(/ /g, '');
+		        var birth_year = $("#birth_year").val().replace(/ /g, '');
+		        var tel = $("#tel").val().replace(/ /g, '');
+		        var join_type = $("#join_type").val().replace(/ /g, '');
+		        
+		        if (email == '' || pw == '' || name == '' || birth_year == '' || tel == '') {
 		            alert("모든 항목을 입력해주세요.");
 		            return false; // Prevent form submission
+		        }
+		        if ($('.pw_x').css("display") == "inline-block" || $('.pw_error').css("display") == "inline-block") {
+		            alert("비밀번호를 다시 확인해주세요.");
+		            return false;
+		        }
+		        
+		        if ($('.year_error').css("display") == "inline-block") {
+		            alert("연도를 다시 확인해주세요.");
+		            return false;
 		        }
 		        
 		        if (telchk == null){
@@ -533,20 +648,14 @@
 		        if (!isAllChecked) {
 		            return false; // 필수 동의 사항이 체크되지 않았으므로 함수 종료
 		        }
-		        
-		        if ($('.pw_x').css("display") == "inline-block") {
-		            alert("비밀번호를 다시 확인해주세요.");
-		            return false;
-		        }
 	        
 		        var data = {
-		            email: email,
-		            pw: pw,
-		            name: name,
-		            birth_year: birth_year,
-		            tel: tel,
-		            gender: gender,
-		            join_type: join_type
+		        		email: email,
+		                pw: pw,
+		                name: name,
+		                birth_year: birth_year,
+		                tel: tel,
+		                join_type: join_type
 		        };
 		        $.ajax({
 		            url: "/whou/member/check",
@@ -567,7 +676,7 @@
 		            }
 		        });
 		    });
-		});
+		}); */
 		</script>
     </body>
     

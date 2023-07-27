@@ -8,11 +8,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -34,6 +32,7 @@ import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.service.DefaultMessageService;
+import whou.secproject.component.Job_infoDTO;
 import whou.secproject.component.MemberDTO;
 import whou.secproject.component.RecommandInfoDTO;
 import whou.secproject.mapper.MemberMapper;
@@ -65,6 +64,18 @@ public class MemberServiceImpl implements MemberService {
 			books = temp + job_cd + ",";
 		}
 		mapper.updateBook(memId, books);
+	}
+	
+	// 회원정보 가져오기
+	@Override
+	public MemberDTO getUser(int userNum) {
+		return mapper.getUser(userNum);
+	}
+	
+	// 북마크 직업 정보 가져오기
+	@Override
+	public Job_infoDTO getJob(int job_cd) {
+		return mapper.getJob(job_cd);
 	}
 
 	// 마이페이지 rank 검색

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import whou.secproject.component.Job_infoDTO;
 import whou.secproject.component.MemberDTO;
 import whou.secproject.component.RecommandInfoDTO;
 
@@ -28,6 +29,7 @@ public interface MemberService {
 	// 마이페이지
 	public RecommandInfoDTO getAptitudeRank(int userNum);
 	public void updateBook(String job_cd, String memId, boolean contain);
-	
+	public MemberDTO getUser(int userNum);
+	public Job_infoDTO getJob(int job_cd);
 }
 
