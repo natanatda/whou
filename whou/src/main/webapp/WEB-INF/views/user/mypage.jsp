@@ -42,7 +42,7 @@
                                   <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">검사결과보기</button>
                                   <button class="nav-link" id="nav-add-tab" data-bs-toggle="tab" data-bs-target="#nav-addInfo" type="button" role="tab" aria-controls="nav-addInfo" aria-selected="false">추가정보입력</button>
                                   <button class="nav-link" id="nav-modify-tab" data-bs-toggle="tab" data-bs-target="#nav-modifyInfo" type="button" role="tab" aria-controls="nav-modifyInfo" aria-selected="false">개인정보수정</button>
-                                  <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">나의 북마크</button>
+                                  <button class="nav-link" id="nav-book-tab" data-bs-toggle="tab" data-bs-target="#nav-book" type="button" role="tab" aria-controls="nav-book" aria-selected="false">나의 북마크</button>
                                   <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">컨설팅하러가기</button>
                                 </div>
                               </nav>
@@ -151,7 +151,28 @@
 		                     <div class="tab-pane fade" id="nav-modifyInfo" role="tabpanel" aria-labelledby="nav-modify-tab" tabindex="0">
 		                     	개인정보
 		                     </div>
-		                     
+		                     <div class="tab-pane fade" id="nav-book" role="tabpanel" aria-labelledby="nav-book-tab" tabindex="0">
+			                     <div class="book-wrap">
+	                                 <c:if test="${books != null }">
+	                                    <c:forEach var="job" items="${jobs}" varStatus="status">
+	                                       <div class="card mb-5 mb-xl-0">
+	                                          <a href="/whou/member/deleteBook?job_cd=${job.job_cd}"><i class="position-absolute top-0 start-100 translate-middle fa-solid fa-circle-minus fa-lg"></i></a>
+	                                          <a href="/whou/job/info?job_cd=${job.job_cd}">
+	                                              <div class="result-cont">
+	                                                  <h4>${job.job_nm }<i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
+	                                                  <p>${job.works}</p>
+	                                              </div>
+	                                    	</a>
+	                                       </div>
+	                                    </c:forEach>
+	                                 </c:if>
+	                                 <c:if test="${books == null }">
+	                                    <div>북마크한 관심직업이 없습니다.</div>
+	                                    <div>직업정보 탐색 후, 나의 관심직업을 등록해 주세요.</div>
+	                                    <div><a href="/whou/job/dic">직업정보 >></a></div>
+	                                 </c:if>
+	                        </div> 
+		                     </div>
 		                     <!-- 컨설팅  -->
                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
                             	<c:if test="${avilReinforce eq '' || avilReinforce==null }">

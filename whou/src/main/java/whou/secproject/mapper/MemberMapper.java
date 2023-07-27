@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import whou.secproject.component.MemberDTO;
 import whou.secproject.component.RecommandInfoDTO;
 import whou.secproject.component.TestReinforcementDTO;
+import whou.secproject.component.Job_infoDTO;
 
 public interface MemberMapper {
 	public int count(String tel);
@@ -24,6 +25,7 @@ public interface MemberMapper {
 	public RecommandInfoDTO getAptitudeRank(int userNum);
 	public void updateBook(@Param("memId")String memId, @Param("books")String books);
 	public String getBook(String memId);
+	public Job_infoDTO getJob(int job_cd);
 	
 	// sj write
 	public int getCunsultingNum(int user_info_num); // user_info의 num을 이용하여 cunsulting_num 컬럼 값 get

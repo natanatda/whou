@@ -41,9 +41,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import whou.secproject.component.JobDicDetailResponseDTO;
+import whou.secproject.component.Job_infoDTO;
 import whou.secproject.component.MemberDTO;
 import whou.secproject.component.RecommandInfoDTO;
 import whou.secproject.component.TestReinforcementDTO;
+import whou.secproject.mapper.MemberMapper;
 import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.service.AptitudeService;
 import whou.secproject.service.MemberService;
@@ -59,24 +61,41 @@ public class MemberController {
 	private AptitudeService serviceAt;
 	
 	@Autowired
+	private MemberMapper mapperMem;
+	
+	@Autowired
 	private JobDicApiDAO dao;
 	
-	
+
 	// 북마크
-	@RequestMapping("/bookmark")
-	public String bookmark(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String memId = (String)session.getAttribute("memId");
-		String job_cd = request.getParameter("job_cd");
-		int num = Integer.parseInt(request.getParameter("contain"));
-		boolean contain = false;
-		if(num == 1) {
-			contain = true;
-		}		
-		service.updateBook(job_cd, memId, contain);
-        return "redirect:/job/info?job_cd=" + job_cd;
-	}
+	   @RequestMapping("/bookmark")
+	   public String bookmark(HttpServletRequest request) {
+	      HttpSession session = request.getSession();
+	      String memId = (String)session.getAttribute("memId");
+	      String job_cd = request.getParameter("job_cd");
+	      int num = Integer.parseInt(request.getParameter("contain"));
+	      boolean contain = false;
+	      if(num == 1) {
+	         contain = true;
+	      }   
+	      if(memId != null) {
+	         service.updateBook(job_cd, memId, contain);
+	      }
+	        return "redirect:/job/info?job_cd=" + job_cd;
+	   }
 	
+	 //마이페이지에서 북마크 직업 제거
+     @RequestMapping("/deleteBook")
+    public String deleteBook(HttpServletRequest request){
+        HttpSession session = request.getSession();
+      String memId = (String)session.getAttribute("memId");
+      String job_cd = request.getParameter("job_cd");
+      if(memId != null) {
+         service.updateBook(job_cd, memId, true);
+      }
+      return "redirect:/member/mypage";
+   }
+	     
 	//회원가입 폼
 	@RequestMapping("/joinForm")
 	public String  joinForm() {
@@ -506,7 +525,22 @@ public class MemberController {
 	      model.addAttribute("scoreTrue", scoreTrue);
         
         
-        
+	    //북마크 가져오기
+	         String temp = mapperMem.getBook(memId);
+	         String [] books = null;
+	         List<String> jobList = new ArrayList();
+	         List<Job_infoDTO> job = new ArrayList();
+	          if(temp!=null) {
+	             books = temp.split(",");
+	             for(String book : books) {
+	                int job_cd = Integer.parseInt(book);
+	                System.out.println("직업 번호ㅗㅗㅗㅗㅗㅗ"+job_cd);
+	                //북마크 직업 정보 가져오기
+	                job.add(service.getJob(job_cd));
+	                model.addAttribute("books", books);
+	                model.addAttribute("jobs", job);
+	             }
+	          }
         
         
         //sojin write

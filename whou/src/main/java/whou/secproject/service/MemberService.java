@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import whou.secproject.component.Job_infoDTO;
 import whou.secproject.component.MemberDTO;
 import whou.secproject.component.RecommandInfoDTO;
 import whou.secproject.component.TestReinforcementDTO;
@@ -29,7 +30,7 @@ public interface MemberService {
 	// 마이페이지
 	public RecommandInfoDTO getAptitudeRank(int userNum);
 	public void updateBook(String job_cd, String memId, boolean contain);
-	
+	public Job_infoDTO getJob(int job_cd);
 	
 	// sj write
 	public int getCunsultingNum(int user_info_num); // user_info의 num을 이용하여 cunsulting_num 컬럼 값 get
