@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="../resources/js/ai.js"></script>
         <%-- TOP 버튼 --%>
         <script>
 	        $(document).ready(function(){
@@ -178,6 +179,7 @@
 				    </table>
 				</div>
             </div>
+            <%@ include file="../aiChatBot.jsp" %>
         </section>
         <!-- Footer-->
        <%@ include file="../footer.jsp" %>

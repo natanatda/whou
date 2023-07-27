@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="../resources/js/ai.js"></script>
         <script>
 			$(document).ready(function(){
 				// menu 클래스 바로 하위에 있는 a 태그를 클릭했을때
@@ -53,6 +54,7 @@
     </head>
  
     <body>
+    
         <!-- Responsive navbar-->
        <%@ include file="../header.jsp" %>        
         <!-- Header-->
@@ -109,7 +111,9 @@
 					<div class="tab-pane fade" id="pills-disabled" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">...</div>
 					</section>
 				</div>
+				
 			</header>
+			<%@ include file="../aiChatBot.jsp" %>
            <%@ include file="../footer.jsp" %>
 	</body>
 </html>

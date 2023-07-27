@@ -278,18 +278,7 @@
                     </div>
                 </div>
             </div>
-            
-            <div id="chatbot" style="position: fixed; right: 20px; bottom: 20px; background-color: #f8f8f8; border: 1px solid #ddd; padding: 10px;">
-            	<div id="assistant" style="display: none;">
-	       			 <%@ include file="assistant/ai.jsp" %>
-	        	</div> 
-	        	<div id="ai-area">
-					<div class="ai-text" >후니에게 이용 방법을 문의하세요!</div>
-					<div class="img-box">
-						<i class="fa-solid fa-robot fa-xl" style="color: #743cb9;"></i>
-			  		</div>
-		  		</div>
-	  		</div>
+            <%@ include file="aiChatBot.jsp" %>
         </section>
 
         <!-- Footer-->
@@ -314,7 +303,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <%-- 모델 --%>
         <script>
-        	var modelCamera_x = 0;
+        	var modelCamera_x = ${brush.camera};
         	var modelCamera_y = 1;
         	var modelCamera_z = 3;
 		 	var modelPath = '/whou/resources/whouModel/${brush.path_folder}/${brush.path_gltf}';
