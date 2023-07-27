@@ -25,7 +25,6 @@ public class AssistantController {
 	@RequestMapping("ai")
 	public String viewAi(Model model, HttpServletRequest request,HttpSession session) {
 		int count = assistantService.assistantCount();
-		
 		if(count > 0) {
 			// 레벨 그룹 1(첫 번째 질문인 리스트)
 			List<AssistantDTO> aiList = assistantService.assistantRef_level1();

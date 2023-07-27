@@ -8,11 +8,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -34,9 +32,12 @@ import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.service.DefaultMessageService;
+import whou.secproject.component.Job_infoDTO;
 import whou.secproject.component.MemberDTO;
 import whou.secproject.component.RecommandInfoDTO;
+import whou.secproject.component.TestReinforcementDTO;
 import whou.secproject.mapper.MemberMapper;
+import whou.secproject.repository.JobDicApiDAO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -66,6 +67,20 @@ public class MemberServiceImpl implements MemberService {
 		}
 		mapper.updateBook(memId, books);
 	}
+	
+
+	// 회원정보 가져오기
+	@Override
+	public MemberDTO getUser(int userNum) {
+		return mapper.getUser(userNum);
+	}
+	
+	// 북마크 직업 정보 가져오기
+	@Override
+	public Job_infoDTO getJob(int job_cd) {
+		return mapper.getJob(job_cd);
+	}
+
 
 	// 마이페이지 rank 검색
 	@Override
@@ -275,5 +290,15 @@ public class MemberServiceImpl implements MemberService {
 		}
 
 	}
-
+	
+	// sj write
+	public Integer getCunsultingNum(int user_info_num){ // user_info의 num을 이용하여 cunsulting_num 컬럼 값 get
+		return mapper.getCunsultingNum(user_info_num);
+	}
+	public String getRecentTest21(int userNum) { //역량 보완법을 위해 크롤링한 결과에서 21번 테스트의 역량별 수치 가져옴
+		return mapper.getRecentTest21(userNum);
+	}
+	public TestReinforcementDTO getTestReinforcement(int num) { // 역량 보완법 가져옴
+		return mapper.getTestReinforcement(num);
+	}
 }

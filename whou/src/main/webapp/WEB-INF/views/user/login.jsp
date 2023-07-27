@@ -27,11 +27,11 @@
           <div class="logo"><a class="navbar-brand"  href="/whou/main"><img src="/whou/resources/img/logo.svg"></a></div>
           <p>회원이 아니신가요? <a href="/whou/member/joinForm">회원가입하기</a></p>
          
-          <div class="input-wrap">
-            <div class="input-form-box"><input type="text" name="email" id="email" class="form-control" placeholder="이메일"></div>
-            <div class="input-form-box"><input type="password" name="pw" id="pw" class="form-control" placeholder="비밀번호"></div>
-              <button type="button" class="btn login-btn btn-xs" id="btn1">로그인 하기</button>
-          </div>
+          <form class="input-wrap" onsubmit="performLogin(); return false;">
+		        <div class="input-form-box"><input type="text" name="email" id="email" class="form-control" placeholder="이메일"></div>
+		        <div class="input-form-box"><input type="password" name="pw" id="pw" class="form-control" placeholder="비밀번호"></div>
+		        <button type="submit" class="btn login-btn btn-xs" id="btn1">로그인 하기</button>
+		  </form>
           <div class="simple-login">
             <p>SNS 간편 로그인</p>
             <ul>
@@ -81,7 +81,38 @@
 		        });
 		    });
 		});
-    	</script> 
+    	</script>
+    	<script>
+        function performLogin() {
+            var email = $("#email").val();
+            var pw = $("#pw").val();
+
+            if (email === '' || pw == '') {
+                alert("모든 항목을 입력해주세요.");
+                return false;
+            }
+
+            $.ajax({
+                url: "/whou/member/loginPro",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                method: "POST",
+                data: { email: email, pw: pw },
+                error: function(xhr, status, error) {
+                    var errorMessage = "오류: " + xhr.status + " " + xhr.statusText;
+                    alert(errorMessage);
+                },
+                success: function(dpw) {
+                    if (dpw == '') {
+                        alert("이메일을 다시 확인해주세요.");
+                    } else if (dpw == pw) {
+                        window.location.href = "/whou/main";
+                    } else if (dpw != pw) {
+                        alert("비밀번호가 일치하지 않습니다.\n다시 입력해주세요.");
+                    }
+                }
+            });
+        }
+	    </script> 
     </body>
     
 </html>

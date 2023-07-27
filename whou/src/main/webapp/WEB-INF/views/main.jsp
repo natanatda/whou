@@ -20,11 +20,9 @@
 		<script src="resources/js/unpkg.com_gsap@3.12.1_dist_gsap.min.js"></script>
 		<script src="resources/js/ThreeCSG.js"></script>
 		<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-        <script type="module" src="/whou/resources/js/whouModel2.js?ver=3"></script>
+        <script type="module" src="/whou/resources/js/whouModel.js?ver=3"></script>
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
-		<script src="resources/js/ai.js"></script>
-       
-        
+		<script src="resources/js/ai.js"></script>		
     </head>
 
     <body>
@@ -34,6 +32,7 @@
         <!-- Header-->
         <header class="py-5">
             <div class="container px-5">
+	       
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-6">
                         <div class="text-center my-5">
@@ -279,6 +278,18 @@
                     </div>
                 </div>
             </div>
+            
+            <div id="chatbot" style="position: fixed; right: 20px; bottom: 20px; background-color: #f8f8f8; border: 1px solid #ddd; padding: 10px;">
+            	<div id="assistant" style="display: none;">
+	       			 <%@ include file="assistant/ai.jsp" %>
+	        	</div> 
+	        	<div id="ai-area">
+					<div class="ai-text" >후니에게 이용 방법을 문의하세요!</div>
+					<div class="img-box">
+						<i class="fa-solid fa-robot fa-xl" style="color: #743cb9;"></i>
+			  		</div>
+		  		</div>
+	  		</div>
         </section>
 
         <!-- Footer-->
@@ -301,30 +312,53 @@
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-         <script>
-        	var modelCamera = 0;
-        	var modelPath= '';
+        <%-- 모델 --%>
+        <script>
+        	var modelCamera_x = 0;
+        	var modelCamera_y = 1;
+        	var modelCamera_z = 3;
+		 	var modelPath = '/whou/resources/whouModel/${brush.path_folder}/${brush.path_gltf}';
+		 	
+		 	var modelWidth = 350;
+        	var modelHeight = 200;
+		 	
+		 	if('${brush.color}' != 'noColor'){
+		 		var modelColor = '${brush.color}';
+		 	}
+		 	var modelScale_x = ${brush.scale_x};
+		 	var modelScale_y = ${brush.scale_y};
+		 	var modelScale_z = ${brush.scale_z};
+		 	
+		 	var modelPosition_x = ${brush.position_x};
+		 	var modelPosition_y = ${brush.position_y};
+		 	var modelPosition_z = ${brush.position_z};
+		 	
+		 	var modelRotation_x = ${brush.rotation_x};
+		 	var modelRotation_y = ${brush.rotation_y};
+		 	var modelRotation_z = ${brush.rotation_z};
+		 	
+		 	var modelMotion = ${brush.motion};
+        	
         	if('${model.headColor}' === ''){
-        		var headColor = '#FF0080';
+        		var headColor = '#F781F3';
         	}else{
         		headColor = '${model.headColor}';
         	}
         	if('${model.armColor}' === ''){
-        		var armColor = '#FF0080';
+        		var armColor = '#F781F3';
         	}else{
         		armColor = '${model.armColor}';
         	}
         	if('${model.cheekColor}' === ''){
-        		var cheekColor = '#FF0080';
+        		var cheekColor = '#DF0101';
         	}else{
         		cheekColor = '${model.cheekColor}';
         	}
         	if('${model.legColor}' === ''){
-        		var legColor = '#FF0080';
+        		var legColor = '#585858';
         	}else{
         		legColor = '${model.legColor}';
         	}
         </script>
-        
     </body>
 </html>

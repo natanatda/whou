@@ -12,12 +12,12 @@
 	</insert>
 	
 	<insert id="insertPro">
-		insert into whou_user (num, email, pw, name, birth_year, tel, gender, join_type) 
+		insert into whou_user (num, email, pw, name, birth_year, tel, join_type) 
 		<if test = "join_type != ''">
-			 values(user_seq.NEXTVAL, #{email}, 'null', #{name}, #{birth_year}, #{tel}, #{gender}, #{join_type})
+			 values(user_seq.NEXTVAL, #{email}, 'null', #{name}, #{birth_year}, #{tel}, #{join_type})
 		</if>
 		<if test = "join_type == ''">
-			values(user_seq.NEXTVAL, #{email}, #{pw}, #{name}, #{birth_year}, #{tel}, #{gender}, 'whoU')
+			values(user_seq.NEXTVAL, #{email}, #{pw}, #{name}, #{birth_year}, #{tel}, 'whoU')
 		</if>
 	</insert>
 	
@@ -66,5 +66,29 @@
 	<update id="updateBook">
 		update user_info set books = #{books} where email =#{memId}
 	</update>
+
+	
+	
+	<!--  sj write  -->
+	<!-- user_info의 num을 이용하여 cunsulting_num 컬럼 값 get -->
+	<select id="getCunsultingNum" resultType="Integer">
+		select cunsulting_num from user_info where num = #{userNum}
+	</select>
+	<!-- 역량 보완법을 위해 크롤링한 결과에서 21번 테스트의 역량별 수치 가져옴 -->
+	<select id="getRecentTest21" resultType="String">
+		SELECT test21_2 FROM user${userNum}_test_result WHERE test_date IN(SELECT max(test_date) FROM user${userNum}_test_result WHERE test_num=21)
+	</select>
+	<!--  역량 보완 방법을 DB에서 가져옴 -->
+	<select id="getTestReinforcement" resultType="whou.secproject.component.TestReinforcementDTO">
+		SELECT * FROM test_reinforcement WHERE num=#{num}
+	</select>
+	
+	<select id="getUser" resultType="whou.secproject.component.MemberDTO">
+		select * from whou_user where num = ${userNum}
+	</select>
+	
+	<select id="getJob" resultType="whou.secproject.component.Job_infoDTO">
+		select job_nm, works, job_cd from job_info where job_cd = #{job_cd}
+	</select>
 	
 </mapper>

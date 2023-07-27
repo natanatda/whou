@@ -28,7 +28,7 @@
 		}
 		
 		function appendChat(user, bot) { // 채팅 내용 출력하는 함수
-			chat += '<p class="chat user" id="user">유저: ' + user + '<p/>' + '<p class="chat bot" id="bot">챗봇: ' + bot + '<p/>'; 
+			chat += '<div class="chat user" id="user"><p>유저: ' + user + '</p></div>' + '<div class="chat bot" id="bot"><p>챗봇: ' + bot + '</p></div>'; 
 			$(".editable").html(chat);
 			scrollToBottom(); 
 		}
@@ -51,30 +51,20 @@
 						for (var i = 0; i < result.length; i++) {
 							test.push(result[i].qes); // 배열에 질문들 다 넣음
 						}
-						if (result.length > 0) { // 2번째 질문이 있을 때
-							$.ajax({
-								url: "/whou/assistant/aiContent",
-								data: {prompt: button}, // 버튼 value값 제출
-								success: function(result) {
-									var html = "";
-									appendChat(button, result); // 채팅 입력 함수 호출
-									for (var i = 0; i < test.length; i++) { // 2번째 질문들로 버튼 생성
-									html += '<input type="button" class="otherBtn btn btn-light" value="' + test[i] + '" />';
-									}
-								$("#btnContain").html(html);
-								$("#btnContain").append('<input type="button" class="btn btn-light" id="back" value="돌아가기" />');
+						$.ajax({
+							url: "/whou/assistant/aiContent",
+							data: {prompt: button}, // 버튼 value값 제출
+							success: function(result) {
+								var html = "";
+								appendChat(button, result); // 채팅 입력 함수 호출
+								for (var i = 0; i < test.length; i++) { // 2번째 질문들로 버튼 생성
+								html += '<input type="button" class="otherBtn btn btn-light" value="' + test[i] + '" />';
+								}
+							$("#btnContain").html(html);
+							$("#readArea1").html('<input type="button" class="btn btn-light" id="back" value="돌아가기" />');
 								}
 							});
-						} else { // 질문이 없으면
-							$.ajax({
-								url: "/whou/assistant/aiContent",
-								data: {prompt: button},
-								success: function(result) {
-									appendChat(button, result);
-									$("#btnContain").html('<input type="button" id="back" class="btn btn-light" value="돌아가기" />'); // 돌아가기 버튼만 생성     
-								}
-							});
-						}
+					 
 					}
 				});
 			}
@@ -181,50 +171,47 @@
 	<head>
 	    <style>
 	        div.editable {
-	            width: 500px;
-	            height: 550px;
+	        	height: 400px;
 	            border: 1px solid #dcdcdc;
 	            overflow: auto;
 	            margin:0 auto;
 	        }
-	        p#bot {
+	       div #bot {
 				text-align : left;
 			}
-	        p#user{
+	        div #user{
 	        	text-align : right;
 	        }
-	        div#btnContain{
-	        	display: inline-block;
-	        	width: fit-content;
+	        
+	        #test{
+	      		height: 400px;
+	      		border: 1px solid #dcdcdc;
+	      		margin:0 auto;  
 	        }
 	    </style>
 	</head>
 	<body>
-		  <%@ include file="../header.jsp" %>        
-	        <!-- Header-->
-		<header class="py-5">
-			<div class="container px-5">
-				<h2 class="page-title">ai</h2>
-			</div>
-		</header>
-		<div style="width: 900px; height: 400px; border: 1px solid #dcdcdc; margin:0 auto;">
-			<div class="editable" id="editable" contenteditable="false" style="width: 900px; height: 400px;">
-			<p class="chat"> 문의하실 내용을 선택해주세요. </p>
-		</div>
-			<div style="display: flex; justify-content: right; align-items: right;">
+	        
+		<div id="test">
+			<div class="editable" id="editable" contenteditable="false" style="">
+				<p class="chat"> 문의하실 내용을 선택해주세요. </p>
+			</div>			
+			<div>
 				<div id="btnContain" >
 					<c:forEach items="${assistantList}" var="ailist">
 						<input type="button" class="btn btn-light mainbtn" value="${ailist.qes}"/>
 					</c:forEach>
 				</div>
-				<div id="readArea" style="display: flex; justify-content: right; align-items: right;">
-					<button class="btn btn-light" id="readbtn">읽기</button>
-					<button class="btn btn-light" id="clear">초기화</button>
+				<div style="display:flex; justify-content: right;">
+					<div id="readArea1" >
+					</div>
+					<div id="readArea" >
+						<button class="btn btn-light" id="readbtn">읽기</button>
+						<button class="btn btn-light" id="clear">초기화</button>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div style="height: 200px;"></div>
-		
-		<%@ include file="../footer.jsp" %>
 	</body>
 </html>

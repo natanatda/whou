@@ -21,13 +21,10 @@ import whou.secproject.component.JobDicDetailResponseDTO;
 import whou.secproject.component.JobDicListResponseDTO;
 import whou.secproject.component.JobDicParamDTO;
 import whou.secproject.component.JobDicValueListDTO;
-import whou.secproject.component.WhouModelCustomDTO;
-import whou.secproject.component.WhouModelDTO;
 import whou.secproject.mapper.MemberMapper;
 import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.service.JobDicService;
-import whou.secproject.service.WhouModelCustomService;
-import whou.secproject.service.WhouModelService;
+import whou.secproject.service.MemberService;
 
 @Controller
 @RequestMapping("/job")
@@ -42,14 +39,9 @@ public class JobController {
 	@Autowired
 	private MemberMapper mapperMem;
 
-	@Autowired
-	private WhouModelService whouModelService;
-	
-	@Autowired
-	private WhouModelCustomService whouModelCustomService;
 	@RequestMapping("/dic")
 	public String goJobDic(Model model,HttpServletRequest request) {
-
+		
 		List<JobDicValueListDTO> valueList= service.getSortValue("search_factor");
 		List<JobDicAptdValueListDTO> aptdValueList= service.getAptdValue("aptd_factor");
 		String clickTabId= request.getParameter("clickTabId");
@@ -64,13 +56,7 @@ public class JobController {
 		model.addAttribute("aptdList", aptdValueList);
 		JobDicParamDTO jParam = new JobDicParamDTO();
 		String jobNm = request.getParameter("jobNM");
-		try {
-			if(jobNm!=null) 
-				jobNm = new String(jobNm.getBytes("ISO-8859-1"), "UTF-8");
-			jParam.setSearchJobNm(jobNm);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+		if(jobNm!=null) jParam.setSearchJobNm(jobNm);
 		model.addAttribute("jobNm", jobNm);
 		
 		String [] idCheck = request.getParameterValues("id");
@@ -139,6 +125,11 @@ public class JobController {
 		return "/job/description";
 	}
 	
+	@RequestMapping("/c")
+	public String c(Model model,HttpServletRequest request) {
+		return "/job/c";
+	}
+	
 //	@RequestMapping("/search")
 //	public String JobDicSearch(HttpServletRequest request) {
 //		
@@ -177,16 +168,12 @@ public class JobController {
     public String JobDicInfo(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		String memId = (String)session.getAttribute("memId");
+		
        int seq = -1;
        String strSeq= request.getParameter("job_cd");
        JobDicDetailResponseDTO jobDetail = null;
        if(strSeq!=null) 
           seq = Integer.parseInt(strSeq);
-       
-       // 직업분류별 모델
-       int modelNum = whouModelService.selectSortValue(seq);
-       WhouModelDTO whouModel = whouModelService.selectModel(modelNum);
-       if(whouModel.getColor() == null) {whouModel.setColor("noColor");}
        
        System.out.println("seq == " +seq);
        jobDetail= dao.getJobDicDetail(seq);
@@ -219,29 +206,28 @@ public class JobController {
        } catch (JsonProcessingException e) {
            e.printStackTrace();
        }
+
+       if(memId != null) {
+    	   String temp = mapperMem.getBook(memId);
+    	   boolean contain = false;
+    	   if(temp!=null) {
+	    	  String [] arr = temp.split(",");
+	    	  for (String str : arr) {
+	    		  if (str.equals(strSeq)) {
+	    			  contain = true;
+	    		  }
+	    	  }
+    	   }
+    	   model.addAttribute("contain", contain);
+       }
       
-      boolean contain = false;
-      String temp = "";
-      if(memId != null) {
-    	  WhouModelCustomDTO modelColor = whouModelCustomService.customModel(memId); // 커스텀한 모델 색
-    	  model.addAttribute("modelColor",modelColor);
-    	  temp = mapperMem.getBook(memId);
-    	  if(temp!=null) {
-    		  String [] arr = temp.split(",");
-    		  for (String str : arr) {
-    			  if (str.equals(strSeq)) {
-    				  contain = true;
-    			  }
-    		  }
-    	  }
-      }
        
-       model.addAttribute("contain", contain);
        model.addAttribute("jobDetail", jobDetail);
        model.addAttribute("indicatorData", indicatorData);
        model.addAttribute("majorData", majorData);
        model.addAttribute("eduData", eduData);
-       model.addAttribute("model", whouModel);
+       model.addAttribute("memId", memId);
+	   System.out.println("//////////"+memId);
        return "/job/description-detail";
     }
 	

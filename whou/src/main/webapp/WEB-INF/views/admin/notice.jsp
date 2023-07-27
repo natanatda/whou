@@ -27,7 +27,8 @@
         	      var position = $(window).scrollTop()+500; // 현재 스크롤바의 위치값을 반환
         	      $("#Quick").stop().animate({top:position+"px"}, 400); //해당 오브젝트 위치값 재설정
         	   });
-
+	        var initialPosition = $(window).scrollTop() + 500;
+	        $("#chatbot").css("top", initialPosition + "px");
         	});
         </script>
     </head>

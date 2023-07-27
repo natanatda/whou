@@ -471,7 +471,7 @@
                     </div>
                 </div>
 			    </c:if>
-             <button onclick="location='마이페이지'">진로컨설팅 받으러가기</button>
+             <button onclick="location='/whou/member/mypage'">진로컨설팅 받으러가기</button>
              </div>
         </section>
    

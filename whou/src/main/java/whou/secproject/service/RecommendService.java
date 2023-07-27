@@ -1,6 +1,8 @@
 package whou.secproject.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import whou.secproject.component.CertiDTO;
@@ -12,6 +14,11 @@ public interface RecommendService {
 	public RecommandInfoDTO getTestResult(int num);
 	public List<Integer> allJobCd(String tb_name);
 	public List<String> getValueCd(String tb_name);
-	public ArrayList<String> certiInfo(CertiDTO certi);
-	public List<Integer> certiToCD(SelectDTO selDTO, String certi);
+	public ArrayList<String> majorInfo(CertiDTO certi);
+	public List<Integer> majorToCD(SelectDTO selDTO, String certi);
+	public void createJobPoint(int num, int major, int certi);
+	public void insertJobPoint(int num, int job_cd, double total, double [] detail, int major, int certi);
+	public List<HashMap<String, BigDecimal>> getJobPoint(SelectDTO selDTO,int user, int page, int count);
+	public HashMap<String, String> getRecoList(SelectDTO selDTO, int user);
+	public void dropTable(int num);
 }
