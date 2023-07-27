@@ -22,4 +22,5 @@ public interface RecommendService {
 	public HashMap<String, String> getRecoList(SelectDTO selDTO, int user);
 	public void dropTable(int num);
 	public List<String> getJname(SelectDTO selDTO);
+	public int tbTrue(int user);
 }
