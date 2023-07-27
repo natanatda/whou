@@ -21,4 +21,5 @@ public interface RecommendService {
 	public List<HashMap<String, BigDecimal>> getJobPoint(SelectDTO selDTO,int user, int page, int count);
 	public HashMap<String, String> getRecoList(SelectDTO selDTO, int user);
 	public void dropTable(int num);
+	public List<String> getJname(SelectDTO selDTO);
 }
