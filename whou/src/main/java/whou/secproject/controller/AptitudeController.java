@@ -205,6 +205,7 @@ public class AptitudeController {
 				}
 				dtoRe.setAptitude_score(dto.getTest21_2());
 				service.aptitudeUpdate(dtoRe,userNum);
+			
 			}
 			
 			List<String> updatedList1 = new ArrayList<>();
@@ -238,7 +239,8 @@ public class AptitudeController {
 				System.out.println("가치관 점수 12개 :" + score);
 			
 			}
-			
+			// 검사할때마다 userinfo에 1로 업데이트
+			service.commendNumUpdate(memId);
 		model.addAttribute("updatedList1", updatedList1);
 		model.addAttribute("updatedList2", updatedList2);
 		model.addAttribute("updatedList3", updatedList3);	

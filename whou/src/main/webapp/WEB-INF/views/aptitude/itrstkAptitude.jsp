@@ -106,8 +106,8 @@
 		                            <li>
 		                                <div class="question-item"><span class="ic-question">${item.qitemNo}</span>${item.question}</div>
 		                                <div class="question-dt">
-		                                    <div class="question-dt-info">${item.tip2Desc}</div>
 		                                    <div class="question-dt-info">${item.tip1Desc}</div>
+		                                    <div class="question-dt-info">${item.tip2Desc}</div>
 		                                </div>
 		                                <div class="btn-group radio-group" role="group" aria-label="Basic radio toggle button group">
 		                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 1}" value="1" ${arrList[status.index]=='1' ? 'checked' : ''} autocomplete="off" >

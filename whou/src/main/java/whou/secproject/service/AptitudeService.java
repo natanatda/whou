@@ -40,6 +40,9 @@ public interface AptitudeService {
 	public void valuesUpdate(String score, int userNum); //가지관 차트 점수 저장
 	public void saveAbilityScore(String abilityScore, int userNum); //역량점수저장
 	
+	// 검사하면 user 테이블에 1 업데이트
+	public void commendNumUpdate(String memId);
+	
 	
 	public String getName(String memId);//세션으로 이름 꺼내기
 	

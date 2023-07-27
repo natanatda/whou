@@ -39,7 +39,8 @@ public interface AptitudeMapper {
 	public void createUserTable(int userNum);// 회원가입시 테이블 생성
 	public void createSequence(int userNum);// 회원가입시 테이블 생성
 	public void createuSaveTable(int userNum);// 회원가입시 테이블 생성
-	
+	// 검사하면 user 테이블에 1 업데이트
+	public void commendNumUpdate(String memId);
 	
 	// 마이페이지 차트 점수
 	public String getAptitudeScore(int userNum);

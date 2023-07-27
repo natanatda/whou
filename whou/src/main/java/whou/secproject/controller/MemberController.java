@@ -448,7 +448,8 @@ public class MemberController {
   	
   	//마이페이지
   	@RequestMapping("/mypage")
-    public String mypage(Model model, HttpServletRequest request){
+    public String mypage(Model model, HttpServletRequest request, String load){
+  		model.addAttribute("load", load);
   		HttpSession session = request.getSession();
 		String memId = (String)session.getAttribute("memId");
 		// user_info 테이블에서 세션에 해당하는 num 추출
@@ -845,7 +846,7 @@ public class MemberController {
 	//회원 추가 정보 수정(자격증, 학과)
 	@RequestMapping("/updateInfo")
 	public String updateInfo(@RequestParam(value = "certi", required = false) List<String> certiList,
-	                         @RequestParam(value = "major", required = false) List<String> majorList, HttpServletRequest request){
+	                         @RequestParam(value = "major", required = false) List<String> majorList, HttpServletRequest request, Model model){
 		
 		HttpSession session = request.getSession();
 		String memId = (String)session.getAttribute("memId");
@@ -860,7 +861,7 @@ public class MemberController {
 	        combinedMajor = String.join(",", majorList);
 	        System.out.println("Major2 "+combinedMajor);
 	        service.updateInfo(combinedCerti, combinedMajor, memId);
-	        
+	        model.addAttribute("load", "2");
 	    }
 	    return "redirect:/member/mypage";
 	}

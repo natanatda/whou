@@ -858,4 +858,10 @@ public class AptitudeServiceImpl implements AptitudeService{
 	public String getAbilityScore(int userNum) {
 		return mapper.getAbilityScore(userNum);
 	}
+	
+	// 검사하면 user 테이블에 1 업데이트
+	@Override
+	public void commendNumUpdate(String memId) {
+		mapper.commendNumUpdate(memId);
+	}
 }

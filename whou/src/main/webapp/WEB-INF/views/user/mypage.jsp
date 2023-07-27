@@ -131,9 +131,9 @@
                                             
                                            </div>
                                            <div class="add-certi-wrap">
-                                              <div class="add-certi-btn">
+                                              <div class="add-certi-btn" onclick="addQualification()">
                                                   <i class="fa-solid fa-circle-plus fa-lg"></i>
-                                                  <p onclick="addQualification()">자격증 추가</p>
+                                                  <p>자격증 추가</p>
                                               </div>
                                           </div>
                                         </div>
@@ -156,14 +156,36 @@
                                             </div>
                                     </div> 
                                     <div class="button-wrap">
-                                        <button type="submit" class="purple-btn" >저장</button>  
+                                        <button type="submit" class="purple-btn" onclick="load()">저장</button>  
                                     </div>                                       
                                 </div>   
                         </form>                        
                      </div>
+                     <style>
+                     #nav-modifyInfo .nav{display:flex;flex-direction: row;}
+                     </style>
+							<!-- 개인정보수정 -->
 		                     <div class="tab-pane fade" id="nav-modifyInfo" role="tabpanel" aria-labelledby="nav-modify-tab" tabindex="0">
-		                     	개인정보
-		                     </div>
+                               	<nav>
+                                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                     <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#nav-info" type="button" role="tab" aria-controls="nav-info" aria-selected="true">기본정보</button>
+                                     <button class="nav-link" id="nav-pw-tab" data-bs-toggle="tab" data-bs-target="#nav-pw" type="button" role="tab" aria-controls="nav-pw" aria-selected="false">비밀번호 변경</button>
+                                   </div>
+                               	</nav>
+                                 <div class="tab-content" id="nav-tabContent">
+                                    <div class="tab-pane fade show active" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab" tabindex="0">
+                                    	<h3>기본 정보</h3>
+                                    	<div>${mem.join_type}</div>
+                                    	<h3>추가 정보</h3>
+                                    	<div></div>
+                                    </div>
+                                   <c:if test="${mem.join_type eq 'K'}">
+                                     <div class="tab-pane fade" id="nav-pw" role="tabpanel" aria-labelledby="nav-pw-tab" tabindex="0">
+                                        비밀번호 변경
+                                     </div>
+                                  </c:if>
+                                </div>                            
+                          </div>
 		                     <div class="tab-pane fade" id="nav-book" role="tabpanel" aria-labelledby="nav-book-tab" tabindex="0">
 			                     <div class="book-wrap">
 	                                 <c:if test="${books != null }">
@@ -379,7 +401,23 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script>
-         
+
+        
+        let load = "${load}";
+        
+        if(load === "2"){
+         	 $(".nav-link").removeClass("active");
+         	 $(".tab-pane").removeClass("active show");
+         	 
+           	 $("#nav-add-tab").addClass("active");
+           	 $("#nav-addInfo").addClass("active show");
+        }else if(load === "3"){
+        	$(".nav-link").removeClass("active");
+        	 $(".tab-pane").removeClass("active show");
+        	 
+          	 $("#nav-modify-tab").addClass("active");
+          	 $("#nav-modifyInfo").addClass("active show");
+        }
          // 적성 차트
          	let aptitudeScoreArr = 0;
          	let aptitudeNameArr = ["음악능력","수리·논리력","창의력","자연친화력","예술시각능력","공간지각력","대인관계능력","손재능","언어능력","자기성찰능력","신체·운동능력"];
@@ -750,6 +788,11 @@
         	}else{
         		legColor = '${model.legColor}';
         	}
+        	
+        	
+        	
+            
+          
         </script>
         
     
