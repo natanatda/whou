@@ -12,12 +12,12 @@
 	</insert>
 	
 	<insert id="insertPro">
-		insert into whou_user (num, email, pw, name, birth_year, tel, gender, join_type) 
+		insert into whou_user (num, email, pw, name, birth_year, tel, join_type) 
 		<if test = "join_type != ''">
-			 values(user_seq.NEXTVAL, #{email}, 'null', #{name}, #{birth_year}, #{tel}, #{gender}, #{join_type})
+			 values(user_seq.NEXTVAL, #{email}, 'null', #{name}, #{birth_year}, #{tel}, #{join_type})
 		</if>
 		<if test = "join_type == ''">
-			values(user_seq.NEXTVAL, #{email}, #{pw}, #{name}, #{birth_year}, #{tel}, #{gender}, 'whoU')
+			values(user_seq.NEXTVAL, #{email}, #{pw}, #{name}, #{birth_year}, #{tel}, 'whoU')
 		</if>
 	</insert>
 	
@@ -84,6 +84,14 @@
 	<!--  역량 보완 방법을 DB에서 가져옴 -->
 	<select id="getTestReinforcement" resultType="whou.secproject.component.TestReinforcementDTO">
 		SELECT * FROM test_reinforcement WHERE num=#{num}
+	</select>
+	
+	<select id="getUser" resultType="whou.secproject.component.MemberDTO">
+		select * from whou_user where num = ${userNum}
+	</select>
+	
+	<select id="getJob" resultType="whou.secproject.component.Job_infoDTO">
+		select job_nm, works, job_cd from job_info where job_cd = #{job_cd}
 	</select>
 	
 </mapper>

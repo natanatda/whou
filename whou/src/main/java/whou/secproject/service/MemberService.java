@@ -30,12 +30,15 @@ public interface MemberService {
 	// 마이페이지
 	public RecommandInfoDTO getAptitudeRank(int userNum);
 	public void updateBook(String job_cd, String memId, boolean contain);
-	public Job_infoDTO getJob(int job_cd);
+
 	
 	// sj write
 	public int getCunsultingNum(int user_info_num); // user_info의 num을 이용하여 cunsulting_num 컬럼 값 get
 	public String getRecentTest21(int userNum); //역량 보완법을 위해 크롤링한 결과에서 21번 테스트의 역량별 수치 가져옴
 	public TestReinforcementDTO getTestReinforcement(int num); // 역량 보완법 가져옴
-	
+
+	public MemberDTO getUser(int userNum);
+	public Job_infoDTO getJob(int job_cd);
+
 }
 

@@ -68,11 +68,19 @@ public class MemberServiceImpl implements MemberService {
 		mapper.updateBook(memId, books);
 	}
 	
+
+	// 회원정보 가져오기
+	@Override
+	public MemberDTO getUser(int userNum) {
+		return mapper.getUser(userNum);
+	}
+	
 	// 북마크 직업 정보 가져오기
-   @Override
-   public Job_infoDTO getJob(int job_cd) {
-      return mapper.getJob(job_cd);
-   }
+	@Override
+	public Job_infoDTO getJob(int job_cd) {
+		return mapper.getJob(job_cd);
+	}
+
 
 	// 마이페이지 rank 검색
 	@Override
