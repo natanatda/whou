@@ -291,7 +291,6 @@ public class MemberServiceImpl implements MemberService {
 
 	}
 	
-	// sj write
 	public Integer getCunsultingNum(int user_info_num){ // user_info의 num을 이용하여 cunsulting_num 컬럼 값 get
 		return mapper.getCunsultingNum(user_info_num);
 	}

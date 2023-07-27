@@ -71,11 +71,11 @@ public class MemberController {
 	@Autowired
 	private AptitudeService serviceAt;
 	
-   @Autowired
-   private RecommendDAO redao;
+	@Autowired
+	private RecommendDAO redao;
 
-   @Autowired
-   private RecommendService serviceRe;
+	@Autowired
+	private RecommendService serviceRe;
 	
 	@Autowired
 	private WhouModelCustomService serviceMo;
@@ -453,7 +453,9 @@ public class MemberController {
 		// user_info 테이블에서 세션에 해당하는 num 추출
 		System.out.println("세션있냐?"+memId);
 		int userNum = 0;
-		userNum=serviceAt.userNumSelect(memId);
+		if(memId != null) {
+			userNum=serviceAt.userNumSelect(memId);
+		}
 			
 		// ai model 가져오기
 		if(memId != null) {
@@ -573,11 +575,9 @@ public class MemberController {
 	          }
         
         
-        //sojin write
         // user_info의 num을 이용하여 cunsulting_num(직업백과 job_cd) 컬럼 값 get
         Integer cunsultingNum = 0;
         if(memId != null) {
-        	System.out.println("어디까지 되는지 확인 "+memId);
         	cunsultingNum = service.getCunsultingNum(userNum);
         	if(cunsultingNum==null)cunsultingNum = 0;
         }
@@ -602,47 +602,50 @@ public class MemberController {
     	
     	
     	//역량 보완법을 위해 크롤링한 결과에서 21번 테스트의 역량별 수치 가져옴
-    	String avilReinforce="";
-    	if(memId != null) {
-    		avilReinforce = service.getRecentTest21(userNum);
-    	}
-    	double [] avilArrDouble = new double [11];
-    	if(avilReinforce.length()>10) {
-    		String [] avilArrString = avilReinforce.split("\\+");
-    		for(int i=0; i<11; i++) {
-    			avilArrDouble[i]=Double.parseDouble(avilArrString[i]);
-    			//0음악능력  1예술시각능력  2언어능력  3수리·논리력  4공간지각력
-    			//5자기성찰능력  6창의력  7대인관계능력  8신체·운동능력  9자연친화력  10손재능
-    		}
+    	if(memId != null && userNum >0) {
+    		System.out.println("++service.getRecentTest21(userNum)+++ "+service.getRecentTest21(userNum));
+    		String avilReinforce=service.getRecentTest21(userNum);
     		
-    		// 해당 직업에서 요구하는 능력치의 value
-    		double [] avilArrValue = new double [needAvil.size()];
-    		int avilNum = -1;
-    		List<TestReinforcementDTO> reinDTO=new ArrayList<>();
-    		for(int i=0; i<needAvil.size(); i++) {
-    			switch(needAvil.get(i)) {
-    			case "음악능력": avilArrValue[i]=avilArrDouble[0]; avilNum=0; break;
-//	        		case "예술시각능력": avilArrValue[i]=avilArrDouble[1]; avilNum=1; break;
-    			case "예술시각능력": avilArrValue[i]=1000; avilNum=1; break;
-//	        		case "언어능력": avilArrValue[i]=avilArrDouble[2]; avilNum=2; break;
-    			case "언어능력": avilArrValue[i]=1000; avilNum=2; break;
-    			case "수리·논리력": avilArrValue[i]=avilArrDouble[3]; avilNum=3; break;
-    			case "공간지각력": avilArrValue[i]=avilArrDouble[4]; avilNum=4; break;
-//	        		case "자기성찰능력": avilArrValue[i]=avilArrDouble[5]; avilNum=5; break;
-    			case "자기성찰능력": avilArrValue[i]=1000; avilNum=5; break;
-    			case "창의력": avilArrValue[i]=avilArrDouble[6]; avilNum=6; break;
-//	        		case "대인관계능력": avilArrValue[i]=avilArrDouble[7]; avilNum=7; break;
-    			case "대인관계능력": avilArrValue[i]=1000; avilNum=7; break;
-    			case "신체·운동능력": avilArrValue[i]=avilArrDouble[8]; avilNum=8; break;
-    			case "자연친화력": avilArrValue[i]=avilArrDouble[9]; avilNum=9; break;
-    			case "손재능": avilArrValue[i]=avilArrDouble[10]; avilNum=10; break;
-    			}
-    			reinDTO.add(service.getTestReinforcement(avilNum));
+    		if(avilReinforce!=null || !(avilReinforce.equals(""))) {
+	    		double [] avilArrDouble = new double [11];
+	    		if(avilReinforce.length()>10) {
+	    			String [] avilArrString = avilReinforce.split("\\+");
+	    			for(int i=0; i<11; i++) {
+	    				avilArrDouble[i]=Double.parseDouble(avilArrString[i]);
+	    				//0음악능력  1예술시각능력  2언어능력  3수리·논리력  4공간지각력
+	    				//5자기성찰능력  6창의력  7대인관계능력  8신체·운동능력  9자연친화력  10손재능
+	    			}
+	    			
+	    			// 해당 직업에서 요구하는 능력치의 value
+	    			double [] avilArrValue = new double [needAvil.size()];
+	    			int avilNum = -1;
+	    			List<TestReinforcementDTO> reinDTO=new ArrayList<>();
+	    			for(int i=0; i<needAvil.size(); i++) {
+	    				switch(needAvil.get(i)) {
+	    				case "음악능력": avilArrValue[i]=avilArrDouble[0]; avilNum=0; break;
+	//	        		case "예술시각능력": avilArrValue[i]=avilArrDouble[1]; avilNum=1; break;
+	    				case "예술시각능력": avilArrValue[i]=1000; avilNum=1; break;
+	//	        		case "언어능력": avilArrValue[i]=avilArrDouble[2]; avilNum=2; break;
+	    				case "언어능력": avilArrValue[i]=1000; avilNum=2; break;
+	    				case "수리·논리력": avilArrValue[i]=avilArrDouble[3]; avilNum=3; break;
+	    				case "공간지각력": avilArrValue[i]=avilArrDouble[4]; avilNum=4; break;
+	//	        		case "자기성찰능력": avilArrValue[i]=avilArrDouble[5]; avilNum=5; break;
+	    				case "자기성찰능력": avilArrValue[i]=1000; avilNum=5; break;
+	    				case "창의력": avilArrValue[i]=avilArrDouble[6]; avilNum=6; break;
+	//	        		case "대인관계능력": avilArrValue[i]=avilArrDouble[7]; avilNum=7; break;
+	    				case "대인관계능력": avilArrValue[i]=1000; avilNum=7; break;
+	    				case "신체·운동능력": avilArrValue[i]=avilArrDouble[8]; avilNum=8; break;
+	    				case "자연친화력": avilArrValue[i]=avilArrDouble[9]; avilNum=9; break;
+	    				case "손재능": avilArrValue[i]=avilArrDouble[10]; avilNum=10; break;
+	    				}
+	    				reinDTO.add(service.getTestReinforcement(avilNum));
+	    			}
+	    			model.addAttribute("reinDTO",reinDTO);
+	    			model.addAttribute("avilArrValue",avilArrValue);
+	    		}
+	    		model.addAttribute("avilReinforce",avilReinforce);
     		}
-    		model.addAttribute("reinDTO",reinDTO);
-    		model.addAttribute("avilArrValue",avilArrValue);
     	}
-    	model.addAttribute("avilReinforce",avilReinforce);
         
         
     	// 추천
@@ -684,8 +687,8 @@ public class MemberController {
          
         System.out.println(10+majorC+certiC);
          double [][] jobScorePoint = new double [jC][10+majorC+certiC];
-         serviceRe.dropTable(userNum);
-        serviceRe.createJobPoint(userNum, majorC, certiC);
+         if(serviceRe.tbTrue(userNum)==1) serviceRe.dropTable(userNum);
+         serviceRe.createJobPoint(userNum, majorC, certiC);
 
         int i = 0;
         for (Map.Entry<ArrayList<Double>, Double> entry : scores.entrySet()) {
