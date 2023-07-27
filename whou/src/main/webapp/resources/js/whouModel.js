@@ -350,7 +350,7 @@
                     // star.position.set(x, y, z);
 
                     // // 별을 3D 공간에 추가합니다.
-                    // scene.add(star);
+                    // scene.add(별);
                     // }
 
                     // getStarShape() {
