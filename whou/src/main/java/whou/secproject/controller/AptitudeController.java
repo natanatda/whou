@@ -1,7 +1,10 @@
 package whou.secproject.controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -321,6 +324,34 @@ public class AptitudeController {
 			
 			//진행한 검사
 			List<AptitudeTestValueDTO> valueList = service.getRecentTest(dto1, userNum);
+			int [] valueCountArr = {0,0,0,0};
+			String [] valueDateArr = {"-","-","-","-"}; 
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			for (int i = 0; i < valueList.size() && i < 4; i++) {
+				System.out.println(valueList.get(i).getMax_test_date());
+			    AptitudeTestValueDTO testValue = valueList.get(i);
+			    int testNum = testValue.getTest_num();
+			    Timestamp timestamp = testValue.getMax_test_date();
+			    Date date = new Date(timestamp.getTime());
+			    if(testNum == 21) {
+			    	valueCountArr[0] = testValue.getCount();
+			    	valueDateArr[0] = sdf.format(date);
+			    }
+			    if(testNum == 25) {
+			    	valueCountArr[1] = testValue.getCount();
+			    	valueDateArr[1] = sdf.format(date);
+			    }
+			    if(testNum == 27) {
+			    	valueCountArr[2] = testValue.getCount();
+			    	valueDateArr[2] = sdf.format(date);
+			    }
+			    if(testNum == 31) {
+			    	valueCountArr[3] = testValue.getCount();
+			    	valueDateArr[3] = sdf.format(date);
+			    }
+			}
+			model.addAttribute("valueCountArr", valueCountArr);
+			model.addAttribute("valueDateArr", valueDateArr);
 			model.addAttribute("valueList", valueList);
 			
 			//임시 저장한 모든 값 가져오기
