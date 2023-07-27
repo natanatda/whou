@@ -47,7 +47,8 @@
                                 </div>
                               </nav>
                         </div>                        
-                        <div class="custom-box">내 비서 커스텀하기</div>
+                        <div class="custom-box">
+                        <a href="/whou/whouModel/modelCustom">내 비서 커스텀하기</a></div>
                     </div>
                     <div class="right-wrap">
                           <div class="tab-content" id="nav-tabContent">
@@ -446,7 +447,7 @@
                    options: {
                        scale: {                                          
                                min: 0,
-                               max: 100,
+                               max: 20,
                                ticks: {
                                  stepSize:5
                                }
