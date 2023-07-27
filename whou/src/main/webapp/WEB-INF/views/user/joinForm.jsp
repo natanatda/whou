@@ -392,7 +392,7 @@
 	            </div>
 	            </div>
 	            <div class="input-wrap">
-	            	<button type="button" class="purple-btn btn-xs" id="btn1" onclick="checkAgreement()">회원가입</button>
+	            	<button type="button" class="purple-btn btn-xs" id="btn1">회원가입</button>
 	          	</div>
           	</form>
           </div>
@@ -516,9 +516,9 @@
 		   		        cache : false,
 		   		        success:function(numStr){
 		   		            if(numStr == "error"){ //실패시 
-		   		                alert("휴대폰 번호가 올바르지 않습니다.")
+		   		                //alert("휴대폰 번호가 올바르지 않습니다.")
 		   		            }else{            //성공시        
-		   		                alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.")
+		   		                //alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.")
 		   		                code2 = numStr; // 성공하면 데이터저장
 		   		            }
 		   		        }
@@ -535,12 +535,12 @@
    		//휴대폰 인증번호 대조
 		$("#phoneChk2").click(function(){
 		    if($("#tel2").val() == code2){ // 위에서 저장한값을 비교
-		         alert("인증에 성공하셨습니다.")
+		         //alert("인증에 성공하셨습니다.")
 		         $('.tel2_ok').css("display", "inline-block");
 	   			 $('.tel2_error').css("display", "none");
 		         telchk = "성공";
 		    }else{
-		        alert("인증에 실패하셨습니다.\n인증번호를 다시 입력해주세요.")
+		        //alert("인증에 실패하셨습니다.\n인증번호를 다시 입력해주세요.")
 		        $('.tel2_ok').css("display", "none");
    				$('.tel2_error').css("display", "inline-block");
 		    }
@@ -566,12 +566,12 @@
 
    		    function updateButtonStatus() {
    		    	//alert(checkAll);
-   		        var email = $("#email").val();
-   		        var pw = $("#pw").val();
-   		        var name = $("#name").val();
-   		        var birth_year = $("#birth_year").val();
-   		        var tel = $("#tel").val();
-   		        var join_type = $("#join_type").val();
+   		        var email = $("#email").val().replace(/ /g, '');
+		        var pw = $("#pw").val().replace(/ /g, '');
+		        var name = $("#name").val().replace(/ /g, '');
+		        var birth_year = $("#birth_year").val().replace(/ /g, '');
+		        var tel = $("#tel").val().replace(/ /g, '');
+		        var join_type = $("#join_type").val().replace(/ /g, '');
 
    		        var emailValid = $('.email_already').css("display") === "none" && $('.email_error').css("display") === "none" && $('.email_ok').css("display") === "inline-block";
    		        var pwValid = $('.pw_x').css("display") === "none" && $('.pw_error').css("display") === "none" && $('.pw_ok').css("display") === "inline-block";
@@ -612,6 +612,49 @@
    		    $("#agreeAllPersonal, #agree_rule1, #agree_take1").on("input", function() {
    		        updateButtonStatus();
    		    });
+   		    
+   		    
+   		    //회원가입 버튼 클릭시 컨트롤러로
+	   		$("#btn1").click(function() {
+	   		  if (!$(this).prop("disabled")) {
+	   			  
+	   			var email = $("#email").val().replace(/ /g, '');
+		        var pw = $("#pw").val().replace(/ /g, '');
+		        var name = $("#name").val().replace(/ /g, '');
+		        var birth_year = $("#birth_year").val().replace(/ /g, '');
+		        var tel = $("#tel").val().replace(/ /g, '');
+		        var join_type = $("#join_type").val().replace(/ /g, '');
+  
+	   			//컨트롤러로 보낼 데이터
+     		 	var data = {
+  	        		email: email,
+  	                pw: pw,
+  	                name: name,
+  	                birth_year: birth_year,
+  	                tel: tel,
+  	                join_type: join_type
+	  	        };
+
+	   			$.ajax({
+	   		      url: "/whou/member/check",
+	   		      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	   		      method: "POST",
+	   		      data: data,
+	   		      error: function() {
+	   		        alert("오류");
+	   		        //window.location.href = "/whou/main";
+	   		      },
+	   		      success: function(result) {
+	   		        if (result == 0) {
+	   		          alert("가입이 완료되었습니다.");
+	   		        } else if (result == 1) {
+	   		          alert("이미 가입하셨습니다");
+	   		        }
+	   		        window.location.href = "/whou/main";
+	   		      }
+	   		    });
+	   		  }
+	   	   });
    		}); 
 
    		/* $(function() {
