@@ -19,6 +19,14 @@
      <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  </head>
+ <style>
+ #btn1:disabled {
+  background-color: #ddd; /* 비활성화 배경색 */
+  color: #888; /* 비활성화 글자색 */
+  cursor: not-allowed; /* 비활성화된 버튼에는 커서를 변경하여 마우스 클릭을 방지 */
+}
+ 
+ </style>
  
 <body>
    

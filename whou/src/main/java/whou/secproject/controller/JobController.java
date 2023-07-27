@@ -125,6 +125,11 @@ public class JobController {
 		return "/job/description";
 	}
 	
+	@RequestMapping("/c")
+	public String c(Model model,HttpServletRequest request) {
+		return "/job/c";
+	}
+	
 //	@RequestMapping("/search")
 //	public String JobDicSearch(HttpServletRequest request) {
 //		
