@@ -362,7 +362,7 @@
                               <div class="reco-wrap">
                               	<div class="reco-item">
                               		<div>직업이름</div>
-                              		<div>설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명</div>
+                              		<div>설명설명설명설명설명설명ㅇ설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명</div>
                               	</div>
                               	<div class="add-btn">
 	                              	<i class="fa-solid fa-circle-plus fa-lg"></i>
