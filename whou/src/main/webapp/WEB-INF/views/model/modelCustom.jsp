@@ -55,34 +55,35 @@
 	<canvas class="webgl"></canvas>
 </div>
 <script>
-var modelCamera_x = 0;
-var modelCamera_y = 1;
-var modelCamera_z = 3;
-var modelPath = '';
-var modelWidth = 220;
-var modelHeight = 200;
-
-// default 색상
-if('${model.headColor}' === ''){
-	var headColor = '#FF0080';
-}else{
-	headColor = '${model.headColor}';
-}
-if('${model.armColor}' === ''){
-	var armColor = '#FF0080';
-}else{
-	armColor = '${model.armColor}';
-}
-if('${model.cheekColor}' === ''){
-	var cheekColor = '#FF0080';
-}else{
-	cheekColor = '${model.cheekColor}';
-}
-if('${model.legColor}' === ''){
-	var legColor = '#FF0080';
-}else{
-	legColor = '${model.legColor}';
-}
+			var modelCamera_x = '0';
+			var modelCamera_y = '0';
+			var modelCamera_z = '10';
+			
+			var modelPath = '';
+			
+			var modelWidth = 400;
+			var modelHeight = 400;
+			// default 색상
+			if('${model.headColor}' === ''){
+        		var headColor = '#F781F3';
+        	}else{
+        		headColor = '${model.headColor}';
+        	}
+        	if('${model.armColor}' === ''){
+        		var armColor = '#F781F3';
+        	}else{
+        		armColor = '${model.armColor}';
+        	}
+        	if('${model.cheekColor}' === ''){
+        		var cheekColor = '#DF0101';
+        	}else{
+        		cheekColor = '${model.cheekColor}';
+        	}
+        	if('${model.legColor}' === ''){
+        		var legColor = '#585858';
+        	}else{
+        		legColor = '${model.legColor}';
+        	}
 
 	var colorPicker = new iro.ColorPicker("#picker", {
 		    // Set the size of the color picker
@@ -153,23 +154,7 @@ if('${model.legColor}' === ''){
 			});
 
 </script>
-		<footer class="container py-5">
-			<div class="border-top border-bottom py-3">
-				<ul class="footer-content">
-					<li><a href="#!">개인정보처리방침</a></li>
-					<li><a href="#!">이메일주소무단수집거부</a></li>
-					<li><a href="#!">이용안내</a></li>
-					<li><a href="#!">이용문의 및 오류제보</a></li>
-					<li><a href="#!">English</a></li>
-					<li><a href="#!">오픈API</a></li>
-				</ul>
-			</div>
-			<div class="footer-address py-3">
-				<p class="m-0">주소 : 서울특별시 관악구 봉천동 에그옐로우 14층</p>
-				<p class="m-0">운영 : 한국직업능력연구원 국가진로교육연구센터</p>
-				<p class="m-0">Copyright &copy; Your Website 2023</p>
-			</div>
-		</footer>
+		<%@ include file="../footer.jsp" %>
 
 </body>
 </html>

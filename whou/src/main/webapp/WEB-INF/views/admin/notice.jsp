@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="../resources/js/ai.js"></script>
         <%-- TOP 버튼 --%>
         <script>
 	        $(document).ready(function(){
@@ -27,7 +28,8 @@
         	      var position = $(window).scrollTop()+500; // 현재 스크롤바의 위치값을 반환
         	      $("#Quick").stop().animate({top:position+"px"}, 400); //해당 오브젝트 위치값 재설정
         	   });
-
+	        var initialPosition = $(window).scrollTop() + 500;
+	        $("#chatbot").css("top", initialPosition + "px");
         	});
         </script>
     </head>
@@ -120,7 +122,6 @@
 							</c:forEach>
 							</tbody>
 						</table>
-
                 <div class="pagination">
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
@@ -178,24 +179,9 @@
 				    </table>
 				</div>
             </div>
+            <%@ include file="../aiChatBot.jsp" %>
         </section>
         <!-- Footer-->
-        <footer class="container py-5">
-            <div class="border-top border-bottom py-3">
-                <ul class="footer-content">
-                    <li><a href="#!">개인정보처리방침</a></li>
-                    <li><a href="#!">이메일주소무단수집거부</a></li>
-                    <li><a href="#!">이용안내</a></li>
-                    <li><a href="#!">이용문의 및 오류제보</a></li>
-                    <li><a href="#!">English</a></li>
-                    <li><a href="#!">오픈API</a></li>
-                </ul>
-            </div>
-            <div class="footer-address py-3">
-                <p class="m-0">주소 : 서울특별시 관악구 봉천동 에그옐로우 14층</p>
-                <p class="m-0">운영 : 한국직업능력연구원 국가진로교육연구센터</p>
-                <p class="m-0">Copyright &copy; Your Website 2023</p>
-            </div>
-        </footer>
+       <%@ include file="../footer.jsp" %>
     </body>
 </html>

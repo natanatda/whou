@@ -18,11 +18,10 @@
 	<script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="../resources/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-	<script src="../resources/js/adminInputcheck.js" ></script>
 <script>
 	let oEditors2 = [];
 	$(function() {
-		var i =0; 
+		var i =0; // 스마트에디터 생성 카운트
 		$("#add").click(function(){ // '추가' 버튼 눌렀을 때 동작
 			if(i===1){return;} // 이미 추가 해놨으면 동작 안 함 
 			$("#addText").show(); // 숨겨놨던 div 보여줌
@@ -62,7 +61,7 @@
 	</c:if>
 	<style>
 		input[type=text]{
-			width: 500px;
+			width: 600px;
 		}
 	</style>
 </head>
@@ -75,13 +74,13 @@
 			</div>
 		</header>	
 	<!-- start -->
-	<div style="display:flex; justify-content: center;">
-	<div style="margin:0 auto; height: 40px">
+	<div style="margin:0 auto; height: 40px; display:flex; justify-content: center;">
 		<input style="float: left;" class="btn btn-light" type="button" id="add" value="추가" />
 	</div>
+	<div style="display:flex; justify-content: center;">
 											<%-- div 숨김 --%>
-		<div id="addText" style="margin:0 auto; display:none; height: 510px">
-			<form action="/whou/assistant/aiInsert" onsubmit="return ajaxSubmitPost();">
+		<div id="addText" style="margin:0 auto; display:none; height: 510px; width: 600px;">
+			<form action="/whou/assistant/aiInsert" onsubmit="return ajaxSubmitPost();" style="width: 600px;">
 				<div class="form-group">
 					<label  class="form-label">질문</label>
 					<input type="text" id="qes" name="qes" placeholder="질문" />
@@ -118,10 +117,10 @@
 							fCreator: "createSEditor2"
 						})
 					}
-					var j = 0;
-					var z = 0;
+					var j = 0; // div 숨김, 보여줌 카운트
+					var z = 0; // 스마트에디터 생성 카운트
 					$("#show${assistant.num}").click(function(event){ // '추가' 버튼 눌렀을 때 동작
-						event.preventDefault(); // a태그 동작 막음(스크롤)
+						event.preventDefault(); // a태그 동작 막음
 						if(j===1){
 							$("#test${assistant.num}").hide(); // div숨김
 							j--;
@@ -149,8 +148,8 @@
 					} 
 				}
 			</script>
-			<div style="margin: 0 auto; overflow: auto; display:flex; justify-content: center; " >
-				<form action="/whou/assistant/aiUpdate" onsubmit="return submitPost${assistant.num}();">
+			<div style="margin: 0 auto; display:flex; justify-content: center; width: 600px;" >
+				<form action="/whou/assistant/aiUpdate" onsubmit="return submitPost${assistant.num}();" style="width: 600px;">
 					<div class="form-group">
 						<label class="form-label">질문</label><a href="#" id="show${assistant.num}">></a> 
 						<input type="text" id="qes" name="qes" value="${assistant.qes}" />
@@ -181,22 +180,6 @@
 		</c:forEach>
 	</c:if>
 	<!-- end -->
-	<footer class="container py-5">
-            <div class="border-top border-bottom py-3">
-                <ul class="footer-content">
-                    <li><a href="#!">개인정보처리방침</a></li>
-                    <li><a href="#!">이메일주소무단수집거부</a></li>
-                    <li><a href="#!">이용안내</a></li>
-                    <li><a href="#!">이용문의 및 오류제보</a></li>
-                    <li><a href="#!">English</a></li>
-                    <li><a href="#!">오픈API</a></li>
-                </ul>
-            </div>
-            <div class="footer-address py-3">
-                <p class="m-0">주소 : 서울특별시 관악구 봉천동 에그옐로우 14층</p>
-                <p class="m-0">운영 : 한국직업능력연구원 국가진로교육연구센터</p>
-                <p class="m-0">Copyright &copy; Your Website 2023</p>
-            </div>
-        </footer>
+	<%@ include file="../footer.jsp" %>
     </body>
 </html>

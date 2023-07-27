@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="../resources/js/ai.js"></script>
         <script>
 			$(document).ready(function(){
 				// menu 클래스 바로 하위에 있는 a 태그를 클릭했을때
@@ -53,6 +54,7 @@
     </head>
  
     <body>
+    
         <!-- Responsive navbar-->
        <%@ include file="../header.jsp" %>        
         <!-- Header-->
@@ -109,25 +111,9 @@
 					<div class="tab-pane fade" id="pills-disabled" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">...</div>
 					</section>
 				</div>
+				
 			</header>
-           
-		<!-- Footer-->
-		<footer class="container py-5">
-			<div class="border-top border-bottom py-3">
-				<ul class="footer-content">
-					<li><a href="#!">개인정보처리방침</a></li>
-					<li><a href="#!">이메일주소무단수집거부</a></li>
-					<li><a href="#!">이용안내</a></li>
-					<li><a href="#!">이용문의 및 오류제보</a></li>
-					<li><a href="#!">English</a></li>
-					<li><a href="#!">오픈API</a></li>
-				</ul>
-			</div>
-			<div class="footer-address py-3">
-				<p class="m-0">주소 : 서울특별시 관악구 봉천동 에그옐로우 14층</p>
-				<p class="m-0">운영 : 한국직업능력연구원 국가진로교육연구센터</p>
-				<p class="m-0">Copyright &copy; Your Website 2023</p>
-			</div>
-		</footer>
+			<%@ include file="../aiChatBot.jsp" %>
+           <%@ include file="../footer.jsp" %>
 	</body>
 </html>

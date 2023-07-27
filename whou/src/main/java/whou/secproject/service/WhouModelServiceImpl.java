@@ -24,4 +24,9 @@ public class WhouModelServiceImpl implements WhouModelService {
 		return whouModelMapper.selectModel2();
 	}
 
+	@Override
+	public int selectSortValue(int seq) {
+		return whouModelMapper.selectSortValue(seq);
+	}
+
 }
