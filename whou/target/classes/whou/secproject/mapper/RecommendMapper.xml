@@ -47,6 +47,7 @@
 				</foreach>
 			</if>
 			<if test="certis!= null">
+				,
 				<foreach collection="certis" separator="," item="certi"> 
 					${certi} 
 				</foreach>
@@ -74,6 +75,7 @@
 			</foreach>
 		</if>
 		<if test="certis!= null">
+			,
 			<foreach collection="certis" separator="," item="certi"> 
 				#{certi}
 			</foreach>
