@@ -56,13 +56,7 @@ public class JobController {
 		model.addAttribute("aptdList", aptdValueList);
 		JobDicParamDTO jParam = new JobDicParamDTO();
 		String jobNm = request.getParameter("jobNM");
-		try {
-			if(jobNm!=null) 
-				jobNm = new String(jobNm.getBytes("ISO-8859-1"), "UTF-8");
-			jParam.setSearchJobNm(jobNm);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+		if(jobNm!=null) jParam.setSearchJobNm(jobNm);
 		model.addAttribute("jobNm", jobNm);
 		
 		String [] idCheck = request.getParameterValues("id");
