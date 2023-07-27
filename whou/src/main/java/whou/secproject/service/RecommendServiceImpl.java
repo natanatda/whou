@@ -137,5 +137,24 @@ public class RecommendServiceImpl implements RecommendService{
 	public void dropTable(int num) {
 		mapper.dropTable(num);
 	}
+	@Override
+	public int tbTrue(int user) {
+		SelectDTO selDTO = new SelectDTO();
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		SelectResultHandler<BigDecimal> resultHandler = new SelectResultHandler<BigDecimal>();
+		selDTO.setCol("count(*)");
+		selDTO.setTb_name("all_tables");
+		selDTO.setConditions(Arrays.asList("table_name='JOB_POINT_"+user+"'"));
+		sqlSession.select("whou.secproject.mapper.RecommendMapper.selectInfo", selDTO, resultHandler);
+		sqlSession.close();
+	    HashMap<String, BigDecimal> mapList = resultHandler.getSelOne();
+	    System.out.println(mapList.get("COUNT(*)").intValue());
+	    return mapList.get("COUNT(*)").intValue();
+	}
+	@Override
+	public List<String> getJname(SelectDTO selDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
