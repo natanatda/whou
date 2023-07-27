@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
  <head>
@@ -18,7 +21,7 @@
      <link rel="stylesheet" href="/whou/resources/css/style.css">
      <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
      
  </head>
  <style>
@@ -39,7 +42,7 @@
                                   <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">검사결과보기</button>
                                   <button class="nav-link" id="nav-add-tab" data-bs-toggle="tab" data-bs-target="#nav-addInfo" type="button" role="tab" aria-controls="nav-addInfo" aria-selected="false">추가정보입력</button>
                                   <button class="nav-link" id="nav-modify-tab" data-bs-toggle="tab" data-bs-target="#nav-modifyInfo" type="button" role="tab" aria-controls="nav-modifyInfo" aria-selected="false">개인정보수정</button>
-                                  <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">나의 북마크</button>
+                                  <button class="nav-link" id="nav-book-tab" data-bs-toggle="tab" data-bs-target="#nav-book" type="button" role="tab" aria-controls="nav-book" aria-selected="false">나의 북마크</button>
                                   <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">컨설팅하러가기</button>
                                 </div>
                               </nav>
@@ -47,136 +50,301 @@
                         <div class="custom-box">내 비서 커스텀하기</div>
                     </div>
                     <div class="right-wrap">
-                         <div class="tab-content" id="nav-tabContent">
+                          <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-	                            <select id="testResultSelect">
-	                                <option value="21">적성</option>
-	                                <option value="25">가치관</option>
-	                                <option value="27">역량</option>
-	                                <option value="31">흥미</option>
-	                            </select>
-	                            <div id="item-aptitude">
-	                                <canvas id="aptitudeChart"></canvas>
-	                                <ul>
-		                               	<li>${aptitudeRank.aptitude_name1}</li>                         
-		                               	<li>${aptitudeRank.aptitude_name2}</li>                         
-		                               	<li>${aptitudeRank.aptitude_name3}</li>                         
-	                                </ul>
-	                            </div>
-	                            <div id="item-values">
-	                                <canvas id="valuesChart"></canvas>
-	                            </div>
-	                            <div id="item-interest">
-	                                <canvas id="interestChart"></canvas>
-	                                <ul>
-		                               	<li>${aptitudeRank.interest_name1}</li>                         
-		                               	<li>${aptitudeRank.interest_name2}</li>                         
-		                               	<li>${aptitudeRank.interest_name3}</li>                         
-	                                </ul>
-	                            </div>
-	                            <div id="item-ability">
-	                                <canvas id="abilityChart1"></canvas>
-	                                <canvas id="abilityChart2"></canvas>
-	                            </div>
+                               <select id="testResultSelect">
+                                   <option value="21">적성</option>
+                                   <option value="25">가치관</option>
+                                   <option value="27">역량</option>
+                                   <option value="31">흥미</option>
+                               </select>
+                               <div id="item-aptitude">
+                                  <c:if test="${!scoreTrue}">
+                                     검사하고왕
+                                  </c:if>
+                                  <c:if test="${scoreTrue}">
+                                      <canvas id="aptitudeChart"></canvas>
+                                      <ul>
+                                           <li>${aptitudeRank.aptitude_name1}</li>                         
+                                           <li>${aptitudeRank.aptitude_name2}</li>                         
+                                           <li>${aptitudeRank.aptitude_name3}</li>                         
+                                      </ul>
+                                  </c:if>                                  
+                               </div>
+                               <div id="item-values">
+                                  <c:if test="${!scoreTrue}">
+                                     검사하고왕
+                                  </c:if>
+                                  <c:if test="${scoreTrue}">
+                                     <canvas id="valuesChart"></canvas>
+                                  </c:if>
+                               </div>
+                               <div id="item-interest">
+                                  <c:if test="${!scoreTrue}">
+                                     검사하고왕
+                                  </c:if>
+                                  <c:if test="${scoreTrue}">
+                                     <canvas id="interestChart"></canvas>
+                                      <ul>
+                                           <li>${aptitudeRank.interest_name1}</li>                         
+                                           <li>${aptitudeRank.interest_name2}</li>                         
+                                           <li>${aptitudeRank.interest_name3}</li>                         
+                                      </ul>
+                                  </c:if>
+                               </div>
+                               <div id="item-ability">
+                                  <c:if test="${!scoreTrue}">
+                                     검사하고왕
+                                  </c:if>
+                                  <c:if test="${scoreTrue}">
+                                       <canvas id="abilityChart1"></canvas>
+                                      <canvas id="abilityChart2"></canvas>
+                                  </c:if>
+                                 
+                               </div>
                             </div>
                             <div class="tab-pane fade" id="nav-addInfo" role="tabpanel" aria-labelledby="nav-add-tab" tabindex="0">
-		                        <form action="/whou/member/updateInfo" method="post">
-		                             <div>
-		                                    <div class="add-wrap">
-		                                        <div class="left-box">
-		                                           <h4>자격증</h4>
-		                                           <div id="qualificationContainer">
-		                                              
-		                                                  <div class="input-wrap">
-		                                                      <input type="text" name="certi" autocomplete="off" placeholder="자격증 명" oninput="checkCerti(this)" /> <i class="fa-solid fa-circle-minus fa-lg"></i>
-		                                                      <ul class="qualificationList"></ul>
-		                                                  </div> 
-		                                            
-		                                           </div>
-		                                           <div class="add-certi-wrap">
-		                                              <div class="add-certi-btn">
-		                                                  <i class="fa-solid fa-circle-plus fa-lg"></i>
-		                                                  <p onclick="addQualification()">자격증 추가</p>
-		                                              </div>
-		                                          </div>
-		                                        </div>
-		                                        <div class="right-box">
-		                                          <h4>학과정보</h4>
-		                                            <div id="majorContainer">
-		                                              <div class="input-wrap">
-		                                                   <select class="depart-select" name="depart" id="depart">
-		                                                      <option value="대학">대학</option>
-		                                                      <option value="전문대학">전문대학</option>
-		                                                   </select>
-		                                                   <input type="text" name="major" autocomplete="off" placeholder="전공명" oninput="checkMajor(this)" />
-		                                                   <ul class="majorList"></ul>
-		                                              </div>
-		                                              <div class="input-wrap">
-		                                                  <input type="text" name="major" autocomplete="off" placeholder="부전공명/복수전공명" oninput="checkMajor(this)" />
-		                                                  <ul class="majorList"></ul>
-		                                             </div>
-		                                             </div>
-		                                            </div>
-		                                    </div> 
-		                                    <div class="button-wrap">
-		                                        <button type="submit" class="purple-btn" >저장</button>  
-		                                    </div>                                       
-		                                </div>   
-		                        </form>                        
-                     		</div>
-		                    <div class="tab-pane fade" id="nav-modifyInfo" role="tabpanel" aria-labelledby="nav-modify-tab" tabindex="0">
-		                     	<div class="desc-wrap">
-				                    <div class="left-wrap">
-				                        <div>
-				                            <nav>
-				                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-				                                  <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#nav-info" type="button" role="tab" aria-controls="nav-info" aria-selected="true">기본정보</button>
-				                                  <button class="nav-link" id="nav-plus-tab" data-bs-toggle="tab" data-bs-target="#nav-plusInfo" type="button" role="tab" aria-controls="nav-plusInfo" aria-selected="false">추가정보</button>
-				                                  <button class="nav-link" id="nav-pw-tab" data-bs-toggle="tab" data-bs-target="#nav-pw" type="button" role="tab" aria-controls="nav-pw" aria-selected="false">비밀번호 변경</button>
-				                                </div>
-				                              </nav>
-				                        </div>                        
-				                    </div>
-				                    <div class="right-wrap">
-				                         <div class="tab-content" id="nav-tabContent">
-				                            <div class="tab-pane fade show active" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab" tabindex="0">
-				                            	기본 정보
-				                            </div>
-				                            <div class="tab-pane fade" id="nav-plusInfo" role="tabpanel" aria-labelledby="nav-plus-tab" tabindex="0">
-				                     			 추가정보${mem.join_type}
-				                     		</div>
-				                     		<c:if test="${mem.join_type eq 'whoU'}">
-							                    <div class="tab-pane fade" id="nav-pw" role="tabpanel" aria-labelledby="nav-pw-tab" tabindex="0">
-							                    	비밀번호 변경
-							                    </div>
-						                    </c:if>
-				                        </div>
-				                    </div>
-				                 </div>
-		                    </div>
+                        <form action="/whou/member/updateInfo" method="post">
+                             <div>
+                                    <div class="add-wrap">
+                                        <div class="left-box">
+                                           <h4>자격증</h4>
+                                           <div id="qualificationContainer">
+                                              
+                                                  <div class="input-wrap">
+                                                      <input type="text" name="certi" autocomplete="off" placeholder="자격증 명" oninput="checkCerti(this)" /> <i class="fa-solid fa-circle-minus fa-lg"></i>
+                                                      <ul class="qualificationList"></ul>
+                                                  </div> 
+                                            
+                                           </div>
+                                           <div class="add-certi-wrap">
+                                              <div class="add-certi-btn">
+                                                  <i class="fa-solid fa-circle-plus fa-lg"></i>
+                                                  <p onclick="addQualification()">자격증 추가</p>
+                                              </div>
+                                          </div>
+                                        </div>
+                                        <div class="right-box">
+                                          <h4>학과정보</h4>
+                                            <div id="majorContainer">
+                                              <div class="input-wrap">
+                                                   <select class="depart-select" name="depart" id="depart">
+                                                      <option value="대학">대학</option>
+                                                      <option value="전문대학">전문대학</option>
+                                                   </select>
+                                                   <input type="text" name="major" autocomplete="off" placeholder="전공명" oninput="checkMajor(this)" />
+                                                   <ul class="majorList"></ul>
+                                              </div>
+                                              <div class="input-wrap">
+                                                  <input type="text" name="major" autocomplete="off" placeholder="부전공명/복수전공명" oninput="checkMajor(this)" />
+                                                  <ul class="majorList"></ul>
+                                             </div>
+                                             </div>
+                                            </div>
+                                    </div> 
+                                    <div class="button-wrap">
+                                        <button type="submit" class="purple-btn" >저장</button>  
+                                    </div>                                       
+                                </div>   
+                        </form>                        
+                     </div>
+		                     <div class="tab-pane fade" id="nav-modifyInfo" role="tabpanel" aria-labelledby="nav-modify-tab" tabindex="0">
+		                     	개인정보
+		                     </div>
+		                     <div class="tab-pane fade" id="nav-book" role="tabpanel" aria-labelledby="nav-book-tab" tabindex="0">
+			                     <div class="book-wrap">
+	                                 <c:if test="${books != null }">
+	                                    <c:forEach var="job" items="${jobs}" varStatus="status">
+	                                       <div class="card mb-5 mb-xl-0">
+	                                          <a href="/whou/member/deleteBook?job_cd=${job.job_cd}"><i class="position-absolute top-0 start-100 translate-middle fa-solid fa-circle-minus fa-lg"></i></a>
+	                                          <a href="/whou/job/info?job_cd=${job.job_cd}">
+	                                              <div class="result-cont">
+	                                                  <h4>${job.job_nm }<i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
+	                                                  <p>${job.works}</p>
+	                                              </div>
+	                                    	</a>
+	                                       </div>
+	                                    </c:forEach>
+	                                 </c:if>
+	                                 <c:if test="${books == null }">
+	                                    <div>북마크한 관심직업이 없습니다.</div>
+	                                    <div>직업정보 탐색 후, 나의 관심직업을 등록해 주세요.</div>
+	                                    <div><a href="/whou/job/dic">직업정보 >></a></div>
+	                                 </c:if>
+	                        </div> 
+		                     </div>
+		                     <!-- 컨설팅  -->
                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-								<div class="book-wrap">
-			                        <c:if test="${books != null }">
-			                        	<c:forEach var="job" items="${jobs}" varStatus="status">
-			                        		<div class="card mb-5 mb-xl-0">
-				                        		<a href="/whou/member/deleteBook?job_cd=${job.job_cd}"><i class="position-absolute top-0 start-100 translate-middle fa-solid fa-circle-minus fa-lg"></i></a>
-				                        		<a href="/whou/job/info?job_cd=${job.job_cd}">
-						                            <div class="result-cont">
-						                                <h4>${job.job_nm }<i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
-						                                <p>${job.works}</p>
-						                            </div>
-												</a>
-					                        </div>
-			                        	</c:forEach>
-			                        </c:if>
-			                        <c:if test="${books == null }">
-			                        	<div>북마크한 관심직업이 없습니다.<div>
-			                        	<div>직업정보 탐색 후, 나의 관심직업을 등록해 주세요.<div>
-			                        	<div><a href="/whou/job/dic">직업정보 >></a></div>
-			                        </c:if>
-								</div>
+                            	<c:if test="${avilReinforce eq '' || avilReinforce==null }">
+                            		컨설팅을 원한다면 직업적성검사를 받으세요.
+                            		<a href="/whou/aptitude/aptitudeMain">검사하러가기</a>
+                            	</c:if>
+                            	<c:if test="${!(avilReinforce eq '') || avilReinforce!=null }">
+									<div style="padding:0px 10xp;">
+										<c:if test="${cunsultingNum > 0}">
+											<div style="margin:0px 10xp;">
+				                                <h4>${jobDetailCunsuling.getBaseInfo().getJob_nm()}</h4>
+				                                <div>
+				                                	<p>${jobDetailCunsuling.getWorkList().get(0).getWork()}</p>
+				                                </div>
+			                                </div>
+			                                <div class="card">
+											  <div class="card-header">취업 방법</div>
+											  <div class="card-body">
+											  	<c:forEach var="getRecruit" items="${jobDetailCunsuling.getJobReady().getRecruit()}">
+											    <p class="card-text">${getRecruit.recruit}</p>
+			                                	</c:forEach>
+											  </div>
+											</div>
+			                                <div class="card">
+											  <div class="card-header">관련 교육</div>
+											  <div class="card-body">
+			                                	<c:forEach var="getCurriculum" items="${jobDetailCunsuling.getJobReady().getCurriculum()}">
+			                                		<p class="card-text">${getCurriculum.curriculum}</p>
+			                                	</c:forEach>
+											  </div>
+											  <div class="card">
+										  </div>
+					                                <div class="card-header">관련학과</div>
+					                                <div class="card-body">
+					                                	<c:forEach var="getDepartList" items="${jobDetailCunsuling.getDepartList()}">
+					                                		${getDepartList.depart_name},
+					                                	</c:forEach>
+													  <div style="height:300px;">
+													  	<canvas id="chartCanvas"></canvas>
+													  	<script>
+														  	function getSpecificColor(index) {
+														    	  const colors = [
+														    		  '#FF6D60', '#F7D060', '#F3E99F', '#98D8AA',
+														    		  '#3AA6B9', '#F0F0F0', '#F9D949', '#F45050',
+														    		  '#F7C8E0', '#DFFFD8', '#B4E4FF', '#95BDFF',
+														    		  '#6F69AC', '#95DAC1', '#C56183',
+														    	  ];
+														    	  return colors[index % colors.length]; // 인덱스에 따라서 색상을 반복해서 사용합니다.
+															}
+														  	var charLabel = [
+														        <c:forEach items="${majorChartMajor}" var="chartMajorLabel" varStatus="status">
+														            '${chartMajorLabel}'<c:if test="${not status.last}">,</c:if>
+														        </c:forEach>
+														    ];
+														  	var chartData = [
+														        <c:forEach items="${majorChartMajorData}" var="chartMajorData" varStatus="status">
+														            '${chartMajorData}'<c:if test="${not status.last}">,</c:if>
+														        </c:forEach>
+														    ];
+														  	const canvas3 = document.getElementById("chartCanvas");
+													    	const data3 = {
+													    	    	  labels: charLabel,
+													    	    	  datasets: [
+													    	    	    {
+													    	    	      label: "종사자의 전공 계열",
+													    	    	      data: chartData,
+													    	    	      backgroundColor: Array.from({ length: charLabel.length }, (_, index) => getSpecificColor(index)), // 무작위 색상을 5000개 생성하여 배열로 설정,
+													    	    	      hoverOffset: 4,
+													    	    	    },
+													    	    	  ],
+													    	    	};
+													    	const options3 = {
+													    			plugins: {
+													    				responsive: false,
+													    				title: {
+													    					display: true,
+													    					position: 'bottom',
+													    					text: '종사자의 전공 계열',
+													    					font: { size: 20, weight: 'bold' },
+													    					},
+													    			    legend: {
+													    			    	position: 'right',
+													    			    	},
+																	},
+															};
+			
+															new Chart(canvas3, {
+																type: "doughnut",
+																data: data3,
+																options: options3,
+															});
+													  	</script>
+													  </div>
+												  </div>
+												  <div>
+												  	${jobDetailCunsuling.getMajorChart().get(0).getSource()}
+												  </div>
+											</div>
+											<!-- 
+			                                <div>
+			                                	종사자 전공 계열 분포 : 
+			                                	<c:forEach var="majorChartMajor" items="${majorChartMajor}">
+			                                		${majorChartMajor}
+			                                	</c:forEach>
+			                                	<c:forEach var="majorChartMajorData" items="${majorChartMajorData}">
+			                                		${majorChartMajorData}%
+			                                	</c:forEach>
+			                                	${jobDetailCunsuling.getMajorChart().get(0).getSource()}
+			                                </div>
+			                                 -->
+			                                 
+			                                 <c:if test="${jobDetailCunsuling.getJobReady().getCertificate().get(0) != null }">
+				                                 <div class="card">
+													<div class="card-header">자격증</div>
+													<div class="card-body">
+														<c:forEach var="getCertificate" items="${jobDetailCunsuling.getJobReady().getCertificate()}">
+								                 			<p class="card-text">${getCertificate.certificate}</p>
+								                 		</c:forEach>
+													</div>
+												</div>
+											</c:if>
+			                                
+			                                <div class="card">
+			                                	<div class="card-header">요구 능력</div>
+			                                	<div class="card-body">
+			                                		<c:forEach var="getAbilityList" items="${jobDetailCunsuling.getAbilityList()}">
+			                                			${getAbilityList.ability_name}
+			                                		</c:forEach>
+			                                	</div>
+		                                	</div>
+		                                	<div>
+			                                	<div class="card-body">
+			                                		회원님의 직업적성검사 결과
+			                                		
+			                                		<c:forEach var="i" begin="0" end="${fn:length(needAvil)}">
+													    <c:set var="currentNeedAvil" value="${needAvil[i]}" />
+													    <c:set var="currentAvilArrValue" value="${avilArrValue[i]}" />
+													    <c:set var="currentReinDTO" value="${reinDTO[i]}" />
+													    <c:if test="${currentNeedAvil != null && currentAvilArrValue < 55}">
+													        ${currentNeedAvil}영역이 ${currentAvilArrValue}점으로 보완이 필요합니다.
+													        아래와 같은 방법을 통해 보완할 수 있습니다.
+															
+															<ol>
+														        <li>${currentReinDTO.getMethod01()}</li>
+														        <li>${currentReinDTO.getMethod02()}</li>
+														        <li>${currentReinDTO.getMethod03()}</li>
+														        <li>${currentReinDTO.getMethod04()}</li>
+														        <li>${currentReinDTO.getMethod05()}</li>
+														        <li>${currentReinDTO.getMethod06()}</li>
+														        <li>${currentReinDTO.getMethod07()}</li>
+														        <li>${currentReinDTO.getMethod08()}</li>
+														        <li>${currentReinDTO.getMethod09()}</li>
+														        <li>${currentReinDTO.getMethod10()}</li>
+													        </ol>
+													    </c:if>
+													
+													    <c:if test="${currentNeedAvil != null && currentAvilArrValue > 55 && currentAvilArrValue < 101}">
+													        ${currentNeedAvil}영역이 ${currentAvilArrValue}점으로 준수합니다. 
+													        자격증과 기타 활동을 위주로 수행하시는 것을 추천드립니다.
+													    </c:if>
+													</c:forEach>
+			                                	</div>
+			                                </div>
+				                        </c:if>
+				                        <c:if test="${cunsultingNum == 0}">
+				                        	컨설팅을 희망하는 직업을 입력하세요
+				                        </c:if>
+									</div>
+								</c:if>
 							</div>
-                        </div>
+                            
+                          </div>
                     </div>
                 </div>    
             </div>
@@ -363,138 +531,88 @@
          })
   
          // 추가 정보 입력
-       	function checkCerti(inputElement) {
-             var certi = $(inputElement).val();
-             var qualificationList = $(inputElement).siblings(".qualificationList");
-             
-             $.ajax({
-                 url: "/whou/member/getCerti",
-                 data: { certi: certi },
-                 success: function (result) {
-                     qualificationList.empty();
-                     qualificationList.hide();
-                     if(certi.length > 0){
-                        if(result && result.length > 0){
-                            for (var i = 0; i < result.length; i++) {
-                                var qualification = result[i];
-                                var button = $("<button>").text(qualification);
-                             
-                                button.on("click", function () {
-                                   event.preventDefault();
-                                    var selectedQualification = $(this).text();
-                                    $(inputElement).val(selectedQualification);
-                                    qualificationList.hide();
-                                });
-                                qualificationList.append($("<li>").append(button));
-                            }
+            function checkCerti(inputElement) {
+               var certi = $(inputElement).val();
+               var qualificationList = $(inputElement).siblings(".qualificationList");
+               $.ajax({
+                   url: "/whou/member/getCerti",
+                   data: { certi: certi },
+                   success: function (result) {
+                       qualificationList.empty();
+                       qualificationList.hide();
+                       if(certi.length > 0){
+                          if(result && result.length > 0){
+                              for (var i = 0; i < result.length; i++) {
+                                  var qualification = result[i];
+                                  var button = $("<button>").text(qualification);
+                               
+                                  button.on("click", function () {
+                                     event.preventDefault();
+                                      var selectedQualification = $(this).text();
+                                      $(inputElement).val(selectedQualification);
+                                      qualificationList.hide();
+                                  });
+                                  qualificationList.append($("<li>").append(button));
+                              }
+                           }else{
+                               var message = "' " + certi + " '을(를) 찾을 수 없습니다.";
+                               var messageElement = $("<li>").text(message);
+                               messageElement.on("click", function () {
+                                   // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
+                                   $(inputElement).val("");
+                                   qualificationList.hide();
+                               });
+                               qualificationList.append(messageElement);
+                           }    
+
+                           qualificationList.show();
+                       }
+                   }
+               });
+           }
+           
+           function checkMajor(inputElement) {
+               var major = $(inputElement).val();
+               var univSe = $("#depart").val();
+               //var univSe2 = $("#depart2").val();
+               var majorList = $(inputElement).next(".majorList");
+
+               $.ajax({
+                   url: "/whou/member/getMajor",
+                   data: { major: major, univSe:univSe},
+                   success: function (result) {
+                      majorList.empty();
+                      majorList.hide();
+                      
+                      if(major.length > 0){
+                         if(result && result.length > 0){
+                             for (var i = 0; i < result.length; i++) {
+                                 var major2 = result[i];
+                                 var button = $("<button>").text(major2);
+                                 button.on("click", function () {
+                                    event.preventDefault();
+                                     var selectedMajor = $(this).text();
+                                     $(inputElement).val(selectedMajor);
+                                     majorList.hide();
+                                 });
+                                 majorList.append($("<li>").append(button));
+                             }
                          }else{
-                             var message = "' " + certi + " '을(를) 찾을 수 없습니다.";
+                             var message = "' " + major + " '을(를) 찾을 수 없습니다.";
                              var messageElement = $("<li>").text(message);
                              messageElement.on("click", function () {
                                  // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
                                  $(inputElement).val("");
-                                 qualificationList.hide();
+                                 majorList.hide();
                              });
-                             qualificationList.append(messageElement);
-                         }    
-
-                         qualificationList.show();
-                     }
-                 }
-             });
-             
-         }
-            $(document).on("click", function(event) {
-                var clickedElement = event.target;
-                var qualificationLists = $(".qualificationList");
-                var isQualificationListVisible = qualificationLists.is(":visible");
-
-                // qualificationList가 보일 때만 작동
-                if (isQualificationListVisible) {
-			        // 클릭된 요소가 majorList 또는 majorList 하위 요소인 경우 아무 동작 없이 리턴
-			        if ($(clickedElement).closest(".qualificationList").length) {
-			            return;
-			        }
-			
-			        // 인풋 요소들의 값을 비웁니다. 단, majorList 보이고 있던 인풋창만 비우고 나머지는 그대로 유지
-			        $("input[name='certi']").each(function() {
-			            if ($(this).siblings(".qualificationList").is(":visible")) {
-			                $(this).val("");
-			            }
-			        });
-			
-			        // majorList를 숨깁니다.
-			        qualificationLists.empty().hide();
-			    }
-            });
-
-         function checkMajor(inputElement) {
-             var major = $(inputElement).val();
-             var univSe = $("#depart").val();
-             //var univSe2 = $("#depart2").val();
-             var majorList = $(inputElement).next(".majorList");
-
-             $.ajax({
-                 url: "/whou/member/getMajor",
-                 data: { major: major, univSe:univSe},
-                 success: function (result) {
-                    majorList.empty();
-                    majorList.hide();
-                    
-                    if(major.length > 0){
-                       if(result && result.length > 0){
-                           for (var i = 0; i < result.length; i++) {
-                               var major2 = result[i];
-                               var button = $("<button>").text(major2);
-                               button.on("click", function () {
-                                  event.preventDefault();
-                                   var selectedMajor = $(this).text();
-                                   $(inputElement).val(selectedMajor);
-                                   majorList.hide();
-                               });
-                               majorList.append($("<li>").append(button));
-                           }
-                       }else{
-                           var message = "' " + major + " '을(를) 찾을 수 없습니다.";
-                           var messageElement = $("<li>").text(message);
-                           messageElement.on("click", function () {
-                               // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
-                               $(inputElement).val("");
-                               majorList.hide();
-                           });
-                           majorList.append(messageElement);
-                       }
-                       
-                       majorList.show();
-                    }
-                 }
-             });
-         }
-         $(document).on("click", function(event) {
-        	    var clickedElement = event.target;
-        	    var majorLists = $(".majorList");
-        	    var isMajorListVisible = majorLists.is(":visible");
-
-        	    // majorList가 보일 때만 작동
-        	    if (isMajorListVisible) {
-			        // 클릭된 요소가 majorList 또는 majorList 하위 요소인 경우 아무 동작 없이 리턴
-			        if ($(clickedElement).closest(".majorList").length) {
-			            return;
-			        }
-			
-			        // 인풋 요소들의 값을 비웁니다. 단, majorList 보이고 있던 인풋창만 비우고 나머지는 그대로 유지
-			        $("input[name='major']").each(function() {
-			            if ($(this).siblings(".majorList").is(":visible")) {
-			                $(this).val("");
-			            }
-			        });
-			
-			        // majorList를 숨깁니다.
-			        majorLists.empty().hide();
-			    }
-        	});
-
-
+                             majorList.append(messageElement);
+                         }
+                         
+                         majorList.show();
+                      }
+                   }
+               });
+           }
 
         function addQualification() {
             var newDiv = $("<div>").addClass("input-wrap");

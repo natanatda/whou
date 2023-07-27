@@ -35,7 +35,9 @@ import net.nurigo.sdk.message.service.DefaultMessageService;
 import whou.secproject.component.Job_infoDTO;
 import whou.secproject.component.MemberDTO;
 import whou.secproject.component.RecommandInfoDTO;
+import whou.secproject.component.TestReinforcementDTO;
 import whou.secproject.mapper.MemberMapper;
+import whou.secproject.repository.JobDicApiDAO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -66,6 +68,7 @@ public class MemberServiceImpl implements MemberService {
 		mapper.updateBook(memId, books);
 	}
 	
+
 	// 회원정보 가져오기
 	@Override
 	public MemberDTO getUser(int userNum) {
@@ -77,6 +80,7 @@ public class MemberServiceImpl implements MemberService {
 	public Job_infoDTO getJob(int job_cd) {
 		return mapper.getJob(job_cd);
 	}
+
 
 	// 마이페이지 rank 검색
 	@Override
@@ -286,5 +290,15 @@ public class MemberServiceImpl implements MemberService {
 		}
 
 	}
-
+	
+	// sj write
+	public int getCunsultingNum(int user_info_num){ // user_info의 num을 이용하여 cunsulting_num 컬럼 값 get
+		return mapper.getCunsultingNum(user_info_num);
+	}
+	public String getRecentTest21(int userNum) { //역량 보완법을 위해 크롤링한 결과에서 21번 테스트의 역량별 수치 가져옴
+		return mapper.getRecentTest21(userNum);
+	}
+	public TestReinforcementDTO getTestReinforcement(int num) { // 역량 보완법 가져옴
+		return mapper.getTestReinforcement(num);
+	}
 }

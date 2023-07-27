@@ -66,6 +66,22 @@
 	<update id="updateBook">
 		update user_info set books = #{books} where email =#{memId}
 	</update>
+
+	
+	
+	<!--  sj write  -->
+	<!-- user_info의 num을 이용하여 cunsulting_num 컬럼 값 get -->
+	<select id="getCunsultingNum" resultType="int">
+		select cunsulting_num from user_info where num = #{userNum}
+	</select>
+	<!-- 역량 보완법을 위해 크롤링한 결과에서 21번 테스트의 역량별 수치 가져옴 -->
+	<select id="getRecentTest21" resultType="String">
+		SELECT test21_2 FROM user${userNum}_test_result WHERE test_date IN(SELECT max(test_date) FROM user${userNum}_test_result WHERE test_num=21)
+	</select>
+	<!--  역량 보완 방법을 DB에서 가져옴 -->
+	<select id="getTestReinforcement" resultType="whou.secproject.component.TestReinforcementDTO">
+		SELECT * FROM test_reinforcement WHERE num=#{num}
+	</select>
 	
 	<select id="getUser" resultType="whou.secproject.component.MemberDTO">
 		select * from whou_user where num = ${userNum}

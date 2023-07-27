@@ -77,6 +77,9 @@ public class EducationController {
 		
 		// 모든 결과 불러오기
 		EducationMajorResponseDTO responseDTO = dao.getMajorApi(paramDTO);
+		System.out.println("여기까지는 되는 건가요?"+responseDTO);
+		
+		
 		// 결과 총 개수 세기
 		int univCount = 0;
 		univCount = responseDTO.getDataSearch().getContent().size();

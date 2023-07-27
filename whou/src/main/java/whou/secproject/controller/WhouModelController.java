@@ -60,10 +60,15 @@ public class WhouModelController {
 		return "/model/modelCustom";
 	}
 	@RequestMapping("modelCustomInsert")
-	public String modelCustomInsert(Model model, HttpSession session, WhouModelCustomDTO dto) {
+	public String modelCustomInsert(Model model, HttpSession session, WhouModelCustomDTO dto,HttpServletRequest request) {
 		String email = (String)session.getAttribute("memId");
 		if(email == null) {return "redirect:/main";}
+		
 		dto.setEmail(email);
+		dto.setHeadColor(request.getParameter("head"));
+		dto.setArmColor(request.getParameter("arm"));
+		dto.setCheekColor(request.getParameter("cheek"));
+		dto.setLegColor(request.getParameter("leg"));
 		int count = whouModelCustomService.customCount(email);
 		if(count == 0) {
 			whouModelCustomService.customInsert(dto);			

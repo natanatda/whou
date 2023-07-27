@@ -39,7 +39,7 @@ public class EducationApiDAO {
 	
 	@Autowired
 	private String apiKey;
-	
+    
 	@Autowired
 	private String authKey;
 	
