@@ -51,14 +51,21 @@
 		</table>
 		<button onclick="history.back();" type="button" class="btn btn-light" style="float: right;">돌아가기</button>
 		<c:if test="${lv == 2}">
-			<button type="button" onclick="location='/whou/cs/noticeDelete?num=${notice.num}'" class="btn btn-light" style="float: right;">삭제</button>
+			<button type="button" onclick="deleteNotice();" class="btn btn-light" style="float: right;">삭제</button>
 			<button type="button" onclick="location='/whou/cs/noticeModifyForm?num=${notice.num}'" class="btn btn-light" style="float: right;">수정</button>
 		</c:if>
-		
+		<script>
+			function deleteNotice(){
+				if(confirm("삭제하시겠습니까?") == true){
+					location='/whou/cs/noticeDelete?num=${notice.num}';
+				}
+			}
+		</script>
 	</div>
 	</div>
 	</header>
 	<%@ include file="../aiChatBot.jsp" %>
 	<%@ include file="../footer.jsp" %>
+	<ㄴ
 </body>
 </html>
