@@ -400,6 +400,10 @@ public class MemberController {
   	//중복확인 & 추가정보
   	@PostMapping("/check")
   	public @ResponseBody int check(MemberDTO dto, HttpSession session) {
+		String memId = (String)session.getAttribute("memId");
+		int userNum = 0;
+		userNum=serviceAt.userNumSelect(memId);
+		
   	    System.out.println(dto);
   	    int count = service.count(dto.getTel());
   	    int check = service.check(dto.getEmail());
@@ -415,6 +419,7 @@ public class MemberController {
   	    	service.insertPro(dto);
   		  	service.insert2(dto.getEmail());
   	        session.setAttribute("memId", dto.getEmail());
+  	        serviceAt.createTableSet(userNum);
   	    }
   	    System.out.println(result);
   	    return result;
