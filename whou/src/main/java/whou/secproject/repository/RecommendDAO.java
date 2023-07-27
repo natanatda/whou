@@ -1,6 +1,7 @@
 package whou.secproject.repository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,16 +31,20 @@ public class RecommendDAO {
 	public LinkedHashMap<ArrayList<Double>,Double> DoubleTokener(List<String> input, List<String> limit) {
 		LinkedHashMap<ArrayList<Double>,Double> result = new LinkedHashMap<ArrayList<Double>,Double>();
 		for(int i = 0 ; i < input.size(); i++) {
-			ArrayList<Double> list= new ArrayList<Double>();
-			StringTokenizer st = new StringTokenizer(input.get(i), limit.get(i));
-			double avg = 0;
-			while (st.hasMoreTokens()) {
-				double d = Double.parseDouble(st.nextToken());
-				list.add(d);
-				avg+=d;
+			if(input.get(i)!=null) {
+				ArrayList<Double> list= new ArrayList<Double>();
+				StringTokenizer st = new StringTokenizer(input.get(i), limit.get(i));
+				double avg = 0;
+				while (st.hasMoreTokens()) {
+					double d = Double.parseDouble(st.nextToken());
+					list.add(d);
+					avg+=d;
+				}
+				avg=avg/list.size();
+				result.put(list, avg);
+			}else {
+				result.put(new ArrayList<Double>(Arrays.asList(i+1.0,i+1.0,i+1.0)),i+1.0);
 			}
-			avg=avg/list.size();
-			result.put(list, avg);
 		}
 		return result;
 	}
