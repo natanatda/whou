@@ -1,7 +1,7 @@
 
 // top-ai.js
 document.addEventListener('DOMContentLoaded', function() {
- 
+   console.log('ai.js실행됨');
  // ai띄우기
   var topAiElement = document.createElement('div');
   topAiElement.className = 'top-ai';
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var chatBoxContainer = document.querySelector('.chat-box-container');
         chatBoxContainer.innerHTML = data;
         chatBoxContainer.style.display = 'block';
-        
+     
 
       })
       .catch(function(error) {

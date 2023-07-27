@@ -163,6 +163,7 @@ public class JobController {
     public String JobDicInfo(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		String memId = (String)session.getAttribute("memId");
+		
        int seq = -1;
        String strSeq= request.getParameter("job_cd");
        JobDicDetailResponseDTO jobDetail = null;
@@ -201,22 +202,27 @@ public class JobController {
            e.printStackTrace();
        }
 
-      String temp = mapperMem.getBook(memId);
-      boolean contain = false;
-      if(temp!=null) {
-    	  String [] arr = temp.split(",");
-    	  for (String str : arr) {
-    		  if (str.equals(strSeq)) {
-    			  contain = true;
-    		  }
-    	  }
-      }
+       if(memId != null) {
+    	   String temp = mapperMem.getBook(memId);
+    	   boolean contain = false;
+    	   if(temp!=null) {
+	    	  String [] arr = temp.split(",");
+	    	  for (String str : arr) {
+	    		  if (str.equals(strSeq)) {
+	    			  contain = true;
+	    		  }
+	    	  }
+    	   }
+    	   model.addAttribute("contain", contain);
+       }
+      
        
-       model.addAttribute("contain", contain);
        model.addAttribute("jobDetail", jobDetail);
        model.addAttribute("indicatorData", indicatorData);
        model.addAttribute("majorData", majorData);
        model.addAttribute("eduData", eduData);
+       model.addAttribute("memId", memId);
+	   System.out.println("//////////"+memId);
        return "/job/description-detail";
     }
 	

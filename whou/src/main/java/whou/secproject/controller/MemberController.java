@@ -41,8 +41,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import whou.secproject.component.JobDicDetailResponseDTO;
+import whou.secproject.component.Job_infoDTO;
 import whou.secproject.component.MemberDTO;
 import whou.secproject.component.RecommandInfoDTO;
+import whou.secproject.component.TestReinforcementDTO;
+import whou.secproject.mapper.MemberMapper;
 import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.service.AptitudeService;
 import whou.secproject.service.MemberService;
@@ -58,24 +61,41 @@ public class MemberController {
 	private AptitudeService serviceAt;
 	
 	@Autowired
+	private MemberMapper mapperMem;
+	
+	@Autowired
 	private JobDicApiDAO dao;
 	
-	
+
 	// 북마크
-	@RequestMapping("/bookmark")
-	public String bookmark(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String memId = (String)session.getAttribute("memId");
-		String job_cd = request.getParameter("job_cd");
-		int num = Integer.parseInt(request.getParameter("contain"));
-		boolean contain = false;
-		if(num == 1) {
-			contain = true;
-		}		
-		service.updateBook(job_cd, memId, contain);
-        return "redirect:/job/info?job_cd=" + job_cd;
-	}
+	   @RequestMapping("/bookmark")
+	   public String bookmark(HttpServletRequest request) {
+	      HttpSession session = request.getSession();
+	      String memId = (String)session.getAttribute("memId");
+	      String job_cd = request.getParameter("job_cd");
+	      int num = Integer.parseInt(request.getParameter("contain"));
+	      boolean contain = false;
+	      if(num == 1) {
+	         contain = true;
+	      }   
+	      if(memId != null) {
+	         service.updateBook(job_cd, memId, contain);
+	      }
+	        return "redirect:/job/info?job_cd=" + job_cd;
+	   }
 	
+	 //마이페이지에서 북마크 직업 제거
+     @RequestMapping("/deleteBook")
+    public String deleteBook(HttpServletRequest request){
+        HttpSession session = request.getSession();
+      String memId = (String)session.getAttribute("memId");
+      String job_cd = request.getParameter("job_cd");
+      if(memId != null) {
+         service.updateBook(job_cd, memId, true);
+      }
+      return "redirect:/member/mypage";
+   }
+	     
 	//회원가입 폼
 	@RequestMapping("/joinForm")
 	public String  joinForm() {
@@ -411,91 +431,186 @@ public class MemberController {
 		
 		System.out.println("userNum왜안댐? "+userNum);
 		// 적성 차트 점수
-		String scoreA = serviceAt.getAptitudeScore(userNum);
-	
-		if(scoreA != null) {			
-			String [] scoreArr= scoreA.split("\\+");
-			ObjectMapper objectMapper = new ObjectMapper();
-			String scoresA = null;
-			try {
-				scoresA = objectMapper.writeValueAsString(scoreArr);
-			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			model.addAttribute("aptitudeScoreArr", scoresA);
-		}else {
-			model.addAttribute("aptitudeScoreArr", 0);
-		}
-		
-		// 적성 차트 이름
-		String scoreName = serviceAt.getAptitudeScoreName(userNum);
-		if(scoreName != null) {
-			String [] scoreNameArr= scoreName.split("\\+");
-			ObjectMapper objectMapperName = new ObjectMapper();
-			String scoresName = null;
-			try {
-				scoresName = objectMapperName.writeValueAsString(scoreNameArr);
-			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			model.addAttribute("aptitudeNameArr", scoresName);
-		}else {
-			model.addAttribute("aptitudeNameArr", "[]");
-		}
-		
-		// 흥미 차트 점수
-		String scoreI = serviceAt.getInterestScore(userNum);
-		if(scoreI != null) {
-			String [] scoreArrI= scoreI.split("\\+");
-			ObjectMapper objectMapperI = new ObjectMapper();
-			String scoresI = null;
-			try {
-				scoresI = objectMapperI.writeValueAsString(scoreArrI);
-			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			model.addAttribute("interestScoreArr", scoresI);
-		}else {
-			model.addAttribute("interestScoreArr", 0);
-		}
-		
-		// 가치관 차트 점수
-		String scoreV = serviceAt.getValuesScore(userNum);
-		if(scoreV != null) {
-			String [] scoreArrV= scoreV.split("\\,");
-			ObjectMapper objectMapperV = new ObjectMapper();
-			String scoresV = null;
-			try {
-				scoresV = objectMapperV.writeValueAsString(scoreArrV);
-			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			model.addAttribute("valuesScoreArr", scoresV);
-		}else {
-			model.addAttribute("valuesScoreArr", 0);
-		}
-		String scoreAb = serviceAt.getAbilityScore(userNum);
-		if(scoreAb != null) {			
-			// 쉼표(,)를 기준으로 문자열을 분리하여 배열로 얻기
-			String[] elements = scoreAb.split(",", 10); // 최대 10개로 제한
-			
-			// 앞 3개와 뒤 6개를 String으로 합치기
-			String firstThree = String.join(",", Arrays.copyOfRange(elements, 0, 4));
-			String lastSix = String.join(",", Arrays.copyOfRange(elements, 4, elements.length));
-		    model.addAttribute("firstThree", firstThree);
-		    model.addAttribute("lastSix", lastSix);
-		}else {
-			model.addAttribute("firstThree", 0);
-		    model.addAttribute("lastSix", 0);
-		}
+	      String scoreA = serviceAt.getAptitudeScore(userNum);
+	      Boolean scoreTrue = false;
+	      if(scoreA != null) {         
+	         String [] scoreArr= scoreA.split("\\+");
+	         ObjectMapper objectMapper = new ObjectMapper();
+	         String scoresA = null;
+	         try {
+	            scoresA = objectMapper.writeValueAsString(scoreArr);
+	         } catch (JsonProcessingException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         }
+	         model.addAttribute("aptitudeScoreArr", scoresA);
+	         scoreTrue = true;
+	      }else {
+	         model.addAttribute("aptitudeScoreArr", 0);
+	      }
+	      
+	      // 적성 차트 이름
+	      String scoreName = serviceAt.getAptitudeScoreName(userNum);
+	      if(scoreName != null) {
+	         String [] scoreNameArr= scoreName.split("\\+");
+	         ObjectMapper objectMapperName = new ObjectMapper();
+	         String scoresName = null;
+	         try {
+	            scoresName = objectMapperName.writeValueAsString(scoreNameArr);
+	         } catch (JsonProcessingException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         }
+	         model.addAttribute("aptitudeNameArr", scoresName);
+	         scoreTrue = true;
 
-        // 마이페이지 top 검색
-        RecommandInfoDTO aptitudeRank = service.getAptitudeRank(userNum);
-        model.addAttribute("aptitudeRank", aptitudeRank);
+	      }else {
+	         model.addAttribute("aptitudeNameArr", "[]");
+	      }
+	      
+	      // 흥미 차트 점수
+	      String scoreI = serviceAt.getInterestScore(userNum);
+	      if(scoreI != null) {
+	         String [] scoreArrI= scoreI.split("\\+");
+	         ObjectMapper objectMapperI = new ObjectMapper();
+	         String scoresI = null;
+	         try {
+	            scoresI = objectMapperI.writeValueAsString(scoreArrI);
+	         } catch (JsonProcessingException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         }
+	         model.addAttribute("interestScoreArr", scoresI);
+	         scoreTrue = true;
+
+	      }else {
+	         model.addAttribute("interestScoreArr", 0);
+	      }
+	      
+	      // 가치관 차트 점수
+	      String scoreV = serviceAt.getValuesScore(userNum);
+	      if(scoreV != null) {
+	         String [] scoreArrV= scoreV.split("\\,");
+	         ObjectMapper objectMapperV = new ObjectMapper();
+	         String scoresV = null;
+	         try {
+	            scoresV = objectMapperV.writeValueAsString(scoreArrV);
+	         } catch (JsonProcessingException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         }
+	         model.addAttribute("valuesScoreArr", scoresV);
+	         scoreTrue = true;
+	      }else {
+	         model.addAttribute("valuesScoreArr", 0);
+	      }
+	      String scoreAb = serviceAt.getAbilityScore(userNum);
+	      if(scoreAb != null) {         
+	         // 쉼표(,)를 기준으로 문자열을 분리하여 배열로 얻기
+	         String[] elements = scoreAb.split(",", 10); // 최대 10개로 제한
+	         
+	         // 앞 3개와 뒤 6개를 String으로 합치기
+	         String firstThree = String.join(",", Arrays.copyOfRange(elements, 0, 4));
+	         String lastSix = String.join(",", Arrays.copyOfRange(elements, 4, elements.length));
+	          model.addAttribute("firstThree", firstThree);
+	          model.addAttribute("lastSix", lastSix);
+	      }else {
+	         model.addAttribute("firstThree", 0);
+	          model.addAttribute("lastSix", 0);
+	      }
+
+	        // 마이페이지 top 검색
+	        RecommandInfoDTO aptitudeRank = service.getAptitudeRank(userNum);
+	        model.addAttribute("aptitudeRank", aptitudeRank);
+	      model.addAttribute("scoreTrue", scoreTrue);
+        
+        
+	    //북마크 가져오기
+	         String temp = mapperMem.getBook(memId);
+	         String [] books = null;
+	         List<String> jobList = new ArrayList();
+	         List<Job_infoDTO> job = new ArrayList();
+	          if(temp!=null) {
+	             books = temp.split(",");
+	             for(String book : books) {
+	                int job_cd = Integer.parseInt(book);
+	                System.out.println("직업 번호ㅗㅗㅗㅗㅗㅗ"+job_cd);
+	                //북마크 직업 정보 가져오기
+	                job.add(service.getJob(job_cd));
+	                model.addAttribute("books", books);
+	                model.addAttribute("jobs", job);
+	             }
+	          }
+        
+        
+        //sojin write
+        // user_info의 num을 이용하여 cunsulting_num(직업백과 job_cd) 컬럼 값 get
+        int cunsultingNum = 0;
+        cunsultingNum = service.getCunsultingNum(userNum);
+        List<String> needAvil = new ArrayList<>();//직업의 능력
+        if(cunsultingNum>0) {
+        	// 직업 백과에서 정보 뜯어오기
+        	JobDicDetailResponseDTO jobDetailCunsuling = dao.getJobDicDetail(userNum);
+        	String [] majorChartMajor = jobDetailCunsuling.getMajorChart().get(0).getMajor().split(","); // 종사자 전공 비율 항목
+        	String [] majorChartMajorData = jobDetailCunsuling.getMajorChart().get(0).getMajor_data().split(","); //종사전 전공 비율 값
+        	model.addAttribute("majorChartMajor", majorChartMajor);
+        	model.addAttribute("majorChartMajorData", majorChartMajorData);
+        	model.addAttribute("jobDetailCunsuling", jobDetailCunsuling);
+        	
+        	for(int i=0; i<jobDetailCunsuling.getAbilityList().size();i++) {
+        		needAvil.add(jobDetailCunsuling.getAbilityList().get(i).getAbility_name());
+        	}
+        }
+        model.addAttribute("cunsultingNum", cunsultingNum);
+        model.addAttribute("needAvil", needAvil);
+        
+        
+        
+        //역량 보완법을 위해 크롤링한 결과에서 21번 테스트의 역량별 수치 가져옴
+        String avilReinforce="";
+        avilReinforce = service.getRecentTest21(userNum);
+        double [] avilArrDouble = new double [11];
+        if(avilReinforce.length()>10) {
+        	String [] avilArrString = avilReinforce.split("\\+");
+        	for(int i=0; i<11; i++) {
+        		avilArrDouble[i]=Double.parseDouble(avilArrString[i]);
+        		//0음악능력  1예술시각능력  2언어능력  3수리·논리력  4공간지각력
+        		//5자기성찰능력  6창의력  7대인관계능력  8신체·운동능력  9자연친화력  10손재능
+        	}
+        	
+        	// 해당 직업에서 요구하는 능력치의 value
+        	double [] avilArrValue = new double [needAvil.size()];
+        	int avilNum = -1;
+        	List<TestReinforcementDTO> reinDTO=new ArrayList<>();
+        	for(int i=0; i<needAvil.size(); i++) {
+	        	switch(needAvil.get(i)) {
+	        		case "음악능력": avilArrValue[i]=avilArrDouble[0]; avilNum=0; break;
+//	        		case "예술시각능력": avilArrValue[i]=avilArrDouble[1]; avilNum=1; break;
+	        		case "예술시각능력": avilArrValue[i]=1000; avilNum=1; break;
+//	        		case "언어능력": avilArrValue[i]=avilArrDouble[2]; avilNum=2; break;
+	        		case "언어능력": avilArrValue[i]=1000; avilNum=2; break;
+	        		case "수리·논리력": avilArrValue[i]=avilArrDouble[3]; avilNum=3; break;
+	        		case "공간지각력": avilArrValue[i]=avilArrDouble[4]; avilNum=4; break;
+//	        		case "자기성찰능력": avilArrValue[i]=avilArrDouble[5]; avilNum=5; break;
+	        		case "자기성찰능력": avilArrValue[i]=1000; avilNum=5; break;
+	        		case "창의력": avilArrValue[i]=avilArrDouble[6]; avilNum=6; break;
+//	        		case "대인관계능력": avilArrValue[i]=avilArrDouble[7]; avilNum=7; break;
+	        		case "대인관계능력": avilArrValue[i]=1000; avilNum=7; break;
+	        		case "신체·운동능력": avilArrValue[i]=avilArrDouble[8]; avilNum=8; break;
+	        		case "자연친화력": avilArrValue[i]=avilArrDouble[9]; avilNum=9; break;
+	        		case "손재능": avilArrValue[i]=avilArrDouble[10]; avilNum=10; break;
+	        	}
+	        	reinDTO.add(service.getTestReinforcement(avilNum));
+        	}
+        	model.addAttribute("reinDTO",reinDTO);
+        	model.addAttribute("avilArrValue",avilArrValue);
+        }
+        model.addAttribute("avilReinforce",avilReinforce);
+        
+        
+        
+        
+        
  
 		return "/user/mypage";
 	}
