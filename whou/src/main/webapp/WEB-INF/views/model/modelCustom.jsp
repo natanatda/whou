@@ -55,8 +55,12 @@
 	<canvas class="webgl"></canvas>
 </div>
 <script>
-var modelCamera = '0';
+var modelCamera_x = 0;
+var modelCamera_y = 1;
+var modelCamera_z = 3;
 var modelPath = '';
+var modelWidth = 220;
+var modelHeight = 200;
 
 // default 색상
 if('${model.headColor}' === ''){

@@ -19,9 +19,16 @@
      <!-- Core theme CSS (includes Bootstrap)-->
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
      <link rel="stylesheet" href="/whou/resources/css/style.css">
-     <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
    	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   	
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   	<script src="../resources/js/unpkg.com_gsap@3.12.1_dist_gsap.min.js"></script>
+	<script src="../resources/js/ThreeCSG.js"></script>
+	<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  	<script type="module" src="../resources/js/whouModel.js"></script>
+  	
      
  </head>
  <style>
@@ -44,11 +51,16 @@
                                   <button class="nav-link" id="nav-modify-tab" data-bs-toggle="tab" data-bs-target="#nav-modifyInfo" type="button" role="tab" aria-controls="nav-modifyInfo" aria-selected="false">개인정보수정</button>
                                   <button class="nav-link" id="nav-book-tab" data-bs-toggle="tab" data-bs-target="#nav-book" type="button" role="tab" aria-controls="nav-book" aria-selected="false">나의 북마크</button>
                                   <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">컨설팅하러가기</button>
+                                  <button class="nav-link" id="nav-reco-tab" data-bs-toggle="tab" data-bs-target="#nav-reco" type="button" role="tab" aria-controls="nav-reco" aria-selected="false">추천 받기</button>
                                 </div>
                               </nav>
                         </div>                        
                         <div class="custom-box">
-                        <a href="/whou/whouModel/modelCustom">내 비서 커스텀하기</a></div>
+	                        <div>
+	                       		<canvas class="webgl"></canvas> <%-- ai --%>                        
+	                        </div>
+                        	<a href="/whou/whouModel/modelCustom">내 비서 커스텀하기</a>
+                        </div>
                     </div>
                     <div class="right-wrap">
                           <div class="tab-content" id="nav-tabContent">
@@ -345,6 +357,19 @@
 								</c:if>
 							</div>
                             
+							<!-- 추천 -->
+                            <div class="tab-pane fade" id="nav-reco" role="tabpanel" aria-labelledby="nav-reco-tab" tabindex="0">
+                              <div class="reco-wrap">
+                              	<div class="reco-item">
+                              		<div>직업이름</div>
+                              		<div>설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명</div>
+                              	</div>
+                              	<div class="add-btn">
+	                              	<i class="fa-solid fa-circle-plus fa-lg"></i>
+                              	</div>
+                              </div> 
+                               ${NMByPoint}
+                           </div>
                           </div>
                     </div>
                 </div>    
@@ -675,7 +700,58 @@
                 $('#item-ability').show();
             }
         });
+        
+        
+        
+        // 추천
+        function addReco() {
+            var newDiv = $("<div>").addClass("input-wrap");
+            var newInput = $("<input>").attr({
+                type: "text",
+                name: "certi",
+                required: true,
+                oninput: "checkCerti(this)",
+                placeholder: "자격증 명",
+                autocomplete: "off",
+            });
+            var newIcon = $("<i>").addClass("fa-solid fa-circle-minus fa-lg");
+            var newUl = $("<ul>").addClass("qualificationList");
+   
+            newDiv.append(newInput).append(newIcon).append(newUl);
+
+            $("#qualificationContainer").append(newDiv);
+            newUl.hide();
+        }
         </script>
+       <script>
+	       var modelCamera_x = 0;
+		   	var modelCamera_y = 1;
+		   	var modelCamera_z = 3;
+        	var modelPath= '';
+        	var modelWidth = 220;
+        	var modelHeight = 200;
+        	if('${model.headColor}' === ''){
+        		var headColor = '#FF0080';
+        	}else{
+        		headColor = '${model.headColor}';
+        	}
+        	if('${model.armColor}' === ''){
+        		var armColor = '#FF0080';
+        	}else{
+        		armColor = '${model.armColor}';
+        	}
+        	if('${model.cheekColor}' === ''){
+        		var cheekColor = '#FF0080';
+        	}else{
+        		cheekColor = '${model.cheekColor}';
+        	}
+        	if('${model.legColor}' === ''){
+        		var legColor = '#FF0080';
+        	}else{
+        		legColor = '${model.legColor}';
+        	}
+        </script>
+        
     
     </body>
     

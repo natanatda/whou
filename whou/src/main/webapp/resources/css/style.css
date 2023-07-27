@@ -466,6 +466,10 @@ input::placeholder{font-size: 14px;color:#999;}
 .book-wrap .card{width:200px;height:200px;  }
 .book-wrap .result-cont{ padding: 20px;height:180px;text-overflow:ellipsis;word-wrap:break-word;display: -webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
 
+.reco-wrap .reco-item{display:flex;gap:20px;align-items:center; background:#fff; border-radius:12px;padding:20px;margin-bottom:20px;}
+.reco-wrap .reco-item div:first-child{width:20%;font-weight:600;font-size: 18px;}
+.reco-wrap .reco-item div:last-child{width:80%;}
+.reco-wrap .add-btn{display:flex;justify-content:center;align-items: center;height: 20px;cursor:pointer}
 
 
 /*****************************************************************************

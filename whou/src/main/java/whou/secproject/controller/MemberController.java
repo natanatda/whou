@@ -49,6 +49,7 @@ import whou.secproject.mapper.MemberMapper;
 import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.service.AptitudeService;
 import whou.secproject.service.MemberService;
+import whou.secproject.service.WhouModelCustomService;
 
 @Controller
 @RequestMapping("/member/*")
@@ -59,6 +60,10 @@ public class MemberController {
 	
 	@Autowired
 	private AptitudeService serviceAt;
+	
+	
+	@Autowired
+	private WhouModelCustomService serviceMo;
 	
 	@Autowired
 	private MemberMapper mapperMem;
@@ -429,7 +434,11 @@ public class MemberController {
 		System.out.println("세션있냐?"+memId);
 		int userNum = 0;
 		userNum=serviceAt.userNumSelect(memId);
-		
+			
+		// ai model 가져오기
+		if(memId != null) {
+			model.addAttribute("model", serviceMo.customModel(memId));
+		}
 		System.out.println("userNum왜안댐? "+userNum);
 		// 적성 차트 점수
 	      String scoreA = serviceAt.getAptitudeScore(userNum);

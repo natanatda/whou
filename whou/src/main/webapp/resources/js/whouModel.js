@@ -7,7 +7,6 @@
     const object = new THREE.Object3D();
         const canvas = document.querySelector('.webgl')
         const scene = new THREE.Scene()
-        
         // 각도를 라디안으로 반환
         const degreesToRadians = (degrees) => { 
             return degrees * (Math.PI / 180)
@@ -19,8 +18,8 @@
         }
 
          // Renderer
-        const renderer = new THREE.WebGLRenderer({ canvas })
-		scene.background = new THREE.Color('0xFFFFFF');
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true })
+		renderer.background = new THREE.Color(0x00000000);
         const render = () => {
 	
             renderer.setSize(sizes.width, sizes.height)
@@ -29,14 +28,13 @@
         }
 
         // Camera
-   
-        const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000)
+        const camera = new THREE.PerspectiveCamera(50, sizes.width / sizes.height, 0.1, 1000)
         // 카메라 위치 조정 ( 작을수록 가까워짐 )
-        camera.position.set(modelCamera,0,10);
+        camera.position.set(modelCamera_x,modelCamera_y,modelCamera_z);
         scene.add(camera)
 		// Update sizes
-            sizes.width = 200
-            sizes.height = 200
+            sizes.width = modelWidth
+            sizes.height = modelHeight
 
             // Update camera
             camera.aspect = sizes.width / sizes.height
@@ -352,7 +350,7 @@
                     // star.position.set(x, y, z);
 
                     // // 별을 3D 공간에 추가합니다.
-                    // scene.add(star);
+                    // scene.add(별);
                     // }
 
                     // getStarShape() {
