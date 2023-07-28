@@ -15,7 +15,7 @@
 	<script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
 <script>
-	var read = false;
+	
 	$(function(){
 		var chat = "";
 		function clearChat(){
@@ -79,6 +79,7 @@
 			$("#btnContain").html('<c:forEach items="${assistantList}" var="aiList">' // 그룹이 1인 리스트들로 버튼 생성
 								+'<input type="button" class="btn btn-light mainbtn" value="${aiList.qes}"/>'
 								+'</c:forEach>');
+			$("#readArea1").html('');
 		}
 	
 		$(document).on('click', '.mainbtn, .otherBtn', handleButtonClick); // 해당 클래스 버튼 클릭했을 때 함수 호출
@@ -86,7 +87,7 @@
 		$(document).on('click', '#clear', clearChat); // 해당 id 버튼 클릭했을 때 함수 호출
 	});
 	
-	
+	var read = false;
 	var audioFile = new Audio();
 	function readBot(){
 		if(!read){return;} // 취소버튼 눌렀을 때 동작 안 하고 끝냄
