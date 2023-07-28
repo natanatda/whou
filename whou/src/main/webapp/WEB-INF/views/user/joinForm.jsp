@@ -567,8 +567,8 @@
    		    function updateButtonStatus() {
    		    	//alert(checkAll);
    		        var email = $("#email").val().replace(/ /g, '');
-		        var pw = $("#pw").val().replace(/ /g, '');
 		        var name = $("#name").val().replace(/ /g, '');
+		        var pw = $("#pw").val()
 		        var birth_year = $("#birth_year").val().replace(/ /g, '');
 		        var tel = $("#tel").val().replace(/ /g, '');
 		        var join_type = $("#join_type").val().replace(/ /g, '');
@@ -592,15 +592,28 @@
    		        //alert(isAllChecked);
    		        
    		        // 모든 조건이 만족할 때 버튼 활성화
-   		        if (email !== '' && pw !== '' && name !== '' && birth_year !== '' && tel !== '' &&
-   		            pwValid && yearValid && telValid && isAllChecked) {
-   		            $("#btn1").prop("disabled", false);
-   		        }else if (email !== '' && pw !== '' && name !== '' && birth_year !== '' && tel !== '' &&
-   		            pwValid && yearValid && telValid && checkAll) {
-   		            $("#btn1").prop("disabled", false);
-   		        }else {
-   		            $("#btn1").prop("disabled", true);
+   		        if(join_type != null){
+   		        	if (email !== '' && name !== '' && birth_year !== '' && tel !== '' &&
+   		   		        yearValid && telValid && isAllChecked) {
+   		   		            $("#btn1").prop("disabled", false);
+   		   		        }else if (email !== '' && name !== '' && birth_year !== '' && tel !== '' &&
+   		   		            	  yearValid && telValid && checkAll) {
+   		   		            $("#btn1").prop("disabled", false);
+   		   		        }else {
+   		   		            $("#btn1").prop("disabled", true);
+   		   		        }
+   		        }else{
+   		        	if (email !== '' && pw !== '' && name !== '' && birth_year !== '' && tel !== '' &&
+   		   		        pwValid && yearValid && telValid && isAllChecked) {
+   		   		            $("#btn1").prop("disabled", false);
+		   		        }else if (email !== '' && pw !== '' && name !== '' && birth_year !== '' && tel !== '' &&
+		   		            pwValid && yearValid && telValid && checkAll) {
+		   		            $("#btn1").prop("disabled", false);
+		   		        }else {
+		   		            $("#btn1").prop("disabled", true);
+		   		        }
    		        }
+   		        
    		    }
 
    		    // 인풋 필드들의 입력값 변경 시에 이벤트 핸들러 할당
@@ -619,8 +632,12 @@
 	   		  if (!$(this).prop("disabled")) {
 	   			  
 	   			var email = $("#email").val().replace(/ /g, '');
-		        var pw = $("#pw").val().replace(/ /g, '');
 		        var name = $("#name").val().replace(/ /g, '');
+		        if(join_type != null){
+		        	var pw = "0000";
+		        }else{
+		        	var pw = $("#pw").val()
+		        }
 		        var birth_year = $("#birth_year").val().replace(/ /g, '');
 		        var tel = $("#tel").val().replace(/ /g, '');
 		        var join_type = $("#join_type").val().replace(/ /g, '');

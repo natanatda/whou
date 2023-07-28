@@ -48,6 +48,12 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     	<script>
+    	let warn = ${warn};
+    	if(warn === 1){
+    		alert("다른 방식으로 가입하셨습니다.");
+    	}
+    	
+    	
     	//email과 pw가 일치하는지 확인
    		$(function() {
 		    $("#btn1").click(function() {

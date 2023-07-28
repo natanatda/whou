@@ -283,7 +283,7 @@ public class MemberController {
 		        	return "/main";
 	        	}else {
 	        		model.addAttribute("warn", 1);
-	        		return "/main";
+	        		return "/user/login";
 	        	}
 	        }
 	    }else if(email == null){
@@ -318,7 +318,7 @@ public class MemberController {
   		        	return "/main";
   	        	}else {
   	        		model.addAttribute("warn", 1);
-  	        		return "/main";
+  	        		return "/user/login";
   	        	}
   	        }
   	    }else if(email == null){
@@ -386,7 +386,7 @@ public class MemberController {
 	      		        	return "/main";
 	      	        	}else {
 	      	        		model.addAttribute("warn", 1);
-	      	        		return "/main";
+	      	        		return "/user/login";
 	      	        	}
 	      	      }
 	      	  }else if(email == null){
@@ -443,7 +443,6 @@ public class MemberController {
   	@RequestMapping("/emailChk")
   	public @ResponseBody int emailChk(String email) {
   		int result = service.check(email);
-        System.out.println(result);
         return result;
     }
   	
