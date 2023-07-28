@@ -587,7 +587,7 @@ public class MemberController {
     	List<String> needAvil = new ArrayList<>();//직업의 능력
     	if(cunsultingNum>0) {
     		// 직업 백과에서 정보 뜯어오기
-    		JobDicDetailResponseDTO jobDetailCunsuling = dao.getJobDicDetail(userNum);
+    		JobDicDetailResponseDTO jobDetailCunsuling = dao.getJobDicDetail(cunsultingNum);
     		String [] majorChartMajor = jobDetailCunsuling.getMajorChart().get(0).getMajor().split(","); // 종사자 전공 비율 항목
     		String [] majorChartMajorData = jobDetailCunsuling.getMajorChart().get(0).getMajor_data().split(","); //종사전 전공 비율 값
     		model.addAttribute("majorChartMajor", majorChartMajor);
@@ -661,187 +661,193 @@ public class MemberController {
         
         
         int majorC = 0 , certiC = 0;
+        boolean none = false; 
         if(majors!=null) majorC = majors.size();
         if(certis!=null) certiC = certis.size();
-        
         if(redto.getAptitude_score()==null&&
            redto.getInterest_score()==null&&
            redto.getValues_score()==null&&
            majorC==0 && certiC==0) 
-           return "/user/mypage";
+           none=true;
         
-        List<String> valueCd = serviceRe.getValueCd("values_common"); // 가치 평균
-        List<Integer> jList = serviceRe.allJobCd("job_info"); // 직업 일련번호
-        int jC = jList.size(); // 직업 수
-        
-        List<String> scoreStrs = Arrays.asList( // 점수 리스트
-              redto.getAptitude_score(),redto.getInterest_score()); 
-        
-        List<ArrayList<String>> jobNumList = Arrays.asList( // 해당 직업 리스트
-              redto.getAptitude_jobs(),redto.getInterest_jobs());
-        
-        List<String> limitStrs = Arrays.asList("\\+","\\+"); // 구분자
-        List<Integer> importances = Arrays.asList(1,2,3); // 중요도
-        
-        LinkedHashMap<ArrayList<Double>,Double> scores = redao.DoubleTokener(scoreStrs, limitStrs);
-         List<Double> jobScore = new ArrayList<>(Collections.nCopies(jC, 1.0)); // 직업당 점수
-         
-        System.out.println(10+majorC+certiC);
-        double [][] jobScorePoint = new double [jC][10+majorC+certiC];
-        if(serviceRe.tbTrue(userNum)==1) serviceRe.dropTable(userNum);
-        serviceRe.createJobPoint(userNum, majorC, certiC);
-
-        int i = 0;
-        for (Map.Entry<ArrayList<Double>, Double> entry : scores.entrySet()) {
-        	List<String> jobNum = jobNumList.get(i); // 해당하는 직업의 jcd
-        	List<Double> normalize= redao.normalizePer(entry.getKey(), entry.getValue(), importances.get(i++)).subList(0, 3); // 3개만 적용
-        	if(jobNum.size()!=0) {
-        		for(int j = 0 ; j < normalize.size(); j++) {
-        			double d = normalize.get(j); // 1.38~~
-                    StringTokenizer st = new StringTokenizer(jobNum.get(j),",");
-                    while(st.hasMoreTokens( )) {
-                       int f = jList.indexOf(Integer.parseInt(st.nextToken()));
-                       jobScore.set(f, jobScore.get(f)*d);
-                       jobScorePoint[f][3*(i-1)+j] = normalize.get(j);
-                    }
-                 }
-              }
-          }
-        
-        List<Integer> valueList = null;
-        if(redto.getValues_score()!=null) {
-           valueList = redao.valueTokenizer(redto.getValues_score(), ",");
-           List<Double> defaultValue = Arrays.asList(50.82,52.89,45.83,48.52);
-           List<Double> valueScore = redao.valueScore(defaultValue, valueList, importances.get(2));
-           for(int k = 0 ; k < valueScore.size(); k++) {
-              String str = valueCd.get(k);
-              StringTokenizer st = new StringTokenizer(str,",");
-              while(st.hasMoreTokens()) {
-                 int f = jList.indexOf(Integer.parseInt(st.nextToken()));
-                 jobScore.set(f, jobScore.get(f)*valueScore.get(k));
-                 jobScorePoint[f][6+k] = valueScore.get(k);
-              }
-           }
-        }
-        System.out.println(jobScore);
-        
-        if(majors!=null) {
-           SelectDTO selDTO = new SelectDTO();
-           int h = 10;
-           for(String major: majors) {
-              List<Integer> li = serviceRe.majorToCD(selDTO, major);
-              for(Integer l : li) {
-                 l = jList.indexOf(l);
-                 jobScore.set(l, jobScore.get(l)*1.1);
-                   jobScorePoint[l][h] = 1.1;
-              }
-              h++;
-           }
-        }
-        if(certis!=null) {
-           SelectDTO selDTO = new SelectDTO();
-           int m = 10+majorC;
-           for(String certi: certis) {
-              List<Integer> li = serviceRe.majorToCD(selDTO, certi);
-              for(Integer l : li) {
-                 l = jList.indexOf(l);
-                 jobScore.set(l, jobScore.get(l)*1.1);
-                 jobScorePoint[l][m] = 1.1;
-                 System.out.println("certitreu"+jobScorePoint[l][m]+" "+l+" "+m);
-              }
-              m++;
-           }
-        }
-        
-        Map<Integer, Double> jcdToScore = new HashMap<>();
-        for (int idx = 0; idx < jList.size(); idx++) {
-           jcdToScore.put(jList.get(idx), jobScore.get(idx));
+        if(!none) {
+        	if(serviceRe.updateTrue(userNum)==1) {
+        		List<String> valueCd = serviceRe.getValueCd("values_common"); // 가치 평균
+        		List<Integer> jList = serviceRe.allJobCd("job_info"); // 직업 일련번호
+        		int jC = jList.size(); // 직업 수
+        		
+        		List<String> scoreStrs = Arrays.asList( // 점수 리스트
+        				redto.getAptitude_score(),redto.getInterest_score()); 
+        		
+        		List<ArrayList<String>> jobNumList = Arrays.asList( // 해당 직업 리스트
+        				redto.getAptitude_jobs(),redto.getInterest_jobs());
+        		
+        		List<String> limitStrs = Arrays.asList("\\+","\\+"); // 구분자
+        		List<Integer> importances = serviceRe.getImportances(userNum); // 중요도
+        		boolean importanceTrue = importances!=null; // 중요도
+        		System.out.println(importanceTrue);
+        		if(!importanceTrue) importances = new ArrayList<Integer>(Arrays.asList(1,1,1));
+        		LinkedHashMap<ArrayList<Double>,Double> scores = redao.DoubleTokener(scoreStrs, limitStrs);
+        		System.out.println("scores"+scores);
+        		List<Double> jobScore = new ArrayList<>(Collections.nCopies(jC, 1.0)); // 직업당 점수
+        		
+        		double [][] jobScorePoint = new double [jC][10+majorC+certiC];
+        		if(serviceRe.tbTrue(userNum)==1) serviceRe.dropTable(userNum);
+        		serviceRe.createJobPoint(userNum, majorC, certiC);
+        		
+        		int i = 0;
+        		for (Map.Entry<ArrayList<Double>, Double> entry : scores.entrySet()) {
+        			List<String> jobNum = jobNumList.get(i); // 해당하는 직업의 jcd
+        			List<Double> normalize= redao.normalizePer(entry.getKey(), entry.getValue(), importances.get(i++)).subList(0, 3); // 3개만 적용
+        			if(jobNum.size()!=0) {
+        				for(int j = 0 ; j < normalize.size(); j++) {
+        					double d = normalize.get(j); // 1.38~~
+        					StringTokenizer st = new StringTokenizer(jobNum.get(j),",");
+        					while(st.hasMoreTokens( )) {
+        						int f = jList.indexOf(Integer.parseInt(st.nextToken()));
+        						jobScore.set(f, jobScore.get(f)*d);
+        						jobScorePoint[f][3*(i-1)+j] = normalize.get(j);
+        					}
+        				}
+        			}
+        		}
+        		
+        		List<Integer> valueList = null;
+        		if(redto.getValues_score()!=null) {
+        			valueList = redao.valueTokenizer(redto.getValues_score(), ",");
+        			List<Double> defaultValue = Arrays.asList(50.82,52.89,45.83,48.52);
+        			List<Double> valueScore = redao.valueScore(defaultValue, valueList, importances.get(2));
+        			for(int k = 0 ; k < valueScore.size(); k++) {
+        				String str = valueCd.get(k);
+        				StringTokenizer st = new StringTokenizer(str,",");
+        				while(st.hasMoreTokens()) {
+        					int f = jList.indexOf(Integer.parseInt(st.nextToken()));
+        					jobScore.set(f, jobScore.get(f)*valueScore.get(k));
+        					jobScorePoint[f][6+k] = valueScore.get(k);
+        				}
+        			}
+        		}
+        		
+        		if(majors!=null) {
+        			SelectDTO selDTO = new SelectDTO();
+        			int h = 10;
+        			for(String major: majors) {
+        				List<Integer> li = serviceRe.majorToCD(selDTO, major);
+        				for(Integer l : li) {
+        					l = jList.indexOf(l);
+        					jobScore.set(l, jobScore.get(l)*1.1);
+        					jobScorePoint[l][h] = 1.1;
+        				}
+        				h++;
+        			}
+        		}
+        		if(certis!=null) {
+        			SelectDTO selDTO = new SelectDTO();
+        			int m = 10+majorC;
+        			for(String certi: certis) {
+        				List<Integer> li = serviceRe.majorToCD(selDTO, certi);
+        				for(Integer l : li) {
+        					l = jList.indexOf(l);
+        					jobScore.set(l, jobScore.get(l)*1.1);
+        					jobScorePoint[l][m] = 1.1;
+        					System.out.println("certitreu"+jobScorePoint[l][m]+" "+l+" "+m);
+        				}
+        				m++;
+        			}
+        		}
+        		
+        		Map<Integer, Double> jcdToScore = new HashMap<>();
+        		for (int idx = 0; idx < jList.size(); idx++) {
+        			jcdToScore.put(jList.get(idx), jobScore.get(idx));
 //           System.out.print(jList.get(idx)+": "+jobScore.get(idx)+" ");
 //           for(int m = 0; m < 10+majorC+certiC; m++)
 //                 System.out.print(jobScorePoint[idx][m]+" ");
-           serviceRe.insertJobPoint(userNum,jList.get(idx),jobScore.get(idx), jobScorePoint[idx], majorC, certiC);
+        			serviceRe.insertJobPoint(userNum,jList.get(idx),jobScore.get(idx), jobScorePoint[idx], majorC, certiC);
 //              System.out.println();
-        }
-        
+        		}
+        	}
+        	
+        	
 //        List<Map.Entry<Integer, Double>> list = new ArrayList<>(jcdToScore.entrySet());
 //          Collections.sort(list, new Comparator<Map.Entry<Integer, Double>>() {
 //              public int compare(Map.Entry<Integer, Double> o1, Map.Entry<Integer, Double> o2) {
 //                  return o2.getValue().compareTo(o1.getValue());
 //              }
 //          });
-          
-          // 결과 출력
+        	
+        	// 결과 출력
 //          for (Map.Entry<Integer, Double> entry : list) {
 //              System.out.println(entry.getKey() + ": " + entry.getValue()+" ");
 //          }
-        SelectDTO selDTO = new SelectDTO();
-        List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(selDTO, userNum, 1, 5);
-        System.out.println("recoLi="+ recoLi);
-        SelectDTO selDTO2 = new SelectDTO();
-        HashMap<String,String> top3NM = serviceRe.getRecoList(selDTO2, userNum);
-        ArrayList <String> colNM = new ArrayList<String>(
-              Arrays.asList("APTITUDE_NAME1","APTITUDE_NAME2",
-                    "APTITUDE_NAME3","INTEREST_NAME1",
-                    "INTEREST_NAME2","INTEREST_NAME3"));
-        ArrayList <String> colNM2 = new ArrayList<String>(
-              Arrays.asList("JOB_CD","TOTAL","APTITUDE1",
-                    "APTITUDE2","APTITUDE3","INTEREST1",
-                    "INTEREST2","INTEREST3","VALUE1","VALUE2",
-                    "VALUE3","VALUE4"));
-        for(int c = 0 ; c < majorC; c++) colNM2.add("MAJOR"+(c+1));
-        for(int c = 0 ; c < certiC; c++) colNM2.add("CERTI"+(c+1));
-        System.out.println(colNM2);
-        ArrayList<LinkedHashMap<String, BigDecimal>> NMByPoint = new ArrayList<LinkedHashMap<String,BigDecimal>>();
-        //serviceRe;
-        for(int h = 0 ;  h < recoLi.size(); h++) {
-            LinkedHashMap<String,BigDecimal> arr = new LinkedHashMap<String,BigDecimal>();
-            RecoResultDTO reredto = new RecoResultDTO();
-            reredto.setJob_nm("");
-            for(int c = 0; c < 11+majorC+certiC; c++) {
-               String factor = null, detail = null;
-               if(c == 0) factor = "직업 일련번호";
-               else if(c == 1) factor = "총점";
-               else if(c < 8) {
-                  factor = top3NM.get(colNM.get(c-2));
-                  if(factor==null) factor=(c-1)+"?";
-                  if(1<c&& c<5) detail ="적성";
-                  else detail ="흥미";
-               }
-               else if(c==8) factor = "안전지향";
-               else if(c==9) factor = "의미지향";
-               else if(c==10) factor = "변화지향";
-               else if(c==11) factor = "성취지향";
-               else if(c<11+majorC) factor = majors.get(c-11);
-               else if(c<11+majorC+certiC) factor = certis.get(c-11-majorC);
-               arr.put(factor, recoLi.get(h).get(colNM2.get(c)));
-               if(1<c&&c<8) {
- 	              if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
- 	            	  reredto.setDescription(
- 	            		"당신의 "+detail+" 중 " +factor+"은 당신의 표준 "+detail+" 점수에 비해 약 "+
- 	            		Math.round(recoLi.get(h).get(colNM2.get(c)).doubleValue()*100)+"% 높");
- 	              }
-               }else if(7<c&&c<12) {
-            	   if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
-  	            	  reredto.setDescription(
-  	            		" 표준 "+factor+" 점수에 비해 약 "+
-  	            		Math.round(recoLi.get(h).get(colNM2.get(c)).doubleValue()*100)+"% 높");
-  	              }
-               }else if(11<c) {
-            	   if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
-   	            	  reredto.setDescription(
-   	            		" 자격증 "+factor+" 는 도움이 되");
-   	              }
-               }
-            }
-            System.out.println(reredto.getDescriptions());
-            NMByPoint.add(arr);
-         }
-        System.out.println(NMByPoint);
-        model.addAttribute("NMByPoint", NMByPoint);
-
-        
-        
- 
+        	SelectDTO selDTO = new SelectDTO();
+        	List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(selDTO, userNum, 1, 5);
+        	SelectDTO selDTO2 = new SelectDTO();
+        	HashMap<String,String> top3NM = serviceRe.getRecoList(selDTO2, userNum);
+        	ArrayList <String> colNM = new ArrayList<String>(
+        			Arrays.asList("APTITUDE_NAME1","APTITUDE_NAME2",
+        					"APTITUDE_NAME3","INTEREST_NAME1",
+        					"INTEREST_NAME2","INTEREST_NAME3"));
+        	ArrayList <String> colNM2 = new ArrayList<String>(
+        			Arrays.asList("JOB_CD","TOTAL","APTITUDE1",
+        					"APTITUDE2","APTITUDE3","INTEREST1",
+        					"INTEREST2","INTEREST3","VALUE1","VALUE2",
+        					"VALUE3","VALUE4"));
+        	for(int c = 0 ; c < majorC; c++) colNM2.add("MAJOR"+(c+1));
+        	for(int c = 0 ; c < certiC; c++) colNM2.add("CERTI"+(c+1));
+        	SelectDTO selDTOJ = new SelectDTO();
+        	ArrayList<RecoResultDTO> reres = new ArrayList<RecoResultDTO>();
+        	for(int h = 0 ;  h < recoLi.size(); h++) {
+        		RecoResultDTO reredto = new RecoResultDTO();
+        		int job_cd = recoLi.get(h).get(colNM2.get(0)).intValue();
+        		reredto.setJob_cd(job_cd);
+        		reredto.setJob_nm(serviceRe.getJname(selDTOJ, job_cd));
+        		for(int c = 0; c < 11+majorC+certiC; c++) {
+        			String factor = null, detail = null;
+        			if(c == 0) factor = "직업 일련번호";
+        			else if(c == 1) factor = "총점";
+        			else if(c < 8) {
+        				factor = top3NM.get(colNM.get(c-2));
+        				if(factor==null) factor=(c-1)+"?";
+        				if(1<c&& c<5) detail ="적성";
+        				else detail ="흥미";
+        				if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+        					reredto.setDescription(
+        							"당신의 "+detail+" 중 " +factor+"은 당신의 직업 적합도 종합 점수에 약 "+
+        									Math.round(recoLi.get(h).get(colNM2.get(c)).doubleValue()*100-100)+"% 기");
+        				}
+        			}
+        			else if(7<c&&c<12) {
+        				if(c==8) factor = "안전지향";
+            			else if(c==9) factor = "의미지향";
+            			else if(c==10) factor = "변화지향";
+            			else if(c==11) factor = "성취지향";
+        				if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+        					reredto.setDescription(
+        							" 표준 "+factor+" 부분에서 당신의 직업 적합도 종합 점수에 약 "+
+        									Math.round(recoLi.get(h).get(colNM2.get(c)).doubleValue()*100-100)+"% 기");
+        				}
+        			}
+        			else if(c<11+majorC) {
+        				factor = majors.get(c-11);
+        				if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+        					reredto.setDescription(
+        						" 학위 "+factor+" 는 이 직업에서 도움이 되기에 10%");
+        				}
+        			}
+        			else if(c<11+majorC+certiC) { 
+        				factor = certis.get(c-11-majorC);
+        				if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+        					reredto.setDescription(
+        						" 자격증 "+factor+" 는 이 직업에서 도움이 되기에 10%");
+        				}
+        			}
+        			
+        		}
+        		reres.add(reredto);
+        	}
+        	model.addAttribute("reres", reres);
+        }
+        model.addAttribute("none", none);
 		return "/user/mypage";
 	}
   	
@@ -884,5 +890,108 @@ public class MemberController {
 	    }
 	    return "redirect:/member/mypage";
 	}
-
+	
+	// 추천 리스트 가져오기
+	@RequestMapping("/getRecoLi")
+    public @ResponseBody ArrayList<RecoResultDTO> getRecoLi(@RequestParam("page") int page,
+            									@RequestParam("size") int size,
+            									HttpSession session){
+		String memId = (String)session.getAttribute("memId");
+		// user_info 테이블에서 세션에 해당하는 num 추출
+		int userNum = 0;
+		if(memId != null) userNum=serviceAt.userNumSelect(memId);
+		
+        CertiDTO certiDTO = new CertiDTO();
+        certiDTO.setNum(userNum);
+        certiDTO.setCol("SCHOOL_MAJOR");
+        ArrayList<String> majors = serviceRe.majorInfo(certiDTO);
+        certiDTO.setCol("CERTIFICATE");
+        ArrayList<String> certis= serviceRe.majorInfo(certiDTO);
+        int majorC = 0 , certiC = 0;
+        if(majors!=null) majorC = majors.size();
+        if(certis!=null) certiC = certis.size();
+        
+        SelectDTO selDTO = new SelectDTO();
+    	List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(selDTO, userNum, page, size);
+    	SelectDTO selDTO2 = new SelectDTO();
+    	HashMap<String,String> top3NM = serviceRe.getRecoList(selDTO2, userNum);
+    	ArrayList <String> colNM = new ArrayList<String>(
+    			Arrays.asList("APTITUDE_NAME1","APTITUDE_NAME2",
+    					"APTITUDE_NAME3","INTEREST_NAME1",
+    					"INTEREST_NAME2","INTEREST_NAME3"));
+    	ArrayList <String> colNM2 = new ArrayList<String>(
+    			Arrays.asList("JOB_CD","TOTAL","APTITUDE1",
+    					"APTITUDE2","APTITUDE3","INTEREST1",
+    					"INTEREST2","INTEREST3","VALUE1","VALUE2",
+    					"VALUE3","VALUE4"));
+    	for(int c = 0 ; c < majorC; c++) colNM2.add("MAJOR"+(c+1));
+    	for(int c = 0 ; c < certiC; c++) colNM2.add("CERTI"+(c+1));
+    	SelectDTO selDTOJ = new SelectDTO();
+    	ArrayList<RecoResultDTO> reres = new ArrayList<RecoResultDTO>();
+    	for(int h = 0 ;  h < recoLi.size(); h++) {
+    		RecoResultDTO reredto = new RecoResultDTO();
+    		int job_cd = recoLi.get(h).get(colNM2.get(0)).intValue();
+    		reredto.setJob_cd(job_cd);
+    		reredto.setJob_nm(serviceRe.getJname(selDTOJ, job_cd));
+    		for(int c = 0; c < 11+majorC+certiC; c++) {
+    			String factor = null, detail = null;
+    			if(c == 0) factor = "직업 일련번호";
+    			else if(c == 1) factor = "총점";
+    			else if(c < 8) {
+    				factor = top3NM.get(colNM.get(c-2));
+    				if(factor==null) factor=(c-1)+"?";
+    				if(1<c&& c<5) detail ="적성";
+    				else detail ="흥미";
+    				if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+    					reredto.setDescription(
+    							"당신의 "+detail+" 중 " +factor+"은 당신의 표준 "+detail+" 점수 기여도에 비해 약 "+
+    									Math.round(recoLi.get(h).get(colNM2.get(c)).doubleValue()*100-100)+"% 높");
+    				}
+    			}
+    			else if(7<c&&c<12) {
+    				if(c==8) factor = "안전지향";
+        			else if(c==9) factor = "의미지향";
+        			else if(c==10) factor = "변화지향";
+        			else if(c==11) factor = "성취지향";
+    				if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+    					reredto.setDescription(
+    							" 표준 "+factor+" 점수 기여도에 비해 약 "+
+    									Math.round(recoLi.get(h).get(colNM2.get(c)).doubleValue()*100-100)+"% 높");
+    				}
+    			}
+    			else if(c<11+majorC) {
+    				factor = majors.get(c-11);
+    				if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+    					reredto.setDescription(
+    						" 학위 "+factor+" 는 이 직업에서 도움이 되");
+    				}
+    			}
+    			else if(c<11+majorC+certiC) { 
+    				factor = certis.get(c-11-majorC);
+    				if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+    					reredto.setDescription(
+    						" 자격증 "+factor+" 는 이 직업에서 도움이 되");
+    				}
+    			}
+    		}
+    		reres.add(reredto);
+    	}
+    	return reres;
+	}
+	//회원 추가 정보 수정(자격증, 학과)
+		@RequestMapping("/insertConsult")
+		public String updateInfo(HttpServletRequest request){
+			
+			HttpSession session = request.getSession();
+			String memId = (String)session.getAttribute("memId");
+			int userNum = 0;
+			if(memId != null) userNum=serviceAt.userNumSelect(memId);
+			String job_cdStr = request.getParameter("job_cd");
+			System.out.println(job_cdStr);
+			int job_cd = 0;
+			if(job_cdStr != null) job_cd= Integer.parseInt(job_cdStr);
+			serviceRe.insertConsult(userNum, job_cd);
+			
+		    return "redirect:/member/mypage";
+		}
 }

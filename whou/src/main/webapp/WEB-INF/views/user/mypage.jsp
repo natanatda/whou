@@ -50,8 +50,8 @@
                                   <button class="nav-link" id="nav-add-tab" data-bs-toggle="tab" data-bs-target="#nav-addInfo" type="button" role="tab" aria-controls="nav-addInfo" aria-selected="false">추가정보입력</button>
                                   <button class="nav-link" id="nav-modify-tab" data-bs-toggle="tab" data-bs-target="#nav-modifyInfo" type="button" role="tab" aria-controls="nav-modifyInfo" aria-selected="false">개인정보수정</button>
                                   <button class="nav-link" id="nav-book-tab" data-bs-toggle="tab" data-bs-target="#nav-book" type="button" role="tab" aria-controls="nav-book" aria-selected="false">나의 북마크</button>
-                                  <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">컨설팅하러가기</button>
                                   <button class="nav-link" id="nav-reco-tab" data-bs-toggle="tab" data-bs-target="#nav-reco" type="button" role="tab" aria-controls="nav-reco" aria-selected="false">추천 받기</button>
+                                  <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">컨설팅하러가기</button>
                                 </div>
                               </nav>
                         </div>                        
@@ -124,10 +124,10 @@
                                            <h4>자격증</h4>
                                            <div id="qualificationContainer">
                                               
-                                                  <div class="input-wrap">
-                                                      <input type="text" name="certi" autocomplete="off" placeholder="자격증 명" oninput="checkCerti(this)" /> <i class="fa-solid fa-circle-minus fa-lg"></i>
-                                                      <ul class="qualificationList"></ul>
-                                                  </div> 
+                                                 <div class="input-wrap">
+                                                     <input type="text" name="certi" autocomplete="off" placeholder="자격증 명" oninput="checkCerti(this)" /> <i class="fa-solid fa-circle-minus fa-lg"></i>
+                                                     <ul class="qualificationList"></ul>
+                                                 </div> 
                                             
                                            </div>
                                            <div class="add-certi-wrap">
@@ -381,17 +381,28 @@
                             
 							<!-- 추천 -->
                             <div class="tab-pane fade" id="nav-reco" role="tabpanel" aria-labelledby="nav-reco-tab" tabindex="0">
-                              <div class="reco-wrap">
-                              	<div class="reco-item">
-                              		<div>직업이름</div>
-                              		<div>설명설명설명설명설명설명ㅇ설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명</div>
-                              	</div>
-                              	<div class="add-btn">
+                            <c:if test="${!none }">
+                               <c:forEach var="rere" items="${reres }">
+	                              <div class="reco-wrap">
+	                               		<div class="reco-item">
+		                              		<div onclick="location='/whou/member/insertConsult?job_cd=${rere.job_cd}'">${rere.job_nm}</div>
+		                              		<div onclick="location='/whou/job/info?job_cd=${rere.job_cd}'">${rere.descriptions}</div>
+		                              	</div>
+	                              </div> 
+                               </c:forEach>
+                              	<div class="add-btn" onclick="getRecoLi()">
 	                              	<i class="fa-solid fa-circle-plus fa-lg"></i>
                               	</div>
-                              </div> 
-                               ${NMByPoint}
-                           </div>
+                              	직업 정보를 보고싶으면 본문의 내용을, 컨설팅을 받고 싶으면 직업 이름을 눌러주세요
+                              	<div class="input-wrap">
+                                   <input type="text" name="reco" autocomplete="off" placeholder="직업 이름" oninput="getJobs(this)" /> <i class="fa-solid fa-circle-minus fa-lg"></i>
+                                   <ul class="qualificationList"></ul>
+                               </div> 
+                           	</div>
+                            </c:if>
+                            <c:if test="${none}">
+                            	추천이 불가능합니다. 검사를 보거나, 자격증 및 학과 정보를 기입해주세요
+                            </c:if>
                           </div>
                     </div>
                 </div>    
@@ -671,7 +682,6 @@
                              });
                              majorList.append(messageElement);
                          }
-                         
                          majorList.show();
                       }
                    }
@@ -760,6 +770,25 @@
             $("#qualificationContainer").append(newDiv);
             newUl.hide();
         }
+        
+        
+        var recoPlus = 1;
+        function getRecoLi(){
+        	var size=5;
+            $.ajax({
+                url: "/whou/member/getRecoLi",
+                type: "GET",
+                dataType: "json",
+                data: { page : recoPlus++, size:size},
+                success: function(result) {
+                	console.log(result);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching joke:", error);
+                }
+            });
+        }; 
+
         </script>
        <script>
 	       var modelCamera_x = 0;

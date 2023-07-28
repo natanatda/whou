@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class RecoResultDTO {
+	private int job_cd;
 	private String job_nm;
 	private String description;
 	private ArrayList<String> descriptionLi = new ArrayList<String>();
@@ -18,8 +19,8 @@ public class RecoResultDTO {
 		descriptions="";
 		for(int i = 0 ; i < descriptionLi.size(); i++) {
 			descriptions+=descriptionLi.get(i);
-			if(i!=descriptionLi.size()-1) descriptions+="고,";
-			else descriptions+="게 나왔습니다.";
+			if(i!=descriptionLi.size()-1) descriptions+="여하고,";
+			else descriptions+="여 했습니다.";
 		}
 		return descriptions;
 	}
