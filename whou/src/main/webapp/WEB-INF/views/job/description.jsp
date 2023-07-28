@@ -38,8 +38,10 @@
                             <div class="select-form">
                                 <select class="desc-select">
                                     <option value="">전체</option>
-                                    <option value="">직업명</option>
-                                    <option value="">하는일</option>
+                                    <!-- 
+	                                    <option value="">직업명</option>
+	                                    <option value="">하는일</option>
+                                     -->
                                 </select>
                             </div>
                             <div class="input-group search-form">
@@ -135,15 +137,11 @@
                 <div class="result-top">
                     <p class="result-top-txt">총 <span>${count}</span>건이 검색되었습니다</p>
                     <div class="result-top-right">
-                        <select name="" id="">
-                            <option value="">정렬순서</option>
-                        </select>
-                        <select name="" id="">
-                            <option value="">9개씩보기</option>
-                        </select>
                         <input type ="submit" class="square-btn" value="적용" onclick="getTabName('${clickTabId}')" >
-                        <div><i class="fa-solid fa-table-cells fa-lg"></i></div>
-                        <div><i class="fa-solid fa-bars fa-lg"></i></div>
+                        <!-- 
+	                        <div><i class="fa-solid fa-table-cells fa-lg"></i></div>
+	                        <div><i class="fa-solid fa-bars fa-lg"></i></div>
+                         -->
                     </div>
                 </div>
                 
