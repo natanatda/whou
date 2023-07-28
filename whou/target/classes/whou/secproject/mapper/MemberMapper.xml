@@ -41,6 +41,8 @@
 		select email from whou_user where name = #{name} and tel = #{tel}
 	</select>
 	
+	
+	<!-- 추가정보관련(자격증/학과) -->
 	<select id="getCerti" resultType="String">
 	    select jmfldnm from certificate where jmfldnm like '%' || #{txt} || '%'
 	</select>
@@ -49,16 +51,20 @@
 		select MCLASS from major where MCLASS like '%' || #{major} || '%' and univSe = #{univSe}
 	</select>
 	
+	<select id="getUserCerti" resultType="String">
+		select CERTIFICATE from user_info where email = #{memId}
+	</select>
+	
+	<select id="getUserMajor" resultType="String">
+		select SCHOOL_MAJOR from user_info where email = #{memId}
+	</select>
+	
 	<update id="updateInfo">
 		update user_info set CERTIFICATE=#{combinedCerti}, SCHOOL_MAJOR=#{combinedMajor} where email = #{memId}
 	</update>
 	
 	
-	<!-- 마이페이지 -->
-	<select id="getAptitudeRank" resultType="whou.secproject.component.RecommandInfoDTO">
-		select * from recommand_info where num = ${userNum}
-	</select>
-	
+	<!-- 북마크 관련 -->
 	<select id="getBook" resultType="String">
 		select books from user_info where email = #{memId}
 	</select>
@@ -67,14 +73,39 @@
 		update user_info set books = #{books} where email =#{memId}
 	</update>
 	
-	<select id="getUserCerti" resultType="String">
-		select CERTIFICATE from user_info where email = #{memId}
+	<select id="getJob" resultType="whou.secproject.component.Job_infoDTO">
+		select job_nm, works, job_cd from job_info where job_cd = #{job_cd}
 	</select>
 	
-	<select id="getUserMajor" resultType="String">
-		select SCHOOL_MAJOR from user_info where email = #{memId}
+	
+	<!-- 회원정보수정 관련 -->
+	<select id="getUser" resultType="whou.secproject.component.MemberDTO">
+		select * from whou_user where num = #{userNum}
 	</select>
+	
+	<select id="userInfo" resultType="whou.secproject.component.UserInfoDTO">
+		select * from user_info where num = #{userNum}
+	</select>
+	
+	<update id="updateUser">
+		update whou_user set name = #{name}, birth_year = #{birth_year}, tel = #{tel} where num = #{userNum}
+	</update>
+	
+	<update id="updatePw">
+		update whou_user set pw=#{pw} where num = #{userNum}
+	</update>
+	
+	<update id="updateUserInfo">
+		update user_info set CERTIFICATE=#{combinedCerti}, SCHOOL_MAJOR=#{combinedMajor} where num = #{userNum}
+	</update>
 
+		
+		
+	<!-- 마이페이지 -->
+	<select id="getAptitudeRank" resultType="whou.secproject.component.RecommandInfoDTO">
+		select * from recommand_info where num = #{userNum}
+	</select>
+	
 	
 	
 	<!-- user_info의 num을 이용하여 cunsulting_num 컬럼 값 get -->
@@ -90,12 +121,9 @@
 		SELECT * FROM test_reinforcement WHERE num=#{num}
 	</select>
 	
-	<select id="getUser" resultType="whou.secproject.component.MemberDTO">
-		select * from whou_user where num = ${userNum}
-	</select>
 	
-	<select id="getJob" resultType="whou.secproject.component.Job_infoDTO">
-		select job_nm, works, job_cd from job_info where job_cd = #{job_cd}
-	</select>
+	
+	
+	
 	
 </mapper>
