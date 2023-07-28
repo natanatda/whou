@@ -25,35 +25,35 @@
 <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script type="module" src="/whou/resources/js/whouModel.js?ver=2"></script>
 <meta charset="UTF-8">
 <title>whou</title>
 </head>
 <body>
-<%@ include file="../header.jsp" %>        
-	        <!-- Header-->
-	<header class="py-5">
-		<div class="container px-5">
-			<h2 class="page-title">custom</h2>
+<%@ include file="../header.jsp" %>  
+    <section class="py-2 custom-main">      
+		<div class="container custom-wrap">
+			<div class="canvas-wrap">
+				<canvas class="webgl"></canvas>
+			</div>
+			<div class="picker-wrap">
+				<div>
+					<div id="picker"></div>
+				</div>
+				
+				<ul class="picker-btns">
+					<li id="headColor">얼굴 색 변경</li>
+					<li id="cheekColor">볼 색 변경</li>
+					<li id="armColor">팔 색 변경</li>
+					<li id="legColor">다리 색 변경</li>
+					<li onclick="location='/whou/whouModel/modelCustomDelete'">초기화</li>
+				</ul>
+			
+				<div class="back-btn" onclick="location='/whou/member/mypage'">돌아가기</div>
+			</div>		
 		</div>
-	</header>
-<script type="module" src="../resources/js/whouModel.js?ver=2"></script>
-<div>
-	<div style="display: flex; justify-content: center;">
-		<div id="picker"> </div>
-	</div>
-	
-	<div style="display: flex; justify-content: center;">
-		<input type="button" id="headColor"  value="얼굴 색 변경"/> 
-		<input type="button" id="armColor"  value="팔 색 변경"/> 
-		<input type="button" id="cheekColor"  value="볼 색 변경"/> 
-		<input type="button" id="legColor"  value="다리 색 변경"/> 
-		<input type="button" value="초기화" onclick="location='/whou/whouModel/modelCustomDelete'"/> <br/>
-	</div>
-</div>
-<hr/>
-<div style="display: flex; justify-content: center;">
-	<canvas class="webgl"></canvas>
-</div>
+	</section>
+
 <script>
 			var modelCamera_x = '0';
 			var modelCamera_y = '0';
@@ -61,8 +61,8 @@
 			
 			var modelPath = '';
 			
-			var modelWidth = 400;
-			var modelHeight = 400;
+			var modelWidth = 700;
+			var modelHeight = 700;
 			// default 색상
 			if('${model.headColor}' === ''){
         		var headColor = '#F781F3';

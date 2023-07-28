@@ -221,7 +221,7 @@
 	
 	<!-- 검사하면 회원 테이블에 1 업데이트 -->
 	<update id="commendNumUpdate">
-		UPDATE user_info SET abc3='1' WHERE email=#{memId}
+		UPDATE user_info SET update_true='1' WHERE email=#{memId}
 	</update>
 	
 </mapper>

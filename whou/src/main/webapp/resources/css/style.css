@@ -479,3 +479,22 @@ input::placeholder{font-size: 14px;color:#999;}
 .ai-wrap{display:flex;gap:20px;position:absolute;left:0;top:0;width:100%;height:100%;background:#ddd; max-width: 100%; /* 초기 너비를 최대로 설정 */  overflow: hidden;  transition: max-width 0.5s ease-out; /* 슬라이드 애니메이션 설정 */}
 .ai-wrap div{width:40%;}
 .ai-wrap.closed {  max-width: 0; /* 요소를 왼쪽으로 이동하여 사라지게 함 */  padding: 0; /* 필요에 따라 여백 제거 */}
+
+
+
+/*****************************************************************************
+  ************************************* custom ***********************************
+  *****************************************************************************/
+
+.custom-wrap{display:flex;align-items:center;gap:20px;}
+.custom-wrap .canvas-wrap{width:80%;display:flex;justify-content:center;}
+.custom-wrap .picker-wrap{width:20%;display:flex;flex-direction:column;justify-content:center;margin-top: 200px;}
+.picker-btns{background:#111;color:#fff;padding:10px 0;margin-top:30px;}
+.picker-btns li{padding: 5px 40px;cursor:pointer;}
+.picker-btns li.customize{display:flex;justify-content:space-between;align-items:center;padding-top:10px;}
+.back-btn{position: absolute;bottom: 142px;left: 92px;color:#5A3FFF;font-weight:600;cursor:pointer}
+
+@media (max-width: 1200px){
+	.navbar-nav{gap:20px;}
+	.navbar-expand-lg .navbar-nav .nav-link{padding-left:0;}
+}
