@@ -136,87 +136,144 @@
                                </div>
                             </div>
                             <div class="tab-pane fade" id="nav-addInfo" role="tabpanel" aria-labelledby="nav-add-tab" tabindex="0">
-                        <form action="/whou/member/updateInfo" method="post">
-                             <div>
-                                    <div class="add-wrap">
-                                        <div class="left-box">
-                                           <h4>자격증</h4>
-                                           <div id="qualificationContainer">
-                                              
-                                                 <div class="input-wrap">
-                                                     <input type="text" name="certi" autocomplete="off" placeholder="자격증 명" oninput="checkCerti(this)" /> <i class="fa-solid fa-circle-minus fa-lg"></i>
-                                                     <ul class="qualificationList"></ul>
-                                                 </div> 
-                                            
-                                           </div>
-                                           <div class="add-certi-wrap">
-                                              <div class="add-certi-btn" onclick="addQualification()">
-                                                  <i class="fa-solid fa-circle-plus fa-lg"></i>
-                                                  <p>자격증 추가</p>
-                                              </div>
-                                          </div>
-                                        </div>
-                                        <div class="right-box">
-                                          <h4>학과정보</h4>
-                                            <div id="majorContainer">
-                                              <div class="input-wrap">
-                                                   <select class="depart-select" name="depart" id="depart">
-                                                      <option value="대학">대학</option>
-                                                      <option value="전문대학">전문대학</option>
-                                                   </select>
-                                                   <input type="text" name="major" autocomplete="off" placeholder="전공명" oninput="checkMajor(this)" />
-                                                   <ul class="majorList"></ul>
-                                              </div>
-                                              <div class="input-wrap">
-                                                  <input type="text" name="major" autocomplete="off" placeholder="부전공명/복수전공명" oninput="checkMajor(this)" />
-                                                  <ul class="majorList"></ul>
-                                             </div>
-                                             </div>
-                                            </div>
-                                    </div> 
-                                    <div class="button-wrap">
-                                        <button type="submit" class="purple-btn" onclick="load()">저장</button>  
-                                    </div>                                       
-                                </div>   
-                        </form>                        
-                     </div>
-                     <style>
-                     #nav-modifyInfo .nav{display:flex;flex-direction: row;}
-                     </style>
+		                        <form action="/whou/member/updateInfo" method="post">
+		                             <div>
+		                                    <div class="add-wrap">
+		                                        <div class="left-box">
+		                                           <h4>자격증</h4>
+		                                           <div id="qualificationContainer">
+		                                              
+		                                                 <div class="input-wrap">
+		                                                     <input type="text" name="certi" autocomplete="off" placeholder="자격증 명" oninput="checkCerti(this)" /> <i class="fa-solid fa-circle-minus fa-lg"></i>
+		                                                     <ul class="qualificationList"></ul>
+		                                                 </div> 
+		                                            
+		                                           </div>
+		                                           <div class="add-certi-wrap">
+		                                              <div class="add-certi-btn" onclick="addQualification()">
+		                                                  <i class="fa-solid fa-circle-plus fa-lg"></i>
+		                                                  <p>자격증 추가</p>
+		                                              </div>
+		                                          </div>
+		                                        </div>
+		                                        <div class="right-box">
+		                                          <h4>학과정보</h4>
+		                                            <div id="majorContainer">
+		                                              <div class="input-wrap">
+		                                                   <select class="depart-select" name="depart" id="depart">
+		                                                      <option value="대학">대학</option>
+		                                                      <option value="전문대학">전문대학</option>
+		                                                   </select>
+		                                                   <input type="text" name="major" autocomplete="off" placeholder="전공명" oninput="checkMajor(this)" />
+		                                                   <ul class="majorList"></ul>
+		                                              </div>
+		                                              <div class="input-wrap">
+		                                                  <input type="text" name="major" autocomplete="off" placeholder="부전공명/복수전공명" oninput="checkMajor(this)" />
+		                                                  <ul class="majorList"></ul>
+		                                             </div>
+		                                             </div>
+		                                            </div>
+		                                    </div> 
+		                                    <div class="button-wrap">
+		                                        <button type="submit" class="purple-btn" onclick="load()">저장</button>  
+		                                    </div>                                       
+		                                </div>   
+		                        </form>                        
+		                     </div>
+               
 							<!-- 개인정보수정 -->
-		                     <div class="tab-pane fade" id="nav-modifyInfo" role="tabpanel" aria-labelledby="nav-modify-tab" tabindex="0">
-                               	<nav>
+		                   <div class="tab-pane fade" id="nav-modifyInfo" role="tabpanel" aria-labelledby="nav-modify-tab" tabindex="0">
+                                  <nav>
                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                      <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#nav-info" type="button" role="tab" aria-controls="nav-info" aria-selected="true">기본정보</button>
-                                     <button class="nav-link" id="nav-pw-tab" data-bs-toggle="tab" data-bs-target="#nav-pw" type="button" role="tab" aria-controls="nav-pw" aria-selected="false">비밀번호 변경</button>
+                                     <c:if test="${mem.join_type == 'whoU'}">
+                                        <button class="nav-link" id="nav-pw-tab" data-bs-toggle="tab" data-bs-target="#nav-pw" type="button" role="tab" aria-controls="nav-pw" aria-selected="false">비밀번호 변경</button>
+                                       </c:if>
                                    </div>
-                               	</nav>
+                                  </nav>
                                  <div class="tab-content" id="nav-tabContent">
                                     <div class="tab-pane fade show active" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab" tabindex="0">
-                                    	<h3>기본 정보</h3>
-                                    	<div>${mem.join_type}</div>
-                                    	<h3>추가 정보</h3>
-                                    	<div></div>
+                                       <h3>기본 정보</h3>
+                                             <form name="joinForm" method="post">
+                                            <div class="input-item">
+                                            <label for="joinInput" class="form-label">이메일</label>
+                                            <input type="text" class="form-control" name = "email" id="email" placeholder="xxxx@example.com" value = "${mem.email}">
+                                          </div>
+                                          <div class="input-item">
+                                            <label for="joinInput" class="form-label">이름</label>
+                                            <input type="text" class="form-control" name = "name" id="name" placeholder="이름(실명) 입력" value = "${mem.name}">
+                                            <input type="hidden" class="form-control" id = "join_type" value ="${mem.join_type}">
+                                          </div>
+                                          <div class="input-item">
+                                            <label for="joinInput" class="form-label">연도</label>
+                                            <input type="text" class="form-control" name = "birth_year" id="birth_year" placeholder="YYYY" value = "${mem.birth_year}" required oninput = "checkYear()">
+                                            <span class="year_error" style="color:red; display:none;">4자리로 입력해주세요.</span>
+                                          </div>
+                                          <div class="input-item">
+                                            <label for="joinInput" class="form-label">휴대폰</label>
+                                            <div class="input-box">
+                                               <input type="text" class="form-control" id="tel" name = "tel" placeholder="'-' 빼고 숫자만 입력" value = "${mem.tel}">
+                                               <button type="button" style="border-radius: 8px" class="purple-btn" name="phoneChk" id="phoneChk">인증 요청</button>
+                                            </div>
+                                               <span class="tel_error" style="color:red; display:none;">형식에 맞게 휴대폰번호를 정확히 입력해주세요.</span>
+                                               <span class="tel_ok" style="color:green; display:none;">인증번호 발송이 완료되었습니다.</br> 휴대폰에서 인증번호를 확인해주십시오.</span>
+                                            <div class="input-box">
+                                               <input type="text" style="display:none;" class="form-control" id="tel2" name = "tel2" placeholder="인증번호 입력">
+                                               <button type="button" style="display:none; border-radius: 8px" class="purple-btn" name="phoneChk2" id="phoneChk2">인증 확인</button>
+                                         </div>
+                                              <span class="tel2_ok" style="color:green; display:none;">인증에 성공하셨습니다.</span>
+                                               <span class="tel2_error" style="color:red; display:none;">인증에 실패하셨습니다</br>인증번호를 다시 확인해주십시오.</span>
+                                          </div>
+                                          
+                                          <div class="input-wrap">
+                                             <button type="button" style="border-radius: 8px" class="purple-btn btn-xs" id="btnM">수정</button>
+                                           </div>
+                                        </form>
+                                       <h3>추가 정보</h3>
+                                       <div></div>
                                     </div>
-                                   <c:if test="${mem.join_type eq 'K'}">
-                                     <div class="tab-pane fade" id="nav-pw" role="tabpanel" aria-labelledby="nav-pw-tab" tabindex="0">
-                                        비밀번호 변경
+                                    <div class="tab-pane fade" id="nav-pw" role="tabpanel" aria-labelledby="nav-pw-tab" tabindex="0">
+                                        <form>
+                                    <div class="input-item">
+                                            <label for="joinInput" class="form-label">현재 비밀번호</label>
+                                            <div class="input-box">
+                                               <input type="password" class="form-control" name = "pw" id="pw" placeholder="4자리 이상">
+                                            </div>
+                                  </div>
+                                           <div class="input-item">
+                                       <c:if test="${email == null}">
+                                            <label for="joinInput" class="form-label">새 비밀번호</label>
+                                            <input type="password" class="form-control" name = "pw" id="pw" placeholder="4자리 이상">
+                                            <span class="pw_error" style="color:red; display:none;">형식에 맞게 입력해주세요.</span>
+                                       </c:if>
+                                    </div>
+                                    <div class="input-item">
+                                       <c:if test="${email == null}">
+                                            <label for="joinInput" class="form-label">새 비밀번호 확인</label>
+                                            <input type="password" class="form-control" name = "pw" id="pw2" placeholder="4자리 이상" required oninput = "checkPw2()">
+                                            <span class="pw_ok" style="color:green; display:none;">비밀번호가 일치합니다.</span>
+                                            <span class="pw_x" style="color:red; display:none;">비밀번호가 일치하지 않습니다.</span>
+                                       </c:if>
+                                    </div>
+                                    <div class="input-wrap">
+                                       <button type="button" style="border-radius: 8px" class="purple-btn btn-xs" id="btnPw">변경</button>
                                      </div>
-                                  </c:if>
+                                 </form>
+                                    </div>
                                 </div>                            
-                          </div>
+                             </div>
 		                     <div class="tab-pane fade" id="nav-book" role="tabpanel" aria-labelledby="nav-book-tab" tabindex="0">
 			                     <div class="book-wrap">
 	                                 <c:if test="${books != null }">
 	                                    <c:forEach var="job" items="${jobs}" varStatus="status">
 	                                       <div class="card mb-5 mb-xl-0">
 	                                          <a href="/whou/member/deleteBook?job_cd=${job.job_cd}"><i class="position-absolute top-0 start-100 translate-middle fa-solid fa-circle-minus fa-lg"></i></a>
-	                                          <a href="/whou/job/info?job_cd=${job.job_cd}">
 	                                              <div class="result-cont">
-	                                                  <h4>${job.job_nm }<i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
-	                                                  <p>${job.works}</p>
+		                                          	<div onclick="location='/whou/job/info?job_cd=${job.job_cd}'">
+		                                                  <h4>${job.job_nm }<i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
+		                                                  <p>${job.works}</p>
+		                                    		</div>
 	                                              </div>
-	                                    	</a>
 	                                       </div>
 	                                    </c:forEach>
 	                                 </c:if>
@@ -227,8 +284,94 @@
 		                                    <a href="/whou/job/dic">직업정보 >></a>
 		                                 </div>
 	                                 </c:if>
-	                        </div> 
+	                        	</div> 
 		                     </div>
+		                     <!-- 추천 -->
+		                     <div class="tab-pane fade" id="nav-reco" role="tabpanel" aria-labelledby="nav-reco-tab" tabindex="0">
+		                        <div id="reco-container">
+		                                  <div class="reco-wrap">
+		                                        <div class="reco-item-container" style="display:flex; justify-content:flex-start; gap:20px;">
+		                                           <div class="reco-tag" style="width:400px; height:180px">
+		                                                <span style="font-weight:600;font-size: 18px;margin-left:5px;">컨설팅 직업 선택</span>
+		                                                <a style="font-size: 12px; margin-left:10px;"onclick="/whou/member/mypage?load=6">컨설팅 받으러 가기 ></a>
+		                                                <div class="input-wrap" style="margin-top:10px;display:flex;">
+		                                                    <input class="jobSearch" type="text" name="job" autocomplete="off" placeholder="직업 이름" oninput="" />
+		                                                    <div class="button-wrap" style="margin-top:10px; width:80px;">
+		                                                       <button type="submit" class="purple-btn" style="margin-left:10px;">적용</button>  
+		                                                   </div> 
+		                                                    <ul class="searchList"></ul>
+		                                                </div> 
+		                                              <div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px;">나의 현재 직업 : ${jobDetailCunsuling.getBaseInfo().getJob_nm()} </div>
+		                                          </div>
+		                                           <div class="reco-tag" style="width:500px; height:180px;">
+		                                             <span style="font-weight:600;font-size: 18px;margin-left:5px;">중요도 선택하기</span>
+		                                             <a style="font-size: 12px; margin-left:10px;"onclick="">선택하지 않을시에는 모두 동일한 중요도로 선택합니다</a>
+		                                             <div style="display:flex">
+		                                              <div style="display:flex;font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px; width:200px;">
+		                                                 <p>적성</p>
+		                                                 <select id="aptiImportance" style="min-width:80px; margin-left:15px;">
+		                                                     <option value="1">1순위</option>
+		                                                     <option value="2">2순위</option>
+		                                                     <option value="3">3순위</option>
+		                                                 </select>
+		                                                 <p>응시 안함</p>		                                            
+		                                              </div>
+		                                    <div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px;">
+		                                                 흥미
+		                                              <select id="inteImportance" style="min-width:80px; margin-left:15px;">
+		                                                  <option value="1">1순위</option>
+		                                                  <option value="2">2순위</option>
+		                                                  <option value="3">3순위</option>
+		                                              </select>
+		                                                 응시 안함
+		                                              </div>
+		                                              <div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px;">
+		                                                 가치관
+		                                                 <select id="valueImportance" style="min-width:80px; margin-left:15px;">
+		                                                     <option value="1">1순위</option>
+		                                                     <option value="2">2순위</option>
+		                                                     <option value="3">3순위</option>
+		                                                 </select>
+		                                                 응시함
+		                                              </div>
+		                                              <div class="button-wrap" style="margin-top:10px; width:80px;">
+		                                                    <button type="submit" class="purple-btn" style="margin-left:10px;">적용</button>  
+		                                    </div> 
+		                                 </div>
+		                              </div>
+		                              </div>
+		                           </div>
+		                           <c:if test="${!none}">
+		                              <p style="margin-bottom:20px;margin-left:10px;">직업 정보를 보고싶으면 본문의 내용을, 컨설팅을 받고 싶으면 직업 이름을 눌러주세요</p>
+		                           <c:forEach var="rere" items="${reres}">
+		                              <div class="reco-wrap">
+		                                 <div class="reco-item">
+		                                    <div onclick="alert('직업선택이 완료 되었습니다.');location='/whou/member/insertConsult?job_cd=${rere.job_cd}'">${rere.job_nm}</div>
+		                                    <div onclick="location='/whou/job/info?job_cd=${rere.job_cd}'">${rere.descriptions}</div>
+		                                          </div>
+		                                       </div> 
+		                                  </c:forEach>
+		                           <div>
+		                           
+		                           </div>
+		                         
+		                             
+		                     </c:if>
+		                            <c:if test="${none}">
+		                                <div class="empty-box">
+		                                  <div>추천이 불가능합니다.</div>
+		                                  <div>검사를 보거나, 자격증 및 학과 정보를 기입해주세요.</div>
+		                                  <a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>                               
+		                               </div>
+		                            </c:if>
+		                             
+		                          </div>
+		                          <div class="add-btn" onclick="getRecoLi()">
+		                                  <i class="fa-solid fa-circle-plus fa-lg"></i>
+		                              </div>
+		                       </div>
+              
+		                     
 		                     <!-- 컨설팅  -->
                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
                             	<c:if test="${avilReinforce eq '' || avilReinforce==null || cunsultingNum == 0}">
@@ -407,85 +550,7 @@
 								</c:if>
 							</div>
                             
-						<!-- 추천 -->
-                            <div class="tab-pane fade" id="nav-reco" role="tabpanel" aria-labelledby="nav-reco-tab" tabindex="0">
-                            <div id="reco-container">
-                            <div class="reco-wrap">
-                               <div class="reco-item-container" style="display:flex; justify-content:flex-start; gap:20px;">
-                                  <div class="reco-tag" style="width:400px; height:180px">
-                                       <span style="font-weight:600;font-size: 18px;margin-left:5px;">컨설팅 직업 선택</span>
-                                       <a style="font-size: 12px; margin-left:10px;"onclick="/whou/member/mypage?load=6">컨설팅 받으러 가기 ></a>
-                                       <div class="input-wrap" style="margin-top:10px;display:flex;">
-                                           <input class="jobSearch" type="text" name="job" autocomplete="off" placeholder="직업 이름" oninput="" />
-                                           <div class="button-wrap" style="margin-top:10px; width:80px;">
-                                              <button type="submit" class="purple-btn" style="margin-left:10px;">적용</button>  
-                                          </div> 
-                                           <ul class="qualificationList"></ul>
-                                       </div> 
-                                     <div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px;">나의 현재 직업 : ${jobDetailCunsuling.getBaseInfo().getJob_nm()} </div>
-                                    </div>
-                                  <div class="reco-tag" style="width:500px; height:180px;">
-                                       <span style="font-weight:600;font-size: 18px;margin-left:5px;">중요도 선택하기</span>
-                                       <a style="font-size: 12px; margin-left:10px;"onclick="">선택하지 않을시에는 모두 동일한 중요도로 선택합니다</a>
-                                       <div style="display:flex">
-                                        <div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px; width:200px;">
-                                           적성
-                                           <select id="aptiImportance" style="min-width:80px; margin-left:15px;">
-                                               <option value="1">1순위</option>
-                                               <option value="2">2순위</option>
-                                               <option value="3">3순위</option>
-                                           </select>
-                                           응시 안함
-                                        </div>
-                                        <div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px;">
-                                           흥미
-                                           <select id="inteImportance" style="min-width:80px; margin-left:15px;">
-                                               <option value="1">1순위</option>
-                                               <option value="2">2순위</option>
-                                               <option value="3">3순위</option>
-                                           </select>
-                                           응시 안함
-                                        </div>
-                                        <div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px;">
-                                           가치관
-                                           <select id="valueImportance" style="min-width:80px; margin-left:15px;">
-                                               <option value="1">1순위</option>
-                                               <option value="2">2순위</option>
-                                               <option value="3">3순위</option>
-                                           </select>
-                                           응시함
-                                        </div>
-                                        <div class="button-wrap" style="margin-top:10px; width:80px;">
-                                              <button type="submit" class="purple-btn" style="margin-left:10px;">적용</button>  
-                                          </div> 
-                                       </div>
-                                    </div>
-                               </div>
-                            </div>
-                            <c:if test="${!none}">
-                                 <p style="margin-bottom:20px;margin-left:10px;">직업 정보를 보고싶으면 본문의 내용을, 컨설팅을 받고 싶으면 직업 이름을 눌러주세요</p>
-                               <c:forEach var="rere" items="${reres}">
-                                 <div class="reco-wrap">
-                                        <div class="reco-item">
-                                          <div onclick="alert('직업선택이 완료 되었습니다.');location='/whou/member/insertConsult?job_cd=${rere.job_cd}'">${rere.job_nm}</div>
-                                          <div onclick="location='/whou/job/info?job_cd=${rere.job_cd}'">${rere.descriptions}</div>
-                                       </div>
-                                 </div> 
-                               </c:forEach>
-                            </div>
-                                 <div class="add-btn" onclick="getRecoLi()">
-                                    <i class="fa-solid fa-circle-plus fa-lg"></i>
-                                 </div>
-                              </div>
-                            </c:if>
-                            <c:if test="${none}">
-                                <div class="empty-box">
-	                            	<div>추천이 불가능합니다.</div>
-	                            	<div>검사를 보거나, 자격증 및 학과 정보를 기입해주세요.</div>
-	                            	<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>                            	
-	                            </div>
-                            </c:if>
-                          </div>
+						
                           </div>
                     </div>
                 </div>    

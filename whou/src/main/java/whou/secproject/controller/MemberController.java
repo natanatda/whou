@@ -54,6 +54,7 @@ import whou.secproject.component.RecoResultDTO;
 import whou.secproject.component.RecommandInfoDTO;
 import whou.secproject.component.SelectDTO;
 import whou.secproject.component.TestReinforcementDTO;
+import whou.secproject.component.UserInfoDTO;
 import whou.secproject.mapper.MemberMapper;
 import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.repository.RecommendDAO;
@@ -880,6 +881,11 @@ public class MemberController {
            model.addAttribute("reres", reres);
         }
         model.addAttribute("none", none);
+      //회원정보수정
+        MemberDTO mem = service.getUser(userNum);
+        UserInfoDTO user = service.userInfo(userNum);
+        model.addAttribute("mem", mem);
+        model.addAttribute("user", user);
       return "/user/mypage";
    }
   	
@@ -1029,4 +1035,11 @@ public class MemberController {
 	         model.addAttribute("load", "6");
 	          return "redirect:/member/mypage";
 	      }
+	   
+	 //회원정보 수정
+	   @RequestMapping("/modifyUser")
+	   public String modifyUser(Model model){
+	      model.addAttribute("load", "3");
+	      return "redirect:/member/mypage";
+	   }
 }
