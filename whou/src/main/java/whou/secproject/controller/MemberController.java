@@ -815,6 +815,15 @@ public class MemberController {
            List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(selDTO, userNum, 1, 5);
            SelectDTO selDTO2 = new SelectDTO();
            HashMap<String,String> top3NM = serviceRe.getRecoList(selDTO2, userNum);
+           if(top3NM==null) {
+        	   top3NM = new HashMap<String,String>();
+        	   top3NM.put("APTITUDE_NAME1", "적성1");
+        	   top3NM.put("APTITUDE_NAME2", "적성2");
+        	   top3NM.put("APTITUDE_NAME3", "적성3");
+        	   top3NM.put("INTEREST_NAME1", "흥미1");
+        	   top3NM.put("INTEREST_NAME2", "흥미2");
+        	   top3NM.put("INTEREST_NAME3", "흥미3");
+           }
            ArrayList <String> colNM = new ArrayList<String>(
                  Arrays.asList("APTITUDE_NAME1","APTITUDE_NAME2",
                        "APTITUDE_NAME3","INTEREST_NAME1",
