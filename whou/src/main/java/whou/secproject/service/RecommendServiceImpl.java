@@ -89,6 +89,7 @@ public class RecommendServiceImpl implements RecommendService{
 			arr2 = new ArrayList<String>();
 			for(int i = 1 ; i <= certiC; i++) arr2.add("certi"+i+" number");
 		}
+		System.out.println(arr2);
 		mapper.createJobPoint(user, arr, arr2);
 	}
 	@Override

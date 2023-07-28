@@ -42,8 +42,8 @@
 			value4 number
 			<if test="majors!= null">
 				,
-				<foreach collection="majors" item="major"> 
-					${major}, 
+				<foreach collection="majors" separator="," item="major"> 
+					${major}
 				</foreach>
 			</if>
 			<if test="certis!= null">
@@ -70,8 +70,8 @@
 			#{value4}
 		<if test="majors!= null">
 			,
-			<foreach collection="majors" item="major">
-				#{major}, 
+			<foreach collection="majors" separator="," item="major">
+				#{major} 
 			</foreach>
 		</if>
 		<if test="certis!= null">

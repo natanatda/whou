@@ -659,7 +659,8 @@ public class MemberController {
         ArrayList<String> majors = serviceRe.majorInfo(certiDTO);
         certiDTO.setCol("CERTIFICATE");
         ArrayList<String> certis= serviceRe.majorInfo(certiDTO);
-        
+        System.out.println(majors);
+        System.out.println(certis);
         
 //        int majorC = 0 , certiC = 0;
 //        boolean none = false; 
@@ -712,7 +713,7 @@ public class MemberController {
         		LinkedHashMap<ArrayList<Double>,Double> scores = redao.DoubleTokener(scoreStrs, limitStrs);
         		System.out.println("scores"+scores);
         		List<Double> jobScore = new ArrayList<>(Collections.nCopies(jC, 1.0)); // 직업당 점수
-        		
+        		System.out.println(10+majorC+certiC);
         		double [][] jobScorePoint = new double [jC][10+majorC+certiC];
         		if(serviceRe.tbTrue(userNum)==1) serviceRe.dropTable(userNum);
         		serviceRe.createJobPoint(userNum, majorC, certiC);
@@ -816,6 +817,7 @@ public class MemberController {
         					"VALUE3","VALUE4"));
         	for(int c = 0 ; c < majorC; c++) colNM2.add("MAJOR"+(c+1));
         	for(int c = 0 ; c < certiC; c++) colNM2.add("CERTI"+(c+1));
+        	System.out.println(colNM2);
         	SelectDTO selDTOJ = new SelectDTO();
         	ArrayList<RecoResultDTO> reres = new ArrayList<RecoResultDTO>();
         	for(int h = 0 ;  h < recoLi.size(); h++) {
