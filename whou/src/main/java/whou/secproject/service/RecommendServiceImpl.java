@@ -97,11 +97,11 @@ public class RecommendServiceImpl implements RecommendService{
 		ArrayList<Double> arr2 = null;
 		if(majorC !=0) {
 			arr = new ArrayList<Double>();
-			for(int i = 0 ; i < majorC; i++) arr.add(detail[9+i]);
+			for(int i = 0 ; i < majorC; i++) arr.add(detail[10+i]);
 		}
 		if(certiC !=0) {
 			arr2 = new ArrayList<Double>();
-			for(int i = 0 ; i < certiC; i++) arr2.add(detail[9+majorC+i]);
+			for(int i = 0 ; i < certiC; i++) arr2.add(detail[10+majorC+i]);
 		}
 		mapper.insertJobPoint(num, job_cd, total, detail[0], detail[1], detail[2], detail[3],
 				detail[4], detail[5], detail[6], detail[7], detail[8], detail[9], arr, arr2);
