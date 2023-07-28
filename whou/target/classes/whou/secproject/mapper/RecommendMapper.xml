@@ -85,4 +85,10 @@
 	<insert id = "dropTable">
 		drop table job_point_${num}
 	</insert>
+	<update id="updateFalse">
+		update user_info set update_true = 0 where num =#{user}
+	</update>
+	<update id = "insertConsult">
+		update user_info set cunsulting_num = #{job_cd} where num=#{user}
+	</update>
 </mapper>

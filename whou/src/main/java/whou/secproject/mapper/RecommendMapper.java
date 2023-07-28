@@ -25,5 +25,7 @@ public interface RecommendMapper {
 			@Param("value4")double value4, @Param("majors")ArrayList<Double> majors,
 			@Param("certis")ArrayList<Double> certi);
 	public void dropTable(int num);
+	public void updateFalse(int num);
+	public void insertConsult(@Param("user")int user,@Param("job_cd") int job_cd);
 
 }

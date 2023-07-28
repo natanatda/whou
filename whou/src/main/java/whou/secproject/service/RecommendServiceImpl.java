@@ -136,6 +136,7 @@ public class RecommendServiceImpl implements RecommendService{
 	@Override
 	public void dropTable(int num) {
 		mapper.dropTable(num);
+		mapper.updateFalse(num);
 	}
 	@Override
 	public int tbTrue(int user) {
@@ -152,9 +153,52 @@ public class RecommendServiceImpl implements RecommendService{
 	    return mapList.get("COUNT(*)").intValue();
 	}
 	@Override
-	public List<String> getJname(SelectDTO selDTO) {
-		// TODO Auto-generated method stub
+	public String getJname(SelectDTO selDTO,int job_cd) {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		SelectResultHandler<String> resultHandler = new SelectResultHandler<String>();
+		selDTO.setCol("JOB_NM");
+		selDTO.setTb_name("JOB_INFO");
+		selDTO.setConditions(Arrays.asList("JOB_CD="+job_cd));
+		sqlSession.select("whou.secproject.mapper.RecommendMapper.selectInfo", selDTO, resultHandler);
+		sqlSession.close();
+		return resultHandler.getSelOne().get("JOB_NM");
+	}
+	@Override
+	public int updateTrue(int user) {
+		SelectDTO selDTO = new SelectDTO();
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		SelectResultHandler<BigDecimal> resultHandler = new SelectResultHandler<BigDecimal>();
+		selDTO.setCol("UPDATE_TRUE");
+		selDTO.setTb_name("USER_INFO");
+		selDTO.setConditions(Arrays.asList("NUM="+user));
+		sqlSession.select("whou.secproject.mapper.RecommendMapper.selectInfo", selDTO, resultHandler);
+		sqlSession.close();
+		if(resultHandler.getSelOne()==null) return 0;
+		else return resultHandler.getSelOne().get(selDTO.getCol()).intValue();
+	}
+	@Override
+	public ArrayList<Integer> getImportances(int user){
+		SelectDTO selDTO = new SelectDTO();
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		SelectResultHandler<String> resultHandler = new SelectResultHandler<String>();
+		selDTO.setCol("FACTOR_IMPORTANT");
+		selDTO.setTb_name("USER_INFO");
+		selDTO.setConditions(Arrays.asList("NUM="+user));
+		sqlSession.select("whou.secproject.mapper.RecommendMapper.selectInfo", selDTO, resultHandler);
+		sqlSession.close();
+		if(resultHandler.getSelOne()!=null) {
+			StringTokenizer st = new StringTokenizer(resultHandler.getSelOne().get(selDTO.getCol()),",");
+			ArrayList<Integer> arr = new ArrayList<Integer>();
+			while(st.hasMoreTokens()) {
+				arr.add(Integer.parseInt(st.nextToken()));
+			}
+			return arr;
+		}
 		return null;
+	}
+	@Override
+	public void insertConsult(int user,int job_cd) {
+		mapper.insertConsult(user, job_cd);
 	}
 
 }
