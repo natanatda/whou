@@ -152,13 +152,26 @@ public class MemberServiceImpl implements MemberService {
 		CertiSet.addAll(certiList);
 		MajorSet.addAll(majorList);
 		
-		String certiArr[] = certi.split(",");
-		String majorArr[] = major.split(",");
+		String certiArr[] = new String[30];
+		String majorArr[] = new String[5];
+				
+		if(certi!=null) {
+			certiArr = certi.split(",");
+			System.out.println("자격증이 널이 아님");
+		}else {
+			System.out.println("자격증이 널임");
+
+		}
+		if(major!=null) {
+			majorArr = major.split(",");
+		}
+		
 		
 		
 		for(String arrC : certiArr) {
 			CertiSet.add(arrC);
 		}
+		System.out.println("////////자격증 셋///////"+CertiSet);
 		
 		for(String arrM : majorArr) {
 			MajorSet.add(arrM);
