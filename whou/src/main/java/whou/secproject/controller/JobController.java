@@ -133,9 +133,9 @@ public class JobController {
 		return "/job/description";
 	}
 	
-	@RequestMapping("/c")
-	public String c(Model model,HttpServletRequest request) {
-		return "/job/c";
+	@RequestMapping("/calendar")
+	public String calendar(Model model,HttpServletRequest request) {
+		return "/job/calendar";
 	}
 	
 //	@RequestMapping("/search")

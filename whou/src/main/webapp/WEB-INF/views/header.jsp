@@ -17,15 +17,37 @@
                         <a class="navbar-brand main-logo" href="/whou/main"><img src="/whou/resources/img/logo.svg"></a>
                         <li class="nav-item"><a class="nav-link" href="/whou/job/dic">직업정보</a></li>
                         <li class="nav-item"><a class="nav-link" href="/whou/aptitude/aptitudeMain">진로검사</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/whou/education/majorList">학과정보</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/whou/education/training">교육정보</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/whou/cs/notice">고객지원</a></li>
+                        <li class="nav-item dropdown">
+				          <a class="nav-link dropdown-toggle" href="/whou/cs/notice" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				            진로정보
+				          </a>
+				          <ul class="dropdown-menu">
+				            <li><a class="dropdown-item" href="/whou/education/majorList">학과정보</a></li>
+				            <li><a class="dropdown-item" href="/whou/education/training">교육정보</a></li>
+				          </ul>
+				        </li>
+                        <li class="nav-item dropdown">
+				          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				            고객지원
+				          </a>
+				          <ul class="dropdown-menu">
+				            <li><a class="dropdown-item" href="/whou/cs/notice">공지사항</a></li>
+				            <li><a class="dropdown-item" href="#">FAQ</a></li>
+				          </ul>
+				        </li>
+				        <li class="nav-item dropdown">
+				          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				            채용정보
+				          </a>
+				          <ul class="dropdown-menu">
+				            <li><a class="dropdown-item" href="/whou/job/calendar">채용달력</a></li>
+				            <li><a class="dropdown-item" href="">채용정보</a></li>
+				          </ul>
+				        </li>
                     </ul>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="/whou/assistant/ai">My 봇</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/whou/member/mypage">진로컨설팅</a></li>
                         <c:if test="${memId != null}">
                         	<li class="nav-item"><a class="nav-link" href="/whou/member/mypage">마이페이지</a></li>
                         	<li class="nav-item"><a class="nav-link" href="/whou/member/logout">로그아웃</a></li>

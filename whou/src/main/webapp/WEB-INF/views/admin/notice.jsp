@@ -42,7 +42,7 @@
     	}
     </script>
         <!-- Responsive navbar-->
-       <%@ include file="../header.jsp" %>        
+        <%@ include file="../header.jsp" %> 
         <!-- Header-->
         <header class="py-5">
             <div class="container px-5">
