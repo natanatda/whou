@@ -38,8 +38,6 @@
                             <div class="select-form">
                                 <select class="desc-select">
                                     <option value="">전체</option>
-                                    <option value="">직업명</option>
-                                    <option value="">하는일</option>
                                 </select>
                             </div>
                             <div class="input-group search-form">

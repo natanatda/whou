@@ -74,14 +74,14 @@
                                    <option value="31">흥미</option>
                                </select>
                                <div id="item-aptitude">
-                                  <c:if test="${!scoreTrue}">
+                                  <c:if test="${!scoreTrue1}">
                                    <canvas id="aptitudeChart" style="display:none;"></canvas>
                                      <div class="empty-box">
                                      	<div>검사결과가 없습니다.</div>
                                      	<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
                                      </div>
                                   </c:if>
-                                  <c:if test="${scoreTrue}">
+                                  <c:if test="${scoreTrue1}">
                                       <canvas id="aptitudeChart"></canvas>
                                       <ul>
                                            <li>${aptitudeRank.aptitude_name1}</li>                         
@@ -91,26 +91,26 @@
                                   </c:if>                                  
                                </div>
                                <div id="item-values">
-                                  <c:if test="${!scoreTrue}">
+                                  <c:if test="${!scoreTrue3}">
                                    <canvas id="valuesChart" style="display:none;"></canvas>
                                    <div class="empty-box">
                                      	<div>검사결과가 없습니다.</div>
                                      	<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
                                      </div>
                                   </c:if>
-                                  <c:if test="${scoreTrue}">
+                                  <c:if test="${scoreTrue3}">
                                      <canvas id="valuesChart"></canvas>
                                   </c:if>
                                </div>
                                <div id="item-interest">
-                                  <c:if test="${!scoreTrue}">
+                                  <c:if test="${!scoreTrue2}">
                                       <canvas id="interestChart" style="display:none;"></canvas>
                                      <div class="empty-box">
                                      	<div>검사결과가 없습니다.</div>
                                      	<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
                                      </div>
                                   </c:if>
-                                  <c:if test="${scoreTrue}">
+                                  <c:if test="${scoreTrue2}">
                                      <canvas id="interestChart"></canvas>
                                       <ul>
                                            <li>${aptitudeRank.interest_name1}</li>                         
@@ -120,7 +120,7 @@
                                   </c:if>
                                </div>
                                <div id="item-ability">
-                                  <c:if test="${!scoreTrue}">
+                                  <c:if test="${!scoreTrue4}">
                                    <canvas id="abilityChart1" style="display:none;"></canvas>
                                       <canvas id="abilityChart2" style="display:none;"></canvas>
                                      <div class="empty-box">
@@ -128,7 +128,7 @@
                                      	<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
                                      </div>
                                   </c:if>
-                                  <c:if test="${scoreTrue}">
+                                  <c:if test="${scoreTrue4}">
                                        <canvas id="abilityChart1"></canvas>
                                       <canvas id="abilityChart2"></canvas>
                                   </c:if>
@@ -407,34 +407,85 @@
 								</c:if>
 							</div>
                             
-							<!-- 추천 -->
+						<!-- 추천 -->
                             <div class="tab-pane fade" id="nav-reco" role="tabpanel" aria-labelledby="nav-reco-tab" tabindex="0">
-                            <c:if test="${!none }">
-                               <c:forEach var="rere" items="${reres }">
-	                              <div class="reco-wrap">
-	                               		<div class="reco-item">
-		                              		<div onclick="location='/whou/member/insertConsult?job_cd=${rere.job_cd}'">${rere.job_nm}</div>
-		                              		<div onclick="location='/whou/job/info?job_cd=${rere.job_cd}'">${rere.descriptions}</div>
-		                              	</div>
-	                              </div> 
+                            <div id="reco-container">
+                            <div class="reco-wrap">
+                               <div class="reco-item-container" style="display:flex; justify-content:flex-start; gap:20px;">
+                                  <div class="reco-tag" style="width:400px; height:180px">
+                                       <span style="font-weight:600;font-size: 18px;margin-left:5px;">컨설팅 직업 선택</span>
+                                       <a style="font-size: 12px; margin-left:10px;"onclick="/whou/member/mypage?load=6">컨설팅 받으러 가기 ></a>
+                                       <div class="input-wrap" style="margin-top:10px;display:flex;">
+                                           <input class="jobSearch" type="text" name="job" autocomplete="off" placeholder="직업 이름" oninput="" />
+                                           <div class="button-wrap" style="margin-top:10px; width:80px;">
+                                              <button type="submit" class="purple-btn" style="margin-left:10px;">적용</button>  
+                                          </div> 
+                                           <ul class="qualificationList"></ul>
+                                       </div> 
+                                     <div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px;">나의 현재 직업 : ${jobDetailCunsuling.getBaseInfo().getJob_nm()} </div>
+                                    </div>
+                                  <div class="reco-tag" style="width:500px; height:180px;">
+                                       <span style="font-weight:600;font-size: 18px;margin-left:5px;">중요도 선택하기</span>
+                                       <a style="font-size: 12px; margin-left:10px;"onclick="">선택하지 않을시에는 모두 동일한 중요도로 선택합니다</a>
+                                       <div style="display:flex">
+                                        <div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px; width:200px;">
+                                           적성
+                                           <select id="aptiImportance" style="min-width:80px; margin-left:15px;">
+                                               <option value="1">1순위</option>
+                                               <option value="2">2순위</option>
+                                               <option value="3">3순위</option>
+                                           </select>
+                                           응시 안함
+                                        </div>
+                                        <div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px;">
+                                           흥미
+                                           <select id="inteImportance" style="min-width:80px; margin-left:15px;">
+                                               <option value="1">1순위</option>
+                                               <option value="2">2순위</option>
+                                               <option value="3">3순위</option>
+                                           </select>
+                                           응시 안함
+                                        </div>
+                                        <div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px;">
+                                           가치관
+                                           <select id="valueImportance" style="min-width:80px; margin-left:15px;">
+                                               <option value="1">1순위</option>
+                                               <option value="2">2순위</option>
+                                               <option value="3">3순위</option>
+                                           </select>
+                                           응시함
+                                        </div>
+                                        <div class="button-wrap" style="margin-top:10px; width:80px;">
+                                              <button type="submit" class="purple-btn" style="margin-left:10px;">적용</button>  
+                                          </div> 
+                                       </div>
+                                    </div>
+                               </div>
+                            </div>
+                            <c:if test="${!none}">
+                                 <p style="margin-bottom:20px;margin-left:10px;">직업 정보를 보고싶으면 본문의 내용을, 컨설팅을 받고 싶으면 직업 이름을 눌러주세요</p>
+                               <c:forEach var="rere" items="${reres}">
+                                 <div class="reco-wrap">
+                                        <div class="reco-item">
+                                          <div onclick="alert('직업선택이 완료 되었습니다.');location='/whou/member/insertConsult?job_cd=${rere.job_cd}'">${rere.job_nm}</div>
+                                          <div onclick="location='/whou/job/info?job_cd=${rere.job_cd}'">${rere.descriptions}</div>
+                                       </div>
+                                 </div> 
                                </c:forEach>
-                              	<div class="add-btn" onclick="getRecoLi()">
-	                              	<i class="fa-solid fa-circle-plus fa-lg"></i>
-                              	</div>
-                              	직업 정보를 보고싶으면 본문의 내용을, 컨설팅을 받고 싶으면 직업 이름을 눌러주세요
-                              	<div class="input-wrap">
-                                   <input type="text" name="reco" autocomplete="off" placeholder="직업 이름" oninput="getJobs(this)" /> <i class="fa-solid fa-circle-minus fa-lg"></i>
-                                   <ul class="qualificationList"></ul>
-                               </div> 
-                           	</div>
+                            </div>
+                                 <div class="add-btn" onclick="getRecoLi()">
+                                    <i class="fa-solid fa-circle-plus fa-lg"></i>
+                                 </div>
+                              </div>
                             </c:if>
                             <c:if test="${none}">
-	                            <div class="empty-box">
+                                <div class="empty-box">
 	                            	<div>추천이 불가능합니다.</div>
 	                            	<div>검사를 보거나, 자격증 및 학과 정보를 기입해주세요.</div>
 	                            	<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>                            	
 	                            </div>
                             </c:if>
+                          </div>
                           </div>
                     </div>
                 </div>    
@@ -461,6 +512,13 @@
           	 $("#nav-modify-tab").addClass("active");
           	 $("#nav-modifyInfo").addClass("active show");
         }
+        else if(load === "6"){
+            $(".nav-link").removeClass("active");
+               $(".tab-pane").removeClass("active show");
+               
+                 $("#nav-contact-tab").addClass("active");
+                 $("#nav-contact").addClass("active show");
+           }
          // 적성 차트
          	let aptitudeScoreArr = 0;
          	let aptitudeNameArr = ["음악능력","수리·논리력","창의력","자연친화력","예술시각능력","공간지각력","대인관계능력","손재능","언어능력","자기성찰능력","신체·운동능력"];
@@ -806,14 +864,17 @@
         
         var recoPlus = 1;
         function getRecoLi(){
-        	var size=5;
+           var size=5;
             $.ajax({
                 url: "/whou/member/getRecoLi",
                 type: "GET",
                 dataType: "json",
                 data: { page : recoPlus++, size:size},
                 success: function(result) {
-                	console.log(result);
+                   console.log(result);
+                   for(var i = 0 ; i < result.length; i++){
+                       generateDynamicHTML(result[i]);
+                   }
                 },
                 error: function(xhr, status, error) {
                     console.error("Error fetching joke:", error);
@@ -821,6 +882,33 @@
             });
         }; 
 
+        // Function to generate the dynamic HTML content
+        function generateDynamicHTML(data) {
+            const recoWrapDiv = document.createElement('div');
+            recoWrapDiv.className = 'reco-wrap';
+
+            const recoItemDiv = document.createElement('div');
+            recoItemDiv.className = 'reco-item';
+
+            const jobNameDiv = document.createElement('div');
+            jobNameDiv.innerText = data.job_nm;
+            jobNameDiv.onclick = function () {
+                location = '/whou/member/insertConsult?job_cd='+data.job_cd;
+            };
+            
+            const jobDescriptionDiv = document.createElement('div');
+            jobDescriptionDiv.innerText = data.descriptions;
+            jobDescriptionDiv.onclick = function () {
+                location = '/whou/job/info?job_cd='+data.job_cd;
+            };
+
+            recoItemDiv.appendChild(jobNameDiv);
+            recoItemDiv.appendChild(jobDescriptionDiv);
+            recoWrapDiv.appendChild(recoItemDiv);
+
+            const dynamicContentDiv = document.getElementById('reco-container');
+            dynamicContentDiv.appendChild(recoWrapDiv);
+        }
         </script>
        <script>
 	       var modelCamera_x = 0;
