@@ -46,19 +46,21 @@
                            <div>
                                 <p class="status-title">진행(임시저장) 중 인 검사</p>
                                 <div>
-	                               
-	                                   <c:if test="${fn:length(tempList) == 0}">
-	                                       <i class="fa-regular fa-circle-xmark fa-2xl" style="color: #363636;"></i>
-	                                       <p>진행중인 검사가 없습니다.</p>
-	                                    </c:if>
-	                                    <c:if test="${fn:length(tempList) > 0}">
+                                   <c:if test="${fn:length(tempList) == 0}">
+                                   <div class="empty-box">
+                                       <i class="fa-regular fa-circle-xmark fa-2xl" style="color: #363636;"></i>
+                                       <p>진행중인 검사가 없습니다.</p>
+                                   </div>
+                                    </c:if>
+                                    <c:if test="${fn:length(tempList) > 0}">
+                                       <ul>
 	                                       <c:forEach items="${tempList}" var="templist">
-	                                       <div>
-	                                          <a href="/whou/aptitude/itrstkAptitude?qnum=${templist.test_num}&tempSave=tempSave">${templist.test_name}</a>
-	                                       </div>
+			                                 	<li>
+			                                    	<i class="fa-solid fa-caret-right" style="color: #5d5e5f;"></i> <a href="/whou/aptitude/itrstkAptitude?qnum=${templist.test_num}&tempSave=tempSave">${templist.test_name}</a>
+			                                 	</li>
 	                                       </c:forEach>
-	                                    </c:if>
-	                                
+                                       </ul>
+                                    </c:if>
                                 </div>
                            </div>
                            <div>

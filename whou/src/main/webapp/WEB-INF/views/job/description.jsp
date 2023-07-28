@@ -31,7 +31,7 @@
         <!-- Header-->
         <header class="py-5">
             <div class="container px-5">
-                <h2 class="page-title">직업백과</h2>
+                <h2 class="page-title">직업정보</h2>
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-9">
                         <div class="text-center my-4 d-flex">
@@ -135,15 +135,15 @@
                 <div class="result-top">
                     <p class="result-top-txt">총 <span>${count}</span>건이 검색되었습니다</p>
                     <div class="result-top-right">
-                        <select name="" id="">
-                            <option value="">정렬순서</option>
-                        </select>
-                        <select name="" id="">
-                            <option value="">9개씩보기</option>
-                        </select>
-                        <input type ="submit" class="square-btn" value="적용" onclick="getTabName('${clickTabId}')" >
-                        <div><i class="fa-solid fa-table-cells fa-lg"></i></div>
-                        <div><i class="fa-solid fa-bars fa-lg"></i></div>
+<!--                         <select name="" id=""> -->
+<!--                             <option value="">정렬순서</option> -->
+<!--                         </select> -->
+<!--                         <select name="" id=""> -->
+<!--                             <option value="">9개씩보기</option> -->
+<!--                         </select> -->
+<%--                         <input type ="submit" class="square-btn" value="적용" onclick="getTabName('${clickTabId}')" > --%>
+<!--                         <div><i class="fa-solid fa-table-cells fa-lg"></i></div> -->
+<!--                         <div><i class="fa-solid fa-bars fa-lg"></i></div> -->
                     </div>
                 </div>
                 

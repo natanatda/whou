@@ -104,7 +104,7 @@
 							<ul class="question-wrap num">
 								<c:forEach var="item" items="${RESULT}" varStatus="status">
 		                            <li>
-		                                <div class="question-item"><span class="ic-question">${item.qitemNo}</span>${item.question}</div>
+		                                <div class="question-item"><span class="ic-question">${item.qitemNo}</span><div>${item.question}</div></div>
 		                                <div class="question-dt">
 		                                    <div class="question-dt-info">${item.tip1Desc}</div>
 		                                    <div class="question-dt-info">${item.tip2Desc}</div>
@@ -207,11 +207,11 @@
 									<c:if test="${status.index+1 == 49}" >
 										<input type="hidden" name="selectedValues" id="selectedValues" value="">
 										<li>
-											<div class="question-item">
+											<div class="question-item values-btn-item">
 												<span class="ic-question">${item.qitemNo}</span>${item.question}
 											</div>
 											
-											<div class="btn-group radio-group" role="group" aria-label="Basic radio toggle button group">
+											<div class="btn-group radio-group values-btn-group" role="group" aria-label="Basic radio toggle button group">
 												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 1}" value="1" autocomplete="off">
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 1}">안정성</label>
 		
@@ -219,7 +219,7 @@
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 2}">보수</label>
 		
 												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 3}" value="3" autocomplete="off">
-												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 3}">일과 삶의 균형</label>
+												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 3}">일과 삶의<br /> 균형</label>
 		
 												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 4}" value="4" autocomplete="off">
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 4}">즐거움</label>
@@ -237,13 +237,13 @@
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 8}">영향력</label>
 												
 												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 9}" value="9" autocomplete="off">
-												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 9}">사회적 기여</label>
+												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 9}">사회적<br />기여</label>
 												
 												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 10}" value="10" autocomplete="off">
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 10}">성취</label>
 												
 												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 11}" value="11" autocomplete="off">
-												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 11}">사회적 인정</label>
+												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 11}">사회적<br />인정</label>
 												
 												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 12}" value="12" autocomplete="off">
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 12}">자율성</label>
@@ -259,9 +259,9 @@
 							<button class="white-btn" onclick="previousPage()">이전</button>
 							<button class="white-btn" onclick="nextPage()">다음</button>
 							 -->
-							<button class="white-btn">취소</button>
-							<input type="submit" class="white-btn" formaction="temporarySave" value="임시저장"></button>
-							<input type="submit" class="white-btn"></button>
+							<button type="button" class="white-btn" onclick="location='/whou/aptitude/aptitudeMain'">취소</button>
+							<button type="submit" class="white-btn" formaction="temporarySave">임시저장</button>
+							<button type="submit" class="purple-btn">제출</button>
 						</div>
 					</form>
 				</div>
