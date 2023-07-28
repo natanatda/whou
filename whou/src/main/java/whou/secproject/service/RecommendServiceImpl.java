@@ -109,13 +109,13 @@ public class RecommendServiceImpl implements RecommendService{
 	}
 	@Override
 	public List<HashMap<String, BigDecimal>> getJobPoint(SelectDTO selDTO, int user, int page, int count){
-		SqlSession sqlSession = sqlSessionFactory.openSession();
+		SqlSession sqlSession = sqlSessionFactory.openSession(); // 1 5 2 5 
 		SelectResultHandler<BigDecimal> resultHandler = new SelectResultHandler<BigDecimal>();
 		selDTO.setFullClassName("Double");
 		selDTO.setCol("*");
 		selDTO.setTb_name("JOB_POINT_"+user);
-		selDTO.setOrder(" order by total desc ");
-		selDTO.setEtc("FETCH FIRST "+ page*count + " ROWS ONLY");
+		selDTO.setOrder(" order by total desc , job_cd asc");
+		selDTO.setEtc("OFFSET "+(count*(page-1))+" ROWS FETCH FIRST "+ count + " ROWS ONLY");
 	    sqlSession.select("whou.secproject.mapper.RecommendMapper.selectInfo", selDTO, resultHandler);
 		sqlSession.close();
 		return resultHandler.getSel();
