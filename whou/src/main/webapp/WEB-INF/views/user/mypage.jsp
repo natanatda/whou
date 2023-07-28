@@ -31,9 +31,9 @@
   	
      
  </head>
- <style>
+<style>
 
-    </style>
+</style>
  
  
 <body>
@@ -59,7 +59,9 @@
 	                        <div>
 	                       		<canvas class="webgl"></canvas> <%-- ai --%>                        
 	                        </div>
-                        	<a href="/whou/whouModel/modelCustom">내 비서 커스텀하기</a>
+	                        <div>
+	                        	<a href="/whou/whouModel/modelCustom">커스텀하기 >></a>
+	                        </div>
                         </div>
                     </div>
                     <div class="right-wrap">
@@ -74,7 +76,10 @@
                                <div id="item-aptitude">
                                   <c:if test="${!scoreTrue}">
                                    <canvas id="aptitudeChart" style="display:none;"></canvas>
-                                     검사하고왕
+                                     <div class="empty-box">
+                                     	<div>검사결과가 없습니다.</div>
+                                     	<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
+                                     </div>
                                   </c:if>
                                   <c:if test="${scoreTrue}">
                                       <canvas id="aptitudeChart"></canvas>
@@ -88,7 +93,10 @@
                                <div id="item-values">
                                   <c:if test="${!scoreTrue}">
                                    <canvas id="valuesChart" style="display:none;"></canvas>
-                                     검사하고왕
+                                   <div class="empty-box">
+                                     	<div>검사결과가 없습니다.</div>
+                                     	<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
+                                     </div>
                                   </c:if>
                                   <c:if test="${scoreTrue}">
                                      <canvas id="valuesChart"></canvas>
@@ -97,7 +105,10 @@
                                <div id="item-interest">
                                   <c:if test="${!scoreTrue}">
                                       <canvas id="interestChart" style="display:none;"></canvas>
-                                     검사하고왕
+                                     <div class="empty-box">
+                                     	<div>검사결과가 없습니다.</div>
+                                     	<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
+                                     </div>
                                   </c:if>
                                   <c:if test="${scoreTrue}">
                                      <canvas id="interestChart"></canvas>
@@ -112,7 +123,10 @@
                                   <c:if test="${!scoreTrue}">
                                    <canvas id="abilityChart1" style="display:none;"></canvas>
                                       <canvas id="abilityChart2" style="display:none;"></canvas>
-                                     검사하고왕
+                                     <div class="empty-box">
+                                     	<div>검사결과가 없습니다.</div>
+                                     	<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
+                                     </div>
                                   </c:if>
                                   <c:if test="${scoreTrue}">
                                        <canvas id="abilityChart1"></canvas>
@@ -207,17 +221,21 @@
 	                                    </c:forEach>
 	                                 </c:if>
 	                                 <c:if test="${books == null }">
-	                                    <div>북마크한 관심직업이 없습니다.</div>
-	                                    <div>직업정보 탐색 후, 나의 관심직업을 등록해 주세요.</div>
-	                                    <div><a href="/whou/job/dic">직업정보 >></a></div>
+		                                 <div class="empty-box">
+		                                    <div>북마크한 관심직업이 없습니다.</div>
+		                                    <div>직업정보 탐색 후, 나의 관심직업을 등록해 주세요.</div>
+		                                    <a href="/whou/job/dic">직업정보 >></a>
+		                                 </div>
 	                                 </c:if>
 	                        </div> 
 		                     </div>
 		                     <!-- 컨설팅  -->
                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-                            	<c:if test="${avilReinforce eq '' || avilReinforce==null }">
-                            		컨설팅을 원한다면 직업적성검사를 받으세요.
-                            		<a href="/whou/aptitude/aptitudeMain">검사하러가기</a>
+                            	<c:if test="${avilReinforce eq '' || avilReinforce==null || cunsultingNum == 0}">
+	                            	<div class="empty-box">
+	                            		<div>컨설팅을 원한다면 직업적성검사를 받으세요.</div>
+	                            		<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
+	                            	</div>
                             	</c:if>
                             	<c:if test="${!(avilReinforce eq '') || avilReinforce!=null }">
 									<div style="padding:0px 10xp;">
@@ -384,9 +402,7 @@
 			                                
 			                                </div>
 				                        </c:if>
-				                        <c:if test="${cunsultingNum == 0}">
-				                        	컨설팅을 희망하는 직업을 입력하세요
-				                        </c:if>
+				                      
 									</div>
 								</c:if>
 							</div>
@@ -413,7 +429,11 @@
                            	</div>
                             </c:if>
                             <c:if test="${none}">
-                            	추천이 불가능합니다. 검사를 보거나, 자격증 및 학과 정보를 기입해주세요
+	                            <div class="empty-box">
+	                            	<div>추천이 불가능합니다.</div>
+	                            	<div>검사를 보거나, 자격증 및 학과 정보를 기입해주세요.</div>
+	                            	<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>                            	
+	                            </div>
                             </c:if>
                           </div>
                     </div>
@@ -807,7 +827,7 @@
 		   	var modelCamera_y = 1;
 		   	var modelCamera_z = 3;
         	var modelPath= '';
-        	var modelWidth = 220;
+        	var modelWidth = 200;
         	var modelHeight = 200;
         	if('${model.headColor}' === ''){
         		var headColor = '#FF0080';
