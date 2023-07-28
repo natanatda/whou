@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -115,7 +114,7 @@
 							elPlaceHolder: "exampleFormControlTextarea${assistant.num}", // 지정할 textarea ID
 							sSkinURI: "../resources/smarteditor/SmartEditor2Skin.html",
 							fCreator: "createSEditor2"
-						})
+						});
 					}
 					var j = 0; // div 숨김, 보여줌 카운트
 					var z = 0; // 스마트에디터 생성 카운트
@@ -128,24 +127,27 @@
 						}
 						$("#test${assistant.num}").show(); // div 보여줌
 						if(z === 0){
-							smartEditor(); // 스마트 에디터 생성			
+							smartEditor(); // 스마트 에디터 생성	
+							alert($("exampleFormControlTextarea${assistant.num}").val());
 							z++;
 						}
 						j++;
 					});
-				})
+				});
 				function submitPost${assistant.num}(){
 					oEditors.getById["exampleFormControlTextarea${assistant.num}"].exec("UPDATE_CONTENTS_FIELD", []); // textarea 내용 서버에 전달
 					// 유효성 검사
-					var content = document.getElementById("exampleFormControlTextarea${assistant.num}").value;
+					var content = $("exampleFormControlTextarea${assistant.num}").val();
+					alert(content);
 					var qes = document.getElementById("qes").value;
 					var ref = document.getElementById("ref").value;
 					var ref_level = document.getElementById("ref_level").value;
-					if(content == ""  || content == null || content == '&nbsp;' || content == '<p>&nbsp;</p>' || !qes || !ref || !ref_level)  {
+					
+					if(content == ""  || content == null || content == '&nbsp;' || content == '<p>&nbsp;</p>' || !qes || !ref || !ref_level )  {
 						alert("모든 입력창에 입력해주세요.");
 						oEditors.getById["exampleFormControlTextarea${assistant.num}"].exec("FOCUS"); //포커싱
 						return false;
-					} 
+					}
 				}
 			</script>
 			<div style="margin: 0 auto; display:flex; justify-content: center; width: 600px;" >
@@ -173,7 +175,7 @@
 					</div>
 					<input type="hidden" name="num" value="${assistant.num}" />
 					<input type="submit" class="btn btn-light" value="수정" />
-					<input type="button" class="btn btn-light" value="삭제" onclick="location='/whou/assistant/aiDelete?num=${assistant.num}'"/>
+					<input type="button" class="btn btn-light deleteList" data-value="${assistant.num}" value="삭제"/>
 				</form>
 				</div>
 			<hr/>
@@ -181,5 +183,14 @@
 	</c:if>
 	<!-- end -->
 	<%@ include file="../footer.jsp" %>
+	<script>
+		$(".deleteList").click(function(){
+			var deleteNum = $(this).data('value');
+			if(confirm("삭제 하시겠습니까?") == true){
+				location='/whou/assistant/aiDelete?num='+deleteNum;	
+			}
+		});
+	</script>
     </body>
+    
 </html>
