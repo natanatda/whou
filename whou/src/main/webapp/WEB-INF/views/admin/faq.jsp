@@ -98,7 +98,7 @@
 									<ul class="hide">
 										<li class="list-group-item list-group-item-light">${faq.content} <br/>
 											<c:if test="${lv == 2}"> 
-												<input type="button" value="삭제" class="btn btn-light" onclick="location='/whou/cs/faqDelete?num=${faq.num}'" />
+												<input type="button" value="삭제" class="btn btn-light deleteFaq" data-value="${faq.num}" />
 											</c:if>
 										</li>
 									</ul>
@@ -115,5 +115,14 @@
 			</header>
 			<%@ include file="../aiChatBot.jsp" %>
            <%@ include file="../footer.jsp" %>
+           <%-- location='/whou/cs/faqDelete?num=${faq.num}' --%>
+           <script>
+		$(".deleteFaq").click(function(){
+			var deleteNum = $(this).data('value');
+			if(confirm("삭제 하시겠습니까?") == true){
+				location='/whou/cs/faqDelete?num='+deleteNum;	
+			}
+		});
+	</script>
 	</body>
 </html>

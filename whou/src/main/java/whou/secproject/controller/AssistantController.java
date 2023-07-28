@@ -52,8 +52,12 @@ public class AssistantController {
 	}
 	
 	@RequestMapping("aiUpdate")
-	public String aiUpdate(AssistantDTO dto, HttpSession session) {
+	public String aiUpdate(AssistantDTO dto, HttpSession session,HttpServletRequest request) {
 		String email = (String)session.getAttribute("memId");
+		System.out.println(dto.getCon());
+		System.out.println(dto.getNum());
+		System.out.println(dto.getQes());
+		System.out.println(dto.getRef_level());
 		if(email != null) {			
 			int lv = assistantService.adminUserLvCheck(email);
 			if(lv == 2) { // 레벨 2 => 관리자
