@@ -8,7 +8,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +38,8 @@ import whou.secproject.component.Job_infoDTO;
 import whou.secproject.component.MemberDTO;
 import whou.secproject.component.RecommandInfoDTO;
 import whou.secproject.component.TestReinforcementDTO;
+import whou.secproject.component.UserInfoDTO;
 import whou.secproject.mapper.MemberMapper;
-import whou.secproject.repository.JobDicApiDAO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -45,6 +47,7 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberMapper mapper;
 
+	//북마크 변경
 	@Override
 	public void updateBook(String job_cd, String memId, boolean contain) {
 		String temp = mapper.getBook(memId);
@@ -69,11 +72,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 
-	// 회원정보 가져오기
-	@Override
-	public MemberDTO getUser(int userNum) {
-		return mapper.getUser(userNum);
-	}
+	
 	
 	// 북마크 직업 정보 가져오기
 	@Override
@@ -130,21 +129,72 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.getEmail(name, tel);
 	}
 
+	
+	//추가정보//
 	@Override
-	public List<String> getCerti(String certi) {
+	public List<String> getCerti(String certi) { //자격증 가져오기
 		return mapper.getCerti(certi);
 	}
 
 	@Override
-	public List<String> getMajor(String major, String univSe) {
+	public List<String> getMajor(String major, String univSe) { //학과 가져오기
 		return mapper.getMajor(major, univSe);
 	}
 
 	@Override
-	public void updateInfo(String combinedCerti, String combinedMajor, String memId) {
-		String certi = mapper.getUserCerti(memId);
-		String major = mapper.getUserMajor(memId);
-		mapper.updateInfo(certi+","+combinedCerti, major+combinedMajor, memId);
+	public void updateInfo(List<String> certiList, List<String> majorList, String memId) { //추가정보 db에 넣기
+		String certi = mapper.getUserCerti(memId); //db에 저장된 자격증 가져오기
+		String major = mapper.getUserMajor(memId); //db에 저장된 학과 가져오기
+		
+		Set<String> CertiSet = new HashSet<>();
+		Set<String> MajorSet = new HashSet<>();
+		
+		CertiSet.addAll(certiList);
+		MajorSet.addAll(majorList);
+		
+		String certiArr[] = certi.split(",");
+		String majorArr[] = major.split(",");
+		
+		
+		for(String arrC : certiArr) {
+			CertiSet.add(arrC);
+		}
+		
+		for(String arrM : majorArr) {
+			MajorSet.add(arrM);
+		}
+		
+		String combinedCerti = String.join(",", CertiSet);
+		String combinedMajor = String.join(",", MajorSet);
+		
+		
+		mapper.updateInfo(combinedCerti, combinedMajor, memId);
+	}
+	
+	//회원정보수정//
+	@Override
+	public MemberDTO getUser(int userNum) { // 회원정보 가져오기
+		return mapper.getUser(userNum);
+	}
+	
+	@Override
+	public UserInfoDTO userInfo(int userNum) { // 추가 회원정보 가져오기
+		return mapper.userInfo(userNum);
+	}
+	
+	@Override
+	public void updateUser(int userNum) {
+		
+	}
+	
+	@Override
+	public void updatePw(int userNum) {
+		
+	}
+	
+	@Override
+	public void updateUserInfo(int userNum) {
+		
 	}
 
 	// 카카오 로그인시 토큰 생성
