@@ -38,6 +38,7 @@
                 		<input type="hidden" name="pageNum" value="${currentPage}" />
 	                    <div class="card edu-search-card">
 	                        <div class="card-body">
+	                        	<!-- 
 		                        <div class="edu-train-search-form">
 									<div class="input-group mb-3">
 										<div>
@@ -52,6 +53,7 @@
 										</div>
 									</div>
 								</div>
+								 -->
 								<div class="search-cont">
 									<div class="input-group mb-3">
 										<label class="input-group-text" id="train-select-label" style="background:#5A3FFF; color:#fff " for="inputGroupSelect01">훈련유형</label>
