@@ -143,6 +143,7 @@ public class EducationController {
 	
 	@RequestMapping("/training")
 	public String educationTrain(Model model, HttpServletRequest request) throws IOException {
+		request.setCharacterEncoding("UTF-8");
 		
 		//파라미터 set하기
 		EducationHrdParamDTO hrdParam = new EducationHrdParamDTO();
@@ -183,7 +184,6 @@ public class EducationController {
 			hrdParam.setSrchTraEndDt(srchTraEndDt!=null && !(srchTraEndDt.equals(""))? srchTraEndDt.replace("-",""):"");
 			hrdParam.setSrchTraArea1(srchTraArea1!=null && !(srchTraArea1.equals(""))? srchTraArea1:"");
 			hrdParam.setSrchTraOrganNm(srchTraOrganNm!=null && !(srchTraOrganNm.equals(""))? srchTraOrganNm:"");
-			hrdParam.setSrchTraProcessNm(srchTraProcessNm!=null && !(srchTraProcessNm.equals(""))? srchTraProcessNm:"");
 			hrdParam.setSrchTraProcessNm(srchTraProcessNm!=null && !(srchTraProcessNm.equals(""))? srchTraProcessNm:"");
 			hrdParam.setPageSize("100");
 			hrdParam.setPageNum("1");

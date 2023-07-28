@@ -101,27 +101,27 @@ public class EducationApiDAO {
 		}
 	    return educationMajorResponseDTO;
 	}
+		
 	
+		
 	
-	
-	
-	//hrdnet 학과 리스트 API
+	//hrdnet 교육 정보 리스트 API
 	public List<EducationHrdResponseDTO> getHrdApi(String param, EducationHrdParamDTO hrdParam) {
 		String url = null;
 		if(param != null) {
 			url = getHrdURL(param, hrdParam);
 		}
 		System.out.println("xml파싱 유알앨 "+url);
-
+		
 		List<EducationHrdResponseDTO> educationHrdResponseList = new ArrayList<>();
 		try {
 			// HTTP 요청 보내기
-            HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
-            conn.setRequestMethod("GET");
-
-            // 응답 코드 확인
+			HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+			conn.setRequestMethod("GET");
+			
+			// 응답 코드 확인
 			int responseCode = conn.getResponseCode();
-
+			
 			if (responseCode == HttpURLConnection.HTTP_OK) {
 				// 응답 데이터 읽기
 				BufferedReader reader = new BufferedReader(
@@ -131,67 +131,67 @@ public class EducationApiDAO {
 				while ((line = reader.readLine()) != null) {
 					response.append(line);
 				}
-
+				
 				// 응답 데이터를 XML로 파싱
 				String xmlData = response.toString();
 				System.out.println("XML 데이터: " + xmlData.substring(0,90));
-
+				
 				// XML 파서 설정
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder builder = factory.newDocumentBuilder();
 				Document document = builder.parse(new InputSource(new StringReader(xmlData)));
 				
-	            // "HRDNet" 엘리먼트를 찾습니다.
-	            Element hrdnetElement = document.getDocumentElement();
-
-	            // "srchList" 엘리먼트를 찾습니다.
-	            Element srchListElement = (Element) hrdnetElement.getElementsByTagName("srchList").item(0);
-
-	            // "scn_list" 엘리먼트들을 찾습니다.
-	            NodeList scnListNodes = srchListElement.getElementsByTagName("scn_list");
+				// "HRDNet" 엘리먼트를 찾습니다.
+				Element hrdnetElement = document.getDocumentElement();
 				
-	            for (int i = 0; i < scnListNodes.getLength(); i++) {
-	                Node itemNode = scnListNodes.item(i);
-	                if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
-	                    Element itemElement = (Element) itemNode;
-
-	                    String address = getElementValue(itemElement, "address");
-	                    String subTitle = getElementValue(itemElement, "subTitle");
-	                    String title = getElementValue(itemElement, "title");
-	                    String titleLink = getElementValue(itemElement, "titleLink");
-	                    String traStartDate = getElementValue(itemElement, "traStartDate");
-	                    String traEndDate = getElementValue(itemElement, "traEndDate");
-
-	                    EducationHrdResponseDTO educationHrdResponseDTO = new EducationHrdResponseDTO();
-	                    educationHrdResponseDTO.setAddress(address);
-	                    educationHrdResponseDTO.setSubTitle(subTitle);
-	                    educationHrdResponseDTO.setTitle(title);
-	                    educationHrdResponseDTO.setTitleLink(titleLink);
-	                    educationHrdResponseDTO.setTraStartDate(traStartDate);
-	                    educationHrdResponseDTO.setTraEndDate(traEndDate);
-
-	                    educationHrdResponseList.add(educationHrdResponseDTO);
-	                }
-	            }
+				// "srchList" 엘리먼트를 찾습니다.
+				Element srchListElement = (Element) hrdnetElement.getElementsByTagName("srchList").item(0);
+				
+				// "scn_list" 엘리먼트들을 찾습니다.
+				NodeList scnListNodes = srchListElement.getElementsByTagName("scn_list");
+				
+				for (int i = 0; i < scnListNodes.getLength(); i++) {
+					Node itemNode = scnListNodes.item(i);
+					if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
+						Element itemElement = (Element) itemNode;
+						
+						String address = getElementValue(itemElement, "address");
+						String subTitle = getElementValue(itemElement, "subTitle");
+						String title = getElementValue(itemElement, "title");
+						String titleLink = getElementValue(itemElement, "titleLink");
+						String traStartDate = getElementValue(itemElement, "traStartDate");
+						String traEndDate = getElementValue(itemElement, "traEndDate");
+						
+						EducationHrdResponseDTO educationHrdResponseDTO = new EducationHrdResponseDTO();
+						educationHrdResponseDTO.setAddress(address);
+						educationHrdResponseDTO.setSubTitle(subTitle);
+						educationHrdResponseDTO.setTitle(title);
+						educationHrdResponseDTO.setTitleLink(titleLink);
+						educationHrdResponseDTO.setTraStartDate(traStartDate);
+						educationHrdResponseDTO.setTraEndDate(traEndDate);
+						
+						educationHrdResponseList.add(educationHrdResponseDTO);
+					}
+				}
 			}
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		return educationHrdResponseList;
 	}
 	
 	
 	//HRD-net URL 처리
 	public String getHrdURL(String param, EducationHrdParamDTO dto) {
-	    
+		
 		StringBuilder url = new StringBuilder();
 		url.append("https://www.hrd.go.kr/jsp/HRDP/HRDPO00/").append(param)
-	    .append("?authKey=").append(authKey)
-	    .append("&returnType=XML").append("&sortCol=TRNG_BGDE").append("&outType=1");
+		.append("?authKey=").append(authKey)
+		.append("&returnType=XML").append("&sortCol=TRNG_BGDE").append("&outType=1");
 		
-	    
+		
 		if (dto.getSrchNcs1() != null && !(dto.getSrchNcs1().equals("")) ) {
 			url.append("&srchNcs1=").append(dto.getSrchNcs1());
 		}
@@ -225,9 +225,13 @@ public class EducationApiDAO {
 		if (dto.getPageNum() != null && !(dto.getPageNum().equals("")) ) {
 			url.append("&pageNum=").append(dto.getPageNum());
 		}
-	    
+		
 		return url.toString();
 	}
+	
+	
+	
+	
 	
 	// XML 엘리먼트의 값을 가져오는 유틸리티 메소드
 	public String getElementValue(Element element, String tagName) {
