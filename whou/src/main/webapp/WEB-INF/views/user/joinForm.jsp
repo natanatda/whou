@@ -597,7 +597,7 @@
    		   		        yearValid && telValid && isAllChecked) {
    		   		            $("#btn1").prop("disabled", false);
    		   		        }else if (email !== '' && name !== '' && birth_year !== '' && tel !== '' &&
-   		   		            	  yearValid && telValid && checkAll) {
+   		   		            	  yearValid && telValid && checkAll && isAllChecked) {
    		   		            $("#btn1").prop("disabled", false);
    		   		        }else {
    		   		            $("#btn1").prop("disabled", true);
@@ -607,7 +607,7 @@
    		   		        pwValid && yearValid && telValid && isAllChecked) {
    		   		            $("#btn1").prop("disabled", false);
 		   		        }else if (email !== '' && pw !== '' && name !== '' && birth_year !== '' && tel !== '' &&
-		   		            pwValid && yearValid && telValid && checkAll) {
+		   		            pwValid && yearValid && telValid && checkAll && isAllChecked) {
 		   		            $("#btn1").prop("disabled", false);
 		   		        }else {
 		   		            $("#btn1").prop("disabled", true);
@@ -622,7 +622,12 @@
    		    });
 
    		    // 필수 동의사항 체크박스의 상태가 변경될 때마다 버튼 상태 업데이트
-   		    $("#agreeAllPersonal, #agree_rule1, #agree_take1").on("input", function() {
+   		    $("#agreeAllPersonal, #agree_rule1, #agree_take1, #locationBased, #termsAgree, #sms_receive_fl").on("input", function() {
+   		        updateButtonStatus();
+   		    });
+   		    
+   			// 핸드폰 인증 버튼 클릭될 때마다 버튼 상태 업데이트
+   		    $("#phoneChk2").on("click", function() {
    		        updateButtonStatus();
    		    });
    		    
