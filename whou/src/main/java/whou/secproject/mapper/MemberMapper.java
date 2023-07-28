@@ -18,14 +18,17 @@ public interface MemberMapper {
 	public String getEmail(@Param("name") String name, @Param("tel") String tel);
 	public void insert2(String email);
 	public void insertPro(MemberDTO dto);
+	
+	// 마이페이지
 	public List<String> getCerti(String certi);
 	public List<String> getMajor(@Param("major")String major, @Param("univSe")String univSe);
 	public void updateInfo(@Param("combinedCerti")String combinedCerti, @Param("combinedMajor")String combinedMajor, @Param("memId")String memId);
-	
-	// 마이페이지
 	public RecommandInfoDTO getAptitudeRank(int userNum);
 	public void updateBook(@Param("memId")String memId, @Param("books")String books);
 	public String getBook(String memId);
+	public String getUserCerti(String memId);
+	public String getUserMajor(String memId);
+	
 
 	
 	public Integer getCunsultingNum(int user_info_num); // user_info의 num을 이용하여 cunsulting_num 컬럼 값 get

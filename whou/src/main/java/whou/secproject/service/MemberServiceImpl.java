@@ -142,7 +142,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void updateInfo(String combinedCerti, String combinedMajor, String memId) {
-		mapper.updateInfo(combinedCerti, combinedMajor, memId);
+		String certi = mapper.getUserCerti(memId);
+		String major = mapper.getUserMajor(memId);
+		mapper.updateInfo(certi+","+combinedCerti, major+combinedMajor, memId);
 	}
 
 	// 카카오 로그인시 토큰 생성
