@@ -66,6 +66,14 @@
 	<update id="updateBook">
 		update user_info set books = #{books} where email =#{memId}
 	</update>
+	
+	<select id="getUserCerti" resultType="String">
+		select CERTIFICATE from user_info where email = #{memId}
+	</select>
+	
+	<select id="getUserMajor" resultType="String">
+		select SCHOOL_MAJOR from user_info where email = #{memId}
+	</select>
 
 	
 	

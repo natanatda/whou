@@ -910,6 +910,8 @@ public class MemberController {
 	        combinedMajor = String.join(",", majorList);
 	        System.out.println("Major2 "+combinedMajor);
 	        service.updateInfo(combinedCerti, combinedMajor, memId);
+	        serviceAt.commendNumUpdate(memId);
+	        
 	        model.addAttribute("load", "2");
 	    }
 	    return "redirect:/member/mypage";
