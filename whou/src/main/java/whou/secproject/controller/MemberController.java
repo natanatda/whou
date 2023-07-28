@@ -917,17 +917,12 @@ public class MemberController {
 		String combinedMajor = null;
 		System.out.println("Certi "+certiList);
 		System.out.println("Major "+majorList);
-		
 		if (certiList != null && majorList != null) {
-			combinedCerti = String.join(",", certiList);
-	        System.out.println("Certi2 "+combinedCerti);
-	        combinedMajor = String.join(",", majorList);
-	        System.out.println("Major2 "+combinedMajor);
-	        service.updateInfo(combinedCerti, combinedMajor, memId);
-	        serviceAt.commendNumUpdate(memId);
-	        
-	        model.addAttribute("load", "2");
-	    }
+	           service.updateInfo(certiList, majorList, memId);
+	           serviceAt.commendNumUpdate(memId);
+	           
+	           model.addAttribute("load", "2");
+	       }
 	    return "redirect:/member/mypage";
 	}
 	
