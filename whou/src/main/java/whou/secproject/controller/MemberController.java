@@ -606,9 +606,10 @@ public class MemberController {
     	//역량 보완법을 위해 크롤링한 결과에서 21번 테스트의 역량별 수치 가져옴
     	if(memId != null && userNum >0) {
     		System.out.println("++service.getRecentTest21(userNum)+++ "+service.getRecentTest21(userNum));
-    		String avilReinforce=service.getRecentTest21(userNum);
+    		String avilReinforce="";
+    		avilReinforce=service.getRecentTest21(userNum);
     		
-    		if(avilReinforce!=null || !(avilReinforce.equals(""))) {
+    		if(avilReinforce!=null) {
 	    		double [] avilArrDouble = new double [11];
 	    		if(avilReinforce.length()>10) {
 	    			String [] avilArrString = avilReinforce.split("\\+");
@@ -660,15 +661,36 @@ public class MemberController {
         ArrayList<String> certis= serviceRe.majorInfo(certiDTO);
         
         
+//        int majorC = 0 , certiC = 0;
+//        boolean none = false; 
+//        if(majors!=null) majorC = majors.size();
+//        if(certis!=null) certiC = certis.size();
+//        if(redto.getAptitude_score()==null&&
+//        		redto.getInterest_score()==null&&
+//        		redto.getValues_score()==null&&
+//        		majorC==0 && certiC==0) 
+//        	none=true;
+        
         int majorC = 0 , certiC = 0;
-        boolean none = false; 
         if(majors!=null) majorC = majors.size();
         if(certis!=null) certiC = certis.size();
-        if(redto.getAptitude_score()==null&&
-           redto.getInterest_score()==null&&
-           redto.getValues_score()==null&&
-           majorC==0 && certiC==0) 
-           none=true;
+        boolean none = false; 
+        if(redto != null) {
+	        if(redto.getAptitude_score()==null&&
+	           redto.getInterest_score()==null&&
+	           redto.getValues_score()==null&&
+	           majorC==0 && certiC==0) 
+	           none=true;
+        }else if(redto == null && majorC==0 && certiC==0) none=true;
+        System.out.println(none);
+        
+//        String aptitude_score = redto.getAptitude_score()!=null ? redto.getAptitude_score():null;
+//        String interest_score = redto.getInterest_score()!=null ? redto.getInterest_score():null;
+//        String values_score = redto.getValues_score()!=null ? redto.getValues_score():null;
+        
+//        if(aptitude_score==null && interest_score==null && values_score==null
+//        		&& majorC==0 && certiC==0) 
+//        	none=true;
         
         if(!none) {
         	if(serviceRe.updateTrue(userNum)==1) {

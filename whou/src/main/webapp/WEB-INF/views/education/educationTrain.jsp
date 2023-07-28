@@ -333,7 +333,6 @@
 
 	// 페이지 링크 클릭 시 폼 제출 이벤트 핸들러
     function handlePageLinkClick(pageNumber) {
-		alert(pageNumber);
         var pageNumInput = document.querySelector('input[name="pageNum"]');
         pageNumInput.value= pageNumber;
         form.submit();
