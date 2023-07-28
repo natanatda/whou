@@ -75,7 +75,7 @@ select{border:1px solid #acacac;color:#999;font-size: 14px;padding:0 10px;min-wi
 /* common */
 p{margin-bottom:0;}
 .weight900{font-weight: 900;}
-
+.hide{display:none;}
 /* text */
 .main-color{ color:#5A3FFF}
 .main-text-wrap{text-align: center;}
@@ -472,6 +472,8 @@ input::placeholder{font-size: 14px;color:#999;}
 .reco-wrap .add-btn{display:flex;justify-content:center;align-items: center;height: 20px;cursor:pointer}
 
 
+#nav-contact .card{margin-top:20px;}
+
 /*****************************************************************************
   ************************************* description detail ai***********************************
   *****************************************************************************/
@@ -498,7 +500,7 @@ input::placeholder{font-size: 14px;color:#999;}
 /*****************************************************************************
   ************************************* calendar-section ***********************************
   *****************************************************************************/
-  
+.calendar-section h3{font-size: 48px;background: #F7FBFE;position: absolute;top: 202px;left: 428px;width: 346px;text-align: center;}
 #pageFrame{width:100%;height:1500px;}
   
   

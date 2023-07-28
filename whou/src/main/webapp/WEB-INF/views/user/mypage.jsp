@@ -73,6 +73,7 @@
                                </select>
                                <div id="item-aptitude">
                                   <c:if test="${!scoreTrue}">
+                                   <canvas id="aptitudeChart" style="display:none;"></canvas>
                                      검사하고왕
                                   </c:if>
                                   <c:if test="${scoreTrue}">
@@ -86,6 +87,7 @@
                                </div>
                                <div id="item-values">
                                   <c:if test="${!scoreTrue}">
+                                   <canvas id="valuesChart" style="display:none;"></canvas>
                                      검사하고왕
                                   </c:if>
                                   <c:if test="${scoreTrue}">
@@ -94,6 +96,7 @@
                                </div>
                                <div id="item-interest">
                                   <c:if test="${!scoreTrue}">
+                                      <canvas id="interestChart" style="display:none;"></canvas>
                                      검사하고왕
                                   </c:if>
                                   <c:if test="${scoreTrue}">
@@ -107,6 +110,8 @@
                                </div>
                                <div id="item-ability">
                                   <c:if test="${!scoreTrue}">
+                                   <canvas id="abilityChart1" style="display:none;"></canvas>
+                                      <canvas id="abilityChart2" style="display:none;"></canvas>
                                      검사하고왕
                                   </c:if>
                                   <c:if test="${scoreTrue}">
@@ -218,9 +223,10 @@
 									<div style="padding:0px 10xp;">
 										<c:if test="${cunsultingNum > 0}">
 											<div style="margin:0px 10xp;">
-				                                <h4>${jobDetailCunsuling.getBaseInfo().getJob_nm()}</h4>
+												<div>${memId} 님의 컨설팅이 완료되었습니다.</div>
+				                                <h4>직업 이름 : ${jobDetailCunsuling.getBaseInfo().getJob_nm()}</h4>
 				                                <div>
-				                                	<p>${jobDetailCunsuling.getWorkList().get(0).getWork()}</p>
+				                                	<p>직업설명: ${jobDetailCunsuling.getWorkList().get(0).getWork()}</p>
 				                                </div>
 			                                </div>
 			                                <div class="card">
@@ -238,8 +244,11 @@
 			                                		<p class="card-text">${getCurriculum.curriculum}</p>
 			                                	</c:forEach>
 											  </div>
-											  <div class="card">
-										  </div>
+											  
+												
+											</div>
+											<div class="card">
+										  
 					                                <div class="card-header">관련학과</div>
 					                                <div class="card-body">
 					                                	<c:forEach var="getDepartList" items="${jobDetailCunsuling.getDepartList()}">
@@ -301,11 +310,12 @@
 															});
 													  	</script>
 													  </div>
-												  </div>
-												  <div>
+													    <div>
 												  	${jobDetailCunsuling.getMajorChart().get(0).getSource()}
 												  </div>
-											</div>
+												  </div>
+												  
+												  </div>
 											<!-- 
 			                                <div>
 			                                	종사자 전공 계열 분포 : 
@@ -339,37 +349,39 @@
 			                                	</div>
 		                                	</div>
 		                                	<div>
-			                                	<div class="card-body">
-			                                		회원님의 직업적성검사 결과
-			                                		
-			                                		<c:forEach var="i" begin="0" end="${fn:length(needAvil)}">
-													    <c:set var="currentNeedAvil" value="${needAvil[i]}" />
-													    <c:set var="currentAvilArrValue" value="${avilArrValue[i]}" />
-													    <c:set var="currentReinDTO" value="${reinDTO[i]}" />
-													    <c:if test="${currentNeedAvil != null && currentAvilArrValue < 55}">
-													        ${currentNeedAvil}영역이 ${currentAvilArrValue}점으로 보완이 필요합니다.
-													        아래와 같은 방법을 통해 보완할 수 있습니다.
-															
-															<ol>
-														        <li>${currentReinDTO.getMethod01()}</li>
-														        <li>${currentReinDTO.getMethod02()}</li>
-														        <li>${currentReinDTO.getMethod03()}</li>
-														        <li>${currentReinDTO.getMethod04()}</li>
-														        <li>${currentReinDTO.getMethod05()}</li>
-														        <li>${currentReinDTO.getMethod06()}</li>
-														        <li>${currentReinDTO.getMethod07()}</li>
-														        <li>${currentReinDTO.getMethod08()}</li>
-														        <li>${currentReinDTO.getMethod09()}</li>
-														        <li>${currentReinDTO.getMethod10()}</li>
-													        </ol>
-													    </c:if>
-													
-													    <c:if test="${currentNeedAvil != null && currentAvilArrValue > 55 && currentAvilArrValue < 101}">
-													        ${currentNeedAvil}영역이 ${currentAvilArrValue}점으로 준수합니다. 
-													        자격증과 기타 활동을 위주로 수행하시는 것을 추천드립니다.
-													    </c:if>
-													</c:forEach>
+		                                	     <div class="card">
+				                                	<div class="card-header">직업적성검사 결과</div>
+				                                	<div class="card-body">
+				                                		<c:forEach var="i" begin="0" end="${fn:length(needAvil)}">
+														    <c:set var="currentNeedAvil" value="${needAvil[i]}" />
+														    <c:set var="currentAvilArrValue" value="${avilArrValue[i]}" />
+														    <c:set var="currentReinDTO" value="${reinDTO[i]}" />
+														    <c:if test="${currentNeedAvil != null && currentAvilArrValue < 55}">
+														        ${currentNeedAvil}영역이 ${currentAvilArrValue}점으로 보완이 필요합니다.
+														        아래와 같은 방법을 통해 보완할 수 있습니다.
+																
+																<ol>
+															        <li>${currentReinDTO.getMethod01()}</li>
+															        <li>${currentReinDTO.getMethod02()}</li>
+															        <li>${currentReinDTO.getMethod03()}</li>
+															        <li>${currentReinDTO.getMethod04()}</li>
+															        <li>${currentReinDTO.getMethod05()}</li>
+															        <li>${currentReinDTO.getMethod06()}</li>
+															        <li>${currentReinDTO.getMethod07()}</li>
+															        <li>${currentReinDTO.getMethod08()}</li>
+															        <li>${currentReinDTO.getMethod09()}</li>
+															        <li>${currentReinDTO.getMethod10()}</li>
+														        </ol>
+														    </c:if>
+														
+														    <c:if test="${currentNeedAvil != null && currentAvilArrValue > 55 && currentAvilArrValue < 101}">
+														        ${currentNeedAvil}영역이 ${currentAvilArrValue}점으로 준수합니다. 
+														        자격증과 기타 활동을 위주로 수행하시는 것을 추천드립니다.
+														    </c:if>
+														</c:forEach>
+				                                	</div>
 			                                	</div>
+			                                
 			                                </div>
 				                        </c:if>
 				                        <c:if test="${cunsultingNum == 0}">

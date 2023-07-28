@@ -231,7 +231,23 @@
 									    </div>
 									  </div>
 									</div>
-                                    <button class="black-btn">검사결과 예시</button>
+                                    <button class="black-btn" data-bs-toggle="modal" data-bs-target="aptitudeModalEx" >검사결과 예시</button>
+                                    <div class="modal fade" id="aptitudeModalEx" tabindex="-1" aria-labelledby="aptitudeModalEx" aria-hidden="true">
+									  <div class="modal-dialog">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <h1 class="modal-title fs-5" id="exampleModalLabel2">Modal title</h1>
+									        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									      </div>
+									      <div class="modal-body">
+									     검사결과 예시
+									      </div>
+									      <div class="modal-footer">
+									        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+									      </div>
+									    </div>
+									  </div>
+									</div>
                                 </div>
                                 <button class="purple-btn" onclick="aptitudeStart()">검사시작</button>
                             </div>

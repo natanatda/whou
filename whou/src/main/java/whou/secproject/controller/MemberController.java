@@ -452,6 +452,7 @@ public class MemberController {
   		model.addAttribute("load", load);
   		HttpSession session = request.getSession();
 		String memId = (String)session.getAttribute("memId");
+		model.addAttribute("memId", memId);
 		// user_info 테이블에서 세션에 해당하는 num 추출
 		System.out.println("세션있냐?"+memId);
 		int userNum = 0;
