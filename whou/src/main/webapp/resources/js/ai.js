@@ -16,6 +16,11 @@
 		    $('#ai-assistant').hide(); // include한 jsp를 숨김
 		    $('#ai-chatBot').css({'width':''}); // css 수정
 		    showChatBot = 0;
+		    
+		    // tts종료
+		    $("#readArea").html('<button id="readbtn" class="btn btn-light">읽기</button>'
+							+'<button class="btn btn-light" id="clear">초기화</button>');
+		    read = false;
 		  }
 		});
     });

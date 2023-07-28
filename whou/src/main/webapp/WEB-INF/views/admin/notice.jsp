@@ -23,14 +23,7 @@
         <script src="../resources/js/ai.js"></script>
         <%-- TOP 버튼 --%>
         <script>
-	        $(document).ready(function(){
-        	$(window).scroll(function(){  //스크롤이 움직일때마다 이벤트 발생
-        	      var position = $(window).scrollTop()+500; // 현재 스크롤바의 위치값을 반환
-        	      $("#Quick").stop().animate({top:position+"px"}, 400); //해당 오브젝트 위치값 재설정
-        	   });
-	        var initialPosition = $(window).scrollTop() + 500;
-	        $("#chatbot").css("top", initialPosition + "px");
-        	});
+	       
         </script>
     </head>
  
@@ -171,17 +164,13 @@
                         </ul>
                       </nav>
                 </div>
-                <div id="Quick" class="" style="position: absolute; right: 10px; top: 400px;">
-				    <table class="quickMenuBar" style="">
-				        <tr>
-				            <td colspan="2" style="cursor:pointer;" onclick="window.scrollTo(0,0);">TOP</td>
-				        </tr>
-				    </table>
-				</div>
+               
             </div>
             <%@ include file="../aiChatBot.jsp" %>
         </section>
         <!-- Footer-->
        <%@ include file="../footer.jsp" %>
+       <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

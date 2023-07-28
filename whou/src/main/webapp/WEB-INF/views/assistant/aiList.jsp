@@ -79,7 +79,7 @@
 	<div style="display:flex; justify-content: center;">
 											<%-- div 숨김 --%>
 		<div id="addText" style="margin:0 auto; display:none; height: 510px; width: 600px;">
-			<form action="/whou/assistant/aiInsert" onsubmit="return ajaxSubmitPost();" style="width: 600px;">
+			<form action="/whou/assistant/aiInsert" method="post" onsubmit="return ajaxSubmitPost();" style="width: 600px;">
 				<div class="form-group">
 					<label  class="form-label">질문</label>
 					<input type="text" id="qes" name="qes" placeholder="질문" />
@@ -116,6 +116,7 @@
 							fCreator: "createSEditor2"
 						});
 					}
+					
 					var j = 0; // div 숨김, 보여줌 카운트
 					var z = 0; // 스마트에디터 생성 카운트
 					$("#show${assistant.num}").click(function(event){ // '추가' 버튼 눌렀을 때 동작
@@ -128,7 +129,6 @@
 						$("#test${assistant.num}").show(); // div 보여줌
 						if(z === 0){
 							smartEditor(); // 스마트 에디터 생성	
-							alert($("exampleFormControlTextarea${assistant.num}").val());
 							z++;
 						}
 						j++;
@@ -137,11 +137,10 @@
 				function submitPost${assistant.num}(){
 					oEditors.getById["exampleFormControlTextarea${assistant.num}"].exec("UPDATE_CONTENTS_FIELD", []); // textarea 내용 서버에 전달
 					// 유효성 검사
-					var content = $("exampleFormControlTextarea${assistant.num}").val();
-					alert(content);
-					var qes = document.getElementById("qes").value;
-					var ref = document.getElementById("ref").value;
-					var ref_level = document.getElementById("ref_level").value;
+					var content = $("#exampleFormControlTextarea${assistant.num}").val();
+					var qes = $("#qes${assistant.num}").val();
+					var ref = $("#ref${assistant.num}").val();
+					var ref_level = $("#ref_level${assistant.num}").val();
 					
 					if(content == ""  || content == null || content == '&nbsp;' || content == '<p>&nbsp;</p>' || !qes || !ref || !ref_level )  {
 						alert("모든 입력창에 입력해주세요.");
@@ -151,12 +150,12 @@
 				}
 			</script>
 			<div style="margin: 0 auto; display:flex; justify-content: center; width: 600px;" >
-				<form action="/whou/assistant/aiUpdate" onsubmit="return submitPost${assistant.num}();" style="width: 600px;">
+				<form action="/whou/assistant/aiUpdate" method="post" onsubmit="return submitPost${assistant.num}();" style="width: 600px;">
 					<div class="form-group">
 						<label class="form-label">질문</label><a href="#" id="show${assistant.num}">></a> 
-						<input type="text" id="qes" name="qes" value="${assistant.qes}" />
+						<input type="text" id="qes${assistant.num}" name="qes" value="${assistant.qes}" />
 					</div>
-					
+					<!-- display: none; -->
 					<div id="test${assistant.num}" style="display: none;">
 					
 					<div class="form-group">
@@ -165,11 +164,11 @@
 		  			</div>
 		  			<div class="form-group">
 						<label class="form-label">그룹</label>
-						<input type="number" id="ref" name="ref" value="${assistant.ref}" min="1"/>
+						<input type="number" id="ref${assistant.num}" name="ref" value="${assistant.ref}" min="1"/>
 					</div>
 					<div class="form-group">
 						<label class="form-label">레벨</label>
-						<input type="number" id="ref_level" name="ref_level" value="${assistant.ref_level}" min="1"/> <br/>
+						<input type="number" id="ref_level${assistant.num}" name="ref_level" value="${assistant.ref_level}" min="1"/> <br/>
 					</div>
 					
 					</div>
@@ -183,6 +182,8 @@
 	</c:if>
 	<!-- end -->
 	<%@ include file="../footer.jsp" %>
+	<!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
 		$(".deleteList").click(function(){
 			var deleteNum = $(this).data('value');
