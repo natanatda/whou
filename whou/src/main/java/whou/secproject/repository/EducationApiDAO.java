@@ -85,9 +85,6 @@ public class EducationApiDAO {
 	    byte[] responseBodyBytes = response.getBody();
 	    String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
 
-	    // 로깅을 활용한 디버깅
-    	System.out.println("API 응답: " + responseBody.substring(0,60));
-	    
 	    EducationMajorResponseDTO educationMajorResponseDTO = null;
 	    try {
 	        ObjectMapper objectMapper = new ObjectMapper();
@@ -111,7 +108,6 @@ public class EducationApiDAO {
 		if(param != null) {
 			url = getHrdURL(param, hrdParam);
 		}
-		System.out.println("xml파싱 유알앨 "+url);
 		
 		List<EducationHrdResponseDTO> educationHrdResponseList = new ArrayList<>();
 		try {
@@ -134,7 +130,6 @@ public class EducationApiDAO {
 				
 				// 응답 데이터를 XML로 파싱
 				String xmlData = response.toString();
-				System.out.println("XML 데이터: " + xmlData.substring(0,90));
 				
 				// XML 파서 설정
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

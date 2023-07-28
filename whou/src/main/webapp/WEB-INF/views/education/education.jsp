@@ -168,6 +168,9 @@
                     </div>
                 </div>
                 
+                <c:if test="${univCount==0}">
+					<h5 style="text-align: center">검색 결과가 없습니다.</h5>
+				</c:if>
                 <c:if test="${RESULT != null}">
 	                <div class="row justify-content-center">
 		                <c:forEach items="${RESULT}"  var="eachRESULT" varStatus="status">
