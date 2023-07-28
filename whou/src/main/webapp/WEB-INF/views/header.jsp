@@ -31,9 +31,6 @@
                         	<li class="nav-item"><a class="nav-link" href="/whou/member/logout">로그아웃</a></li>
                         </c:if>
                         <c:if test="${memId == null}">
-                        	<c:if test="${warn != null}">
-								<h2>!!!! 다른걸로 가입했습니다 !!!!</h2>
-							</c:if>
                         	<li class="nav-item"><a class="nav-link" href="/whou/member/login">로그인/회원가입</a></li>
 						</c:if>
                     </ul>
