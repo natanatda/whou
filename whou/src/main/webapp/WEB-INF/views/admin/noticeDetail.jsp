@@ -60,6 +60,8 @@
 	</header>
 	<%@ include file="../aiChatBot.jsp" %>
 	<%@ include file="../footer.jsp" %>
+	<!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
 		function deleteNotice(){
 			if(confirm("삭제 하시겠습니까?") == true){
