@@ -293,7 +293,7 @@
 		                                        <div class="reco-item-container" style="display:flex; justify-content:flex-start; gap:20px;">
 		                                           <div class="reco-tag" style="width:400px; height:180px">
 		                                                <span style="font-weight:600;font-size: 18px;margin-left:5px;">컨설팅 직업 선택</span>
-		                                                <a style="font-size: 12px; margin-left:10px;"onclick="/whou/member/mypage?load=6">컨설팅 받으러 가기 ></a>
+		                                                <a style="font-size: 12px; margin-left:10px;"onclick="location = '/whou/member/mypage?load=6'">컨설팅 받으러 가기 ></a>
 		                                                <div class="input-wrap" style="margin-top:10px;display:flex;">
 		                                                    <input class="jobSearch" type="text" name="job" autocomplete="off" placeholder="직업 이름" oninput="" />
 		                                                    <div class="button-wrap" style="margin-top:10px; width:80px;">
@@ -374,7 +374,8 @@
 		                     
 		                     <!-- 컨설팅  -->
                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-                            	<c:if test="${avilReinforce eq '' || avilReinforce==null || cunsultingNum == 0}">
+                            	<%-- <c:if test="${avilReinforce eq '' || avilReinforce==null || cunsultingNum == 0}">--%>
+                            	<c:if test="${cunsultingNum==0 }">
 	                            	<div class="empty-box">
 	                            		<div>컨설팅을 원한다면 직업적성검사를 받으세요.</div>
 	                            		<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
