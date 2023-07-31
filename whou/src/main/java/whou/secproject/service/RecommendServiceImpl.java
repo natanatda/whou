@@ -1,6 +1,6 @@
 package whou.secproject.service;
 
-import java.math.BigDecimal;
+import java.math.BigDecimal; 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -200,6 +200,58 @@ public class RecommendServiceImpl implements RecommendService{
 	@Override
 	public void insertConsult(int user,int job_cd) {
 		mapper.insertConsult(user, job_cd);
+	}
+	
+	@Override
+	public List<HashMap<String, Object>> getJob_NM(String job_nm) {
+		if(job_nm!=""&&job_nm!=null) {
+			System.out.println(job_nm);
+			SelectDTO selDTO = new SelectDTO();
+			SqlSession sqlSession = sqlSessionFactory.openSession();
+			SelectResultHandler<Object> resultHandler = new SelectResultHandler<Object>();
+			selDTO.setCol("JOB_CD,JOB_NM");
+			selDTO.setTb_name("JOB_INFO");
+			selDTO.setConditions(Arrays.asList("JOB_NM like '"+job_nm+"%'"));
+			selDTO.setOrder(" order by job_cd");
+			sqlSession.select("whou.secproject.mapper.RecommendMapper.selectInfo", selDTO, resultHandler);
+			sqlSession.close();
+			List<HashMap<String, Object>> result = resultHandler.getSel();
+			return result;
+		}
+		return null;
+	}
+	@Override
+	public List<HashMap<String, String>> getJobDetail(int job_cd) {
+		SelectDTO selDTO = new SelectDTO();
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		SelectResultHandler<String> resultHandler = new SelectResultHandler<String>();
+		selDTO.setCol("WORKS");
+		selDTO.setTb_name("JOB_INFO");
+		selDTO.setConditions(Arrays.asList("job_cd="+job_cd));
+		sqlSession.select("whou.secproject.mapper.RecommendMapper.selectInfo", selDTO, resultHandler);
+		selDTO.setCol("DETAIL_VALUE");
+		selDTO.setTb_name("JOB_DETAIL");
+		selDTO.setConditions(Arrays.asList("job_cd="+job_cd+"","factor_detail='ability_name'"));
+		sqlSession.select("whou.secproject.mapper.RecommendMapper.selectInfo", selDTO, resultHandler);
+		sqlSession.close();
+		return resultHandler.getSel();
+	}
+	
+	@Override
+	public HashMap<String,String> getJobTagByTal(String tals){
+		SelectDTO selDTO = new SelectDTO();
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		SelectResultHandler<String> resultHandler = new SelectResultHandler<String>();
+		selDTO.setCol("SORT_ICON");
+		selDTO.setTb_name("APTD_FACTOR");
+		selDTO.setConditions(Arrays.asList("sort_name='"+tals+"'"));
+		sqlSession.select("whou.secproject.mapper.RecommendMapper.selectInfo", selDTO, resultHandler);
+		sqlSession.close();
+		return resultHandler.getSelOne();
+	}
+	@Override
+	public void setImportances(int user,String [] arr) {
+		mapper.setImportances(user, String.join(",", arr));
 	}
 
 }

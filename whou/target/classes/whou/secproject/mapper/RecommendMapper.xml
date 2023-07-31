@@ -91,4 +91,7 @@
 	<update id = "insertConsult">
 		update user_info set cunsulting_num = #{job_cd} where num=#{user}
 	</update>
+	<update id = "setImportances">
+		update user_info set factor_important = #{impt} where num=#{user}
+	</update>
 </mapper>
