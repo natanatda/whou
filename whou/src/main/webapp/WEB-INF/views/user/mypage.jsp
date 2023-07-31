@@ -917,11 +917,8 @@
                            }else{
                                var message = "' " + certi + " '을(를) 찾을 수 없습니다.";
                                var messageElement = $("<li>").text(message);
-                               messageElement.on("click", function () {
-                                   // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
-                                   $(inputElement).val("");
-                                   qualificationList.hide();
-                               });
+                               $(inputElement).val("");
+                               qualificationList.hide();
                                qualificationList.append(messageElement);
                            }    
 
@@ -1011,7 +1008,93 @@
         $(document).on('click', '.fa-solid.fa-circle-minus', function(){
             $(this).parent(".input-wrap").remove();
         });
-        
+
+        $(document).on("click", function(event) {
+            var clickedElement = event.target;
+            var majorLists = $(".majorList");
+            var isMajorListVisible = majorLists.is(":visible");
+
+            // majorList가 보일 때만 작동
+            if (isMajorListVisible) {
+                // 클릭된 요소가 majorList 또는 majorList 하위 요소인 경우 아무 동작 없이 리턴
+                if ($(clickedElement).closest(".majorList").length) {
+                    return;
+                }
+
+                // 인풋 요소들의 값을 비웁니다. 단, majorList 보이고 있던 인풋창만 비우고 나머지는 그대로 유지
+                $("input[name='major']").each(function() {
+                    if ($(this).siblings(".majorList").is(":visible")) {
+                        $(this).val("");
+                    }
+                });
+
+                // majorList를 숨깁니다.
+                majorLists.empty().hide();
+            }
+        });
+
+        // majorList가 보일 때 이벤트를 등록하고, 숨겨질 때 이벤트를 제거합니다.
+        $(".majorList").on("show", function() {
+            $(document).on("click", hideMajorListOnClickOutside);
+        }).on("hide", function() {
+            $(document).off("click", hideMajorListOnClickOutside);
+        });
+
+        // 전공 입력창 외부를 클릭했을 때 majorList를 숨기는 함수
+        function hideMajorListOnClickOutside(event) {
+            var clickedElement = event.target;
+            var majorLists = $(".majorList");
+
+            // 클릭된 요소가 majorList 또는 majorList 하위 요소인 경우 아무 동작 없이 리턴
+            if ($(clickedElement).closest(".majorList").length) {
+                return;
+            }
+
+            // 인풋 요소들의 값을 비웁니다. 단, majorList 보이고 있던 인풋창만 비우고 나머지는 그대로 유지
+            $("input[name='major']").each(function() {
+                if ($(this).siblings(".majorList").is(":visible")) {
+                    $(this).val("");
+                }
+            });
+
+            // majorList를 숨깁니다.
+            majorLists.empty().hide();
+        }
+
+        $(document).on("click", function(event) {
+            var clickedElement = event.target;
+            var qualificationLists = $(".qualificationList");
+            var isQualificationListVisible = qualificationLists.is(":visible");
+
+            // qualificationList가 보일 때만 작동
+            if (isQualificationListVisible) {
+                // 클릭된 요소의 태그 이름이 "INPUT" 또는 "BUTTON"이 아닌 경우에만 qualificationList를 비우고 숨깁니다.
+                if (clickedElement.tagName !== "BUTTON" && !$(clickedElement).closest(".qualificationList").length) {
+                    qualificationLists.empty().hide();
+                    $("input[name='certi']").val("");
+                }
+            }
+        });
+
+        // qualificationList가 보일 때 이벤트를 등록하고, 숨겨질 때 이벤트를 제거합니다.
+        $(".qualificationList").on("show", function() {
+            $(document).on("click", hideQualificationListOnClickOutside);
+        }).on("hide", function() {
+            $(document).off("click", hideQualificationListOnClickOutside);
+        });
+
+        // 인증서 입력창 외부를 클릭했을 때 qualificationList를 숨기고 인증서 입력창의 값이 비워지는 함수
+        function hideQualificationListOnClickOutside(event) {
+            var clickedElement = event.target;
+            var qualificationLists = $(".qualificationList");
+            
+            // 클릭된 요소의 태그 이름이 "INPUT" 또는 "BUTTON"이 아닌 경우에만 qualificationList를 비우고 숨깁니다.
+            if (clickedElement.tagName !== "BUTTON" && !$(clickedElement).closest(".qualificationList").length) {
+                qualificationLists.empty().hide();
+                $("input[name='certi']").val("");
+            }
+        }
+
         // select 요소의 값 변경 감지
         $('#testResultSelect').change(function() {
             var selectedValue = $(this).val();

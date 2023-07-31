@@ -717,6 +717,7 @@ public class MemberController {
         if(majors!=null) majorC = majors.size();
         if(certis!=null) certiC = certis.size();
         boolean none = false; 
+        boolean notTest = false;
         if(redto != null) {
            if(redto.getAptitude_score()==null&&
               redto.getInterest_score()==null&&
@@ -724,6 +725,10 @@ public class MemberController {
               majorC==0 && certiC==0) 
               none=true;
         }else if(redto == null && majorC==0 && certiC==0) none=true;
+  		else if(redto == null && (majorC!=0 || certiC!=0)) {
+  			redto = new RecommandInfoDTO();
+  			notTest = true;
+  		}
         
         if(none) {
         	model.addAttribute("testTure", new ArrayList<Boolean>(Arrays.asList(false,false,false)));
@@ -867,7 +872,8 @@ public class MemberController {
            SelectDTO selDTO = new SelectDTO();
            List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(selDTO, userNum, 1, 5);
            SelectDTO selDTO2 = new SelectDTO();
-           HashMap<String,String> top3NM = serviceRe.getRecoList(selDTO2, userNum);
+           HashMap<String,String> top3NM = null;
+           if(!notTest) serviceRe.getRecoList(selDTO2, userNum);
            if(top3NM==null) {
         	   top3NM = new HashMap<String,String>();
         	   top3NM.put("APTITUDE_NAME1", "적성1");
