@@ -943,7 +943,8 @@ public class MemberController {
            model.addAttribute("reres", reres);
         }
         model.addAttribute("none", none);
-      //회원정보수정
+        
+        //회원정보수정
         MemberDTO mem = service.getUser(userNum);
         UserInfoDTO user = service.userInfo(userNum);
         model.addAttribute("mem", mem);
@@ -951,18 +952,21 @@ public class MemberController {
         
         System.out.println("학과정보ㅗㅗㅗㅗㅗ"+user.getSchool_major());
         
-        String arrM [] = user.getSchool_major().split(",");
-        arrM = Arrays.stream(arrM)
-                .filter(item -> !item.isEmpty())
-                .toArray(String[]::new);
-        
+        if(user.getSchool_major() != null) {
+        	String arrM [] = user.getSchool_major().split(",");
+            arrM = Arrays.stream(arrM)
+                    .filter(item -> !item.isEmpty())
+                    .toArray(String[]::new);
+            model.addAttribute("arrM", arrM);
+        }
+
+        if(user.getCertificate() != null) {
         String arrC [] = user.getCertificate().split(",");
         arrC = Arrays.stream(arrC)
                 .filter(item -> !item.isEmpty())
                 .toArray(String[]::new);
-        
-        model.addAttribute("arrM", arrM);
-        model.addAttribute("arrC", arrC);
+        	model.addAttribute("arrC", arrC);
+        }
         
         
       return "/user/mypage";
