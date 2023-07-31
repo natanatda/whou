@@ -2,6 +2,7 @@ package whou.secproject.mapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -27,5 +28,6 @@ public interface RecommendMapper {
 	public void dropTable(int num);
 	public void updateFalse(int num);
 	public void insertConsult(@Param("user")int user,@Param("job_cd") int job_cd);
-
+	//public LinkedHashMap<Integer,String> getJob_NM(String job_nm);
+	public void setImportances(@Param("user")int user,@Param("impt")String impt);
 }

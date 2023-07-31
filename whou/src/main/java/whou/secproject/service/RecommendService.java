@@ -1,6 +1,6 @@
 package whou.secproject.service;
 
-import java.math.BigDecimal;
+import java.math.BigDecimal; 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +25,9 @@ public interface RecommendService {
 	public int tbTrue(int user);
 	public int updateTrue(int user);
 	public ArrayList<Integer> getImportances(int user);
+	public void setImportances(int user,String [] arr);
 	public void insertConsult(int user,int job_cd) ;
-	
+	public List<HashMap<String, Object>> getJob_NM(String job_nm);
+	public List<HashMap<String, String>> getJobDetail(int job_cd);
+	public HashMap<String,String> getJobTagByTal(String tals);
 }

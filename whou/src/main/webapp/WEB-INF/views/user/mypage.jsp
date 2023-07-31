@@ -32,7 +32,9 @@
      
  </head>
 <style>
-
+	.jobMadeCard {position:absolute;left: 105%;top: -200%;width:100%; background-color:white;border:1px solid #cfcfcf;padding:20px;}
+	.JcardP1{font-size:18px;font-weight:700;margin-bottom:10px;}
+	.JcardP2{font-size:16px;margin-bottom:20px;}
 </style>
  
  
@@ -266,14 +268,14 @@
 			                     <div class="book-wrap">
 	                                 <c:if test="${books != null }">
 	                                    <c:forEach var="job" items="${jobs}" varStatus="status">
-	                                       <div class="card mb-5 mb-xl-0">
-	                                          <a href="/whou/member/deleteBook?job_cd=${job.job_cd}"><i class="position-absolute top-0 start-100 translate-middle fa-solid fa-circle-minus fa-lg"></i></a>
-	                                              <div class="result-cont">
-		                                          	<div onclick="location='/whou/job/info?job_cd=${job.job_cd}'">
+											<div class="card mb-5 mb-xl-0">
+												<a href="/whou/member/deleteBook?job_cd=${job.job_cd}"><i class="position-absolute top-0 start-100 translate-middle fa-solid fa-circle-minus fa-lg"></i></a>
+												<div class="result-cont">
+													<div onclick="location='/whou/job/info?job_cd=${job.job_cd}'">
 		                                                  <h4>${job.job_nm }<i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
 		                                                  <p>${job.works}</p>
 		                                    		</div>
-	                                              </div>
+												</div>
 	                                       </div>
 	                                    </c:forEach>
 	                                 </c:if>
@@ -289,92 +291,93 @@
 		                     <!-- 추천 -->
 		                     <div class="tab-pane fade" id="nav-reco" role="tabpanel" aria-labelledby="nav-reco-tab" tabindex="0">
 		                        <div id="reco-container">
-		                                  <div class="reco-wrap">
-		                                        <div class="reco-item-container" style="display:flex; justify-content:flex-start; gap:20px;">
-		                                           <div class="reco-tag" style="width:400px; height:180px">
-		                                                <span style="font-weight:600;font-size: 18px;margin-left:5px;">컨설팅 직업 선택</span>
-		                                                <a style="font-size: 12px; margin-left:10px;"onclick="/whou/member/mypage?load=6">컨설팅 받으러 가기 ></a>
-		                                                <div class="input-wrap" style="margin-top:10px;display:flex;">
-		                                                    <input class="jobSearch" type="text" name="job" autocomplete="off" placeholder="직업 이름" oninput="" />
-		                                                    <div class="button-wrap" style="margin-top:10px; width:80px;">
-		                                                       <button type="submit" class="purple-btn" style="margin-left:10px;">적용</button>  
-		                                                   </div> 
-		                                                    <ul class="searchList"></ul>
-		                                                </div> 
-		                                              <div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px;">나의 현재 직업 : ${jobDetailCunsuling.getBaseInfo().getJob_nm()} </div>
-		                                          </div>
-		                                           <div class="reco-tag" style="width:500px; height:180px;">
-		                                             <span style="font-weight:600;font-size: 18px;margin-left:5px;">중요도 선택하기</span>
-		                                             <a style="font-size: 12px; margin-left:10px;"onclick="">선택하지 않을시에는 모두 동일한 중요도로 선택합니다</a>
-		                                             <div style="display:flex">
-		                                              <div style="display:flex;font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px; width:200px;">
-		                                                 <p>적성</p>
-		                                                 <select id="aptiImportance" style="min-width:80px; margin-left:15px;">
-		                                                     <option value="1">1순위</option>
-		                                                     <option value="2">2순위</option>
-		                                                     <option value="3">3순위</option>
-		                                                 </select>
-		                                                 <p>응시 안함</p>		                                            
-		                                              </div>
-		                                    <div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px;">
-		                                                 흥미
-		                                              <select id="inteImportance" style="min-width:80px; margin-left:15px;">
-		                                                  <option value="1">1순위</option>
-		                                                  <option value="2">2순위</option>
-		                                                  <option value="3">3순위</option>
-		                                              </select>
-		                                                 응시 안함
-		                                              </div>
-		                                              <div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px;">
-		                                                 가치관
-		                                                 <select id="valueImportance" style="min-width:80px; margin-left:15px;">
-		                                                     <option value="1">1순위</option>
-		                                                     <option value="2">2순위</option>
-		                                                     <option value="3">3순위</option>
-		                                                 </select>
-		                                                 응시함
-		                                              </div>
-		                                              <div class="button-wrap" style="margin-top:10px; width:80px;">
-		                                                    <button type="submit" class="purple-btn" style="margin-left:10px;">적용</button>  
-		                                    </div> 
-		                                 </div>
-		                              </div>
-		                              </div>
-		                           </div>
-		                           <c:if test="${!none}">
-		                              <p style="margin-bottom:20px;margin-left:10px;">직업 정보를 보고싶으면 본문의 내용을, 컨설팅을 받고 싶으면 직업 이름을 눌러주세요</p>
-		                           <c:forEach var="rere" items="${reres}">
-		                              <div class="reco-wrap">
-		                                 <div class="reco-item">
-		                                    <div onclick="alert('직업선택이 완료 되었습니다.');location='/whou/member/insertConsult?job_cd=${rere.job_cd}'">${rere.job_nm}</div>
-		                                    <div onclick="location='/whou/job/info?job_cd=${rere.job_cd}'">${rere.descriptions}</div>
-		                                          </div>
-		                                       </div> 
-		                                  </c:forEach>
-		                           <div>
-		                           
-		                           </div>
-		                         
-		                             
-		                     </c:if>
-		                            <c:if test="${none}">
-		                                <div class="empty-box">
-		                                  <div>추천이 불가능합니다.</div>
-		                                  <div>검사를 보거나, 자격증 및 학과 정보를 기입해주세요.</div>
-		                                  <a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>                               
-		                               </div>
-		                            </c:if>
-		                             
-		                          </div>
-		                          <div class="add-btn" onclick="getRecoLi()">
-		                                  <i class="fa-solid fa-circle-plus fa-lg"></i>
-		                              </div>
-		                       </div>
-              
-		                     
+									<div class="reco-wrap">
+										<div class="reco-item-container" style="display:flex; justify-content:flex-start; gap:20px;">
+											<div class="reco-tag" style="width:380px; height:170px">
+												<span style="font-weight:600;font-size: 18px;margin-left:5px;">컨설팅 직업 선택</span>
+												<a style="font-size: 12px; margin-left:10px;"onclick="location = '/whou/member/mypage?load=6'">컨설팅 받으러 가기 ></a>
+												<div id="jobContainer">
+													<div class="input-wrap" style="margin-top:10px;">
+														<input class="jobSearch" type="text" name="job" placeholder="직업 이름" oninput="checkJob(this)" />
+														<ul class="jobSearchLi">
+															<li>
+																<%-- 
+																<div class="jobMadeCard">
+																	<p class="JcardP1">정밀기기제품제조원</p>
+																	<p class="JcardP2">정밀기기제품제조원은 각종 센서, 제어장치 등의 부품을 제작 및 조립하여 현미경, 시계, 카메라 등, 모양은 작지만 다양한 기능을 갖춘 기기들을 제조하는 일을 담당합니다</p>
+																	<p class="JcardP1">핵심능력</h3>
+																	<div style="display:flex; gap:20px;">
+																		<div>
+																			<i class="fa-solid fa-hand" style="color:#5A3FFF;"></i><span style="margin-left:10px;">손재능</span>
+																		</div>
+																		<div>
+																			<i class="fa-solid fa-hand" style="color:#5A3FFF;"></i><span style="margin-left:10px;">손재능</span>
+																		</div>
+																	</div>
+																</div>
+																 --%>
+															</li>
+														</ul>
+													</div>
+												</div>
+												<div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px;">나의 현재 직업 : ${jobDetailCunsuling.getBaseInfo().getJob_nm()} </div>
+											</div>
+											<div class="reco-tag" style="width:520px; height:170px;">
+												<span style="font-weight:600;font-size: 18px;margin-left:5px;">우선순위 선택하기</span>
+												<a style="font-size: 12px; margin-left:10px;">선택하지 않을시에는 모두 동일한 중요도로 적용됩니다.</a>
+												<form action="/whou/member/mypage?load=5" method="post">
+													<div style="display:flex; flex-wrap:wrap;align-content:flex-start;">
+														<c:forEach var="trueByTest" items="${testTrue}" varStatus="loop">
+															<div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px; width:230px;">
+															<c:if test="${loop.index eq 0}">적성</c:if>
+															<c:if test="${loop.index eq 1}">흥미</c:if>
+															<c:if test="${loop.index eq 2}">가치관</c:if>
+																<select name="importance" style="min-width:50px; margin-left:25px;margin-right:15px;">
+																	<option value="3"<c:if test="${impt.get(loop.index)==3}">selected</c:if> >1</option>
+																	<option value="2"<c:if test="${impt.get(loop.index)==2}">selected</c:if> >2</option>
+																	<option value="1"<c:if test="${impt.get(loop.index)==1}">selected</c:if> >3</option>
+																</select>
+																<c:if test="${trueByTest}">응시함</c:if>
+																<c:if test="${!trueByTest}">응시 안함</c:if>
+															</div>
+														</c:forEach>
+														<div class="button-wrap" style=" margin-top:20px; text-align:right; width:230px;">
+															<button type="submit" class="purple-btn" style="margin-left:10px; width: 80px; display: block; margin-left: auto;margin-right:20px;">적용</button>  
+														</div> 
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+									<c:if test="${!none}">
+										<div id="reco-li-container">
+											<p style="margin-bottom:20px;margin-left:10px;">직업 정보를 보고싶으면 본문의 내용을, 컨설팅을 받고 싶으면 직업 이름을 클릭해주세요</p>
+											<c:forEach var="rere" items="${reres}">
+											<div class="reco-wrap">
+												<div class="reco-item">
+													<div onclick="alert('직업선택이 완료 되었습니다.');location='/whou/member/insertConsult?job_cd=${rere.job_cd}'">${rere.job_nm}</div>
+													<div onclick="location='/whou/job/info?job_cd=${rere.job_cd}'">${rere.descriptions}</div>
+												</div>
+											</div> 
+											</c:forEach>
+										</div>
+										<div class="add-btn" onclick="getRecoLi()">
+											<i class="fa-solid fa-circle-plus fa-lg"></i>
+										</div>
+									</c:if>
+									<c:if test="${none}">
+										<div class="empty-box">
+											<div>추천이 불가능합니다.</div>
+											<div>검사를 보거나, 자격증 및 학과 정보를 기입해주세요.</div>
+											<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>                               
+										</div>
+									</c:if>
+								</div>
+							</div>
 		                     <!-- 컨설팅  -->
                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-                            	<c:if test="${avilReinforce eq '' || avilReinforce==null || cunsultingNum == 0}">
+                            	<%-- <c:if test="${avilReinforce eq '' || avilReinforce==null || cunsultingNum == 0}">--%>
+                            	<c:if test="${cunsultingNum==0 }">
 	                            	<div class="empty-box">
 	                            		<div>컨설팅을 원한다면 직업적성검사를 받으세요.</div>
 	                            		<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
@@ -576,8 +579,12 @@
         	 
           	 $("#nav-modify-tab").addClass("active");
           	 $("#nav-modifyInfo").addClass("active show");
-        }
-        else if(load === "6"){
+        }else if(load === "5"){
+        	$(".nav-link").removeClass("active");
+       		$(".tab-pane").removeClass("active show");
+         	$("#nav-reco-tab").addClass("active");
+         	$("#nav-reco").addClass("active show");
+		}else if(load === "6"){
             $(".nav-link").removeClass("active");
                $(".tab-pane").removeClass("active show");
                
@@ -936,7 +943,6 @@
                 dataType: "json",
                 data: { page : recoPlus++, size:size},
                 success: function(result) {
-                   console.log(result);
                    for(var i = 0 ; i < result.length; i++){
                        generateDynamicHTML(result[i]);
                    }
@@ -971,9 +977,97 @@
             recoItemDiv.appendChild(jobDescriptionDiv);
             recoWrapDiv.appendChild(recoItemDiv);
 
-            const dynamicContentDiv = document.getElementById('reco-container');
+            const dynamicContentDiv = document.getElementById('reco-li-container');
             dynamicContentDiv.appendChild(recoWrapDiv);
         }
+        
+        function checkJob(inputElement) {
+            var job= $(inputElement).val();
+            var jobSearchLi= $(inputElement).siblings(".jobSearchLi");
+            $.ajax({
+                url: "/whou/member/searchJobs",
+                data: {job_nm: job},
+                success: function (result) {
+                	
+                	jobSearchLi.empty();
+                	jobSearchLi.hide();
+                	
+                    if(job.length > 0){
+                       if(result && result.length > 0){
+                           for (var i = 0; i < result.length; i++) {
+                        	   
+                               var jobDTO = result[i];
+                               let job_cd = jobDTO.JOB_CD;
+                               var job_nm = jobDTO.JOB_NM;
+                               var button = $("<button>").text(job_nm);
+                               var li = $("<li>");
+                               (function (job_nm, li) {
+									li.on("mouseover", function () {
+										event.preventDefault();
+										$.ajax({
+											url: "/whou/member/searchJDetail",
+											data : {job_cd:job_cd},
+											success : function(result){
+							                    var divsWithClass = li.find('.jobMadeCard');
+												if(divsWithClass.length==0){
+					                                updateJobCard(job_nm, result.work, result.talents, li);
+												}else{
+													divsWithClass.show();
+												}
+											}
+										})
+	                            	});
+								})(job_nm, li);
+
+								button.on("click", function () {
+									event.preventDefault();
+									var selectedJob = $(this).text();
+									$(inputElement).val(selectedJob);
+									alert("직업선택이 완료 되었습니다.");
+									location = '/whou/member/insertConsult?job_cd='+job_cd;
+									jobSearchLi.hide();
+								});
+								li.append(button);
+			                    jobSearchLi.append(li);
+							}
+                        }else{
+                            var message = "' " + job + " '을(를) 찾을 수 없습니다.";
+                            var messageElement = $("<li>").text(message);
+                            messageElement.on("click", function () {
+                                // 메시지 클릭 시 jobSearchLi를 숨기고 인풋 값을 비웁니다.
+                                $(inputElement).val("");
+                                jobSearchLi.hide();
+                            });
+                            jobSearchLi.append(messageElement);
+                        }    
+						jobSearchLi.show();
+                    }
+                }
+            });
+        }
+		function updateJobCard(job_nm, work, talents, li) {
+		    var jobMadeCard = $("<div>").addClass("jobMadeCard");
+		    var title = $("<p>").addClass("JcardP1").text(job_nm);
+		    var description = $("<p>").addClass("JcardP2").text(work);
+		    var coreAbilitiesDiv = $("<div>").css("display", "flex").css("gap", "20px");
+	
+		    talents.forEach(function (talent) {
+		        var capabilityDiv = $("<div>");
+		        var icon = $("<i>").addClass(talent.SORT_ICON).css("color", "#5A3FFF");
+		        var text = $("<span>").text(talent.DETAIL_VALUE);
+		        capabilityDiv.append(icon, text);
+		        coreAbilitiesDiv.append(capabilityDiv);
+		    });
+	
+		    jobMadeCard.append(title, description, coreAbilitiesDiv);
+		    li.append(jobMadeCard);
+		}
+		
+		$(".jobSearchLi").on("mouseout", function () {
+		    var jobMadeCard = $(".jobMadeCard");
+		    jobMadeCard.hide();
+		});
+		
         </script>
        <script>
 	       var modelCamera_x = 0;

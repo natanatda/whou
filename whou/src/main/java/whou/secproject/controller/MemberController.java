@@ -661,7 +661,7 @@ public class MemberController {
         
         
     	// 추천
-        RecommandInfoDTO redto = serviceRe.getTestResult(userNum);
+    	RecommandInfoDTO redto = serviceRe.getTestResult(userNum);
         CertiDTO certiDTO = new CertiDTO();
         certiDTO.setNum(userNum);
         certiDTO.setCol("SCHOOL_MAJOR");
@@ -692,7 +692,21 @@ public class MemberController {
               majorC==0 && certiC==0) 
               none=true;
         }else if(redto == null && majorC==0 && certiC==0) none=true;
-        System.out.println(none);
+        
+        if(none) {
+        	model.addAttribute("testTure", new ArrayList<Boolean>(Arrays.asList(false,false,false)));
+        }else {
+        	Boolean aptiTrue = 
+        			(redto.getAptitude_job1()==null)
+        			&&(redto.getAptitude_job2()==null)
+        			&&(redto.getAptitude_job3()==null);
+        	Boolean inteTrue = 
+        			(redto.getInterest_job1()==null)
+        			&&(redto.getInterest_job2()==null)
+        			&&(redto.getInterest_job3()==null);
+        	Boolean valueTrue = (redto.getValues_score()==null);
+        	model.addAttribute("testTrue", new ArrayList<Boolean>(Arrays.asList(!aptiTrue,!inteTrue,!valueTrue)));
+        }
         
 //        String aptitude_score = redto.getAptitude_score()!=null ? redto.getAptitude_score():null;
 //        String interest_score = redto.getInterest_score()!=null ? redto.getInterest_score():null;
@@ -703,101 +717,108 @@ public class MemberController {
 //           none=true;
         
         if(!none) {
-           if(serviceRe.updateTrue(userNum)==1) {
-              List<String> valueCd = serviceRe.getValueCd("values_common"); // 가치 평균
-              List<Integer> jList = serviceRe.allJobCd("job_info"); // 직업 일련번호
-              int jC = jList.size(); // 직업 수
+            String [] impt = request.getParameterValues("importance");
+            if(impt != null) {
+            	serviceAt.commendNumUpdate(memId);
+            	serviceRe.setImportances(userNum,impt);
+            }
+            List<Integer> importances = serviceRe.getImportances(userNum); // 중요도
+        	boolean importanceTrue = importances!=null; // 중요도 여부
+        	if(!importanceTrue) importances = new ArrayList<Integer>(Arrays.asList(1,1,1));
+        	model.addAttribute("impt", importances);
+        	
+            if(serviceRe.updateTrue(userNum)==1) {
+            	List<String> valueCd = serviceRe.getValueCd("values_common"); // 가치 평균
+            	List<Integer> jList = serviceRe.allJobCd("job_info"); // 직업 일련번호
+            	int jC = jList.size(); // 직업 수
               
-              List<String> scoreStrs = Arrays.asList( // 점수 리스트
-                    redto.getAptitude_score(),redto.getInterest_score()); 
+            	List<String> scoreStrs = Arrays.asList( // 점수 리스트
+            			redto.getAptitude_score(),redto.getInterest_score()); 
               
-              List<ArrayList<String>> jobNumList = Arrays.asList( // 해당 직업 리스트
-                    redto.getAptitude_jobs(),redto.getInterest_jobs());
+            	List<ArrayList<String>> jobNumList = Arrays.asList( // 해당 직업 리스트
+            			redto.getAptitude_jobs(),redto.getInterest_jobs());
               
-              List<String> limitStrs = Arrays.asList("\\+","\\+"); // 구분자
-              List<Integer> importances = serviceRe.getImportances(userNum); // 중요도
-              boolean importanceTrue = importances!=null; // 중요도
-              System.out.println(importanceTrue);
-              if(!importanceTrue) importances = new ArrayList<Integer>(Arrays.asList(1,1,1));
-              LinkedHashMap<ArrayList<Double>,Double> scores = redao.DoubleTokener(scoreStrs, limitStrs);
-              System.out.println("scores"+scores);
-              List<Double> jobScore = new ArrayList<>(Collections.nCopies(jC, 1.0)); // 직업당 점수
-              System.out.println(10+majorC+certiC);
-              double [][] jobScorePoint = new double [jC][10+majorC+certiC];
-              if(serviceRe.tbTrue(userNum)==1) serviceRe.dropTable(userNum);
-              serviceRe.createJobPoint(userNum, majorC, certiC);
+            	List<String> limitStrs = Arrays.asList("\\+","\\+"); // 구분자
+            	
+            	LinkedHashMap<ArrayList<Double>,Double> scores = redao.DoubleTokener(scoreStrs, limitStrs);
+            	System.out.println("scores"+scores);
+            	List<Double> jobScore = new ArrayList<>(Collections.nCopies(jC, 1.0)); // 직업당 점수
+            	System.out.println(10+majorC+certiC);
+            	double [][] jobScorePoint = new double [jC][10+majorC+certiC];
+            	if(serviceRe.tbTrue(userNum)==1) serviceRe.dropTable(userNum);
+            	serviceRe.createJobPoint(userNum, majorC, certiC);
               
-              int i = 0;
-              for (Map.Entry<ArrayList<Double>, Double> entry : scores.entrySet()) {
-                 List<String> jobNum = jobNumList.get(i); // 해당하는 직업의 jcd
-                 List<Double> normalize= redao.normalizePer(entry.getKey(), entry.getValue(), importances.get(i++)).subList(0, 3); // 3개만 적용
-                 if(jobNum.size()!=0) {
-                    for(int j = 0 ; j < normalize.size(); j++) {
-                       double d = normalize.get(j); // 1.38~~
-                       StringTokenizer st = new StringTokenizer(jobNum.get(j),",");
-                       while(st.hasMoreTokens( )) {
-                          int f = jList.indexOf(Integer.parseInt(st.nextToken()));
-                          jobScore.set(f, jobScore.get(f)*d);
-                          jobScorePoint[f][3*(i-1)+j] = normalize.get(j);
-                       }
-                    }
-                 }
-              }
+            	int i = 0;
+            	for (Map.Entry<ArrayList<Double>, Double> entry : scores.entrySet()) {
+            		List<String> jobNum = jobNumList.get(i); // 해당하는 직업의 jcd
+            		List<Double> normalize= redao.normalizePer(entry.getKey(), entry.getValue(), importances.get(i++)).subList(0, 3); // 3개만 적용
+            		if(jobNum.size()!=0) {
+            			for(int j = 0 ; j < normalize.size(); j++) {
+            				double d = normalize.get(j); // 1.38~~
+            				StringTokenizer st = new StringTokenizer(jobNum.get(j),",");
+            				while(st.hasMoreTokens( )) {
+            					int f = jList.indexOf(Integer.parseInt(st.nextToken()));
+            					jobScore.set(f, jobScore.get(f)*d);
+            					jobScorePoint[f][3*(i-1)+j] = normalize.get(j);
+            				}
+            			}
+            		}
+            	}
               
-              List<Integer> valueList = null;
-              if(redto.getValues_score()!=null) {
-                 valueList = redao.valueTokenizer(redto.getValues_score(), ",");
-                 List<Double> defaultValue = Arrays.asList(50.82,52.89,45.83,48.52);
-                 List<Double> valueScore = redao.valueScore(defaultValue, valueList, importances.get(2));
-                 for(int k = 0 ; k < valueScore.size(); k++) {
-                    String str = valueCd.get(k);
-                    StringTokenizer st = new StringTokenizer(str,",");
-                    while(st.hasMoreTokens()) {
-                       int f = jList.indexOf(Integer.parseInt(st.nextToken()));
-                       jobScore.set(f, jobScore.get(f)*valueScore.get(k));
-                       jobScorePoint[f][6+k] = valueScore.get(k);
-                    }
-                 }
-              }
+            	List<Integer> valueList = null;
+            	if(redto.getValues_score()!=null) {
+            		valueList = redao.valueTokenizer(redto.getValues_score(), ",");
+            		List<Double> defaultValue = Arrays.asList(50.82,52.89,45.83,48.52);
+            		List<Double> valueScore = redao.valueScore(defaultValue, valueList, importances.get(2));
+            		for(int k = 0 ; k < valueScore.size(); k++) {
+            			String str = valueCd.get(k);
+            			StringTokenizer st = new StringTokenizer(str,",");
+            			while(st.hasMoreTokens()) {
+            				int f = jList.indexOf(Integer.parseInt(st.nextToken()));
+            				jobScore.set(f, jobScore.get(f)*valueScore.get(k));
+            				jobScorePoint[f][6+k] = valueScore.get(k);
+            			}
+            		}
+            	}
               
-              if(majors!=null) {
-                 SelectDTO selDTO = new SelectDTO();
-                 int h = 10;
-                 for(String major: majors) {
-                    List<Integer> li = serviceRe.majorToCD(selDTO, major);
-                    for(Integer l : li) {
-                       l = jList.indexOf(l);
-                       jobScore.set(l, jobScore.get(l)*1.1);
-                       jobScorePoint[l][h] = 1.1;
-                    }
-                    h++;
-                 }
-              }
-              if(certis!=null) {
-                 SelectDTO selDTO = new SelectDTO();
-                 int m = 10+majorC;
-                 for(String certi: certis) {
-                    List<Integer> li = serviceRe.majorToCD(selDTO, certi);
-                    for(Integer l : li) {
-                       l = jList.indexOf(l);
-                       jobScore.set(l, jobScore.get(l)*1.1);
-                       jobScorePoint[l][m] = 1.1;
-                       System.out.println("certitreu"+jobScorePoint[l][m]+" "+l+" "+m);
-                    }
-                    m++;
-                 }
-              }
+            	if(majors!=null) {
+            		SelectDTO selDTO = new SelectDTO();
+            		int h = 10;
+            		for(String major: majors) {
+            			List<Integer> li = serviceRe.majorToCD(selDTO, major);
+            			for(Integer l : li) {
+            				l = jList.indexOf(l);
+            				jobScore.set(l, jobScore.get(l)*1.1);
+            				jobScorePoint[l][h] = 1.1;
+            			}
+            			h++;
+            		}
+            	}
+            	if(certis!=null) {
+            		SelectDTO selDTO = new SelectDTO();
+            		int m = 10+majorC;
+            		for(String certi: certis) {
+            			List<Integer> li = serviceRe.majorToCD(selDTO, certi);
+	                    for(Integer l : li) {
+	                       l = jList.indexOf(l);
+	                       jobScore.set(l, jobScore.get(l)*1.1);
+	                       jobScorePoint[l][m] = 1.1;
+	                       System.out.println("certitreu"+jobScorePoint[l][m]+" "+l+" "+m);
+	                    }
+	                    m++;
+            		}
+            	}
               
-              Map<Integer, Double> jcdToScore = new HashMap<>();
-              for (int idx = 0; idx < jList.size(); idx++) {
-                 jcdToScore.put(jList.get(idx), jobScore.get(idx));
+            	Map<Integer, Double> jcdToScore = new HashMap<>();
+            	for (int idx = 0; idx < jList.size(); idx++) {
+            		jcdToScore.put(jList.get(idx), jobScore.get(idx));
 //           System.out.print(jList.get(idx)+": "+jobScore.get(idx)+" ");
 //           for(int m = 0; m < 10+majorC+certiC; m++)
 //                 System.out.print(jobScorePoint[idx][m]+" ");
-                 serviceRe.insertJobPoint(userNum,jList.get(idx),jobScore.get(idx), jobScorePoint[idx], majorC, certiC);
+            		serviceRe.insertJobPoint(userNum,jList.get(idx),jobScore.get(idx), jobScorePoint[idx], majorC, certiC);
 //              System.out.println();
-              }
-           }
+            	}
+            }
            
            
 //        List<Map.Entry<Integer, Double>> list = new ArrayList<>(jcdToScore.entrySet());
@@ -815,6 +836,15 @@ public class MemberController {
            List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(selDTO, userNum, 1, 5);
            SelectDTO selDTO2 = new SelectDTO();
            HashMap<String,String> top3NM = serviceRe.getRecoList(selDTO2, userNum);
+           if(top3NM==null) {
+        	   top3NM = new HashMap<String,String>();
+        	   top3NM.put("APTITUDE_NAME1", "적성1");
+        	   top3NM.put("APTITUDE_NAME2", "적성2");
+        	   top3NM.put("APTITUDE_NAME3", "적성3");
+        	   top3NM.put("INTEREST_NAME1", "흥미1");
+        	   top3NM.put("INTEREST_NAME2", "흥미2");
+        	   top3NM.put("INTEREST_NAME3", "흥미3");
+           }
            ArrayList <String> colNM = new ArrayList<String>(
                  Arrays.asList("APTITUDE_NAME1","APTITUDE_NAME2",
                        "APTITUDE_NAME3","INTEREST_NAME1",
@@ -930,8 +960,7 @@ public class MemberController {
 	// 추천 리스트 가져오기
 	   @RequestMapping("/getRecoLi")
 	    public @ResponseBody ArrayList<RecoResultDTO> getRecoLi(@RequestParam("page") int page,
-	                                       @RequestParam("size") int size,
-	                                       HttpSession session){
+	                                       @RequestParam("size") int size, HttpSession session){
 	      String memId = (String)session.getAttribute("memId");
 	      // user_info 테이블에서 세션에 해당하는 num 추출
 	      int userNum = 0;
@@ -1037,5 +1066,35 @@ public class MemberController {
 	   public String modifyUser(Model model){
 	      model.addAttribute("load", "3");
 	      return "redirect:/member/mypage";
+	   }
+	   
+	   @RequestMapping("/searchJobs")
+	   public @ResponseBody List<HashMap<String, Object>> searchJobs(String job_nm){
+		   if(job_nm!="") {
+			   List<HashMap<String, Object>> jobList = serviceRe.getJob_NM(job_nm);
+//			   for(int i = 0 ; i < jobList.size(); i++) {
+//				   int j_cd = ((BigDecimal)jobList.get(i).get("JOB_CD")).intValue();
+//				   String j_nm = (String)jobList.get(i).get("JOB_NM");
+//				   
+//			   }
+			   return jobList;
+		   }
+		   return null;
+	   }
+	   @RequestMapping("/searchJDetail")
+	   public @ResponseBody HashMap<String, Object> searchJDetail(int job_cd){
+		   List<HashMap<String,String>> info = serviceRe.getJobDetail(job_cd);
+		   StringTokenizer st = new StringTokenizer(info.get(0).get("WORKS"),"/");
+		   String work = st.nextToken();
+		   HashMap<String,Object> result = new HashMap<String,Object>();
+		   result.put("work", work);
+		   ArrayList<HashMap<String,String>> arr = new ArrayList<HashMap<String,String>>();
+		   for(int i = 1; i < info.size(); i++) {
+			   HashMap<String, String> talent = info.get(i);
+			   arr.add(talent);
+			   arr.add(serviceRe.getJobTagByTal(talent.get("DETAIL_VALUE")));
+		   }
+		   result.put("talents", arr);
+		   return result;
 	   }
 }

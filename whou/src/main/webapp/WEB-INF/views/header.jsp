@@ -49,6 +49,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <c:if test="${memId != null}">
+                        
+                        	<li class="nav-item"><a class="nav-link" href="/whou/member/mypage?load=6">컨설팅하기</a></li>
                         	<li class="nav-item"><a class="nav-link" href="/whou/member/mypage">마이페이지</a></li>
                         	<li class="nav-item"><a class="nav-link" href="/whou/member/logout">로그아웃</a></li>
                         </c:if>
