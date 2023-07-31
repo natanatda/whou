@@ -239,6 +239,7 @@ public class RecommendServiceImpl implements RecommendService{
 	
 	@Override
 	public HashMap<String,String> getJobTagByTal(String tals){
+		if(tals.equals("자기성찰능력")) tals = "자아성찰능력";
 		SelectDTO selDTO = new SelectDTO();
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		SelectResultHandler<String> resultHandler = new SelectResultHandler<String>();
