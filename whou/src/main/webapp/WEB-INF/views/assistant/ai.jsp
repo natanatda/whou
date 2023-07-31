@@ -61,7 +61,7 @@
 								html += '<input type="button" class="otherBtn btn btn-light" value="' + test[i] + '" />';
 								}
 							$("#btnContain").html(html);
-							$("#readArea1").html('<input type="button" class="btn btn-light" id="back" value="돌아가기" />');
+							$("#backArea").html('<input type="button" class="btn btn-light" id="back" value="돌아가기" />');
 								}
 							});
 					 
@@ -79,7 +79,7 @@
 			$("#btnContain").html('<c:forEach items="${assistantList}" var="aiList">' // 그룹이 1인 리스트들로 버튼 생성
 								+'<input type="button" class="btn btn-light mainbtn" value="${aiList.qes}"/>'
 								+'</c:forEach>');
-			$("#readArea1").html('');
+			$("#backArea").html('');
 		}
 	
 		$(document).on('click', '.mainbtn, .otherBtn', handleButtonClick); // 해당 클래스 버튼 클릭했을 때 함수 호출
@@ -193,8 +193,8 @@
 	</head>
 	<body>
 	        
-		<div id="test">
-			<div class="editable" id="editable" contenteditable="false" style="">
+		<div id="botArea">
+			<div class="editable" id="editable" contenteditable="false">
 				<p class="chat"> 문의하실 내용을 선택해주세요. </p>
 			</div>			
 			<div>
@@ -204,7 +204,7 @@
 					</c:forEach>
 				</div>
 				<div style="display:flex; justify-content: right;">
-					<div id="readArea1" >
+					<div id="backArea" >
 					</div>
 					<div id="readArea" >
 						<button class="btn btn-light" id="readbtn">읽기</button>
@@ -213,6 +213,6 @@
 				</div>
 			</div>
 		</div>
-		<div style="height: 200px;"></div>
+		
 	</body>
 </html>

@@ -45,12 +45,26 @@
 			var qes = document.getElementById("qes").value;
 			var ref = document.getElementById("ref").value;
 			var ref_level = document.getElementById("ref_level").value;
-			if(content == ""  || content == null || content == '&nbsp;' || content == '<p>&nbsp;</p>' || !qes || !ref || !ref_level)  {
-				alert("모든 입력창에 입력해주세요.");
-				oEditors.getById["exampleFormControlTextarea${assistant.num}"].exec("FOCUS"); //포커싱
+			if(!qes){
+				alert("질문을 입력해 주세요.");
 				return false;
 			}
+			if(content == ""  || content == null || content == '&nbsp;' || content == '<p>&nbsp;</p>')  {
+					alert("내용을 입력해주세요.");
+					oEditors2.getById["ajaxCon"].exec("FOCUS"); //포커싱
+					return false;
+			}
+			if(!ref){
+				alert("그룹을 입력해주세요.");
+				return false;
+			}
+			if(!ref_level){
+				alert("레벨을 입력해주세요.");
+				return false;
+			}
+			
 	}
+			
 	</script>
 	<c:if test="${lv != 2}"> <%-- 레벨 검사 --%>
 		<script>
@@ -141,12 +155,24 @@
 					var qes = $("#qes${assistant.num}").val();
 					var ref = $("#ref${assistant.num}").val();
 					var ref_level = $("#ref_level${assistant.num}").val();
-					
-					if(content == ""  || content == null || content == '&nbsp;' || content == '<p>&nbsp;</p>' || !qes || !ref || !ref_level )  {
-						alert("모든 입력창에 입력해주세요.");
+					if(!qes){
+						alert("질문을 입력해 주세요.");
+						return false;
+					}
+					if(content == ""  || content == null || content == '&nbsp;' || content == '<p>&nbsp;</p>')  {
+						alert("내용을 입력해주세요.");
 						oEditors.getById["exampleFormControlTextarea${assistant.num}"].exec("FOCUS"); //포커싱
 						return false;
 					}
+					if(!ref){
+						alert("그룹을 입력해주세요.");
+						return false;
+					}
+					if(!ref_level){
+						alert("레벨을 입력해주세요.");
+						return false;
+					}
+					
 				}
 			</script>
 			<div style="margin: 0 auto; display:flex; justify-content: center; width: 600px;" >
