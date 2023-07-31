@@ -32,7 +32,7 @@
 				          </a>
 				          <ul class="dropdown-menu">
 				            <li><a class="dropdown-item" href="/whou/cs/notice">공지사항</a></li>
-				            <li><a class="dropdown-item" href="#">FAQ</a></li>
+				            <li><a class="dropdown-item" href="/whou/cs/faq">FAQ</a></li>
 				          </ul>
 				        </li>
 				        <li class="nav-item dropdown">
