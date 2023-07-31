@@ -329,27 +329,81 @@
 														</ul>
 													</div>
 												</div>
-												<div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px;">나의 현재 직업 : ${jobDetailCunsuling.getBaseInfo().getJob_nm()} </div>
+												<div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px;">
+													<c:if test="${jobDetailCunsuling.getBaseInfo().getJob_nm()!=null}">
+														나의 현재 직업 : ${jobDetailCunsuling.getBaseInfo().getJob_nm()} 
+													</c:if>
+													<c:if test="${jobDetailCunsuling.getBaseInfo().getJob_nm()==null}">
+														나의 현재 직업 : 없음 
+													</c:if>
+												</div>
 											</div>
 											<div class="reco-tag" style="width:520px; height:170px;">
 												<span style="font-weight:600;font-size: 18px;margin-left:5px;">우선순위 선택하기</span>
 												<a style="font-size: 12px; margin-left:10px;">선택하지 않을시에는 모두 동일한 중요도로 적용됩니다.</a>
 												<form action="/whou/member/mypage?load=5" method="post">
 													<div style="display:flex; flex-wrap:wrap;align-content:flex-start;">
-														<c:forEach var="trueByTest" items="${testTrue}" varStatus="loop">
+														<c:if test="${testTrue !=null}">
+															<c:forEach var="trueByTest" items="${testTrue}" varStatus="loop">
+																<div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px; width:230px;">
+																<c:if test="${loop.index eq 0}">적성</c:if>
+																<c:if test="${loop.index eq 1}">흥미</c:if>
+																<c:if test="${loop.index eq 2}">가치관</c:if>
+																	<select name="importance" style="min-width:50px; margin-left:25px;margin-right:15px;">
+																		<option value="3"<c:if test="${impt.get(loop.index)==3}">selected</c:if> >1</option>
+																		<option value="2"<c:if test="${impt.get(loop.index)==2}">selected</c:if> >2</option>
+																		<option value="1"<c:if test="${impt.get(loop.index)==1}">selected</c:if> >3</option>
+																	</select>
+																	<c:if test="${trueByTest}">응시함</c:if>
+																	<c:if test="${!trueByTest}">응시 안함</c:if>
+																</div>
+															</c:forEach>
+														</c:if>
+														<c:if test="${testTrue !=null}">
+															<c:forEach var="trueByTest" items="${testTrue}" varStatus="loop">
+																<div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px; width:230px;">
+																<c:if test="${loop.index eq 0}">적성</c:if>
+																<c:if test="${loop.index eq 1}">흥미</c:if>
+																<c:if test="${loop.index eq 2}">가치관</c:if>
+																	<select name="importance" style="min-width:50px; margin-left:25px;margin-right:15px;">
+																		<option value="3"<c:if test="${impt.get(loop.index)==3}">selected</c:if> >1</option>
+																		<option value="2"<c:if test="${impt.get(loop.index)==2}">selected</c:if> >2</option>
+																		<option value="1"<c:if test="${impt.get(loop.index)==1}">selected</c:if> >3</option>
+																	</select>
+																	<c:if test="${trueByTest}">응시함</c:if>
+																	<c:if test="${!trueByTest}">응시 안함</c:if>
+																</div>
+															</c:forEach>
+														</c:if>
+														<c:if test="${testTrue==null}">
 															<div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px; width:230px;">
-															<c:if test="${loop.index eq 0}">적성</c:if>
-															<c:if test="${loop.index eq 1}">흥미</c:if>
-															<c:if test="${loop.index eq 2}">가치관</c:if>
+																적성
 																<select name="importance" style="min-width:50px; margin-left:25px;margin-right:15px;">
-																	<option value="3"<c:if test="${impt.get(loop.index)==3}">selected</c:if> >1</option>
-																	<option value="2"<c:if test="${impt.get(loop.index)==2}">selected</c:if> >2</option>
-																	<option value="1"<c:if test="${impt.get(loop.index)==1}">selected</c:if> >3</option>
+																	<option value="3">1</option>
+																	<option value="2">2</option>
+																	<option value="1">3</option>
 																</select>
-																<c:if test="${trueByTest}">응시함</c:if>
-																<c:if test="${!trueByTest}">응시 안함</c:if>
+																응시 안함
 															</div>
-														</c:forEach>
+															<div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px; width:230px;">
+																흥미
+																<select name="importance" style="min-width:50px; margin-left:25px;margin-right:15px;">
+																	<option value="3">1</option>
+																	<option value="2">2</option>
+																	<option value="1">3</option>
+																</select>
+																응시 안함
+															</div>
+															<div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px; width:230px;">
+																가치관
+																<select name="importance" style="min-width:50px; margin-left:11px;margin-right:15px;">
+																	<option value="3">1</option>
+																	<option value="2">2</option>
+																	<option value="1">3</option>
+																</select>
+																응시 안함
+															</div>
+														</c:if>
 														<div class="button-wrap" style=" margin-top:20px; text-align:right; width:230px;">
 															<button type="submit" class="purple-btn" style="margin-left:10px; width: 80px; display: block; margin-left: auto;margin-right:20px;">적용</button>  
 														</div> 
@@ -1058,7 +1112,7 @@
 		    var jobMadeCard = $("<div>").addClass("jobMadeCard");
 		    var title = $("<p>").addClass("JcardP1").text(job_nm);
 		    var description = $("<p>").addClass("JcardP2").text(work);
-		    var coreAbilitiesDiv = $("<div>").css("display", "flex").css("gap", "20px");
+		    var coreAbilitiesDiv = $("<div>").css("display", "flex").css("gap", "10px");
 	
 		    talents.forEach(function (talent) {
 		        var capabilityDiv = $("<div>");

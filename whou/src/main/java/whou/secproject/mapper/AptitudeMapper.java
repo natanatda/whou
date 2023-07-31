@@ -48,4 +48,6 @@ public interface AptitudeMapper {
 	public String getValuesScore(int userNum);
 	public String getAptitudeScoreName(int userNum); //적성 점수 이름
 	public String getAbilityScore(int userNum);//역량점수
+	public void updatePercent(@Param("userNum")int userNum, @Param("percents")String percents);
+	public String getPercent(int userNum);
 }

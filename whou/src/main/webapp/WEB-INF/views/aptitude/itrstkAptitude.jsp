@@ -51,7 +51,7 @@
 					<h3 class="page-count">
 						<span>0</span> / <span>${fn:length(RESULT)}</span>
 					</h3>
-					<form action="report" method="post">
+					<form action="report" method="post" id = "reportForm">
 						<input type="hidden" name="qnum" value="${qnum}">
 						<input type="hidden" name="countQ" value="${fn:length(RESULT)}">
 						<input type="hidden" name="tempSave" value="${param.tempSave != null ? param.tempSave : ''}">
@@ -260,7 +260,7 @@
 							<button class="white-btn" onclick="nextPage()">다음</button>
 							 -->
 							<button type="button" class="white-btn" onclick="location='/whou/aptitude/aptitudeMain'">취소</button>
-							<button type="submit" class="white-btn" formaction="temporarySave">임시저장</button>
+							<button type="submit" class="white-btn" formaction="temporarySave" onclick="getPercent()">임시저장</button>
 							<button type="submit" class="purple-btn">제출</button>
 						</div>
 					</form>
@@ -275,13 +275,23 @@
  		const percent = ${100/fn:length(RESULT)};
  		const progressBar = document.querySelector('.progress-bar');
  	    const progressPercent = document.querySelector('.progress+div > span');
- 	   	let percentCount =0;
- 	   
+ 	   	let percentCount=0;
+ 	   	
+
 		// 답한 문항 개수
 	    const radioButtons = document.querySelectorAll('.btn-check');
 	    const countSpan = document.querySelector('.page-count span:first-child');
-	    let count = 0;
-	
+	    
+ 	   	function getCount(){
+	        return document.querySelectorAll('.btn-check:checked').length;
+ 	   	}
+ 	   	let count = getCount();
+        countSpan.textContent = count;
+		percentCount = count * percent;
+		percentCountDown = Math.floor(percentCount);
+		progressPercent.textContent = percentCountDown;
+		progressBar.style.width = percentCount + '%';
+	    
 	    radioButtons.forEach(radioButton => {
 	        radioButton.addEventListener('click', () => {
 	        	// 답한 문항 개수
@@ -293,8 +303,6 @@
 	         	percentCountDown = Math.floor(percentCount);
 	            progressPercent.textContent = percentCountDown;
 	            progressBar.style.width = percentCount + '%';
-
-	           
 	        });
 	    });
 	    
@@ -305,28 +313,28 @@
 		var selectedOrder = []; // 선택된 순서를 저장할 배열
 		
 		checkboxes.forEach(function(checkbox, index) {
-		  checkbox.addEventListener('change', function() {
-		    var checkedCount = 0;
+			checkbox.addEventListener('change', function() {
+				var checkedCount = 0;
 		
-		    checkboxes.forEach(function(checkbox) {
-		      if (checkbox.checked) {
-		        checkedCount++;
-		      }
-		    });
+				checkboxes.forEach(function(checkbox) {
+				if (checkbox.checked) {
+					checkedCount++;
+				}
+			});
 		
 		    if (checkedCount > maxLimit) {
-		      alert("3개 선택하세요");
-		      this.checked = false;
-		      return;
+				alert("3개 선택하세요");
+				this.checked = false;
+				return;
 		    }
 		
-		    if (this.checked) {
-		      selectedOrder.push({ value: this.value, index: index });
-		    } else {
-		      selectedOrder = selectedOrder.filter(function(item) {
-		        return item.value !== this.value; // 선택 해제된 checkbox의 value를 배열에서 제거
-		      }, this);
-		    }
+			if (this.checked) {
+				selectedOrder.push({ value: this.value, index: index });
+			} else {
+				selectedOrder = selectedOrder.filter(function(item) {
+					return item.value !== this.value; // 선택 해제된 checkbox의 value를 배열에서 제거
+				}, this);
+			}
 		
 		    if (selectedOrder.length > maxLimit) {
 		      checkboxes.forEach(function(checkbox) {
@@ -356,8 +364,22 @@
 		    //alert(selectedValuesInput.value);
 		  });
 		});
+		
+		function getPercent(){
+			count = document.querySelectorAll('.btn-check:checked').length;
+            countSpan.textContent = count;
+            percentCount = count * percent;
+         	percentCountDown = Math.floor(percentCount);
+            progressPercent.textContent = percentCountDown;
+		    var form = document.getElementById("reportForm");
+			var input = document.createElement('input');
+    		input.type = 'hidden';
+			input.name = 'percent';
+    		input.value = percentCountDown;
+    		form.appendChild(input);
+		}
     </script>
-
+	
 		<!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>

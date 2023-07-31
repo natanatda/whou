@@ -162,7 +162,7 @@ public class MemberController {
   	public String logout(HttpSession session, HttpServletRequest request, Model model ) {
   	    session.removeAttribute("access_Token");
   	    session.removeAttribute("memId");
-  		return "/main";
+  		return "redirect:/main";
   	}
   	
   	//이메일 찾기 폼
