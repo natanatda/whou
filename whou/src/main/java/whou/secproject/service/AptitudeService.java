@@ -55,4 +55,8 @@ public interface AptitudeService {
 	public String getValuesScore(int userNum);
 	public String getAptitudeScoreName(int userNum); //적성 점수 이름
 	public String getAbilityScore(int userNum);//역량점수
+	
+	// 진행률 테이블에 추가하기
+	public void updatePercent(int userNum, int [] arr);
+	public int [] getPercent(int userNum);
 }

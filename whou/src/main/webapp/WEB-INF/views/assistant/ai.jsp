@@ -14,13 +14,16 @@
 	<link rel="stylesheet" href="/whou/resources/css/style.css">
 	<script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
-<script>
+
+<html>
+	<head>
+	  <script>
 	
 	$(function(){
 		var chat = "";
 		function clearChat(){
 			chat = ""; // 채팅 내역 초기화
-			$(".editable").html('<p class="chat"> 문의하실 내용을 선택해주세요. </p>'); // div에 출력
+			$(".editable").html('<p class="chat">문의하실 내용을 선택해주세요. </p>'); // div에 출력
 			$("#readArea").html('<button id="readbtn" class="btn btn-light">읽기</button>'
 								+'<button class="btn btn-light" id="clear">초기화</button>');
 			read = false; // tts 종료
@@ -28,7 +31,7 @@
 		}
 		
 		function appendChat(user, bot) { // 채팅 내용 출력하는 함수
-			chat += '<div class="chat user" id="user"><p>유저: ' + user + '</p></div>' + '<div class="chat bot" id="bot"><p>챗봇: ' + bot + '</p></div>'; 
+			chat += '<div class="chat user" id="user"><p>' + user + '</p></div>' + '<div class="chat bot" id="bot"><p><i class="fa-solid fa-robot" style="color: #743cb9;"></i> <div class="bot-text">' + bot + '</div></p></div>'; 
 			$(".editable").html(chat);
 			scrollToBottom(); 
 		}
@@ -168,42 +171,21 @@
 	}
 
 </script>
-<html>
-	<head>
-	    <style>
-	        div.editable {
-	        	height: 400px;
-	            border: 1px solid #dcdcdc;
-	            overflow: auto;
-	            margin:0 auto;
-	        }
-	       div #bot {
-				text-align : left;
-			}
-	        div #user{
-	        	text-align : right;
-	        }
-	        
-	        #test{
-	      		height: 400px;
-	      		border: 1px solid #dcdcdc;
-	      		margin:0 auto;  
-	        }
-	    </style>
 	</head>
 	<body>
-	        
-		<div id="test">
-			<div class="editable" id="editable" contenteditable="false" style="">
-				<p class="chat"> 문의하실 내용을 선택해주세요. </p>
-			</div>			
-			<div>
+		<div class="ai-text-wrap">
+			<div id="test">
+				<div class="editable" id="editable" contenteditable="false">
+					<p class="chat">문의하실 내용을 선택해주세요. </p>
+				</div>			
+			</div>
+			<div class="ai-text-btns">
 				<div id="btnContain" >
-					<c:forEach items="${assistantList}" var="ailist">
-						<input type="button" class="btn btn-light mainbtn" value="${ailist.qes}"/>
-					</c:forEach>
+						<c:forEach items="${assistantList}" var="ailist">
+							<input type="button" class="btn btn-light mainbtn" value="${ailist.qes}"/>
+						</c:forEach>
 				</div>
-				<div style="display:flex; justify-content: right;">
+				<div>
 					<div id="readArea1" >
 					</div>
 					<div id="readArea" >
@@ -213,6 +195,5 @@
 				</div>
 			</div>
 		</div>
-		<div style="height: 200px;"></div>
 	</body>
 </html>

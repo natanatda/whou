@@ -52,6 +52,7 @@ public class AptitudeController {
 		// user_info 테이블에서 세션에 해당하는 num 추출
 		int userNum = service.userNumSelect(memId);
 	    
+		
 	    //임시 저장한 설문지로 들어온 경우
 	    String tempSave= request.getParameter("tempSave")!= null?request.getParameter("tempSave"):"";
 //	    tempSave = request.getParameter("tempSave");
@@ -73,9 +74,9 @@ public class AptitudeController {
 	    
 	    return "/aptitude/itrstkAptitude";
 	}
-	   public static String listToString(List<String> list, String delimiter) {
-	        return String.join(delimiter, list);
-	    }
+	public static String listToString(List<String> list, String delimiter) {
+		return String.join(delimiter, list);
+	}
 	//크롤링 결과 집어넣기
 	@RequestMapping("/report")
 	public String getAptitudeTestResult(Model model, String countQ, HttpServletRequest request, HttpServletResponse response, JobDicParamDTO jParam, RecommandInfoDTO dtoRe) {
@@ -83,10 +84,10 @@ public class AptitudeController {
 		String memId = (String)session.getAttribute("memId");
 		// user_info 테이블에서 세션에 해당하는 num 추출
 		int userNum = service.userNumSelect(memId);
-		
 		List<String>answers = new ArrayList<>();
 		String qnum = request.getParameter("qnum");
 		model.addAttribute("qnum", qnum);
+		
 		
 		//검사25의 49번 문제 예외처리
     	for(int i=1; i<=Integer.parseInt(countQ);i++) {
@@ -259,12 +260,25 @@ public class AptitudeController {
 	//임시저장하기
 	@RequestMapping("/temporarySave")
 	public String temporaryResult(Model model, String countQ, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
 		List<String>answers = new ArrayList<>();
 		String qnum = request.getParameter("qnum");
 		HttpSession session = request.getSession();
 		String memId = (String)session.getAttribute("memId");
 		// user_info 테이블에서 세션에 해당하는 num 추출
 		int userNum = service.userNumSelect(memId);
+		
+		
+		// 퍼센트 정보 추가하기
+		int [] percents = service.getPercent(userNum);
+		String percentStr = request.getParameter("percent");
+		int percent = 0;
+		if(percentStr!=null) percent = Integer.parseInt(percentStr);
+		if(qnum.equals("21")) percents[0] = percent;
+		else if(qnum.equals("25")) percents[1] = percent;
+		else if(qnum.equals("27")) percents[2] = percent;
+		else if(qnum.equals("31")) percents[3] = percent;
+		service.updatePercent(userNum, percents);
 		
 		//검사25의 49번 문제 예외처리
     	for(int i=1; i<=Integer.parseInt(countQ);i++) {
@@ -285,7 +299,6 @@ public class AptitudeController {
 		if(tempSave.equals("tempSave")) {
 			service.temporarySaveUpdate(answers, dto, qnum, userNum);
 		}
-		
 
 		
 		// 첫 임시 저장

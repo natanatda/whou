@@ -26,7 +26,9 @@
 		<script type="module" src="../resources/js/whouModel.js?ver=1"></script>
     </head>
 
- 
+ <style>
+ 	body{overflow-y:hidden}
+ </style>
     <body>
     <c:set var="workList" value="${jobDetail.workList}" />
     <c:set var="BaseInfo" value="${jobDetail.baseInfo}" />
@@ -47,14 +49,22 @@
     <c:set var="knowledge" value="${jobDetail.perform.knowledge}" />
     <c:set var="environment" value="${jobDetail.perform.environment}" />
         <!-- Responsive navbar-->
-       <%@ include file="../header.jsp" %>      
-       <div class="ai-wrap">
-		<div style="position: relative; width: 400px; height: 400px; top: 30%;">
-       		<canvas class="webgl"></canvas>
-       	</div> 
-       	<div>설명</div>
-       	<button onclick="checkAndClose()">상세가기</button>
-       </div>  
+       <%@ include file="../header.jsp" %>  
+       <c:if test="${slide == null}">
+          <div class="ai-wrap">
+			<div>
+	       		<canvas class="webgl"></canvas>
+	       	</div> 
+	       	<div class="job_info-sd">
+	       		<h3>${BaseInfo.job_nm}</h3>
+						<div>&middot; ${workList[0].work}</div>
+			</div>
+	       	<button onclick="checkAndClose()"><i class="fa-solid fa-angles-right fa-2xl" style="color:#fff;"></i></button>
+	       </div>  
+       </c:if>    
+    
+       
+       
         <section class="py-2 desc-dtl-section">
             <div class="desc-container">
                 <h2 class="page-title">직업백과</h2>
@@ -63,7 +73,6 @@
                         <h5>${BaseInfo.job_nm}</h5>
                         <ul class="desc-icon-box">
                         	<c:if test="${contain}">
-                        	
 	                            <li onclick="return bookCheck(${BaseInfo.job_cd},1)"><i class="fa-solid fa-star" style="color: purple;"></i></li>
                         	</c:if>
                         	<c:if test="${!contain}">
@@ -526,9 +535,11 @@
 	        
 	        function checkAndClose() {
 	        	  var aiWrapElement = document.querySelector('.ai-wrap');
+	        	  var body = document.querySelector('body');
 	        	  if (aiWrapElement) {
 	        	    aiWrapElement.style.transition = 'max-width 0.5s ease-out'; // 슬라이드 애니메이션 설정
 	        	    aiWrapElement.style.maxWidth = '0'; // 요소를 왼쪽으로 슬라이드하여 사라지게 함
+	        	    body.style.overflowY = 'auto';
 	        	    setTimeout(function() {
 	        	      aiWrapElement.style.display = 'none'; // 슬라이드 애니메이션이 완료되면 요소를 숨김
 	        	    }, 500); // 0.5초(500ms) 후에 요소를 숨김 (transition 속성과 동일한 시간)
@@ -539,12 +550,12 @@
 	    <%-- 모델 --%>
 	    <script>
 		 	var modelCamera_x = ${model.camera};
-		 	var modelCamera_y = 6;
-		 	var modelCamera_z = 10;
+		 	var modelCamera_y = 2;
+		 	var modelCamera_z = 9;
 		 	var modelPath = '../resources/whouModel/${model.path_folder}/${model.path_gltf}';
 		 	
-		 	var modelWidth = 500;
-        	var modelHeight = 500;
+		 	var modelWidth = 1000;
+        	var modelHeight = 1000;
 		 	
 		 	if('${model.color}' != 'noColor'){
 		 		var modelColor = ${model.color};

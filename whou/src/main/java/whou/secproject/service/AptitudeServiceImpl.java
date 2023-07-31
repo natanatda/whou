@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -863,5 +864,21 @@ public class AptitudeServiceImpl implements AptitudeService{
 	@Override
 	public void commendNumUpdate(String memId) {
 		mapper.commendNumUpdate(memId);
+	}
+	@Override
+	public void updatePercent(int userNum, int [] arr) {
+		StringBuilder sb = new StringBuilder();
+		for(int i =0; i<4; i++) sb.append(arr[i]).append(",");
+		mapper.updatePercent(userNum, sb.toString());
+	}
+	@Override
+	public int [] getPercent(int userNum) {
+		String percents = mapper.getPercent(userNum);
+		int [] percentLi = new int [4];
+		if(percents!=null) {
+			StringTokenizer st = new StringTokenizer(percents,",");
+			for(int i = 0; i < 4; i++) percentLi[i] = Integer.parseInt(st.nextToken());
+		}
+		return percentLi;
 	}
 }

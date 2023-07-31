@@ -223,5 +223,13 @@
 	<update id="commendNumUpdate">
 		UPDATE user_info SET update_true='1' WHERE email=#{memId}
 	</update>
+
+	<!-- 진척률 관련 -->	
+	<update id="updatePercent">
+		UPDATE user_info SET TEST_PERCENT=#{percents} WHERE num=#{userNum}
+	</update>
 	
+	<select id="getPercent" resultType="String">
+	 	select test_percent from user_info where num = #{userNum}
+	</select>
 </mapper>

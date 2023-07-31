@@ -236,6 +236,8 @@ public class JobController {
     	   model.addAttribute("contain", contain);
        }
       
+       String slide = request.getParameter("slide");
+       
        
        model.addAttribute("jobDetail", jobDetail);
        model.addAttribute("indicatorData", indicatorData);
@@ -243,6 +245,7 @@ public class JobController {
        model.addAttribute("eduData", eduData);
        model.addAttribute("memId", memId);
        model.addAttribute("model", whouModel);
+       model.addAttribute("slide", slide);
 	   System.out.println("//////////"+memId);
        return "/job/description-detail";
     }

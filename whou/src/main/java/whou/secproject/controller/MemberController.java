@@ -103,7 +103,8 @@ public class MemberController {
 	      if(memId != null) {
 	         service.updateBook(job_cd, memId, contain);
 	      }
-	        return "redirect:/job/info?job_cd=" + job_cd;
+	      
+	        return "redirect:/job/info?job_cd=" + job_cd +"&slide=0";
 	   }
 	
 	 //마이페이지에서 북마크 직업 제거
@@ -162,7 +163,7 @@ public class MemberController {
   	public String logout(HttpSession session, HttpServletRequest request, Model model ) {
   	    session.removeAttribute("access_Token");
   	    session.removeAttribute("memId");
-  		return "/main";
+  		return "redirect:/main";
   	}
   	
   	//이메일 찾기 폼

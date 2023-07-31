@@ -241,6 +241,8 @@ input[type="date"]{
 /*****************************************************************************
 ************************************* main ***********************************
 *****************************************************************************/
+
+#features{margin-top:24px;}
 /* ai */
 .icon-box-ic{margin-left:10px;}
 .top-ai{position:reletive;position:fixed;bottom:20px;right:20px;display:flex;align-items: center;gap: 20px;}
@@ -250,7 +252,7 @@ input[type="date"]{
 .chat-box-container{position: fixed;right: 20px;bottom: 100px;z-index:999;}
 .chat-btn-wrap{}
 .chat-box p#user{text-align:right; background:pink;padding:5px; border-radius:12px;margin:20px 0;}
-.editable p.chat{}
+.editable p.chat{font-weight:500}
 /* 검색창 */
 .search-form{position:relative;width:80%;margin:0 auto;}
 .search-form .search-btn{cursor: pointer;}
@@ -272,11 +274,12 @@ input[type="date"]{
 
 /* 메인-검사하기 */
 .test-section{background-color:#5A3FFF;color: #fff;}
+.test-section .container{padding: 86px 0;} 
 .test-section .add-btn{text-align: right;}
 .test-section .add-btn a{color: #fff;}
-.test-section .test-cont-wrap h4{font-size: 20px;font-weight: 700;margin-bottom: 10px;}
+.test-section .test-cont-wrap h4{font-size: 20px;font-weight: 700;margin-bottom: 18px;}
 .test-section .test-cont-wrap .test-cont-desc{font-size: 13px;margin-bottom: 10px;}
-.test-section .test-cont-wrap .test-cont-info{display:flex;align-items: flex-end;justify-content: space-between;margin:10px 0;}
+.test-section .test-cont-wrap .test-cont-info{display:flex;align-items: flex-end;justify-content: space-between;margin: 28px 0 10px 0;}
 .test-section .test-cont-wrap .test-cont-info li{font-size: 14px;font-weight:600;color:#5A3FFF;margin-bottom: 8px;}
 .test-cont-wrap .button-wrap{height: 34px;margin-bottom: 10px;}
 .test-cont-wrap .purple-btn{height: 50px;font-size: 20px;}
@@ -528,6 +531,11 @@ input[type="date"]{
  #item-ability{display:none;}
 .jobSearchLi {position: absolute;width:300px;background-color: #f9f9f9;border: 1px solid #ccc;padding: 5px;list-style: none;margin: 0;display: none;z-index:1;}
 .jobSearchLi li{position:relative;}
+.chart-wrap {width:100%;display:flex;justify-content: center;}
+.chart-inner{width:500px}
+.chart-inner #interestChart{width:100% !important;height:100% !important;}
+.chart-ranks{margin-left: 70px;}
+.chart-ranks li:first-child{font-weight:500;margin-bottom:10px;font-size:18px;}
 
 .book-wrap{display:flex;gap:20px;flex-wrap:wrap;padding:0 30px;}
 .book-wrap .card{width:200px;height:200px;  }
@@ -545,12 +553,15 @@ input[type="date"]{
   ************************************* description detail ai***********************************
   *****************************************************************************/
 
-.ai-wrap{display:flex;gap:20px;position:absolute;left:0;top:0;width:100%;height:100%;background:#ddd; max-width: 100%; /* 초기 너비를 최대로 설정 */  overflow: hidden;  transition: max-width 0.5s ease-out; /* 슬라이드 애니메이션 설정 */}
-.ai-wrap div{width:40%;}
+.ai-wrap{display:flex;gap:20px;position:absolute;left:0;top:0;width:100%;height:100%;background:#5A3FFF; max-width: 100%; /* 초기 너비를 최대로 설정 */  overflow: hidden;  transition: max-width 0.5s ease-out; /* 슬라이드 애니메이션 설정 */}
+
 .ai-wrap.closed {  max-width: 0; /* 요소를 왼쪽으로 이동하여 사라지게 함 */  padding: 0; /* 필요에 따라 여백 제거 */}
 
+.ai-wrap button{position: absolute;right: 40px;width:100px;height:100%;background: none;cursor:pointer}
 
-
+.job_info-sd{padding:20px 180px 20px 20px;display: flex;flex-direction: column;justify-content: center;color: #fff;    width: 720px;}
+.job_info-sd h3{text-align:center;font-size: 46px;margin-bottom:40px;font-weight: 700;margin-bottom: 40px;}
+.job_info-sd div{margin-bottom:10px;text-indent: -8px;font-size: 24px;}
 /*****************************************************************************
   ************************************* custom ***********************************
   *****************************************************************************/
@@ -567,12 +578,34 @@ input[type="date"]{
 /*****************************************************************************
   ************************************* calendar-section ***********************************
   *****************************************************************************/
-.calendar-section h3{font-size: 48px;background: #F7FBFE;position: absolute;top: 202px;left: 428px;width: 346px;text-align: center;}
+.calendar-section h3{font-size: 48px;background: #F7FBFE;position: absolute;top: 202px;left: 775px;width: 346px;text-align: center;}
 #pageFrame{width:100%;height:1500px;}
   
-  
-  
-  
+
+/*****************************************************************************
+  ************************************* ai 봇 ***********************************
+  *****************************************************************************/
+div.editable {height: 400px;border: 1px solid #ddd;overflow: auto;margin:0 auto;border-radius: 12px;padding: 16px;}
+div #bot {text-align: left;background: #eee;padding: 10px;border-radius: 14px;margin-bottom: 10px;margin-bottom:10px;}
+div #bot p:first-child{margin-bottom:8px;}
+div #user{text-align : right;margin-bottom:10px}
+div #user p{font-weight:500;}
+.ai-text-wrap{border: 1px solid #ddd;padding: 20px;border-radius: 12px;margin-bottom: 20px;background:#fff;}
+#test{height: 400px;margin:0 auto;}
+#ai-chatBot{position: fixed; right: 50px; bottom: 30px; }
+#ai-assistant{display: none;}  
+#ai-area{display:flex;gap:10px;cursor:pointer;justify-content: flex-end;}
+#ai-area .ai-text{border: 1px solid #ddd;padding: 10px;border-radius: 24px;font-weight: 500;background:#fff;}
+#ai-area .img-box{line-height: 44px;padding: 0px 8px;border-radius: 50%;background:#fff;}
+#btnContain{}
+#readArea1 input, #readArea button{border: 1px solid #ddd;border-radius: 24px;margin-right:8px;}
+#readArea button:last-child{margin-right:0;}
+ #btnContain input{border: 1px solid #ddd;border-radius: 24px;margin-right: 10px;margin-bottom:10px;}
+.ai-text-btns{padding: 20px 10px 0;}
+.ai-text-btns > div:last-child{justify-content: flex-end;display: flex;    margin-top: 30px;}
+
+
+
 @media (max-width: 1200px){
 	.navbar-nav{gap:20px;}
 	.navbar-expand-lg .navbar-nav .nav-link{padding-left:0;}

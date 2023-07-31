@@ -21,10 +21,6 @@
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
         <script src="../resources/js/ai.js"></script>
-        <%-- TOP 버튼 --%>
-        <script>
-	       
-        </script>
     </head>
  
     <body>
@@ -98,8 +94,8 @@
 							<c:forEach items="${noticeList}" var="notice">
 							<tr>
 								<th scope="row">
-								${number}
-								<c:set var="number" value="${number - 1}" />
+									${number}
+									<c:set var="number" value="${number - 1}" />
 								</th>
 									<td>관리자</td>
 									<td>
