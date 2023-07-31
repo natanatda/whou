@@ -881,7 +881,8 @@ public class MemberController {
            model.addAttribute("reres", reres);
         }
         model.addAttribute("none", none);
-      //회원정보수정
+        
+        //회원정보수정
         MemberDTO mem = service.getUser(userNum);
         UserInfoDTO user = service.userInfo(userNum);
         model.addAttribute("mem", mem);
