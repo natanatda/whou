@@ -549,6 +549,23 @@ input[type="date"]{
 #nav-modifyInfo .nav{display:flex;flex-direction: row;}
 #nav-contact .card{margin-top:20px;}
 
+/* 개인정보수정 */
+.chg-info{width:600px;margin:0 auto;padding-top: 30px;}
+
+#nav-info h3{display: flex;align-items: center;gap: 20px;margin-bottom:20px;}	
+#nav-info h3 span{font-size:14px;color:#888;}
+.chg-info .input-item{margin-bottom:10px;}
+
+.chg-addinfo{display:flex;gap: 30px;}
+.chg-addinfo > div{width:100%;margin-top: 50px;}
+#nav-info .input-wrap{display:flex;align-items: center;gap: 10px;margin-bottom:10px;}
+#nav-info input{height:40px;}
+#nav-pw button, #nav-info button{height:40px;}
+#nav-info .input-box button{width:200px;}
+#nav-info #btnM{margin-top:20px;}
+#nav-pw button{margin-top:20px}
+
+.input-item span{margin-top:4px} 
 /*****************************************************************************
   ************************************* description detail ai***********************************
   *****************************************************************************/

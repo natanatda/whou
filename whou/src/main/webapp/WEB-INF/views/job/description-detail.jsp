@@ -79,7 +79,7 @@
 	                            <li onclick="return bookCheck(${BaseInfo.job_cd},0)"><i class="fa-regular fa-star" style="color: #5c5c5c;"></i></li>
                         	</c:if>
                             <li><i class="fa-regular fa-thumbs-up" style="color: #5c5c5c;"></i></li>
-                            <li><i class="fa-solid fa-print" style="color: #5c5c5c;"></i></li>
+                            <li class="print-btn" ><i class="fa-solid fa-print" style="color: #5c5c5c;"></i></li>
                         </ul>
                         <div class="d-flex">
                             <div class="desc-item">
