@@ -241,6 +241,8 @@ input[type="date"]{
 /*****************************************************************************
 ************************************* main ***********************************
 *****************************************************************************/
+
+#features{margin-top:24px;}
 /* ai */
 .icon-box-ic{margin-left:10px;}
 .top-ai{position:reletive;position:fixed;bottom:20px;right:20px;display:flex;align-items: center;gap: 20px;}
@@ -272,11 +274,12 @@ input[type="date"]{
 
 /* 메인-검사하기 */
 .test-section{background-color:#5A3FFF;color: #fff;}
+.test-section .container{padding: 86px 0;} 
 .test-section .add-btn{text-align: right;}
 .test-section .add-btn a{color: #fff;}
-.test-section .test-cont-wrap h4{font-size: 20px;font-weight: 700;margin-bottom: 10px;}
+.test-section .test-cont-wrap h4{font-size: 20px;font-weight: 700;margin-bottom: 18px;}
 .test-section .test-cont-wrap .test-cont-desc{font-size: 13px;margin-bottom: 10px;}
-.test-section .test-cont-wrap .test-cont-info{display:flex;align-items: flex-end;justify-content: space-between;margin:10px 0;}
+.test-section .test-cont-wrap .test-cont-info{display:flex;align-items: flex-end;justify-content: space-between;margin: 28px 0 10px 0;}
 .test-section .test-cont-wrap .test-cont-info li{font-size: 14px;font-weight:600;color:#5A3FFF;margin-bottom: 8px;}
 .test-cont-wrap .button-wrap{height: 34px;margin-bottom: 10px;}
 .test-cont-wrap .purple-btn{height: 50px;font-size: 20px;}
@@ -550,12 +553,15 @@ input[type="date"]{
   ************************************* description detail ai***********************************
   *****************************************************************************/
 
-.ai-wrap{display:flex;gap:20px;position:absolute;left:0;top:0;width:100%;height:100%;background:#ddd; max-width: 100%; /* 초기 너비를 최대로 설정 */  overflow: hidden;  transition: max-width 0.5s ease-out; /* 슬라이드 애니메이션 설정 */}
-.ai-wrap div{width:40%;}
+.ai-wrap{display:flex;gap:20px;position:absolute;left:0;top:0;width:100%;height:100%;background:#5A3FFF; max-width: 100%; /* 초기 너비를 최대로 설정 */  overflow: hidden;  transition: max-width 0.5s ease-out; /* 슬라이드 애니메이션 설정 */}
+
 .ai-wrap.closed {  max-width: 0; /* 요소를 왼쪽으로 이동하여 사라지게 함 */  padding: 0; /* 필요에 따라 여백 제거 */}
 
+.ai-wrap button{position: absolute;right: 40px;width:100px;height:100%;background: none;cursor:pointer}
 
-
+.job_info-sd{padding:20px 180px 20px 20px;display: flex;flex-direction: column;justify-content: center;color: #fff;    width: 720px;}
+.job_info-sd h3{text-align:center;font-size: 46px;margin-bottom:40px;font-weight: 700;margin-bottom: 40px;}
+.job_info-sd div{margin-bottom:10px;text-indent: -8px;font-size: 24px;}
 /*****************************************************************************
   ************************************* custom ***********************************
   *****************************************************************************/
