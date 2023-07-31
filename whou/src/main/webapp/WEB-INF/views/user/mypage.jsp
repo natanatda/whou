@@ -917,8 +917,11 @@
                            }else{
                                var message = "' " + certi + " '을(를) 찾을 수 없습니다.";
                                var messageElement = $("<li>").text(message);
-                               $(inputElement).val("");
-                               qualificationList.hide();
+                               messageElement.on("click", function () {
+                                   // 메시지 클릭 시 qualificationList를 숨기고 인풋 값을 비웁니다.
+                                   $(inputElement).val("");
+                                   qualificationList.hide();
+                               });
                                qualificationList.append(messageElement);
                            }    
 
