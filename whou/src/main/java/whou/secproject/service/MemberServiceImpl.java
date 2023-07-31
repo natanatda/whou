@@ -146,6 +146,8 @@ public class MemberServiceImpl implements MemberService {
 		String certi = mapper.getUserCerti(memId); //db에 저장된 자격증 가져오기
 		String major = mapper.getUserMajor(memId); //db에 저장된 학과 가져오기
 		
+		
+		
 		Set<String> CertiSet = new HashSet<>();
 		Set<String> MajorSet = new HashSet<>();
 		
@@ -159,10 +161,17 @@ public class MemberServiceImpl implements MemberService {
 			certiArr = certi.split(",");
 			System.out.println("자격증이 널이 아님");
 		}else {
+			certi = "";
+			certiArr = certi.split(",");
 			System.out.println("자격증이 널임");
 
 		}
+		
+		
 		if(major!=null) {
+			majorArr = major.split(",");
+		}else {
+			major ="";
 			majorArr = major.split(",");
 		}
 		
@@ -171,6 +180,7 @@ public class MemberServiceImpl implements MemberService {
 		for(String arrC : certiArr) {
 			CertiSet.add(arrC);
 		}
+		
 		System.out.println("////////자격증 셋///////"+CertiSet);
 		
 		for(String arrM : majorArr) {
