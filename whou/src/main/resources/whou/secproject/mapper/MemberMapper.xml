@@ -88,15 +88,19 @@
 	</select>
 	
 	<update id="updateUser">
-		update whou_user set name = #{name}, birth_year = #{birth_year}, tel = #{tel} where num = #{userNum}
+		update whou_user set name = #{name}, birth_year = #{birth_year}, tel = #{tel} where email = #{email}
 	</update>
 	
 	<update id="updatePw">
-		update whou_user set pw=#{pw} where num = #{userNum}
+		update whou_user set pw=#{pw} where email = #{memId}
 	</update>
 	
-	<update id="updateUserInfo">
-		update user_info set CERTIFICATE=#{combinedCerti}, SCHOOL_MAJOR=#{combinedMajor} where num = #{userNum}
+	<update id="deleteMajor"> 
+		update user_info set SCHOOL_MAJOR=#{db} where email = #{memId}
+	</update>
+	
+	<update id="deleteCerti">
+		update user_info set CERTIFICATE=#{db} where email = #{memId}
 	</update>
 
 		

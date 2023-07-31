@@ -109,13 +109,14 @@ public class MemberController {
 	
 	 //마이페이지에서 북마크 직업 제거
      @RequestMapping("/deleteBook")
-    public String deleteBook(HttpServletRequest request){
-        HttpSession session = request.getSession();
+    public String deleteBook(HttpServletRequest request, Model model){
+      HttpSession session = request.getSession();
       String memId = (String)session.getAttribute("memId");
       String job_cd = request.getParameter("job_cd");
       if(memId != null) {
          service.updateBook(job_cd, memId, true);
       }
+      model.addAttribute("load", "4");
       return "redirect:/member/mypage";
    }
 	     
@@ -220,6 +221,36 @@ public class MemberController {
   	public String findPwPro2(Model model,@RequestParam("result") String result) {
   		model.addAttribute("pw", result);
   		return "/user/findPwPro2";
+  	}
+  	
+  	//비밀번호 변경
+  	@RequestMapping("/updatePw")
+  	public @ResponseBody String updatePw(String pw, HttpServletRequest request) {
+  		HttpSession session = request.getSession();
+		String memId = (String)session.getAttribute("memId");
+  		String result = "0";
+  		try {
+  	        service.updatePw(pw, memId);
+  	        result = "1"; // 작업이 예외없이 성공했을 경우에만 1로 설정
+  	    } catch (Exception e) {
+  	    	result = "0";// 작업이 실패했을 때의 예외 처리
+  	    }
+  		return result;
+  	}
+  	
+  	//비밀번호 변경
+  	@RequestMapping("/updateUser")
+  	public @ResponseBody String updateUser(MemberDTO dto, HttpServletRequest request) {
+  		//HttpSession session = request.getSession();
+		//String memId = (String)session.getAttribute("memId");
+  		String result = "0";
+  		try {
+  	        service.updateUser(dto);
+  	        result = "1"; // 작업이 예외없이 성공했을 경우에만 1로 설정
+  	    } catch (Exception e) {
+  	    	result = "0";// 작업이 실패했을 때의 예외 처리
+  	    }
+  		return result;
   	}
 	
 	//네이버 로그인
@@ -917,8 +948,54 @@ public class MemberController {
         UserInfoDTO user = service.userInfo(userNum);
         model.addAttribute("mem", mem);
         model.addAttribute("user", user);
+        
+        System.out.println("학과정보ㅗㅗㅗㅗㅗ"+user.getSchool_major());
+        
+        String arrM [] = user.getSchool_major().split(",");
+        arrM = Arrays.stream(arrM)
+                .filter(item -> !item.isEmpty())
+                .toArray(String[]::new);
+        
+        String arrC [] = user.getCertificate().split(",");
+        arrC = Arrays.stream(arrC)
+                .filter(item -> !item.isEmpty())
+                .toArray(String[]::new);
+        
+        model.addAttribute("arrM", arrM);
+        model.addAttribute("arrC", arrC);
+        
+        
       return "/user/mypage";
    }
+  	
+  	//학과 선택 삭제
+  	@RequestMapping("/deleteMajor")
+    public String deleteMajor(HttpServletRequest request, Model model){
+        HttpSession session = request.getSession();
+        String memId = (String)session.getAttribute("memId");
+        String major = request.getParameter("major");
+        if(memId != null) {
+           service.deleteMajor(major, memId);
+           serviceAt.commendNumUpdate(memId);
+        }
+        model.addAttribute("load", "3");
+        return "redirect:/member/mypage";
+	}
+  	
+  	//자격증 선택 삭제
+  	@RequestMapping("/deleteCerti")
+    public String deleteCerti(HttpServletRequest request, Model model){
+        HttpSession session = request.getSession();
+        String memId = (String)session.getAttribute("memId");
+        String certi = request.getParameter("certi");
+        if(memId != null) {
+           service.deleteCerti(certi, memId);
+           serviceAt.commendNumUpdate(memId);
+        }
+        model.addAttribute("load", "3");
+        return "redirect:/member/mypage";
+	}
+  	
   	
   	//자격증 리스트 가져오기
 	@RequestMapping("/getCerti")
@@ -937,7 +1014,7 @@ public class MemberController {
 		return majorList;
 	}
 	
-	//회원 추가 정보 수정(자격증, 학과)
+	//회원정보 추가(자격증, 학과)
 	@RequestMapping("/updateInfo")
 	public String updateInfo(@RequestParam(value = "certi", required = false) List<String> certiList,
 	                         @RequestParam(value = "major", required = false) List<String> majorList, HttpServletRequest request, Model model){

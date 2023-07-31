@@ -37,9 +37,10 @@ public interface MemberService {
 	//회원정보수정
 	public MemberDTO getUser(int userNum);
 	public UserInfoDTO userInfo(int userNum);
-	public void updateUser(int userNum);
-	public void updatePw(int userNum);
-	public void updateUserInfo(int userNum);
+	public void updateUser(MemberDTO dto);
+	public void updatePw(String pw, String memId);
+	public void deleteMajor(String major, String memId);
+	public void deleteCerti(String certi, String memId);
 	
 	
 	// 마이페이지

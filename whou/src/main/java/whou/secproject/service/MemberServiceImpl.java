@@ -206,18 +206,45 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public void updateUser(int userNum) {
-		
+	public void updateUser(MemberDTO dto) {
+		mapper.updateUser(dto);
 	}
 	
 	@Override
-	public void updatePw(int userNum) {
-		
+	public void updatePw(String pw, String memId) {
+		mapper.updatePw(pw, memId);
 	}
 	
+	// 학과 제거
 	@Override
-	public void updateUserInfo(int userNum) {
+	public void deleteMajor(String major, String memId) {
+		String temp = mapper.getUserMajor(memId); //db에 저장된 학과 가져오기
+		String db="";
+		ArrayList<String> list = new ArrayList<String>();
+		StringTokenizer st = new StringTokenizer(temp, ",");
+		while(st.hasMoreTokens()) {
+			String token = st.nextToken();
+			if(!token.equals(major)) list.add(token);
+		}
+		for(String s : list) db+= s+",";
 		
+		mapper.deleteMajor(memId, db);
+	}
+	
+	// 자격증 제거
+	@Override
+	public void deleteCerti(String certi, String memId) {
+		String temp = mapper.getUserMajor(memId); //db에 저장된 학과 가져오기
+		String db="";
+		ArrayList<String> list = new ArrayList<String>();
+		StringTokenizer st = new StringTokenizer(temp, ",");
+		while(st.hasMoreTokens()) {
+			String token = st.nextToken();
+			if(!token.equals(certi)) list.add(token);
+		}
+		for(String s : list) db+= s+",";
+		
+		mapper.deleteCerti(memId, db);
 	}
 
 	// 카카오 로그인시 토큰 생성

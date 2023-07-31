@@ -36,6 +36,20 @@
 	.JcardP1{font-size:18px;font-weight:700;margin-bottom:10px;}
 	.JcardP2{font-size:16px;margin-bottom:20px;}
 </style>
+<style>
+ #btnPw:disabled {
+  background-color: #ddd; /* 비활성화 배경색 */
+  color: #888; /* 비활성화 글자색 */
+  cursor: not-allowed; /* 비활성화된 버튼에는 커서를 변경하여 마우스 클릭을 방지 */
+}
+
+ #btnM:disabled {
+  background-color: #ddd; /* 비활성화 배경색 */
+  color: #888; /* 비활성화 글자색 */
+  cursor: not-allowed; /* 비활성화된 버튼에는 커서를 변경하여 마우스 클릭을 방지 */
+}
+ 
+ </style>
  
  
 <body>
@@ -205,74 +219,110 @@
                                  <div class="tab-content" id="nav-tabContent">
                                     <div class="tab-pane fade show active" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab" tabindex="0">
                                        <h3>기본 정보</h3>
-                                             <form name="joinForm" method="post">
-                                            <div class="input-item">
-                                            <label for="joinInput" class="form-label">이메일</label>
-                                            <input type="text" class="form-control" name = "email" id="email" placeholder="xxxx@example.com" value = "${mem.email}">
-                                          </div>
-                                          <div class="input-item">
-                                            <label for="joinInput" class="form-label">이름</label>
-                                            <input type="text" class="form-control" name = "name" id="name" placeholder="이름(실명) 입력" value = "${mem.name}">
-                                            <input type="hidden" class="form-control" id = "join_type" value ="${mem.join_type}">
-                                          </div>
-                                          <div class="input-item">
-                                            <label for="joinInput" class="form-label">연도</label>
-                                            <input type="text" class="form-control" name = "birth_year" id="birth_year" placeholder="YYYY" value = "${mem.birth_year}" required oninput = "checkYear()">
-                                            <span class="year_error" style="color:red; display:none;">4자리로 입력해주세요.</span>
-                                          </div>
-                                          <div class="input-item">
-                                            <label for="joinInput" class="form-label">휴대폰</label>
-                                            <div class="input-box">
-                                               <input type="text" class="form-control" id="tel" name = "tel" placeholder="'-' 빼고 숫자만 입력" value = "${mem.tel}">
-                                               <button type="button" style="border-radius: 8px" class="purple-btn" name="phoneChk" id="phoneChk">인증 요청</button>
-                                            </div>
-                                               <span class="tel_error" style="color:red; display:none;">형식에 맞게 휴대폰번호를 정확히 입력해주세요.</span>
-                                               <span class="tel_ok" style="color:green; display:none;">인증번호 발송이 완료되었습니다.</br> 휴대폰에서 인증번호를 확인해주십시오.</span>
-                                            <div class="input-box">
-                                               <input type="text" style="display:none;" class="form-control" id="tel2" name = "tel2" placeholder="인증번호 입력">
-                                               <button type="button" style="display:none; border-radius: 8px" class="purple-btn" name="phoneChk2" id="phoneChk2">인증 확인</button>
-                                         </div>
-                                              <span class="tel2_ok" style="color:green; display:none;">인증에 성공하셨습니다.</span>
-                                               <span class="tel2_error" style="color:red; display:none;">인증에 실패하셨습니다</br>인증번호를 다시 확인해주십시오.</span>
-                                          </div>
-                                          
-                                          <div class="input-wrap">
-                                             <button type="button" style="border-radius: 8px" class="purple-btn btn-xs" id="btnM">수정</button>
-                                           </div>
-                                        </form>
-                                       <h3>추가 정보</h3>
-                                       <div></div>
+                                       <p>정보를 변경하려면 휴대폰 본인인증을 완료하셔야합니다.</p>
+                                          <form name="joinForm" method="post">
+	                                            <div class="input-item">
+		                                            <label for="joinInput" class="form-label">이메일</label>
+		                                            <span class="form-control" id="email">${mem.email}</span>
+	                                          	</div>
+	                                          	<div class="input-item">
+		                                            <label for="joinInput" class="form-label">이름</label>
+		                                            <input type="text" class="form-control" name = "name" id="name" placeholder="이름(실명) 입력" value = "${mem.name}">
+		                                            <input type="hidden" class="form-control" id = "join_type" value ="${mem.join_type}">
+	                                          	</div>
+	                                          	<div class="input-item">
+		                                            <label for="joinInput" class="form-label">연도</label>
+		                                            <input type="text" class="form-control" name = "birth_year" id="birth_year" placeholder="YYYY" value = "${mem.birth_year}" required oninput = "checkYear()">
+		                                            <span class="year_error" style="color:red; display:none;">형식에 맞게 4자리로 입력해주세요.</span>
+	                                          	</div>
+	                                          	<div class="input-item">
+	                                            	<label for="joinInput" class="form-label">휴대폰</label>
+		                                            <div class="input-box">
+		                                               <input type="text" class="form-control" id="tel" name = "tel" placeholder="'-' 빼고 숫자만 입력" value = "${mem.tel}">
+		                                               <button type="button" style="border-radius: 8px" class="purple-btn" name="phoneChk" id="phoneChk">인증 요청</button>
+		                                            </div>
+	                                               <span class="tel_error" style="color:red; display:none;">형식에 맞게 휴대폰번호를 정확히 입력해주세요.</span>
+	                                               <span class="tel_ok" style="color:green; display:none;">인증번호 발송이 완료되었습니다.</br> 휴대폰에서 인증번호를 확인해주십시오.</span>
+	                                            <div class="input-box">
+	                                               <input type="text" style="display:none;" class="form-control" id="tel2" name = "tel2" placeholder="인증번호 입력">
+	                                               <button type="button" style="display:none; border-radius: 8px" class="purple-btn" name="phoneChk2" id="phoneChk2">인증 확인</button>
+	                                         	</div>
+	                                              	<span class="tel2_ok" style="color:green; display:none;">인증에 성공하셨습니다.</span>
+	                                               	<span class="tel2_error" style="color:red; display:none;">인증에 실패하셨습니다</br>인증번호를 다시 확인해주십시오.</span>
+	                                          	</div>
+	                                          	<div class="input-wrap">
+	                                             	<button type="submit" style="border-radius: 8px" class="purple-btn btn-xs" id="btnM" disabled>수정</button>
+	                                           	</div>
+                                        	</form>
+                                        <div>
+	                                       <h3>학과 정보</h3>
+	                                       	<div>
+				                                 <c:if test="${arrM != null }">
+				                                    <c:forEach var="major" items="${arrM}" varStatus="status">
+														<div class="card mb-5 mb-xl-0">
+															<a href="/whou/member/deleteMajor?major=${major}"><i class="position-absolute top-50 start-100 translate-middle fa-solid fa-circle-minus fa-lg"></i></a>
+															<div class="result-cont">
+																<span class="form-control" id="major">${major}</span>
+															</div>
+				                                       </div>
+				                                    </c:forEach>
+				                                 </c:if>
+				                                 <c:if test="${arrM == null }">
+					                                 <div class="empty-box">
+					                                    <div>학과 정보가 없습니다.</div>
+					                                    <div>추가정보입력에서 학과를 등록해 주세요.</div>
+					                                    <a href="/whou/member/mypage?load=2">추가정보입력 >></a>
+					                                 </div>
+				                                 </c:if>
+			                        		</div>
+			                        		<h3>자격증 정보</h3>
+	                                       	<div>
+				                                 <c:if test="${arrC != null }">
+				                                    <c:forEach var="certi" items="${arrC}" varStatus="status">
+														<div class="card mb-5 mb-xl-0">
+															<a href="/whou/member/deleteCerti?certi=${certi}"><i class="position-absolute top-50 start-100 translate-middle fa-solid fa-circle-minus fa-lg"></i></a>
+															<div class="result-cont">
+																<span class="form-control" id="major">${certi}</span>
+															</div>
+				                                       </div>
+				                                    </c:forEach>
+				                                 </c:if>
+				                                 <c:if test="${arrC == null }">
+					                                 <div class="empty-box">
+					                                    <div>자격증 정보가 없습니다.</div>
+					                                    <div>추가정보입력에서 자격증을 등록해 주세요.</div>
+					                                    <a href="/whou/member/mypage?load=2">추가정보입력 >></a>
+					                                 </div>
+				                                 </c:if>
+			                        		</div>
+			                        	</div> 
                                     </div>
                                     <div class="tab-pane fade" id="nav-pw" role="tabpanel" aria-labelledby="nav-pw-tab" tabindex="0">
-                                        <form>
-                                    <div class="input-item">
-                                            <label for="joinInput" class="form-label">현재 비밀번호</label>
-                                            <div class="input-box">
-                                               <input type="password" class="form-control" name = "pw" id="pw" placeholder="4자리 이상">
-                                            </div>
-                                  </div>
-                                           <div class="input-item">
-                                       <c:if test="${email == null}">
-                                            <label for="joinInput" class="form-label">새 비밀번호</label>
-                                            <input type="password" class="form-control" name = "pw" id="pw" placeholder="4자리 이상">
-                                            <span class="pw_error" style="color:red; display:none;">형식에 맞게 입력해주세요.</span>
-                                       </c:if>
-                                    </div>
-                                    <div class="input-item">
-                                       <c:if test="${email == null}">
-                                            <label for="joinInput" class="form-label">새 비밀번호 확인</label>
-                                            <input type="password" class="form-control" name = "pw" id="pw2" placeholder="4자리 이상" required oninput = "checkPw2()">
-                                            <span class="pw_ok" style="color:green; display:none;">비밀번호가 일치합니다.</span>
-                                            <span class="pw_x" style="color:red; display:none;">비밀번호가 일치하지 않습니다.</span>
-                                       </c:if>
-                                    </div>
-                                    <div class="input-wrap">
-                                       <button type="button" style="border-radius: 8px" class="purple-btn btn-xs" id="btnPw">변경</button>
-                                     </div>
-                                 </form>
+                                        <form method="post">
+		                                    <div class="input-item">
+	                                            <label for="joinInput" class="form-label">현재 비밀번호</label>
+                                                <input type="password" class="form-control" name = "pw" id="pw" placeholder="4자리 이상" required oninput = "checkPw()">
+                                                <span class="pw_xx" style="color:red; display:none;">비밀번호가 일치하지 않습니다.</span>
+		                                  	</div>
+                                           	<div class="input-item">
+	                                            <label for="joinInput" class="form-label">새 비밀번호</label>
+	                                            <input type="password" class="form-control" name = "newPw" id="newPw" placeholder="4자리 이상" required oninput = "checkNewPw()" disabled>
+	                                            <span class="pw_error" style="color:red; display:none;">형식에 맞게 입력해주세요.</span>
+		                                    </div>
+		                                    <div class="input-item">
+	                                            <label for="joinInput" class="form-label">새 비밀번호 확인</label>
+	                                            <input type="password" class="form-control" name = "newPw2" id="newPw2" placeholder="4자리 이상" required oninput = "checkNewPw2()" disabled> 
+	                                            <span class="pw_ok" style="color:green; display:none;">비밀번호가 일치합니다.</span>
+	                                            <span class="pw_x" style="color:red; display:none;">비밀번호가 일치하지 않습니다.</span>
+		                                    </div>
+		                                    <div class="input-wrap">
+		                                       <button type="submit" style="border-radius: 8px" class="purple-btn btn-xs" id="btnPw" disabled>변경</button>
+		                                    </div>
+                                 		</form>
                                     </div>
                                 </div>                            
                              </div>
+                             <!-- 북마크 -->
 		                     <div class="tab-pane fade" id="nav-book" role="tabpanel" aria-labelledby="nav-book-tab" tabindex="0">
 			                     <div class="book-wrap">
 	                                 <c:if test="${books != null }">
@@ -637,23 +687,30 @@
            	 $("#nav-add-tab").addClass("active");
            	 $("#nav-addInfo").addClass("active show");
         }else if(load === "3"){
-        	$(".nav-link").removeClass("active");
+        	 $(".nav-link").removeClass("active");
         	 $(".tab-pane").removeClass("active show");
         	 
           	 $("#nav-modify-tab").addClass("active");
           	 $("#nav-modifyInfo").addClass("active show");
-        }else if(load === "5"){
+        }else if(load === "4"){
+        	 $(".nav-link").removeClass("active");
+       	 	 $(".tab-pane").removeClass("active show");
+       	 
+         	 $("#nav-book-tab").addClass("active");
+         	 $("#nav-book").addClass("active show");
+       }else if(load === "5"){
         	$(".nav-link").removeClass("active");
        		$(".tab-pane").removeClass("active show");
          	$("#nav-reco-tab").addClass("active");
          	$("#nav-reco").addClass("active show");
 		}else if(load === "6"){
             $(".nav-link").removeClass("active");
-               $(".tab-pane").removeClass("active show");
+            $(".tab-pane").removeClass("active show");
                
-                 $("#nav-contact-tab").addClass("active");
-                 $("#nav-contact").addClass("active show");
-           }
+            $("#nav-contact-tab").addClass("active");
+            $("#nav-contact").addClass("active show");
+       }
+        
          // 적성 차트
          	let aptitudeScoreArr = 0;
          	let aptitudeNameArr = ["음악능력","수리·논리력","창의력","자연친화력","예술시각능력","공간지각력","대인관계능력","손재능","언어능력","자기성찰능력","신체·운동능력"];
@@ -1164,6 +1221,222 @@
         	
             
           
+        </script>
+        <script>
+      	//연도 유효성 검사
+      	var check = /^[0-9]+$/; 
+   		function checkYear() {
+   			var birth_year = $("#birth_year").val();
+   			if (birth_year.length === 4 && check.test(birth_year)) {
+   		        $('.year_error').css("display", "none");
+   		    } else if (birth_year.length > 0 && check.test(birth_year)) {
+   		        $('.year_error').css("display", "inline-block");
+   		    } else if (birth_year.length > 0 && !check.test(birth_year)) {
+   		        $('.year_error').css("display", "inline-block");
+   		    } else if (birth_year.length === 0) {
+   		        $('.year_error').css("display", "none");
+   		    }
+   		}
+   		
+   		//휴대폰 번호 인증
+   		$(function(){
+	   		$("#phoneChk").click(function(){
+	   		    var tel = $("#tel").val();
+	   		    
+	   		    //유효성검사
+	   			if(tel.length === 11 && check.test(tel)){
+	   				$('.tel_ok').css("display", "inline-block");
+	   				$('.tel_error').css("display", "none");
+	   				
+	   				$("#tel2").css("display", "inline-block");
+	                $("#phoneChk2").css("display", "inline-block");
+		   		    $.ajax({
+		   		        type:"POST",
+		   		        url:"/whou/member/telChk",
+		   		        data: {tel:tel},
+		   		        cache : false,
+		   		        success:function(numStr){
+		   		            if(numStr == "error"){ //실패시 
+		   		                //alert("휴대폰 번호가 올바르지 않습니다.")
+		   		            }else{            //성공시        
+		   		                //alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.")
+		   		                code2 = numStr; // 성공하면 데이터저장
+		   		            }
+		   		        }
+		   		        
+		   		    });
+	   			}else{
+	   				$('.tel_ok').css("display", "none");
+	   				$('.tel_error').css("display", "inline-block");
+	   			}
+	   		    
+	   		});
+   		});
+	 
+   		//휴대폰 인증번호 대조
+		$("#phoneChk2").click(function(){
+		    if($("#tel2").val() == code2){ // 위에서 저장한값을 비교
+		         //alert("인증에 성공하셨습니다.")
+		         $('.tel2_ok').css("display", "inline-block");
+	   			 $('.tel2_error').css("display", "none");
+		         telchk = "성공";
+		    }else{
+		        //alert("인증에 실패하셨습니다.\n인증번호를 다시 입력해주세요.")
+		        $('.tel2_ok').css("display", "none");
+   				$('.tel2_error').css("display", "inline-block");
+		    }
+		});
+   		
+		$(function() {
+   		    function updateButtonStatus() {
+		        var name = $("#name").val().replace(/ /g, '');
+		        var birth_year = $("#birth_year").val().replace(/ /g, '');
+		        var tel = $("#tel").val().replace(/ /g, '');
+
+   		        var yearValid = $('.year_error').css("display") === "none";
+   		        var telValid = $('.tel2_error').css("display") === "none" && $('.tel_error').css("display") === "none" && $('.tel2_ok').css("display") === "inline-block" && $('.tel_ok').css("display") === "inline-block";
+
+   		        // 모든 조건이 만족할 때 버튼 활성화
+	        	if (email !== '' && name !== '' && birth_year !== '' && tel !== '' &&
+	   		        yearValid && telValid) {
+	   		        $("#btnM").prop("disabled", false);
+   		        }else {
+   		            $("#btnM").prop("disabled", true);
+   		        }
+   		        
+   		    }
+
+   		    // 인풋 필드들의 입력값 변경 시에 이벤트 핸들러 할당
+   		    $("#name, #birth_year, #tel").on("input", function() {
+   		        updateButtonStatus();
+   		    });
+   			// 핸드폰 인증 버튼 클릭될 때마다 버튼 상태 업데이트
+   		    $("#phoneChk2").on("click", function() {
+   		        updateButtonStatus();
+   		    });
+   		    
+   		    
+   		    //회원가입 버튼 클릭시 컨트롤러로
+	   		$("#btnM").click(function() {
+	   		  if (!$(this).prop("disabled")) {
+	   			  
+	   			var email = $("#email").val().replace(/ /g, '');
+		        var name = $("#name").val().replace(/ /g, '');
+		        var birth_year = $("#birth_year").val().replace(/ /g, '');
+		        var tel = $("#tel").val().replace(/ /g, '');
+  
+	   			//컨트롤러로 보낼 데이터
+     		 	var data = {
+  	        		email: email,
+  	                name: name,
+  	                birth_year: birth_year,
+  	                tel: tel,
+	  	        };
+
+	   			$.ajax({
+	   		      url: "/whou/member/updateUser",
+	   		      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	   		      method: "POST",
+	   		      data: data,
+		   		  error: function() {
+		   		        alert("오류가 발생했습니다.\n다시 시도해주세요.");
+		   		  },
+	  		      success:function(result){
+  		        	if(result === "1"){
+		                	alert("회원정보가 성공적으로 변경되었습니다.")
+		                	location.href = '/whou/member/mypage?load=3';
+  		        	}else{
+  		        		alert("오류가 발생했습니다.\n다시 시도해주세요.");
+  		        	}
+	  		      }
+	   		    });
+	   		  }
+	   	   });
+   		});
+		
+	    //현재 비밀번호 확인
+   		function checkPw() {
+   		     var pw = $("#pw").val();
+   		     var email = "${memId}";
+	   		 $.ajax({
+	             url: "/whou/member/findPwPro",
+	             data: { email: email},
+	             success: function (result) {
+	            	 if(pw.length > 0 && pw == result){
+	         		      $('.pw_xx').css("display", "none");
+	         		      $("#newPw").prop("disabled", false); // 활성화
+	                      $("#newPw2").prop("disabled", false); // 활성화
+	         		    }else if(pw.length > 0 && pw != result){
+	         		       $('.pw_xx').css("display", "inline-block");
+	         		       $("#newPw").prop("disabled", true); // 비활성화
+	                       $("#newPw2").prop("disabled", true); // 비활성화
+	         		    }else if(pw.length === 0){
+         		    	   $('.pw_xx').css("display", "none");
+	         		       $("#newPw").prop("disabled", true); // 비활성화
+	                       $("#newPw2").prop("disabled", true); // 비활성화
+		         		}
+	             }
+	         });
+   		    
+   		}
+	    
+   		//새비밀번호 유효성
+   		function checkNewPw() {
+   		     var newPw = $("#newPw").val();
+	   		 
+           	 if(newPw.length >= 4){
+	   		      $('.pw_error').css("display", "none");
+   		     }else if(newPw.length < 4 && newPw.length >0){
+	   		        $('.pw_error').css("display", "inline-block");
+	   		 }else if(newPw.length === 0){
+	  		        $('.pw_error').css("display", "none");
+         	}
+   		}
+   	
+   		//새 비밀번호 확인
+   		function checkNewPw2() {
+   		     var newPw = $("#newPw").val();
+   		     var newPw2 = $("#newPw2").val();
+	   		 
+           	 if(newPw === newPw2){
+     		      	$('.pw_ok').css("display", "inline-block");
+     		      	$('.pw_x').css("display", "none");
+     		     	$("#btnPw").prop("disabled", false); // 활성화
+     		 }else if(newPw != newPw2){
+     				$('.pw_ok').css("display", "none");
+     		        $('.pw_x').css("display", "inline-block");
+     		       	$("#btnPw").prop("disabled", true); // 비활성화
+     		       
+     		 }else if(pw.length === 0){
+     				$('.pw_ok').css("display", "nonek");
+    		       	$('.pw_x').css("display", "none");
+    		       	$("#btnPw").prop("disabled", true); // 비활성화
+      		 }
+   		    
+   		}
+   		
+   		//비밀번호 변경
+   		$(function(){
+	   		$("#btnPw").click(function(){
+	   		 	var newPw2 = $("#newPw2").val();
+	   		    $.ajax({
+	   		        type:"POST",
+	   		        url:"/whou/member/updatePw",
+	   		        data: {pw:newPw2},
+	   		     	error: function() {
+		   		        alert("오류가 발생했습니다.\n다시 시도해주세요.");
+		   		    },
+	   		        success:function(result){
+	   		        	if(result === "1"){
+   		                	alert("비밀번호가 성공적으로 변경되었습니다.")
+   		                	location.href = '/whou/member/mypage?load=3';
+	   		        	}else{
+	   		        		alert("오류가 발생했습니다.\n다시 시도해주세요.");
+	   		        	}
+	   		        }
+	   		    });
+	   		});
+   		});
         </script>
         
     

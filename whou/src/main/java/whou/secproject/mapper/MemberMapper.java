@@ -35,9 +35,10 @@ public interface MemberMapper {
 	//회원정보 수정
 	public MemberDTO getUser(int userNum);
 	public UserInfoDTO userInfo(int userNum);
-	public void updateUser(int userNum);
-	public void updatePw(int userNum);
-	public void updateUserInfo(int userNum);
+	public void updateUser(MemberDTO dto);
+	public void updatePw(@Param("pw")String pw, @Param("memId")String memId);
+	public void deleteMajor(@Param("memId")String memId, @Param("db")String db);
+	public void deleteCerti(@Param("memId")String memId, @Param("db")String db);
 
 	
 	
