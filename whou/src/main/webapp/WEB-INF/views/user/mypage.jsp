@@ -192,7 +192,7 @@
 		                                                   <input type="text" name="major" autocomplete="off" placeholder="전공명" oninput="checkMajor(this)" />
 		                                                   <ul class="majorList"></ul>
 		                                              </div>
-		                                              <div class="input-wrap">
+		                                              <div class="input-wrap gong2">
 		                                                  <input type="text" name="major" autocomplete="off" placeholder="부전공명/복수전공명" oninput="checkMajor(this)" />
 		                                                  <ul class="majorList"></ul>
 		                                             </div>
