@@ -528,6 +528,11 @@ input[type="date"]{
  #item-ability{display:none;}
 .jobSearchLi {position: absolute;width:300px;background-color: #f9f9f9;border: 1px solid #ccc;padding: 5px;list-style: none;margin: 0;display: none;z-index:1;}
 .jobSearchLi li{position:relative;}
+.chart-wrap {width:100%;display:flex;justify-content: center;}
+.chart-inner{width:500px}
+.chart-inner #interestChart{width:100% !important;height:100% !important;}
+.chart-ranks{margin-left: 70px;}
+.chart-ranks li:first-child{font-weight:500;margin-bottom:10px;font-size:18px;}
 
 .book-wrap{display:flex;gap:20px;flex-wrap:wrap;padding:0 30px;}
 .book-wrap .card{width:200px;height:200px;  }
