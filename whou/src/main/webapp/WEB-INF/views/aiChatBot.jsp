@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div id="ai-chatBot" style="position: fixed; right: 20px; bottom: 20px; background-color: #f8f8f8; border: 1px solid #ddd; padding: 10px;">
-		<div id="ai-assistant" style="display: none;">
+	<div id="ai-chatBot">
+		<div id="ai-assistant" >
 		<%@ include file="assistant/ai.jsp" %>
 		</div> 
 		<div id="ai-area">

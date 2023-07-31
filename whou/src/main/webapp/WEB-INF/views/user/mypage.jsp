@@ -75,7 +75,7 @@
                                    <option value="27">역량</option>
                                    <option value="31">흥미</option>
                                </select>
-                               <div id="item-aptitude">
+                               <div id="item-aptitude" class="chart-wrap">
                                   <c:if test="${!scoreTrue1}">
                                    <canvas id="aptitudeChart" style="display:none;"></canvas>
                                      <div class="empty-box">
@@ -84,15 +84,18 @@
                                      </div>
                                   </c:if>
                                   <c:if test="${scoreTrue1}">
+                                  	<div class="chart-inner">
                                       <canvas id="aptitudeChart"></canvas>
-                                      <ul>
-                                           <li>${aptitudeRank.aptitude_name1}</li>                         
-                                           <li>${aptitudeRank.aptitude_name2}</li>                         
-                                           <li>${aptitudeRank.aptitude_name3}</li>                         
+                                    </div>
+                                      <ul class="chart-ranks">
+                                      		<li>적성 TOP3</li>
+                                           <li>▶ ${aptitudeRank.aptitude_name1}</li>                         
+                                           <li>▶ ${aptitudeRank.aptitude_name2}</li>                         
+                                           <li>▶ ${aptitudeRank.aptitude_name3}</li>                         
                                       </ul>
                                   </c:if>                                  
                                </div>
-                               <div id="item-values">
+                               <div id="item-values" class="chart-wrap">
                                   <c:if test="${!scoreTrue3}">
                                    <canvas id="valuesChart" style="display:none;"></canvas>
                                    <div class="empty-box">
@@ -101,10 +104,12 @@
                                      </div>
                                   </c:if>
                                   <c:if test="${scoreTrue3}">
-                                     <canvas id="valuesChart"></canvas>
+                                  	<div class="chart-inner">
+                                     	<canvas id="valuesChart"></canvas>
+                                     </div>
                                   </c:if>
                                </div>
-                               <div id="item-interest">
+                               <div id="item-interest" class="chart-wrap">
                                   <c:if test="${!scoreTrue2}">
                                       <canvas id="interestChart" style="display:none;"></canvas>
                                      <div class="empty-box">
@@ -113,15 +118,18 @@
                                      </div>
                                   </c:if>
                                   <c:if test="${scoreTrue2}">
-                                     <canvas id="interestChart"></canvas>
-                                      <ul>
-                                           <li>${aptitudeRank.interest_name1}</li>                         
-                                           <li>${aptitudeRank.interest_name2}</li>                         
-                                           <li>${aptitudeRank.interest_name3}</li>                         
+                                  	<div class="chart-inner">
+                                    	 <canvas id="interestChart"></canvas>
+                                     </div>
+                                      <ul class="chart-ranks">
+                                      		<li>흥미 TOP3</li>
+                                           <li>▶ ${aptitudeRank.interest_name1}</li>                         
+                                           <li>▶ ${aptitudeRank.interest_name2}</li>                         
+                                           <li>▶ ${aptitudeRank.interest_name3}</li>                         
                                       </ul>
                                   </c:if>
                                </div>
-                               <div id="item-ability">
+                               <div id="item-ability" class="chart-wrap">
                                   <c:if test="${!scoreTrue4}">
                                    <canvas id="abilityChart1" style="display:none;"></canvas>
                                       <canvas id="abilityChart2" style="display:none;"></canvas>
@@ -131,10 +139,11 @@
                                      </div>
                                   </c:if>
                                   <c:if test="${scoreTrue4}">
-                                       <canvas id="abilityChart1"></canvas>
-                                      <canvas id="abilityChart2"></canvas>
+                                  	<div class="chart-inner">
+                                      	<canvas id="abilityChart1"></canvas>
+                                      	<canvas id="abilityChart2"></canvas>
+                                      </div>
                                   </c:if>
-                                 
                                </div>
                             </div>
                             <div class="tab-pane fade" id="nav-addInfo" role="tabpanel" aria-labelledby="nav-add-tab" tabindex="0">
@@ -619,7 +628,7 @@
                                min: 0,
                                max: 100,
                                ticks: {
-                                 stepSize:5
+                                 stepSize:10
                                }
                            
                        }
@@ -652,7 +661,7 @@
                                min: 0,
                                max: 100,
                                ticks: {
-                                 stepSize:5
+                                 stepSize:10
                                }
                            
                        }
@@ -685,7 +694,7 @@
                                min: 0,
                                max: 20,
                                ticks: {
-                                 stepSize:5
+                                 stepSize:10
                                }
                            
                        }
@@ -719,7 +728,7 @@
                                min: 0,
                                max: 100,
                                ticks: {
-                                 stepSize:5
+                                 stepSize:10
                                }
                            
                        }
@@ -748,7 +757,7 @@
                                  min: 0,
                                  max: 100,
                                  ticks: {
-                                   stepSize:5
+                                   stepSize:10
                                  }
                              
                          }
@@ -901,13 +910,13 @@
 
             // 선택된 값에 따라 해당 아이템을 보여줌
             if (selectedValue === '21') {
-                $('#item-aptitude').show();
+                $('#item-aptitude').css("display","flex");
             } else if (selectedValue === '31') {
-                $('#item-interest').show();
+                $('#item-interest').css("display","flex");
             } else if (selectedValue === '25') {
-                $('#item-values').show();
+                $('#item-values').css("display","flex");
             }else if (selectedValue === '27') {
-                $('#item-ability').show();
+                $('#item-ability').css("display","flex");
             }
         });
         
