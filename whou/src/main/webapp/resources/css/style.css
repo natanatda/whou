@@ -538,7 +538,7 @@ input[type="date"]{
 .chart-ranks{margin-left: 70px;}
 .chart-ranks li:first-child{font-weight:500;margin-bottom:10px;font-size:18px;}
 
-.book-wrap{display:flex;gap:20px;flex-wrap:wrap;padding:0 30px;}
+.book-wrap{display:flex;gap:20px;flex-wrap:wrap;}
 .book-wrap .card{width:200px;height:200px;  }
 .book-wrap .result-cont{ padding: 20px;height:180px;text-overflow:ellipsis;word-wrap:break-word;display: -webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
 .reco-wrap .reco-item{display:flex;gap:20px;align-items:center; background:#fff; border-radius:12px;padding:20px;margin-bottom:20px;}
