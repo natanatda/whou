@@ -66,7 +66,7 @@
                                 </li>
                               </ul>
                               <div class="tab-content" id="pills-tabContent">
-								<div class="tab-pane fade show" id="theme" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+								<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
                                     <h5>최근 대두되는 관심과 흥미를 반영한 작업별 테마를 선택하여 작업을 검색할 수 있습니다.</h5>
                                     <ul class="button-wrap mb-3">
                                     <c:forEach var="tvl" items="${temaValueList1}">
