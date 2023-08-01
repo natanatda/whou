@@ -1,7 +1,6 @@
 package whou.secproject.controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -849,7 +848,7 @@ public class MemberController {
             	Map<Integer, Double> jcdToScore = new HashMap<>();
             	for (int idx = 0; idx < jList.size(); idx++) {
             		jcdToScore.put(jList.get(idx), jobScore.get(idx));
-//           System.out.print(jList.get(idx)+": "+jobScore.get(idx)+" ");
+//           	System.out.print(jList.get(idx)+": "+jobScore.get(idx)+" ");
 //           for(int m = 0; m < 10+majorC+certiC; m++)
 //                 System.out.print(jobScorePoint[idx][m]+" ");
             		serviceRe.insertJobPoint(userNum,jList.get(idx),jobScore.get(idx), jobScorePoint[idx], majorC, certiC);
@@ -873,7 +872,7 @@ public class MemberController {
            List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(selDTO, userNum, 1, 5);
            SelectDTO selDTO2 = new SelectDTO();
            HashMap<String,String> top3NM = null;
-           if(!notTest) serviceRe.getRecoList(selDTO2, userNum);
+           if(!notTest) top3NM = serviceRe.getRecoList(selDTO2, userNum);
            if(top3NM==null) {
         	   top3NM = new HashMap<String,String>();
         	   top3NM.put("APTITUDE_NAME1", "적성1");

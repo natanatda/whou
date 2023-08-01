@@ -62,14 +62,11 @@
                                   <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" ><span>적성유형</span>별 검색</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                  <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false" ><span>조건</span>별 검색</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
                                   <button class="nav-link" id="pills-disabled-tab" data-bs-toggle="pill" data-bs-target="#pills-disabled" type="button" role="tab" aria-controls="pills-disabled" aria-selected="false" ><span>직업분류</span>별 검색</button>
                                 </li>
                               </ul>
                               <div class="tab-content" id="pills-tabContent">
-								<div class="tab-pane fade show active" id="theme" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+								<div class="tab-pane fade show" id="theme" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
                                     <h5>최근 대두되는 관심과 흥미를 반영한 작업별 테마를 선택하여 작업을 검색할 수 있습니다.</h5>
                                     <ul class="button-wrap mb-3">
                                     <c:forEach var="tvl" items="${temaValueList1}">
@@ -112,8 +109,8 @@
                                     </ul>
 								</div>
                                 	
-                                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">...</div>
                                 <div class="tab-pane fade" id="pills-disabled" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">
+                                <h5>직업에 필요한 지식, 능력, 기질 등을 중심으로 구분한 직업분류(국가수준 분류체계)를 선택하여 직업을 검색할 수 있습니다.</h5>
                                 	<ul class="button-wrap mb-3">
                                     <c:forEach var="jcl" items="${jobCdList}">
                                         <li <c:if test="${fn:contains(checked, jcl.sort_value)}">class="active"</c:if>> 
@@ -214,12 +211,12 @@
 				    tabTrigger.show()
 				})
 			})
-				
             var checkedValues = ${checked}; // 서버에서 전달된 checked 배열의 값
             console.log(checkedValues);
             var tabId = "${clickTabId}";
             console.log(tabId);
             setElementsActive("${aptd}");
+            
             if(tabId!=""){
 				var element = document.getElementById(tabId);
 				//alert(tabId);
@@ -380,7 +377,6 @@
 				var form = document.forms['form'];
 	    		return form.appendChild(input);
 			}
-	            
         </script>
     </body>
 </html>

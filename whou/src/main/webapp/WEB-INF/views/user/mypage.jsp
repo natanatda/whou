@@ -412,22 +412,6 @@
 																</div>
 															</c:forEach>
 														</c:if>
-														<c:if test="${testTrue !=null}">
-															<c:forEach var="trueByTest" items="${testTrue}" varStatus="loop">
-																<div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px; width:230px;">
-																<c:if test="${loop.index eq 0}">적성</c:if>
-																<c:if test="${loop.index eq 1}">흥미</c:if>
-																<c:if test="${loop.index eq 2}">가치관</c:if>
-																	<select name="importance" style="min-width:50px; margin-left:25px;margin-right:15px;">
-																		<option value="3"<c:if test="${impt.get(loop.index)==3}">selected</c:if> >1</option>
-																		<option value="2"<c:if test="${impt.get(loop.index)==2}">selected</c:if> >2</option>
-																		<option value="1"<c:if test="${impt.get(loop.index)==1}">selected</c:if> >3</option>
-																	</select>
-																	<c:if test="${trueByTest}">응시함</c:if>
-																	<c:if test="${!trueByTest}">응시 안함</c:if>
-																</div>
-															</c:forEach>
-														</c:if>
 														<c:if test="${testTrue==null}">
 															<div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px; width:230px;">
 																적성

@@ -67,7 +67,9 @@
                         <h1 class="main-text">당신만을 위한 <span>직업 추천</span></h1>
                     </div>
                     <div class="container px-5 my-5">
+                    
                         <div class="row gx-5 main-content">
+                        
                             <div class="col-lg-4 mb-5 mb-lg-0">
                                 <div class="feature mb-3"><i class="bi bi-collection"></i></div>
                                 <h2 class="h5">직업 검사받기</h2>
@@ -77,6 +79,7 @@
                                     직업 검사를 실행 시에는 저희가 정보를 전부 가져갈 수 있다는점 인지해주세요!
                                 </p>
                             </div>
+                            
                             <div class="col-lg-4 mb-5 mb-lg-0">
                                 <div class="feature mb-3"><i class="bi bi-building"></i></div>
                                 <h2 class="h5">직업 컨설팅</h2>
@@ -86,6 +89,7 @@
                                     직업 검사를 실행 시에는 저희가 정보를 전부 가져갈 수 있다는점 인지해주세요!
                                 </p>
                             </div>
+                            
                             <div class="col-lg-4">
                                 <div class="feature mb-3"><i class="bi bi-toggles2"></i></div>
                                 <h2 class="h5">직업 관련정보</h2>
@@ -95,7 +99,9 @@
                                     직업 검사를 실행 시에는 저희가 정보를 전부 가져갈 수 있다는점 인지해주세요!
                                 </p>
                             </div>
+                            
                         </div>
+                        
                     </div>
                 </section>
             </div>
