@@ -1,5 +1,7 @@
 package whou.secproject.controller;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -10,8 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import whou.secproject.component.AssistantDTO;
+import whou.secproject.component.SelectDTO;
+import whou.secproject.service.AptitudeService;
 import whou.secproject.service.AssistantService;
 import whou.secproject.service.MainService;
+import whou.secproject.service.MemberService;
+import whou.secproject.service.RecommendService;
 import whou.secproject.service.WhouModelCustomService;
 import whou.secproject.service.WhouModelService;
 
@@ -26,6 +32,15 @@ public class MainController {
 	private WhouModelCustomService whouModelCustomService;
 	
 	@Autowired
+	private AptitudeService serviceAt;
+	
+	@Autowired
+	private MemberService memService;
+	
+	@Autowired
+	private RecommendService serviceRe;
+	
+	@Autowired
 	private WhouModelService whouModelService;
 	
 	@Autowired
@@ -36,8 +51,10 @@ public class MainController {
 		
 		String email = (String)session.getAttribute("memId");
 		// ai model 가져오기
+		int userNum = 0;
 		if(email != null) {
 			model.addAttribute("model", whouModelCustomService.customModel(email));
+			userNum=serviceAt.userNumSelect(email);
 		}
 		
 		int count = assistantService.assistantCount(); // null방지 카운트
@@ -46,13 +63,33 @@ public class MainController {
 			session.setAttribute("assistantList", aiList);
 		}
 		// icon 가져오기
-		int code = 165;
-		int brush = 995;
-		String icon = service.selectIcon(code);
+		Integer cunsultingNum = 0;
+        if(email!= null) {
+        	cunsultingNum = memService.getCunsultingNum(userNum);
+        	if(cunsultingNum==null)cunsultingNum = 0;
+        }		
+        int brush = 995;
+		String icon = service.selectIcon(cunsultingNum);
 		model.addAttribute("icon", icon);
 		model.addAttribute("brush", whouModelService.selectModel(brush)); // 붓 장착
+		
+		
+		// 추천 글 가져오기
+		
+        HashMap<String,String> talent = serviceRe.getJobFactor(cunsultingNum);
+        String message = null;
+        if(talent!=null) {
+        	String talStr = talent.get("DETAIL_VALUE");
+    		if(talStr.equals("자기성찰능력")) talStr = "자아성찰능력";
+    		message= service.selectRecoMessage(talStr);
+        }
+        model.addAttribute("message", message);
+        
+        
+        //
+        if(email!=null) {
+           // List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(new SelectDTO(), userNum, 1, 5);
+        }
 	    return "/main"; 
 	}
-	
-
 }

@@ -18,7 +18,9 @@ public class MainServiceImpl implements MainService {
 	public String selectIcon(int code) {
 		return mapper.selectIcon(code);
 	}
-
-
 	
+	@Override
+	public String selectRecoMessage(String tal){
+		return mapper.selectRecoMessage(tal);
+	}
 }
