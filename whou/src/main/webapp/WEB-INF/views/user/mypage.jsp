@@ -1055,11 +1055,20 @@
 
             // qualificationList가 보일 때만 작동
             if (isQualificationListVisible) {
-                // 클릭된 요소의 태그 이름이 "INPUT" 또는 "BUTTON"이 아닌 경우에만 qualificationList를 비우고 숨깁니다.
-                if (clickedElement.tagName !== "BUTTON" && !$(clickedElement).closest(".qualificationList").length) {
-                    qualificationLists.empty().hide();
-                    $("input[name='certi']").val("");
+                // 클릭된 요소가 qualificationList 또는 qualificationList 하위 요소인 경우 아무 동작 없이 리턴
+                if ($(clickedElement).closest(".qualificationList").length) {
+                    return;
                 }
+
+                // qualificationList가 보이고 있는 인풋 요소의 값을 비웁니다.
+                $("input[name='certi']").each(function() {
+                    if ($(this).siblings(".qualificationList").is(":visible")) {
+                        $(this).val("");
+                    }
+                });
+
+                // qualificationList를 숨깁니다.
+                qualificationLists.empty().hide();
             }
         });
 
@@ -1074,12 +1083,21 @@
         function hideQualificationListOnClickOutside(event) {
             var clickedElement = event.target;
             var qualificationLists = $(".qualificationList");
-            
-            // 클릭된 요소의 태그 이름이 "INPUT" 또는 "BUTTON"이 아닌 경우에만 qualificationList를 비우고 숨깁니다.
-            if (clickedElement.tagName !== "BUTTON" && !$(clickedElement).closest(".qualificationList").length) {
-                qualificationLists.empty().hide();
-                $("input[name='certi']").val("");
+
+            // 클릭된 요소가 qualificationList 또는 qualificationList 하위 요소인 경우 아무 동작 없이 리턴
+            if ($(clickedElement).closest(".qualificationList").length) {
+                return;
             }
+
+            // qualificationList가 보이고 있는 인풋 요소의 값을 비웁니다.
+            $("input[name='certi']").each(function() {
+                if ($(this).siblings(".qualificationList").is(":visible")) {
+                    $(this).val("");
+                }
+            });
+
+            // qualificationList를 숨깁니다.
+            qualificationLists.empty().hide();
         }
 
         // select 요소의 값 변경 감지
