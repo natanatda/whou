@@ -192,7 +192,7 @@
 		                                                   <input type="text" name="major" autocomplete="off" placeholder="전공명" oninput="checkMajor(this)" />
 		                                                   <ul class="majorList"></ul>
 		                                              </div>
-		                                              <div class="input-wrap">
+		                                              <div class="input-wrap gong2">
 		                                                  <input type="text" name="major" autocomplete="off" placeholder="부전공명/복수전공명" oninput="checkMajor(this)" />
 		                                                  <ul class="majorList"></ul>
 		                                             </div>
@@ -218,107 +218,110 @@
                                   </nav>
                                  <div class="tab-content" id="nav-tabContent">
                                     <div class="tab-pane fade show active" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab" tabindex="0">
-                                       <h3>기본 정보</h3>
-                                       <p>정보를 변경하려면 휴대폰 본인인증을 완료하셔야합니다.</p>
-                                          <form name="joinForm" method="post">
-	                                            <div class="input-item">
-		                                            <label for="joinInput" class="form-label">이메일</label>
-		                                            <span class="form-control" id="email">${mem.email}</span>
-	                                          	</div>
-	                                          	<div class="input-item">
-		                                            <label for="joinInput" class="form-label">이름</label>
-		                                            <input type="text" class="form-control" name = "name" id="name" placeholder="이름(실명) 입력" value = "${mem.name}">
-		                                            <input type="hidden" class="form-control" id = "join_type" value ="${mem.join_type}">
-	                                          	</div>
-	                                          	<div class="input-item">
-		                                            <label for="joinInput" class="form-label">연도</label>
-		                                            <input type="text" class="form-control" name = "birth_year" id="birth_year" placeholder="YYYY" value = "${mem.birth_year}" required oninput = "checkYear()">
-		                                            <span class="year_error" style="color:red; display:none;">형식에 맞게 4자리로 입력해주세요.</span>
-	                                          	</div>
-	                                          	<div class="input-item">
-	                                            	<label for="joinInput" class="form-label">휴대폰</label>
+	                                    <div class="chg-info">
+	                                 	 <h3>기본 정보 <span>정보를 변경하려면 휴대폰 본인인증을 완료하셔야합니다.</span></h3>
+	                                          <form name="joinForm" method="post">
+		                                            <div class="input-item">
+			                                            <label for="joinInput" class="form-label">이메일</label>
+			                                            <span class="form-control" id="email">${mem.email}</span>
+		                                          	</div>
+		                                          	<div class="input-item">
+			                                            <label for="joinInput" class="form-label">이름</label>
+			                                            <input type="text" class="form-control" name = "name" id="name" placeholder="이름(실명) 입력" value = "${mem.name}">
+			                                            <input type="hidden" class="form-control" id = "join_type" value ="${mem.join_type}">
+		                                          	</div>
+		                                          	<div class="input-item">
+			                                            <label for="joinInput" class="form-label">연도</label>
+			                                            <input type="text" class="form-control" name = "birth_year" id="birth_year" placeholder="YYYY" value = "${mem.birth_year}" required oninput = "checkYear()">
+			                                            <span class="year_error" style="color:red; display:none;">형식에 맞게 4자리로 입력해주세요.</span>
+		                                          	</div>
+		                                          	<div class="input-item">
+		                                            	<label for="joinInput" class="form-label">휴대폰</label>
+			                                            <div class="input-box">
+			                                               <input type="text" class="form-control" id="tel" name = "tel" placeholder="'-' 빼고 숫자만 입력" value = "${mem.tel}">
+			                                               <button type="button" style="border-radius: 8px" class="purple-btn" name="phoneChk" id="phoneChk">인증 요청</button>
+			                                            </div>
+		                                               <span class="tel_error" style="color:red; display:none;">형식에 맞게 휴대폰번호를 정확히 입력해주세요.</span>
+		                                               <span class="tel_ok" style="color:green; display:none;">인증번호 발송이 완료되었습니다.</br> 휴대폰에서 인증번호를 확인해주십시오.</span>
 		                                            <div class="input-box">
-		                                               <input type="text" class="form-control" id="tel" name = "tel" placeholder="'-' 빼고 숫자만 입력" value = "${mem.tel}">
-		                                               <button type="button" style="border-radius: 8px" class="purple-btn" name="phoneChk" id="phoneChk">인증 요청</button>
-		                                            </div>
-	                                               <span class="tel_error" style="color:red; display:none;">형식에 맞게 휴대폰번호를 정확히 입력해주세요.</span>
-	                                               <span class="tel_ok" style="color:green; display:none;">인증번호 발송이 완료되었습니다.</br> 휴대폰에서 인증번호를 확인해주십시오.</span>
-	                                            <div class="input-box">
-	                                               <input type="text" style="display:none;" class="form-control" id="tel2" name = "tel2" placeholder="인증번호 입력">
-	                                               <button type="button" style="display:none; border-radius: 8px" class="purple-btn" name="phoneChk2" id="phoneChk2">인증 확인</button>
-	                                         	</div>
-	                                              	<span class="tel2_ok" style="color:green; display:none;">인증에 성공하셨습니다.</span>
-	                                               	<span class="tel2_error" style="color:red; display:none;">인증에 실패하셨습니다</br>인증번호를 다시 확인해주십시오.</span>
-	                                          	</div>
-	                                          	<div class="input-wrap">
-	                                             	<button type="submit" style="border-radius: 8px" class="purple-btn btn-xs" id="btnM" disabled>수정</button>
-	                                           	</div>
-                                        	</form>
-                                        <div>
-	                                       <h3>학과 정보</h3>
-	                                       	<div>
-				                                 <c:if test="${arrM != null }">
-				                                    <c:forEach var="major" items="${arrM}" varStatus="status">
-														<div class="card mb-5 mb-xl-0">
-															<a href="/whou/member/deleteMajor?major=${major}"><i class="position-absolute top-50 start-100 translate-middle fa-solid fa-circle-minus fa-lg"></i></a>
-															<div class="result-cont">
-																<span class="form-control" id="major">${major}</span>
-															</div>
-				                                       </div>
-				                                    </c:forEach>
-				                                 </c:if>
-				                                 <c:if test="${arrM == null }">
-					                                 <div class="empty-box">
-					                                    <div>학과 정보가 없습니다.</div>
-					                                    <div>추가정보입력에서 학과를 등록해 주세요.</div>
-					                                    <a href="/whou/member/mypage?load=2">추가정보입력 >></a>
-					                                 </div>
-				                                 </c:if>
-			                        		</div>
-			                        		<h3>자격증 정보</h3>
-	                                       	<div>
-				                                 <c:if test="${arrC != null }">
-				                                    <c:forEach var="certi" items="${arrC}" varStatus="status">
-														<div class="card mb-5 mb-xl-0">
-															<a href="/whou/member/deleteCerti?certi=${certi}"><i class="position-absolute top-50 start-100 translate-middle fa-solid fa-circle-minus fa-lg"></i></a>
-															<div class="result-cont">
+		                                               <input type="text" style="display:none;" class="form-control" id="tel2" name = "tel2" placeholder="인증번호 입력">
+		                                               <button type="button" style="display:none; border-radius: 8px" class="purple-btn" name="phoneChk2" id="phoneChk2">인증 확인</button>
+		                                         	</div>
+		                                              	<span class="tel2_ok" style="color:green; display:none;">인증에 성공하셨습니다.</span>
+		                                               	<span class="tel2_error" style="color:red; display:none;">인증에 실패하셨습니다</br>인증번호를 다시 확인해주십시오.</span>
+		                                          	</div>
+		                                          	<div class="input-wrap">
+		                                             	<button type="submit" style="border-radius: 8px" class="purple-btn btn-xs" id="btnM" disabled>수정</button>
+		                                           	</div>
+	                                        	</form>
+	                                        <div class="chg-addinfo">
+		                                       	<div>
+		                                      		 <h3>학과 정보</h3>
+					                                 <c:if test="${arrM != null }">
+					                                    <c:forEach var="major" items="${arrM}" varStatus="status">
+						                                  
+																<div class="input-wrap">
+																	<span class="form-control" id="major">${major}</span>
+																	<i onclick="location='/whou/member/deleteMajor?major=${major}'" class="fa-solid fa-circle-minus fa-lg"></i>
+																</div>
+						                                   
+					                                    </c:forEach>
+					                                 </c:if>
+					                                 <c:if test="${arrM == null }">
+						                                 <div class="empty-box">
+						                                    <div>학과 정보가 없습니다.</div>
+						                                    <div>추가정보입력에서 학과를 등록해 주세요.</div>
+						                                    <a href="/whou/member/mypage?load=2">추가정보입력 >></a>
+						                                 </div>
+					                                 </c:if>
+				                        		</div>
+		                                       	<div>
+				                        			<h3>자격증 정보</h3>
+					                                 <c:if test="${arrC != null }">
+					                                    <c:forEach var="certi" items="${arrC}" varStatus="status">
+						                               
+															<div class="input-wrap">
 																<span class="form-control" id="major">${certi}</span>
+																<i onclick="location='/whou/member/deleteCerti?certi=${certi}'" class="fa-solid fa-circle-minus fa-lg"></i>
 															</div>
-				                                       </div>
-				                                    </c:forEach>
-				                                 </c:if>
-				                                 <c:if test="${arrC == null }">
-					                                 <div class="empty-box">
-					                                    <div>자격증 정보가 없습니다.</div>
-					                                    <div>추가정보입력에서 자격증을 등록해 주세요.</div>
-					                                    <a href="/whou/member/mypage?load=2">추가정보입력 >></a>
-					                                 </div>
-				                                 </c:if>
-			                        		</div>
-			                        	</div> 
+						                                   
+					                                    </c:forEach>
+					                                 </c:if>
+					                                 <c:if test="${arrC == null }">
+						                                 <div class="empty-box">
+						                                    <div>자격증 정보가 없습니다.</div>
+						                                    <div>추가정보입력에서 자격증을 등록해 주세요.</div>
+						                                    <a href="/whou/member/mypage?load=2">추가정보입력 >></a>
+						                                 </div>
+					                                 </c:if>
+				                        		</div>
+				                        	</div> 
+	                                    </div>
                                     </div>
                                     <div class="tab-pane fade" id="nav-pw" role="tabpanel" aria-labelledby="nav-pw-tab" tabindex="0">
-                                        <form method="post">
-		                                    <div class="input-item">
-	                                            <label for="joinInput" class="form-label">현재 비밀번호</label>
-                                                <input type="password" class="form-control" name = "pw" id="pw" placeholder="4자리 이상" required oninput = "checkPw()">
-                                                <span class="pw_xx" style="color:red; display:none;">비밀번호가 일치하지 않습니다.</span>
-		                                  	</div>
-                                           	<div class="input-item">
-	                                            <label for="joinInput" class="form-label">새 비밀번호</label>
-	                                            <input type="password" class="form-control" name = "newPw" id="newPw" placeholder="4자리 이상" required oninput = "checkNewPw()" disabled>
-	                                            <span class="pw_error" style="color:red; display:none;">형식에 맞게 입력해주세요.</span>
-		                                    </div>
-		                                    <div class="input-item">
-	                                            <label for="joinInput" class="form-label">새 비밀번호 확인</label>
-	                                            <input type="password" class="form-control" name = "newPw2" id="newPw2" placeholder="4자리 이상" required oninput = "checkNewPw2()" disabled> 
-	                                            <span class="pw_ok" style="color:green; display:none;">비밀번호가 일치합니다.</span>
-	                                            <span class="pw_x" style="color:red; display:none;">비밀번호가 일치하지 않습니다.</span>
-		                                    </div>
-		                                    <div class="input-wrap">
-		                                       <button type="submit" style="border-radius: 8px" class="purple-btn btn-xs" id="btnPw" disabled>변경</button>
-		                                    </div>
-                                 		</form>
+                                       <div class="chg-info">
+	                                        <form method="post">
+			                                    <div class="input-item">
+		                                            <label for="joinInput" class="form-label">현재 비밀번호</label>
+	                                                <input type="password" class="form-control" name = "pw" id="pw" placeholder="4자리 이상" required oninput = "checkPw()">
+	                                                <span class="pw_xx" style="color:red; display:none;">비밀번호가 일치하지 않습니다.</span>
+			                                  	</div>
+	                                           	<div class="input-item">
+		                                            <label for="joinInput" class="form-label">새 비밀번호</label>
+		                                            <input type="password" class="form-control" name = "newPw" id="newPw" placeholder="4자리 이상" required oninput = "checkNewPw()" disabled>
+		                                            <span class="pw_error" style="color:red; display:none;">형식에 맞게 입력해주세요.</span>
+			                                    </div>
+			                                    <div class="input-item">
+		                                            <label for="joinInput" class="form-label">새 비밀번호 확인</label>
+		                                            <input type="password" class="form-control" name = "newPw2" id="newPw2" placeholder="4자리 이상" required oninput = "checkNewPw2()" disabled> 
+		                                            <span class="pw_ok" style="color:green; display:none;">비밀번호가 일치합니다.</span>
+		                                            <span class="pw_x" style="color:red; display:none;">비밀번호가 일치하지 않습니다.</span>
+			                                    </div>
+			                                    <div class="input-wrap">
+			                                       <button type="submit" style="border-radius: 8px" class="purple-btn btn-xs" id="btnPw" disabled>변경</button>
+			                                    </div>
+	                                 		</form>
+                                 		</div>
                                     </div>
                                 </div>                            
                              </div>

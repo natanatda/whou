@@ -80,6 +80,7 @@
 	                </div>
                 </div>
                             <!-- <div class="result-img">img</div> -->
+           
 					<table class="table table-hover" style="table-layout:fixed" >
 						<thead>
 							<tr class="table-secondary">
@@ -111,6 +112,7 @@
 							</c:forEach>
 							</tbody>
 						</table>
+						
                 <div class="pagination">
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
