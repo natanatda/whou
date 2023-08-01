@@ -29,5 +29,7 @@ public interface RecommendService {
 	public void insertConsult(int user,int job_cd) ;
 	public List<HashMap<String, Object>> getJob_NM(String job_nm);
 	public List<HashMap<String, String>> getJobDetail(int job_cd);
+	public HashMap<String, String> getJobFactor(int job_cd);
+
 	public HashMap<String,String> getJobTagByTal(String tals);
 }

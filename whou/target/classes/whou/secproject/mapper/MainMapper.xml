@@ -9,4 +9,10 @@
 		FROM (SELECT A.sort_value, A.job_cds, B.sort_icon FROM job_category_cd A INNER JOIN search_factor B ON A.sort_value = B.sort_value) 
 		WHERE job_cds = #{code}
 	</select>
+	<select id="selectRecoMessage" resultType="String">
+		select message from (
+		SELECT t1.aptd_num, t1.message, t2.sort_name
+		FROM main_message t1
+		JOIN aptd_factor t2 ON t1.aptd_num = t2.aptd_num where sort_name=#{tal})
+	</select>
 </mapper>

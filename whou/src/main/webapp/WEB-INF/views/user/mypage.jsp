@@ -357,7 +357,7 @@
 										<div class="reco-item-container" style="display:flex; justify-content:flex-start; gap:20px;">
 											<div class="reco-tag" style="width:380px; height:170px">
 												<span style="font-weight:600;font-size: 18px;margin-left:5px;">컨설팅 직업 선택</span>
-												<a style="font-size: 12px; margin-left:10px;"onclick="location = '/whou/member/mypage?load=6'">컨설팅 받으러 가기 ></a>
+												<a style="font-size: 12px; margin-left:10px;">마우스를 올릴 시 직업의 정보가 나옵니다</a>
 												<div id="jobContainer">
 													<div class="input-wrap" style="margin-top:10px;">
 														<input class="jobSearch" type="text" name="job" placeholder="직업 이름" oninput="checkJob(this)" />
@@ -455,7 +455,10 @@
 											<c:forEach var="rere" items="${reres}">
 											<div class="reco-wrap">
 												<div class="reco-item">
-													<div onclick="alert('직업선택이 완료 되었습니다.');location='/whou/member/insertConsult?job_cd=${rere.job_cd}'">${rere.job_nm}</div>
+													<div >
+														${rere.job_nm}
+														<div onclick="alert('직업선택이 완료 되었습니다.');location='/whou/member/insertConsult?job_cd=${rere.job_cd}'" style="font-size:16px;color:#5a3fff">추천받기</div>
+													</div>
 													<div onclick="location='/whou/job/info?job_cd=${rere.job_cd}'">${rere.descriptions}</div>
 												</div>
 											</div> 
@@ -1174,20 +1177,25 @@
 
             const jobNameDiv = document.createElement('div');
             jobNameDiv.innerText = data.job_nm;
-            jobNameDiv.onclick = function () {
+            const getRecoDiv = document.createElement('div');
+            getRecoDiv.innerText = '추천받기';
+            getRecoDiv.onclick = function () {
+				alert("직업선택이 완료 되었습니다.");
                 location = '/whou/member/insertConsult?job_cd='+data.job_cd;
             };
+            getRecoDiv.style.fontSize = "16px";
+            getRecoDiv.style.color = "#5a3fff";
             
             const jobDescriptionDiv = document.createElement('div');
             jobDescriptionDiv.innerText = data.descriptions;
             jobDescriptionDiv.onclick = function () {
                 location = '/whou/job/info?job_cd='+data.job_cd;
             };
-
+			jobNameDiv.appendChild(getRecoDiv);
             recoItemDiv.appendChild(jobNameDiv);
             recoItemDiv.appendChild(jobDescriptionDiv);
             recoWrapDiv.appendChild(recoItemDiv);
-
+			
             const dynamicContentDiv = document.getElementById('reco-li-container');
             dynamicContentDiv.appendChild(recoWrapDiv);
         }

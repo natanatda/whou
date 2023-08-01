@@ -236,6 +236,18 @@ public class RecommendServiceImpl implements RecommendService{
 		sqlSession.close();
 		return resultHandler.getSel();
 	}
+	@Override
+	public HashMap<String, String> getJobFactor(int job_cd) {
+		SelectDTO selDTO = new SelectDTO();
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		SelectResultHandler<String> resultHandler = new SelectResultHandler<String>();
+		selDTO.setCol("DETAIL_VALUE");
+		selDTO.setTb_name("JOB_DETAIL");
+		selDTO.setConditions(Arrays.asList("job_cd="+job_cd+"","factor_detail='ability_name'"));
+		sqlSession.select("whou.secproject.mapper.RecommendMapper.selectInfo", selDTO, resultHandler);
+		sqlSession.close();
+		return resultHandler.getSelOne();
+	}
 	
 	@Override
 	public HashMap<String,String> getJobTagByTal(String tals){
