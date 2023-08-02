@@ -121,6 +121,7 @@
                     </div>
                     
                     <div class="right-wrap">
+                    	<div>
 							<!-- 북마크 -->
 							<div class="book-bg">
 	                    		<div class="book-wrap">
@@ -701,6 +702,19 @@
                             
 						
                           </div>
+                    	</div>
+                    	<div class="right-bottom-box">
+                    		<div class="notice-box">
+								<div>공지사항</div>
+								<div>공지사항가져오셈</div>
+							</div>
+                    		<ul class="test-list">
+                    			<li>안한 검사 이름</li>
+                    			<li>안한 검사 이름</li>
+                    			<li>안한 검사 이름</li>
+                    			<li>안한 검사 이름</li>
+                    		</ul>
+                    	</div>
                     </div>
                 </div>    
             </div>

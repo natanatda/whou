@@ -115,6 +115,7 @@ public class MainController {
         	}
     	}
         model.addAttribute("recoLi3", result);
+        model.addAttribute("memId", email);
 	    return "/main"; 
 	}
 }
