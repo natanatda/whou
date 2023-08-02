@@ -1,8 +1,10 @@
 package whou.secproject.controller;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpSession;
 
@@ -77,7 +79,7 @@ public class MainController {
 		
 		// 추천 글 가져오기
         HashMap<String,String> talent = serviceRe.getJobFactor(cunsultingNum);
-        String message = null;
+        String message = "당신은 어떤 능력을 가지고 있나요?";
         if(talent!=null) {
         	String talStr = talent.get("DETAIL_VALUE");
     		if(talStr.equals("자기성찰능력")) talStr = "자아성찰능력";
@@ -87,9 +89,32 @@ public class MainController {
         
         
         //
+        List<HashMap<String,Object>> result = null;
         if(email!=null) {
-           // List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(new SelectDTO(), userNum, 1, 5);
-        }
+        	if(serviceRe.tbTrue(userNum)==1) {
+        		List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(new SelectDTO(), userNum, 1, 3,"*");
+        		result = new ArrayList<HashMap<String,Object>>();
+        		for(int j = 0 ; j < 3; j++) {
+        			HashMap<String,Object> recoMap= new HashMap<String,Object>();
+        			int j_cd = recoLi.get(j).get("JOB_CD").intValue();
+        			List<HashMap<String,String>> info = serviceRe.getJobDetail(j_cd);
+        			String j_nm = serviceRe.getJname(new SelectDTO(), j_cd);
+        			recoMap.put("J_NM", j_nm);
+        			StringTokenizer st = new StringTokenizer(info.get(0).get("WORKS"),"/");
+        			String work = st.nextToken();
+        			recoMap.put("work", work);
+        			ArrayList<HashMap<String,String>> arr = new ArrayList<HashMap<String,String>>();
+        			for(int i = 1; i < info.size(); i++) {
+        				talent = info.get(i);
+        				arr.add(talent);
+        				arr.add(serviceRe.getJobTagByTal(talent.get("DETAIL_VALUE")));
+        			}
+        			recoMap.put("talents", arr);
+        			result.add(recoMap);
+        		}
+        	}
+    	}
+        model.addAttribute("recoLi3", result);
 	    return "/main"; 
 	}
 }

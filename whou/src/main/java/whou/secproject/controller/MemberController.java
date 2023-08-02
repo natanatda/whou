@@ -699,24 +699,15 @@ public class MemberController {
         ArrayList<String> majors = serviceRe.majorInfo(certiDTO);
         certiDTO.setCol("CERTIFICATE");
         ArrayList<String> certis= serviceRe.majorInfo(certiDTO);
-        System.out.println(majors);
-        System.out.println(certis);
-        
-//        int majorC = 0 , certiC = 0;
-//        boolean none = false; 
-//        if(majors!=null) majorC = majors.size();
-//        if(certis!=null) certiC = certis.size();
-//        if(redto.getAptitude_score()==null&&
-//              redto.getInterest_score()==null&&
-//              redto.getValues_score()==null&&
-//              majorC==0 && certiC==0) 
-//           none=true;
         
         int majorC = 0 , certiC = 0;
         if(majors!=null) majorC = majors.size();
         if(certis!=null) certiC = certis.size();
         boolean none = false; 
         boolean notTest = false;
+        boolean majorTrue = majorC!=0;
+        boolean certiTrue = certiC!=0;
+        
         if(redto != null) {
            if(redto.getAptitude_score()==null&&
               redto.getInterest_score()==null&&
@@ -869,7 +860,7 @@ public class MemberController {
 //              System.out.println(entry.getKey() + ": " + entry.getValue()+" ");
 //          }
            SelectDTO selDTO = new SelectDTO();
-           List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(selDTO, userNum, 1, 5);
+           List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(selDTO, userNum, 1, 5,"*");
            SelectDTO selDTO2 = new SelectDTO();
            HashMap<String,String> top3NM = null;
            if(!notTest) top3NM = serviceRe.getRecoList(selDTO2, userNum);
@@ -1063,7 +1054,7 @@ public class MemberController {
 	        if(certis!=null) certiC = certis.size();
 	        
 	        SelectDTO selDTO = new SelectDTO();
-	       List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(selDTO, userNum, page+1, size);
+	       List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(selDTO, userNum, page+1, size,"*");
 	       SelectDTO selDTO2 = new SelectDTO();
 	       HashMap<String,String> top3NM = serviceRe.getRecoList(selDTO2, userNum);
 	       ArrayList <String> colNM = new ArrayList<String>(
