@@ -30,6 +30,11 @@
 
  <style>
  	body{overflow-y:hidden}
+  
+    @media print {
+     html, body { -webkit-print-color-adjust:exact; width: 210mm; height: 297mm; } 
+    .page-title, .left-wrap{display:none;}
+    }
  </style>
     <body>
     <c:set var="workList" value="${jobDetail.workList}" />
@@ -68,7 +73,7 @@
        
        
         <section class="py-2 desc-dtl-section">
-            <div class="desc-container">
+            <div class="desc-container" id="desc">
                 <h2 class="page-title">직업백과</h2>
                 <div class="desc-wrap">
                     <div class="left-wrap">
@@ -81,7 +86,7 @@
 	                            <li onclick="return bookCheck(${BaseInfo.job_cd},0)"><i class="fa-regular fa-star" style="color: #5c5c5c;"></i></li>
                         	</c:if>
                             <li><i class="fa-regular fa-thumbs-up" style="color: #5c5c5c;"></i></li>
-                            <li class="print-btn" ><i class="fa-solid fa-print" style="color: #5c5c5c;"></i></li>
+                            <li class="print-btn"><i class="fa-solid fa-print" style="color: #5c5c5c;"></i></li>
                         </ul>
                         <div class="d-flex">
                             <div class="desc-item">
@@ -599,6 +604,37 @@
         	}
 	 	
 	 </script>
-    </body>
+
+	<script>	
+ 		//화면 인쇄 메소드		
+	
+        var g_oBeforeBody = document.getElementById('desc').innerHTML;
+
+        jQuery('.print-btn').click( function() {
+
+            // 프린트를 보이는 그대로 나오기위한 셋팅
+            window.onbeforeprint = function (ev) {
+                document.body.innerHTML = g_oBeforeBody;
+            };
+
+            // window.onafterprint 로 다시 화면원복을 해주는게 맞으나,
+            // 문제가 있기에 reload로 처리
+/*
+            var initBody = document.body.innerHTML;
+            window.onafterprint = function(){
+                document.body.innerHTML = initBody;
+            }
+*/
+
+            window.print();
+            location.reload();
+
+            // reload를 해주는 이유는 onbeforeprint 이벤트로
+            // 화면을 다시 그렸기때문에 스크립트나 여러가지 이벤트가 해지되는 현상이 있음
+            // 그래서 임시조치로 reload를 해줌
+        });
+
+	</script>
+</body>
     
 </html>
