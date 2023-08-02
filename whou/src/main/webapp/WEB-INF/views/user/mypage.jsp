@@ -24,10 +24,10 @@
    	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
    	
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-   	<script src="../resources/js/unpkg.com_gsap@3.12.1_dist_gsap.min.js"></script>
-	<script src="../resources/js/ThreeCSG.js"></script>
+   	<script src="/whou/resources/js/unpkg.com_gsap@3.12.1_dist_gsap.min.js"></script>
+	<script src="/whou/resources/js/ThreeCSG.js"></script>
 	<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-  	<script type="module" src="../resources/js/whouModel.js"></script>
+  	<script type="module" src="/whou/resources/js/whouModel.js"></script>
   	
      
  </head>
@@ -714,17 +714,14 @@
         let load = "${load}";
         
         if(load === "2"){
-         	 $(".nav-link").removeClass("active");
-         	 $(".tab-pane").removeClass("active show");
-         	 
-           	 $("#nav-add-tab").addClass("active");
-           	 $("#nav-addInfo").addClass("active show");
+        	$("#nav-addInfo").show();
+        	$("#nav-tabContent").hide();
+
         }else if(load === "3"){
-        	 $(".nav-link").removeClass("active");
-        	 $(".tab-pane").removeClass("active show");
-        	 
-          	 $("#nav-modify-tab").addClass("active");
-          	 $("#nav-modifyInfo").addClass("active show");
+        	$(".chg-info-bg").show();
+        	 $(".info-tab").addClass("active");
+          	 $("#nav-info").addClass("active show");
+          	$("#nav-tabContent").hide();
         }else if(load === "4"){
         	 $(".nav-link").removeClass("active");
        	 	 $(".tab-pane").removeClass("active show");
