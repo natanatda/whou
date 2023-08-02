@@ -17,13 +17,13 @@
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
+        <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
 		
 		<script src="resources/js/unpkg.com_gsap@3.12.1_dist_gsap.min.js"></script>
 		<script src="resources/js/ThreeCSG.js"></script>
 		<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
         <script type="module" src="/whou/resources/js/whouModel.js?ver=3"></script>
-        <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
-		<script src="resources/js/ai.js"></script>		
+		<script src="/whou/resources/js/ai.js"></script>		
     </head>
 
     <body>
@@ -64,40 +64,62 @@
                    
                     <div class="main-text-wrap">
                         <p>단 하나의 간편 컨설팅</p>
-                        <h1 class="main-text">당신만을 위한 <span>직업 추천</span></h1>
+                        <h1 class="main-text">당신만을 위한 <span>직업 추천</span></h1>                     
                     </div>
                     <div class="container px-5 my-5">
                     
                         <div class="row gx-5 main-content">
                         
                             <div class="col-lg-4 mb-5 mb-lg-0">
-                                <div class="feature mb-3"><i class="bi bi-collection"></i></div>
-                                <h2 class="h5">직업 검사받기</h2>${recoLi3 }
-                                <p>
+                                <c:if test="${memId == null}">
+	                                <div class="feature mb-3"><i class="bi bi-collection"></i></div>
+                                	<h2 class="h5">직업 검사받기</h2>
+                                	 <p>
                                     직업 검사를 했을 시에는 저희가 기분이 좋아요!
                                     직업 검사를 해야만 저희가 직업 컨설팅을 해드릴 수 있어요!
                                     직업 검사를 실행 시에는 저희가 정보를 전부 가져갈 수 있다는점 인지해주세요!
-                                </p>
+                                	</p>
+                                </c:if>
+                                <c:if test="${memId != null}">
+                                	<div class="feature mb-3"><i class="${recoLi3[0].talents[1].SORT_ICON}"></i></div>
+                                	<h2 class="h5">${recoLi3[0].J_NM}</h2>
+                                	<p>${recoLi3[0].work}</p>
+                                </c:if>
                             </div>
                             
                             <div class="col-lg-4 mb-5 mb-lg-0">
-                                <div class="feature mb-3"><i class="bi bi-building"></i></div>
-                                <h2 class="h5">직업 컨설팅</h2>
-                                <p>
+                                <c:if test="${memId == null}">
+	                                <div class="feature mb-3"><i class="fa-solid fa-leaf"></i></div>
+                                	<h2 class="h5">직업 컨설팅</h2>
+                                	 <p>
                                     직업 검사를 했을 시에는 저희가 기분이 좋아요!
                                     직업 검사를 해야만 저희가 직업 컨설팅을 해드릴 수 있어요!
                                     직업 검사를 실행 시에는 저희가 정보를 전부 가져갈 수 있다는점 인지해주세요!
-                                </p>
+                                	</p>
+                                </c:if>
+                                <c:if test="${memId != null}">
+                                	<div class="feature mb-3"><i class="${recoLi3[1].talents[1].SORT_ICON}"></i></div>
+                                	<h2 class="h5">${recoLi3[1].J_NM}</h2>
+                                	<p>${recoLi3[1].work}</p>
+                                </c:if>
+
                             </div>
                             
                             <div class="col-lg-4">
-                                <div class="feature mb-3"><i class="bi bi-toggles2"></i></div>
-                                <h2 class="h5">직업 관련정보</h2>
-                                <p>
+                                <c:if test="${memId == null}">
+	                                <div class="feature mb-3"><i class="bi bi-toggles2"></i></div>
+                                	<h2 class="h5">직업 관련정보</h2>
+                                	 <p>
                                     직업 검사를 했을 시에는 저희가 기분이 좋아요!
                                     직업 검사를 해야만 저희가 직업 컨설팅을 해드릴 수 있어요!
                                     직업 검사를 실행 시에는 저희가 정보를 전부 가져갈 수 있다는점 인지해주세요!
-                                </p>
+                                	</p>
+                                </c:if>
+                                <c:if test="${memId != null}">
+                                	<div class="feature mb-3"><i class="${recoLi3[2].talents[1].SORT_ICON}"></i></div>
+                                	<h2 class="h5">${recoLi3[2].J_NM}</h2>
+                                	<p>${recoLi3[2].work}</p>
+                                </c:if>
                             </div>
                             
                         </div>

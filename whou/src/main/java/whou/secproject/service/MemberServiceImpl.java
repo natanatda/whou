@@ -234,7 +234,7 @@ public class MemberServiceImpl implements MemberService {
 	// 자격증 제거
 	@Override
 	public void deleteCerti(String certi, String memId) {
-		String temp = mapper.getUserMajor(memId); //db에 저장된 학과 가져오기
+		String temp = mapper.getUserCerti(memId); //db에 저장된 학과 가져오기
 		String db="";
 		ArrayList<String> list = new ArrayList<String>();
 		StringTokenizer st = new StringTokenizer(temp, ",");

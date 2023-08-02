@@ -181,6 +181,7 @@
                 </div>
                 
             </div>
+            <%@ include file="../aiChatBot.jsp" %>
         </section>
 		</form>
         <!-- Footer-->
