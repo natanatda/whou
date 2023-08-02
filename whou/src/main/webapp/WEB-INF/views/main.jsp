@@ -54,7 +54,7 @@
                                         <span class="icon-box-ic"><i class="${icon} fa-2xl"></i></span>
                                     </div>
                                 </div>
-                                <div class="col auto-text">자동추천글자동추천글자동추천글자동추천글</div>
+                                <div class="col auto-text">${message }</div>
                               </div>
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                         
                             <div class="col-lg-4 mb-5 mb-lg-0">
                                 <div class="feature mb-3"><i class="bi bi-collection"></i></div>
-                                <h2 class="h5">직업 검사받기</h2>
+                                <h2 class="h5">직업 검사받기</h2>${recoLi3 }
                                 <p>
                                     직업 검사를 했을 시에는 저희가 기분이 좋아요!
                                     직업 검사를 해야만 저희가 직업 컨설팅을 해드릴 수 있어요!
