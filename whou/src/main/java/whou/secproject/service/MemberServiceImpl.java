@@ -187,7 +187,7 @@ public class MemberServiceImpl implements MemberService {
 			MajorSet.add(arrM);
 		}
 		
-		String combinedCerti = String.join(",", CertiSet);
+		String combinedCerti = String.join(",", CertiSet );
 		String combinedMajor = String.join(",", MajorSet);
 		
 		
