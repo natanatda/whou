@@ -17,13 +17,13 @@
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
+        <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
 		
 		<script src="resources/js/unpkg.com_gsap@3.12.1_dist_gsap.min.js"></script>
 		<script src="resources/js/ThreeCSG.js"></script>
 		<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
         <script type="module" src="/whou/resources/js/whouModel.js?ver=3"></script>
-        <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
-		<script src="resources/js/ai.js"></script>		
+		<script src="/whou/resources/js/ai.js"></script>		
     </head>
 
     <body>
