@@ -699,49 +699,41 @@ public class MemberController {
         ArrayList<String> majors = serviceRe.majorInfo(certiDTO);
         certiDTO.setCol("CERTIFICATE");
         ArrayList<String> certis= serviceRe.majorInfo(certiDTO);
-        
         int majorC = 0 , certiC = 0;
         if(majors!=null) majorC = majors.size();
         if(certis!=null) certiC = certis.size();
-        boolean none = false; 
-        boolean notTest = false;
-        boolean majorTrue = majorC!=0;
-        boolean certiTrue = certiC!=0;
+        int totalCol = 10+majorC+certiC;
+        Boolean none = false; 
+        Boolean redtoTrue = redto!=null;
+        Boolean notTest = false;
+        Boolean majorTrue = majorC!=0;
+        Boolean certiTrue = certiC!=0;
+        Boolean aptiTrue = false,inteTrue = false,valueTrue = false;
+        if(redtoTrue) {
+        	aptiTrue = !((redto.getAptitude_job1()==null)
+        					&&(redto.getAptitude_job2()==null)
+        					&&(redto.getAptitude_job3()==null));
+        	inteTrue = !((redto.getInterest_job1()==null)
+        					&&(redto.getInterest_job2()==null)
+        					&&(redto.getInterest_job3()==null));
+        	valueTrue = !(redto.getValues_score()==null);
+        }
         
-        if(redto != null) {
-           if(redto.getAptitude_score()==null&&
-              redto.getInterest_score()==null&&
-              redto.getValues_score()==null&&
-              majorC==0 && certiC==0) 
-              none=true;
-        }else if(redto == null && majorC==0 && certiC==0) none=true;
-  		else if(redto == null && (majorC!=0 || certiC!=0)) {
+        if(redtoTrue) {
+           if((!aptiTrue)&&(!inteTrue)&&
+              (!valueTrue)&&(!majorTrue)&&
+              (!certiTrue)) none=true;
+        }else if((!redtoTrue)&& (!majorTrue) && (!certiTrue)) {
+        	none=true;
+  		}else if((!redtoTrue) && (majorTrue || certiTrue)) {
   			redto = new RecommandInfoDTO();
   			notTest = true;
   		}
+        if(!aptiTrue) redto.setAptitude_jobs(null);
+        if(!inteTrue) redto.setInterest_jobs(null);
+        if(!valueTrue) redto.setValues_score(null);
         
-        if(none) {
-        	model.addAttribute("testTure", new ArrayList<Boolean>(Arrays.asList(false,false,false)));
-        }else {
-        	Boolean aptiTrue = 
-        			(redto.getAptitude_job1()==null)
-        			&&(redto.getAptitude_job2()==null)
-        			&&(redto.getAptitude_job3()==null);
-        	Boolean inteTrue = 
-        			(redto.getInterest_job1()==null)
-        			&&(redto.getInterest_job2()==null)
-        			&&(redto.getInterest_job3()==null);
-        	Boolean valueTrue = (redto.getValues_score()==null);
-        	model.addAttribute("testTrue", new ArrayList<Boolean>(Arrays.asList(!aptiTrue,!inteTrue,!valueTrue)));
-        }
-        
-//        String aptitude_score = redto.getAptitude_score()!=null ? redto.getAptitude_score():null;
-//        String interest_score = redto.getInterest_score()!=null ? redto.getInterest_score():null;
-//        String values_score = redto.getValues_score()!=null ? redto.getValues_score():null;
-        
-//        if(aptitude_score==null && interest_score==null && values_score==null
-//              && majorC==0 && certiC==0) 
-//           none=true;
+        model.addAttribute("testTrue", new ArrayList<Boolean>(Arrays.asList(aptiTrue,inteTrue,valueTrue)));
         
         if(!none) {
             String [] impt = request.getParameterValues("importance");
@@ -768,18 +760,17 @@ public class MemberController {
             	List<String> limitStrs = Arrays.asList("\\+","\\+"); // 구분자
             	
             	LinkedHashMap<ArrayList<Double>,Double> scores = redao.DoubleTokener(scoreStrs, limitStrs);
-            	System.out.println("scores"+scores);
+            	
             	List<Double> jobScore = new ArrayList<>(Collections.nCopies(jC, 1.0)); // 직업당 점수
-            	System.out.println(10+majorC+certiC);
-            	double [][] jobScorePoint = new double [jC][10+majorC+certiC];
+            	double [][] jobScorePoint = new double [jC][totalCol];
             	if(serviceRe.tbTrue(userNum)==1) serviceRe.dropTable(userNum);
             	serviceRe.createJobPoint(userNum, majorC, certiC);
               
             	int i = 0;
             	for (Map.Entry<ArrayList<Double>, Double> entry : scores.entrySet()) {
             		List<String> jobNum = jobNumList.get(i); // 해당하는 직업의 jcd
-            		List<Double> normalize= redao.normalizePer(entry.getKey(), entry.getValue(), importances.get(i++)).subList(0, 3); // 3개만 적용
-            		if(jobNum.size()!=0) {
+            		if(jobNum!=null) {
+            			List<Double> normalize= redao.normalizePer(entry.getKey(), entry.getValue(), importances.get(i++)).subList(0, 3); // 3개만 적용
             			for(int j = 0 ; j < normalize.size(); j++) {
             				double d = normalize.get(j); // 1.38~~
             				StringTokenizer st = new StringTokenizer(jobNum.get(j),",");
@@ -793,7 +784,7 @@ public class MemberController {
             	}
               
             	List<Integer> valueList = null;
-            	if(redto.getValues_score()!=null) {
+            	if(valueTrue) {
             		valueList = redao.valueTokenizer(redto.getValues_score(), ",");
             		List<Double> defaultValue = Arrays.asList(50.82,52.89,45.83,48.52);
             		List<Double> valueScore = redao.valueScore(defaultValue, valueList, importances.get(2));
@@ -808,7 +799,7 @@ public class MemberController {
             		}
             	}
               
-            	if(majors!=null) {
+            	if(majorTrue) {
             		SelectDTO selDTO = new SelectDTO();
             		int h = 10;
             		for(String major: majors) {
@@ -821,7 +812,7 @@ public class MemberController {
             			h++;
             		}
             	}
-            	if(certis!=null) {
+            	if(certiTrue) {
             		SelectDTO selDTO = new SelectDTO();
             		int m = 10+majorC;
             		for(String certi: certis) {
@@ -830,7 +821,6 @@ public class MemberController {
 	                       l = jList.indexOf(l);
 	                       jobScore.set(l, jobScore.get(l)*1.1);
 	                       jobScorePoint[l][m] = 1.1;
-	                       System.out.println("certitreu"+jobScorePoint[l][m]+" "+l+" "+m);
 	                    }
 	                    m++;
             		}
@@ -839,31 +829,13 @@ public class MemberController {
             	Map<Integer, Double> jcdToScore = new HashMap<>();
             	for (int idx = 0; idx < jList.size(); idx++) {
             		jcdToScore.put(jList.get(idx), jobScore.get(idx));
-//           	System.out.print(jList.get(idx)+": "+jobScore.get(idx)+" ");
-//           for(int m = 0; m < 10+majorC+certiC; m++)
-//                 System.out.print(jobScorePoint[idx][m]+" ");
             		serviceRe.insertJobPoint(userNum,jList.get(idx),jobScore.get(idx), jobScorePoint[idx], majorC, certiC);
-//              System.out.println();
             	}
             }
-           
-           
-//        List<Map.Entry<Integer, Double>> list = new ArrayList<>(jcdToScore.entrySet());
-//          Collections.sort(list, new Comparator<Map.Entry<Integer, Double>>() {
-//              public int compare(Map.Entry<Integer, Double> o1, Map.Entry<Integer, Double> o2) {
-//                  return o2.getValue().compareTo(o1.getValue());
-//              }
-//          });
-           
-           // 결과 출력
-//          for (Map.Entry<Integer, Double> entry : list) {
-//              System.out.println(entry.getKey() + ": " + entry.getValue()+" ");
-//          }
-           SelectDTO selDTO = new SelectDTO();
-           List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(selDTO, userNum, 1, 5,"*");
-           SelectDTO selDTO2 = new SelectDTO();
+            
+           List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(new SelectDTO(), userNum, 1, 5,"*");
            HashMap<String,String> top3NM = null;
-           if(!notTest) top3NM = serviceRe.getRecoList(selDTO2, userNum);
+           if(!notTest) top3NM = serviceRe.getRecoList(new SelectDTO(), userNum);
            if(top3NM==null) {
         	   top3NM = new HashMap<String,String>();
         	   top3NM.put("APTITUDE_NAME1", "적성1");
