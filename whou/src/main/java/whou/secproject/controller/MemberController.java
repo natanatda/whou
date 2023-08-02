@@ -312,7 +312,7 @@ public class MemberController {
 	        	if(join.equals("N")) {
 	        		session.setAttribute("memId", email);
 			        session.setAttribute("access_Token", accessToken);
-		        	return "/main";
+		        	return "redirect:/main";
 	        	}else {
 	        		model.addAttribute("warn", 1);
 	        		return "/user/login";
@@ -321,7 +321,7 @@ public class MemberController {
 	    }else if(email == null){
 	    	return "/user/joinForm";
 	    }
-        return "/main";
+        return "redirect:/main";
     }
     
     //카카오 로그인
@@ -347,7 +347,7 @@ public class MemberController {
   	        	if(join.equals("K")) {
   	        		session.setAttribute("memId", email);
   			        session.setAttribute("access_Token", access_Token);
-  		        	return "/main";
+  		        	return "redirect:/main";
   	        	}else {
   	        		model.addAttribute("warn", 1);
   	        		return "/user/login";
@@ -356,7 +356,7 @@ public class MemberController {
   	    }else if(email == null){
   	    	return "/user/joinForm";
   	    }
-          return "/main";
+          return "redirect:/main";
     }
   		
 	//구글 로그인
@@ -415,7 +415,7 @@ public class MemberController {
 	      	        	if(join.equals("G")) {
 	      	        		session.setAttribute("memId", email);
 	      			        session.setAttribute("access_Token", accessToken);
-	      		        	return "/main";
+	      		        	return "redirect:/main";
 	      	        	}else {
 	      	        		model.addAttribute("warn", 1);
 	      	        		return "/user/login";
@@ -424,7 +424,7 @@ public class MemberController {
 	      	  }else if(email == null){
 	      	    	return "/user/joinForm";
 	      	  }
-	              return "/main"; // 인증이 성공한 경우 리디렉션할 페이지
+	              return "redirect:/main"; // 인증이 성공한 경우 리디렉션할 페이지
 	       } catch (IOException e) {
 	              // 예외 처리
 	              return "redirect:/error"; // 인증이 실패한 경우 리디렉션할 페이지
