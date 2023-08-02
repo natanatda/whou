@@ -18,6 +18,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
+        <script src="/whou/resources/js/ai.js"></script>
     </head>
 <body>
       <script>
@@ -142,16 +144,8 @@
                                 <h4>직업적성검사</h4>
                                 <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
                                 <div class="d-flex test-cont-info">
-                                    <div>
+                                	<div>
                                         <ul>
-                                            <li>중</li>
-                                            <li>20분</li>
-                                            <li>66문항</li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <ul>
-                                            <li>고</li>
                                             <li>30분</li>
                                             <li>88문항</li>
                                         </ul>
@@ -256,25 +250,17 @@
                         </div>
                     </div>
                    
-                    <!-- 직업성숙도검사 -->
+                    <!-- 직업가치관검사 -->
                     <div class="col-lg-6 col-xl-3">
                         <div class="card mb-5 mb-xl-0 test-cont-wrap">
                             <div class="card-body p-4">
                                 <h4>직업가치관검사</h4>
-                                <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
+                                <p class="test-cont-desc">직업과 관련된 다양한 가치 중, 어떤 가치를 중요하게 여기는지 알아볼 수 있습니다.</p>
                                 <div class="d-flex test-cont-info">
                                     <div>
                                         <ul>
-                                            <li>중</li>
-                                            <li>20분</li>
-                                            <li>66문항</li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <ul>
-                                            <li>고</li>
-                                            <li>30분</li>
-                                            <li>88문항</li>
+                                            <li>15~20분</li>
+                                            <li>49문항</li>
                                         </ul>
                                     </div>
                                     <div>
@@ -292,25 +278,17 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 직업흥미검사 -->
+                    <!-- 진로개발역량검사 -->
                     <div class="col-lg-6 col-xl-3">
                         <div class="card mb-5 mb-xl-0 test-cont-wrap">
                             <div class="card-body p-4">
-                                <h4>직업역량검사</h4>
-                                <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
+                                <h4>진로개발역량검사</h4>
+                                <p class="test-cont-desc">진로를 설계하고 준비하는데 요구되는 역량을 어느 정도 갖추고 있는지 알아볼 수 있습니다.</p>
                                 <div class="d-flex test-cont-info">
                                     <div>
                                         <ul>
-                                            <li>중</li>
                                             <li>20분</li>
-                                            <li>66문항</li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <ul>
-                                            <li>고</li>
-                                            <li>30분</li>
-                                            <li>88문항</li>
+                                            <li>53문항</li>
                                         </ul>
                                     </div>
                                     <div>
@@ -328,25 +306,17 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 직업가치관검사 -->
+                    <!-- 직업흥미검사 -->
                     <div class="col-lg-6 col-xl-3">
                         <div class="card mb-5 mb-xl-0 test-cont-wrap">
                             <div class="card-body p-4">
                                 <h4>직업흥미검사</h4>
-                                <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
+                                <p class="test-cont-desc">직업과 관련하여 어떤 흥미가 있는지 알아볼 수 있습니다.</p>
                                 <div class="d-flex test-cont-info">
                                     <div>
                                         <ul>
-                                            <li>중</li>
-                                            <li>20분</li>
-                                            <li>66문항</li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <ul>
-                                            <li>고</li>
-                                            <li>30분</li>
-                                            <li>88문항</li>
+                                            <li>15~20분</li>
+                                            <li>153문항</li>
                                         </ul>
                                     </div>
                                     <div>
@@ -366,6 +336,7 @@
                     </div>
                 </div>
             </div>
+            <%@ include file="../aiChatBot.jsp" %>
         </section>
     <%@ include file="../footer.jsp" %> 
     
@@ -376,26 +347,35 @@
     function sessionChk(){
     	  // `${name}`이 존재하지 않는 경우
         if (!"${name}") {
-            alert("로그인 후 이용해주세요!");
-            location.href = '/whou/aptitude/aptitudeMain';
+        	if (confirm("로그인 후 검사할 수 있습니다.\n로그인 화면으로 이동하시겠습니까?")== true) {
+				location.href ='/whou/member/login';
+		    } else {
+		    	location.href = '/whou/aptitude/aptitudeMain';
+		    }
+        }else{
+        	return true;
         }
     }
     
     function aptitudeStart() {
-	  	 location.href = '/whou/aptitude/itrstkAptitude?qnum=21';
-	  	 sessionChk();      
+    	if(sessionChk()){
+	  		location.href = '/whou/aptitude/itrstkAptitude?qnum=21';
+    	}
     }
     function valuesStart() {
-	  	 location.href = '/whou/aptitude/itrstkAptitude?qnum=25';
-	  	 sessionChk();      
+    	if(sessionChk()){
+    		location.href = '/whou/aptitude/itrstkAptitude?qnum=25';
+    	}
    }
     function abilityStart() {
-	  	 location.href = '/whou/aptitude/itrstkAptitude?qnum=27';
-	  	 sessionChk();      
+    	if(sessionChk()){
+    		location.href = '/whou/aptitude/itrstkAptitude?qnum=27';
+    	}
    }
     function interestStart() {
-	  	 location.href = '/whou/aptitude/itrstkAptitude?qnum=31';
-	  	 sessionChk();      
+    	if(sessionChk()){
+    		location.href = '/whou/aptitude/itrstkAptitude?qnum=31';
+    	}     
    }
     </script>
     

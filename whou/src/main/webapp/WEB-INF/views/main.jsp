@@ -23,7 +23,7 @@
 		<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
         <script type="module" src="/whou/resources/js/whouModel.js?ver=3"></script>
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
-		<script src="resources/js/ai.js"></script>		
+		<script src="/whou/resources/js/ai.js"></script>		
     </head>
 
     <body>
