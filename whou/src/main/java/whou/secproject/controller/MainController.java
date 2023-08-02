@@ -70,12 +70,12 @@ public class MainController {
         }		
         int brush = 995;
 		String icon = service.selectIcon(cunsultingNum);
+		if(icon==null) icon="fa-solid fa-user";
 		model.addAttribute("icon", icon);
 		model.addAttribute("brush", whouModelService.selectModel(brush)); // 붓 장착
 		
 		
 		// 추천 글 가져오기
-		
         HashMap<String,String> talent = serviceRe.getJobFactor(cunsultingNum);
         String message = null;
         if(talent!=null) {

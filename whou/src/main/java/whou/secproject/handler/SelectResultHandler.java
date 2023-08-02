@@ -24,6 +24,7 @@ public class SelectResultHandler<T> implements ResultHandler<HashMap<String, T>>
     }
 
     public HashMap<String, T> getSelOne() {
+    	if(sel.size()==0) return null;
         return sel.get(0);
     }
 }

@@ -1269,6 +1269,57 @@
 		    jobMadeCard.hide();
 		});
 		
+		$(document).on("click", function(event) {
+            var clickedElement = event.target;
+            var jobSearchLi = $(".jobSearchLi");
+            var isJobListVisible = jobSearchLi.is(":visible");
+
+            // majorList가 보일 때만 작동
+            if (isJobListVisible) {
+                // 클릭된 요소가 majorList 또는 majorList 하위 요소인 경우 아무 동작 없이 리턴
+                if ($(clickedElement).closest(".jobSearchLi").length) {
+                    return;
+                }
+
+                // 인풋 요소들의 값을 비웁니다. 단, majorList 보이고 있던 인풋창만 비우고 나머지는 그대로 유지
+                $("input[name='job']").each(function() {
+                    if ($(this).siblings(".jobSearchLi").is(":visible")) {
+                        $(this).val("");
+                    }
+                });
+
+                // majorList를 숨깁니다.
+                jobSearchLi.empty().hide();
+            }
+        });
+
+        // majorList가 보일 때 이벤트를 등록하고, 숨겨질 때 이벤트를 제거합니다.
+        $(".jobSearchLi").on("show", function() {
+            $(document).on("click", hideJobListOnClickOutside);
+        }).on("hide", function() {
+            $(document).off("click", hideJobListOnClickOutside);
+        });
+
+        // 전공 입력창 외부를 클릭했을 때 majorList를 숨기는 함수
+        function hideJobListOnClickOutside(event) {
+            var clickedElement = event.target;
+            var jobSearchLi = $(".jobSearchLi");
+
+            // 클릭된 요소가 majorList 또는 majorList 하위 요소인 경우 아무 동작 없이 리턴
+            if ($(clickedElement).closest(".jobSearchLi").length) {
+                return;
+            }
+
+            // 인풋 요소들의 값을 비웁니다. 단, majorList 보이고 있던 인풋창만 비우고 나머지는 그대로 유지
+            $("input[name='job']").each(function() {
+                if ($(this).siblings(".jobSearchLi").is(":visible")) {
+                    $(this).val("");
+                }
+            });
+
+            // majorList를 숨깁니다.
+            jobSearchLi.empty().hide();
+        }
         </script>
        <script>
 	       var modelCamera_x = 0;
@@ -1518,6 +1569,7 @@
 	   		    });
 	   		});
    		});
+   		
         </script>
         
     
