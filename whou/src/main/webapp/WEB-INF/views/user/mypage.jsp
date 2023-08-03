@@ -565,7 +565,7 @@
 											</div> 
 											</c:forEach>
 										</div>
-										<div class="add-btn" onclick="getRecoLi()">
+										<div class="add-btn" id="add-reco" onclick="getRecoLi()">
 											<i class="fa-solid fa-circle-plus fa-lg"></i>
 										</div>
 									</c:if>
@@ -1270,6 +1270,12 @@
                 success: function(result) {
                    for(var i = 0 ; i < result.length; i++){
                        generateDynamicHTML(result[i]);
+                   }
+                   if(result.length<5){
+                	   addRecoDiv = document.getElementById('add-reco');
+                	   if (addRecoDiv) {
+                	     addRecoDiv.style.display = 'none';
+                	   }
                    }
                 },
                 error: function(xhr, status, error) {

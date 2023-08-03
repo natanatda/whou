@@ -150,7 +150,6 @@ public class RecommendServiceImpl implements RecommendService{
 		sqlSession.select("whou.secproject.mapper.RecommendMapper.selectInfo", selDTO, resultHandler);
 		sqlSession.close();
 	    HashMap<String, BigDecimal> mapList = resultHandler.getSelOne();
-	    System.out.println(mapList.get("COUNT(*)").intValue());
 	    return mapList.get("COUNT(*)").intValue();
 	}
 	@Override
