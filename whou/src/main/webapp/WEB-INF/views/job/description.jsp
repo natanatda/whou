@@ -146,7 +146,11 @@
                   	<c:forEach var="job" items="${jobs}">
                     <div class="col-lg-6 col-xl-4">
                         <div class="card mb-5 mb-xl-0" onclick="location='/whou/job/info?job_cd=${job.job_cd}'">
-                            <div class="result-img" style="background-color: #${job.backColor}">img${job.img}</div>
+                            <div class="result-img" style="background-color: #${job.backColor}">
+	                            <div>
+	                            	<img src="/whou/resources/img/${job.img}" />
+	                            </div>
+                            </div>
                             <div class="result-cont">
                                 <h4>${job.job_nm} <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
                                 <p>${job.work}</p>
