@@ -145,17 +145,7 @@ public class MemberController {
 		}
 		return dpw;
 	}
-	
-	//메인페이지(세션확인)
-	@RequestMapping("/main")
-	public String main(Model model, HttpServletRequest request) throws IOException {
-		HttpSession session = request.getSession();
-		String memId = (String)session.getAttribute("memId");
-		System.out.println(memId);
-		model.addAttribute("memId", memId);
-		return "/main";
-	}
-	
+
 	
 	//로그아웃
   	@RequestMapping("/logout")
@@ -274,6 +264,7 @@ public class MemberController {
         OAuth20Service serv = (OAuth20Service) request.getSession().getAttribute("oauth2Service");
         
         OAuth2AccessToken accessToken = serv.getAccessToken(code);
+        System.out.println(accessToken+"/////////////");
         
         // HttpClient를 사용하여 요청을 보냅니다.
         HttpClient httpClient = HttpClients.createDefault();
@@ -323,6 +314,7 @@ public class MemberController {
 	    }
         return "redirect:/main";
     }
+    
     
     //카카오 로그인
   	@RequestMapping("/kakao")
@@ -484,6 +476,7 @@ public class MemberController {
   		model.addAttribute("load", load);
   		HttpSession session = request.getSession();
 		String memId = (String)session.getAttribute("memId");
+		OAuth2AccessToken accessToken = (OAuth2AccessToken) session.getAttribute("access_token");
 		model.addAttribute("memId", memId);
 		// user_info 테이블에서 세션에 해당하는 num 추출
 		System.out.println("세션있냐?"+memId);
@@ -1123,11 +1116,41 @@ public class MemberController {
 	          return "redirect:/member/mypage";
 	      }
 	   
-	 //회원정보 수정
+	   //회원정보 수정
 	   @RequestMapping("/modifyUser")
 	   public String modifyUser(Model model){
 	      model.addAttribute("load", "3");
 	      return "redirect:/member/mypage";
+	   }
+	   
+	   //회원탈퇴
+	   @RequestMapping("/deleteUser")
+	   public String deleteUser(Model model, HttpSession session){
+	      String email = (String)session.getAttribute("memId");
+		  int userNum = 0;
+		  userNum = serviceAt.userNumSelect(email);
+		  
+		  if(serviceRe.tbTrue(userNum)==1) {
+				serviceRe.dropTable(userNum);
+				System.out.println("/////드랍잡포인트////");
+		  }
+		  service.dropTest_Result(userNum);
+		  System.out.println("/////드랍 결과 테이블////");
+		  service.dropTest_Save(userNum);
+		  System.out.println("/////드랍 임시저장 테이블////");
+		  service.deleteRecommand_info(userNum);
+		  System.out.println("/////드랍 추천 테이블////");
+		  service.deleteModel(email);
+		  System.out.println("/////드랍 모델 테이블////");
+		  service.deleteUser_info(userNum);
+		  System.out.println("/////드랍 인포 테이블////");
+		  service.deleteUser(userNum);
+		  System.out.println("/////드랍 유저 테이블////");
+
+	      
+		  session.invalidate();
+		  
+	  	  return "redirect:/main";
 	   }
 	   
 	   @RequestMapping("/searchJobs")

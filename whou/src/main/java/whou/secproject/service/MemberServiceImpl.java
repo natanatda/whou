@@ -246,6 +246,102 @@ public class MemberServiceImpl implements MemberService {
 		
 		mapper.deleteCerti(memId, db);
 	}
+	
+	//회원탈퇴
+	@Override
+	public void dropTest_Result(int UserNum) {
+		mapper.dropTest_Result(UserNum);
+	}
+	@Override
+	public void dropTest_Save(int userNum) {
+		mapper.dropTest_Save(userNum);
+	}
+	
+	@Override
+	public void deleteUser_info(int userNum) {
+		mapper.deleteUser_info(userNum);
+	}
+	@Override
+	public void deleteUser(int userNum) {
+		mapper.deleteUser(userNum);
+	}
+	@Override
+	public void deleteRecommand_info(int userNum) {
+		mapper.deleteRecommand_info(userNum);
+	}
+	
+	@Override
+	public void deleteModel(String email) {
+		mapper.deleteModel(email);
+	}
+	
+	
+//	//네이버 회원탈퇴
+//	@Override
+//	public String requestToServer(String apiURL) throws IOException {
+//	    return requestToServer(apiURL, null);
+//	}
+//	
+//	@Override
+//	public String requestToServer(String apiURL, String headerStr) throws IOException {
+//	    URL url = new URL(apiURL);
+//	    HttpURLConnection con = (HttpURLConnection)url.openConnection();
+//	    con.setRequestMethod("GET");
+//	    System.out.println("header Str: " + headerStr);
+//	    if(headerStr != null && !headerStr.equals("") ) {
+//	      con.setRequestProperty("Authorization", headerStr);
+//	    }
+//	    int responseCode = con.getResponseCode();
+//	    BufferedReader br;
+//	    System.out.println("responseCode="+responseCode);
+//	    if(responseCode == 200) { // 정상 호출
+//	      br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+//	    } else {  // 에러 발생
+//	      br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+//	    }
+//	    String inputLine;
+//	    StringBuffer res = new StringBuffer();
+//	    while ((inputLine = br.readLine()) != null) {
+//	      res.append(inputLine);
+//	    }
+//	    br.close();
+//	    if(responseCode==200) {
+//	    	String new_res=res.toString().replaceAll("&#39;", "");
+//			 return new_res; 
+//	    } else {
+//	      return null;
+//	    }
+//	  }
+//	
+	@Override
+	public String Nremove(String access_Token) {
+		String reqURL = "https://nid.naver.com/oauth2.0/token";
+		try {
+			URL url = new URL(reqURL);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+			// POST 요청을 위해 기본값이 false인 setDoOutput을 true로
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true);
+
+			// POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+			StringBuilder sb = new StringBuilder();
+			sb.append("grant_type=delete");
+			sb.append("&client_id=QWYmFRRrJidAIVICUYXk");
+			sb.append("&client_secret=SjbYDHwrH9");
+			sb.append("&access_token="+access_Token);
+			sb.append("service_provider=NAVER");
+			bw.write(sb.toString());
+			bw.flush();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return access_Token;
+	}
 
 	// 카카오 로그인시 토큰 생성
 	@Override

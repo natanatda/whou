@@ -42,6 +42,20 @@ public interface MemberService {
 	public void deleteMajor(String major, String memId);
 	public void deleteCerti(String certi, String memId);
 	
+	//회원탈퇴
+	public void dropTest_Result(int UserNum);
+	public void dropTest_Save(int userNum);
+	public void deleteUser_info(int userNum);
+	public void deleteUser(int userNum);
+	public void deleteRecommand_info(int userNum);
+	public void deleteModel(String email);
+	
+	public String Nremove(String access_Token);
+	
+	
+	//네이버 회원탈퇴
+	//public String requestToServer(String apiURL) throws IOException;
+	//public String requestToServer(String apiURL, String headerStr) throws IOException;
 	
 	// 마이페이지
 	public RecommandInfoDTO getAptitudeRank(int userNum);
