@@ -937,6 +937,13 @@ public class MemberController {
         }
         
         
+        // 마이페이지 left-bar
+        // 임시저장 된 % 숫자 가져오기
+        String tempSave = service.getTempSave(memId);
+        String tempArr[] = tempSave.split(",");
+        List<String> tempList = new ArrayList<>(Arrays.asList(tempArr));
+        model.addAttribute("percent",tempList);
+
       return "/user/mypage";
    }
   	

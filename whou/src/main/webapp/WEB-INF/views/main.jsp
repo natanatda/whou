@@ -71,7 +71,7 @@
                         <div class="row gx-5 main-content">
                         
                             <div class="col-lg-4 mb-5 mb-lg-0">
-                                <c:if test="${memId == null}">
+                                <c:if test="${recoLi3 == null}">
 	                                <div class="feature mb-3"><i class="bi bi-collection"></i></div>
                                 	<h2 class="h5">직업 검사받기</h2>
                                 	 <p>
@@ -80,7 +80,7 @@
                                     직업 검사를 실행 시에는 저희가 정보를 전부 가져갈 수 있다는점 인지해주세요!
                                 	</p>
                                 </c:if>
-                                <c:if test="${memId != null}">
+                                <c:if test="${recoLi3 != null}">
                                 	<div class="feature mb-3"><i class="${recoLi3[0].talents[1].SORT_ICON}"></i></div>
                                 	<h2 class="h5">${recoLi3[0].J_NM}</h2>
                                 	<p>${recoLi3[0].work}</p>

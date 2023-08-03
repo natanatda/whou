@@ -90,6 +90,10 @@ p{margin-bottom:0;}
 .main-text span{color:#5A3FFF;font-size: 28px;font-weight: 900;}
 .page-title{font-size: 34px;font-weight: 700;}
 
+/* slide */
+.carousel-control-prev{left:-29px}
+.carousel-control-next{right:-27px}
+.carousel-control-next-icon, .carousel-control-prev-icon{width:25px}
 /*progress-bar*/
 .progress-bar{background-color:#5A3FFF}
 
@@ -326,7 +330,9 @@ input[type="date"]{
 .result-section .card .result-img{height:180px;width:100%;background-color: #5A3FFF;border-top-right-radius: 14px;border-top-left-radius: 14px;}
 .result-section .card .result-cont{height:180px;padding:20px;background-color: #ddd;border-bottom-left-radius: 14px;border-bottom-right-radius: 14px;}
 .result-section .card .result-cont h4{font-size: 20px;font-weight: 600;}
-
+.result-section .card .result-cont p{white-space: normal; line-height: 1.4;height: 112px; text-align: left;word-wrap: break-word; display: -webkit-box;   -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden;}
+.result-section .card .result-img div{width:190px;height:180px;margin: 0 auto;}
+.result-section .card .result-img img{width:100%;height:100%;}
 /*****************************************************************************
 ******************************** aptitude **********************************
 *****************************************************************************/
@@ -345,6 +351,7 @@ input[type="date"]{
 .aptitude .question-title{font-size: 28px;font-weight: 500;}
 
 .values-btn-group label::before{display:none;}
+.values-btn-group input[type="checkbox"]:checked + label:after{display:none;}
 .values-btn-group label{font-size:14px;}
 .values-btn-item .ic-question{width:50px;height:32px;}
 /* main */
@@ -508,14 +515,14 @@ input[type="date"]{
 .mypage-section .decs-wrap{justify-content: space-between;}
 .mypage-section .left-wrap{padding-right:0;width:24%;}
 .mypage-section .left-wrap > .left-top-wrap{padding:20px;background-color: #f2f2f2;border-radius:12px;}
-.mypage-section .left-wrap .profile-cont{display:flex;align-items:center;gap:20px;font-size:14px;}
+.mypage-section .left-wrap .profile-cont{display:flex;align-items:center;gap:20px;font-size:14px;margin-bottom:40px;}
 .mypage-section .left-wrap .profile-cont div:first-child{border-radius:50%;width:50px;height:50px;}
 .mypage-section .left-wrap .profile-cont div:last-child{font-weight: 500;}
 .mypage-section .left-wrap .progress{margin-top:10px;background: #ddd;}
-.mypage-section .left-wrap .test-cont{margin:40px 0;}
-.mypage-section .left-wrap .test-cont > div{border:2px solid #5A3FFF;border-radius:6px;padding:10px;font-size:14px;}
+.mypage-section .left-wrap .test-cont{margin-bottom:40px;}
+.mypage-section .left-wrap .test-cont .carousel-item > div{border:2px solid #5A3FFF;border-radius:6px;padding:10px;font-size:14px;}
 .mypage-section .left-wrap .test-cont > div > div:first-child{font-weight:500;display:flex;align-items:center;gap:5px;}
-.mypage-section .left-wrap .test-cont > div span{font-size:13px;color:#5A3FFF;}
+.mypage-section .left-wrap .test-cont .carousel-item > div span{font-size:13px;color:#5A3FFF;}
 .mypage-section .left-wrap .test-cont .purple-btn{margin-top:10px;border-radius:6px;padding:10px;line-height: 19px;font-size: 18px;}
 .mypage-section .left-wrap .test-cont .purple-btn span{font-size:12px;letter-spacing: -0.5px;}
 .mypage-section .left-wrap .custom-box{margin-top: 20px;padding:20px;background-color: #f2f2f2;border-radius: 10px;}
@@ -651,7 +658,7 @@ div #user p{font-weight:500;}
 #ai-chatBot{position: fixed; right: 50px; bottom: 30px; }
 #ai-assistant{display: none;}  
 #ai-area{display:flex;gap:10px;cursor:pointer;justify-content: flex-end;}
-#ai-area .ai-text{border: 1px solid #ddd;padding: 10px;border-radius: 24px;font-weight: 500;background:#fff;}
+#ai-area .ai-text{border: 1px solid #ddd;padding: 10px;border-radius: 24px;font-weight: 500;background:#fff;color:#111;}
 #ai-area .img-box{line-height: 44px;padding: 0px 8px;border-radius: 50%;background:#fff;}
 #btnContain{}
 #readArea1 input, #readArea button{border: 1px solid #ddd;border-radius: 24px;margin-right:8px;}

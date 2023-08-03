@@ -214,40 +214,40 @@
 											</div>
 											
 											<div class="btn-group radio-group values-btn-group" role="group" aria-label="Basic radio toggle button group">
-												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 1}" value="1" autocomplete="off">
+												<input type="checkbox" class="chk49" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 1}" value="1" autocomplete="off">
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 1}">안정성</label>
 		
-												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 2}" value="2" autocomplete="off">
+												<input type="checkbox" class="chk49" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 2}" value="2" autocomplete="off">
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 2}">보수</label>
 		
-												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 3}" value="3" autocomplete="off">
+												<input type="checkbox" class="chk49" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 3}" value="3" autocomplete="off">
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 3}">일과 삶의<br /> 균형</label>
 		
-												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 4}" value="4" autocomplete="off">
+												<input type="checkbox" class="chk49" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 4}" value="4" autocomplete="off">
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 4}">즐거움</label>
 		
-												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 5}" value="5" autocomplete="off">
+												<input type="checkbox" class="chk49" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 5}" value="5" autocomplete="off">
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 5}">소속감</label>
 												
-												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 6}" value="6" autocomplete="off">
+												<input type="checkbox" class="chk49" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 6}" value="6" autocomplete="off">
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 6}">자기계발</label>
 												
-												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 7}" value="7" autocomplete="off">
+												<input type="checkbox" class="chk49" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 7}" value="7" autocomplete="off">
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 7}">도전성</label>
 												
-												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 8}" value="8" autocomplete="off">
+												<input type="checkbox" class="chk49" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 8}" value="8" autocomplete="off">
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 8}">영향력</label>
 												
-												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 9}" value="9" autocomplete="off">
+												<input type="checkbox" class="chk49" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 9}" value="9" autocomplete="off">
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 9}">사회적<br />기여</label>
 												
-												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 10}" value="10" autocomplete="off">
+												<input type="checkbox" class="chk49" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 10}" value="10" autocomplete="off">
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 10}">성취</label>
 												
-												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 11}" value="11" autocomplete="off">
+												<input type="checkbox" class="chk49" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 11}" value="11" autocomplete="off">
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 11}">사회적<br />인정</label>
 												
-												<input type="checkbox" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 12}" value="12" autocomplete="off">
+												<input type="checkbox" class="chk49" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 12}" value="12" autocomplete="off">
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 12}">자율성</label>
 											</div>
 										</li>
@@ -274,41 +274,7 @@
 
 	<script>
 	
-		// 진척률
- 		const percent = ${100/fn:length(RESULT)};
- 		const progressBar = document.querySelector('.progress-bar');
- 	    const progressPercent = document.querySelector('.progress+div > span');
- 	   	let percentCount=0;
- 	   	
-
-		// 답한 문항 개수
-	    const radioButtons = document.querySelectorAll('.btn-check');
-	    const countSpan = document.querySelector('.page-count span:first-child');
-	    
- 	   	function getCount(){
-	        return document.querySelectorAll('.btn-check:checked').length;
- 	   	}
- 	   	let count = getCount();
-        countSpan.textContent = count;
-		percentCount = count * percent;
-		percentCountDown = Math.floor(percentCount);
-		progressPercent.textContent = percentCountDown;
-		progressBar.style.width = percentCount + '%';
-	    
-	    radioButtons.forEach(radioButton => {
-	        radioButton.addEventListener('click', () => {
-	        	// 답한 문항 개수
-	            count = document.querySelectorAll('.btn-check:checked').length;
-	            countSpan.textContent = count;
-	            
-	         	// 진척률
-	            percentCount = count * percent;
-	         	percentCountDown = Math.floor(percentCount);
-	            progressPercent.textContent = percentCountDown;
-	            progressBar.style.width = percentCount + '%';
-	        });
-	    });
-	    
+		let lastChk = 0;
 	 	// 최대 3개의 체크박스만 선택 가능하도록 제한
 	    var checkboxes = document.querySelectorAll('input[name="btnradio49"]');
 		var maxLimit = 3;
@@ -356,17 +322,58 @@
 		      return item.value;
 		    }).join(',');
 		
+			
 		    if (selectedOrder.length === maxLimit) {
 		      selectedOrder.forEach(function(item, order) {
 		        var label = document.querySelector('label[name="btnradio19"]');
+			    console.log("라벨",label);
 		        label.textContent = label.textContent.replace(/\(\d+\)$/, '(' + (order + 1) + ')');
+		        console.log("라벨이어",label.textContent);
 		      });
+		      lastChk=1;
 		    }
 		
 		    console.log("선택 순서:", selectedOrder);
+		    console.log("라첵",lastChk);
 		    //alert(selectedValuesInput.value);
 		  });
 		});
+		// 진척률
+ 		const percent = ${100/fn:length(RESULT)};
+ 		const progressBar = document.querySelector('.progress-bar');
+ 	    const progressPercent = document.querySelector('.progress+div > span');
+ 	   	let percentCount=0;
+ 	    
+
+		// 답한 문항 개수
+	    const radioButtons = document.querySelectorAll('.btn-check');
+	    const countSpan = document.querySelector('.page-count span:first-child');
+	    
+ 	   	function getCount(){
+	        return document.querySelectorAll('.btn-check:checked').length;
+ 	   	}
+ 	   	let count = getCount()+lastChk;
+        countSpan.textContent = count;
+		percentCount = count * percent;
+		percentCountDown = Math.floor(percentCount);
+		progressPercent.textContent = percentCountDown;
+		progressBar.style.width = percentCount + '%';
+	    
+	    radioButtons.forEach(radioButton => {
+	        radioButton.addEventListener('click', () => {
+	        	// 답한 문항 개수
+	            count = document.querySelectorAll('.btn-check:checked').length;
+	            countSpan.textContent = count;
+	            
+	         	// 진척률
+	            percentCount = count * percent;
+	         	percentCountDown = Math.floor(percentCount);
+	            progressPercent.textContent = percentCountDown;
+	            progressBar.style.width = percentCount + '%';
+	        });
+	    });
+	    
+	    
 		
 		function getPercent(){
 			count = document.querySelectorAll('.btn-check:checked').length;

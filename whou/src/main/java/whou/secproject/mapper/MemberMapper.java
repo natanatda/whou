@@ -45,6 +45,7 @@ public interface MemberMapper {
 	
 	// 마이페이지
 	public RecommandInfoDTO getAptitudeRank(int userNum);
+	public String getTempSave(String memId);
 
 	
 	
