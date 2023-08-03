@@ -78,7 +78,7 @@
 															  <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: ${percent[0]}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 													</div>
-							                    	<button class="purple-btn">적성검사 이어하기</button>
+							                    	<button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=21&tempSave=tempSave'">적성검사 이어하기</button>
 											    </div>
 						                    </c:if>
 						                    <c:if test="${percent[1] != '0'}">
@@ -91,7 +91,7 @@
 															  <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: ${percent[1]}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 													</div>
-							                    	<button class="purple-btn" onclick="location='/whou/aptitude/temporarySave?qnum=25&tempSave=tempSave'">가치관검사 이어하기</button>
+							                    	<button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=25&tempSave=tempSave'">가치관검사 이어하기</button>
 											    </div>
 											</c:if>
 											<c:if test="${percent[2] != '0'}">

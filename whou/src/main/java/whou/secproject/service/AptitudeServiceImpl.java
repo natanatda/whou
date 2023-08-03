@@ -494,7 +494,7 @@ public class AptitudeServiceImpl implements AptitudeService{
 	    	testName="진로개발역량검사";
 	    }
 	    if(qnum.equals("31")) {
-	    	testName="진로개발역량검사";
+	    	testName="직업흥미검사";
 	    }
 	    dto.setTest_name(testName);
 	    
