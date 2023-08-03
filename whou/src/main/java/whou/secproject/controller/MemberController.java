@@ -863,7 +863,8 @@ public class MemberController {
               int job_cd = recoLi.get(h).get(colNM2.get(0)).intValue();
               reredto.setJob_cd(job_cd);
               reredto.setJob_nm(serviceRe.getJname(selDTOJ, job_cd));
-              for(int c = 0; c < 11+majorC+certiC; c++) {
+              if(recoLi.get(h).get(colNM2.get(1)).doubleValue()<=1.0) break;
+              for(int c = 0; c < 12+majorC+certiC; c++) {
                  String factor = null, detail = null;
                  if(c == 0) factor = "직업 일련번호";
                  else if(c == 1) factor = "총점";
@@ -889,18 +890,18 @@ public class MemberController {
                                    Math.round(recoLi.get(h).get(colNM2.get(c)).doubleValue()*100-100)+"% 기");
                     }
                  }
-                 else if(c<11+majorC) {
-                    factor = majors.get(c-11);
+                 else if(c<12+majorC) { // c<13
+                    factor = majors.get(c-12);
                     if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
                        reredto.setDescription(
-                          " 학위 "+factor+" 는 이 직업에서 도움이 되기에 10% 기");
+                          " 학위 "+factor+"는 이 직업에서 도움이 되기에 직업 적합도 종합 점수에 10% 기");
                     }
                  }
-                 else if(c<11+majorC+certiC) { 
-                    factor = certis.get(c-11-majorC);
+                 else if(c<12+majorC+certiC) { // c<15
+                    factor = certis.get(c-12-majorC);
                     if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
                        reredto.setDescription(
-                          " 자격증 "+factor+" 는 이 직업에서 도움이 되기에 10% 기");
+                          " 자격증 "+factor+"는 이 직업에서 도움이 되기에 직업 적합도 종합 점수에 10% 기");
                     }
                  }
                  
@@ -1024,7 +1025,7 @@ public class MemberController {
 	        if(majors!=null) majorC = majors.size();
 	        if(certis!=null) certiC = certis.size();
 	        
-	        List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(new SelectDTO(), userNum, 1, 5,"*");
+	        List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(new SelectDTO(), userNum, page+1, size,"*");
 	        HashMap<String,String> top3NM = serviceRe.getRecoList(new SelectDTO(), userNum);
 	        if(top3NM==null) {
         	   top3NM = new HashMap<String,String>();
@@ -1051,10 +1052,11 @@ public class MemberController {
            ArrayList<RecoResultDTO> reres = new ArrayList<RecoResultDTO>();
            for(int h = 0 ;  h < recoLi.size(); h++) {
               RecoResultDTO reredto = new RecoResultDTO();
+              if(recoLi.get(h).get(colNM2.get(1)).doubleValue()<=1.0) break;
               int job_cd = recoLi.get(h).get(colNM2.get(0)).intValue();
               reredto.setJob_cd(job_cd);
               reredto.setJob_nm(serviceRe.getJname(selDTOJ, job_cd));
-              for(int c = 0; c < 11+majorC+certiC; c++) {
+              for(int c = 0; c < 12+majorC+certiC; c++) {
                  String factor = null, detail = null;
                  if(c == 0) factor = "직업 일련번호";
                  else if(c == 1) factor = "총점";
@@ -1068,32 +1070,30 @@ public class MemberController {
                              "당신의 "+detail+" 중 " +factor+"은 당신의 직업 적합도 종합 점수에 약 "+
                                    Math.round(recoLi.get(h).get(colNM2.get(c)).doubleValue()*100-100)+"% 기");
                     }
-                 }
-                 else if(7<c&&c<12) {
-                    if(c==8) factor = "안전지향";
-                     else if(c==9) factor = "의미지향";
-                     else if(c==10) factor = "변화지향";
-                     else if(c==11) factor = "성취지향";
-                    if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
-                       reredto.setDescription(
+                 }else if(7<c&&c<12) {
+                	 if(c==8) factor = "안전지향";
+                	 else if(c==9) factor = "의미지향";
+                	 else if(c==10) factor = "변화지향";
+                	 else if(c==11) factor = "성취지향";
+                	 if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+                		 reredto.setDescription(
                              " 표준 "+factor+" 부분에서 당신의 직업 적합도 종합 점수에 약 "+
                                    Math.round(recoLi.get(h).get(colNM2.get(c)).doubleValue()*100-100)+"% 기");
-                    }
-                 }
-                 else if(c<11+majorC) {
-                    factor = majors.get(c-11);
-                    if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
-                       reredto.setDescription(
-                          " 학위 "+factor+" 는 이 직업에서 도움이 되기에 10% 기");
-                    }
-                 }
-                 else if(c<11+majorC+certiC) { 
-                    factor = certis.get(c-11-majorC);
-                    if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
-                       reredto.setDescription(
-                          " 자격증 "+factor+" 는 이 직업에서 도움이 되기에 10% 기");
-                    }
-                 }
+                	 }
+                 }else if(c<12+majorC) { // c<13
+                     factor = majors.get(c-12);
+                     if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+                        reredto.setDescription(
+                           " 학위 "+factor+"는 이 직업에서 도움이 되기에 직업 적합도 종합 점수에 10% 기");
+                     }
+                 }else if(c<12+majorC+certiC) { //c<15
+                     factor = certis.get(c-12-majorC);
+                     System.out.println(factor);
+                     if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+                        reredto.setDescription(
+                           " 자격증 "+factor+"는 이 직업에서 도움이 되기에 직업 적합도 종합 점수에 10% 기");
+                     }
+                  }
               }
               reres.add(reredto);
            }
