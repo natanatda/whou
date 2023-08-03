@@ -1,10 +1,13 @@
 package whou.secproject.component;
 
-import java.util.List; 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
+import whou.secproject.service.JobDicService;
 
 @Data
 public class JobDicListResponseDTO {
@@ -23,20 +26,24 @@ public class JobDicListResponseDTO {
 	
 	@Data
 	public static class Jobs {
-		private String aptit_name; // Á÷¾÷±º
-		private String social; // »çÈ¸Àû ±â¿© 
-		private String work; // ÇÏ´Â ÀÏ
-		private int job_cd; // Á÷¾÷ ÄÚµå
-		private String rel_job_nm; // °ü·Ã Á÷¾÷
-	    private String job_nm; // Á÷¾÷¸í
-	    private String top_nm; // ¼öÁ¤ÀÏ
-	    private String wlb; // ¿ö¶óº§
+		
+		
+		private String aptit_name; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		private String social; // ï¿½ï¿½È¸ï¿½ï¿½ ï¿½â¿© 
+		private String work; // ï¿½Ï´ï¿½ ï¿½ï¿½
+		private int job_cd; // ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½
+		private String rel_job_nm; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	    private String job_nm; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	    private String top_nm; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	    private String wlb; // ï¿½ï¿½ï¿½ï¿½
 	    private double RNUM; // rownum
-	    private String edit_dt; // ¼öÁ¤ÀÏ
-	    private String reg_dt; // µî·ÏÀÏ
-	    private int seq; // °íÀ¯¹øÈ£
-	    private int views; // Á¶È¸¼ö
-	    private int likes; // ÃßÃµ¼ö
-	    private String wage; // ¿¬ºÀ ¼öÁØ
+	    private String edit_dt; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	    private String reg_dt; // ï¿½ï¿½ï¿½ï¿½ï¿½
+	    private int seq; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£
+	    private int views; // ï¿½ï¿½È¸ï¿½ï¿½
+	    private int likes; // ï¿½ï¿½Ãµï¿½ï¿½
+	    private String wage; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	    private String img;
+	    private String backColor;
 	}
 }

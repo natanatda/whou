@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import whou.secproject.component.JobDicAptdValueListDTO;
 import whou.secproject.component.JobDicDetailResponseDTO;
 import whou.secproject.component.JobDicListResponseDTO;
+import whou.secproject.component.JobDicListResponseDTO.Jobs;
 import whou.secproject.component.JobDicParamDTO;
 import whou.secproject.component.JobDicValueListDTO;
 import whou.secproject.component.WhouModelCustomDTO;
@@ -121,6 +122,13 @@ public class JobController {
 			int pageBlock = 10;
 			int endPage = startPage + pageBlock -1;
 			if (endPage > pageCount) endPage = pageCount;
+			
+			for(int i = 0 ; i < dtoList.getJobs().size(); i++) {
+				Jobs job = dtoList.getJobs().get(i);
+				job.setBackColor(service.getBackColor(job.getJob_cd()));
+				job.setImg(service.getImg(job.getJob_cd()));
+			}
+			
 			model.addAttribute("startPage", startPage);
 			model.addAttribute("endPage", endPage);
 			model.addAttribute("pageBlock", pageBlock);
@@ -130,7 +138,9 @@ public class JobController {
 		
 		model.addAttribute("count", count);
 		model.addAttribute("currentPage", currentPage); // currentPage
-
+		
+		
+		
 		return "/job/description";
 	}
 	
@@ -138,40 +148,6 @@ public class JobController {
 	public String calendar(Model model,HttpServletRequest request) {
 		return "/job/calendar";
 	}
-	
-//	@RequestMapping("/search")
-//	public String JobDicSearch(HttpServletRequest request) {
-//		
-//		String pageIndex = request.getParameter("pageIndex");
-//		if(pageIndex!=null)
-//			pageIndex = "1";
-//		
-//		JobDicParamDTO jParam = new JobDicParamDTO();
-//		
-//		jParam.setPageIndex(pageIndex);
-//		jParam.setSearchJobNm(request.getParameter("jobNM"));
-//		
-//		dao.getJobDicListSorted(jParam);
-//		return "/job/description";
-//	}
-//	
-//	@RequestMapping("/list")
-//	public String JobDicListSorted(HttpServletRequest request) {
-//		
-//		JobDicParamDTO jParam = new JobDicParamDTO();
-//		
-//		String pageIndex = request.getParameter("pageIndex");
-//		
-//		if(pageIndex!=null) pageIndex = "1";
-//		jParam.setPageIndex(pageIndex);
-//		
-//		jParam.setSearchJobNm(request.getParameter("jobNM"));
-//		String strs = request.getParameter("field");
-//		System.out.println(strs);
-//		
-//		dao.getJobDicListSorted(jParam);
-//		return "/job/description";
-//	}
 	
 	@RequestMapping("/info")
     public String JobDicInfo(HttpServletRequest request, Model model) {

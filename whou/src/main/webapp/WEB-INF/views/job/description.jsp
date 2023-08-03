@@ -146,9 +146,9 @@
                   	<c:forEach var="job" items="${jobs}">
                     <div class="col-lg-6 col-xl-4">
                         <div class="card mb-5 mb-xl-0" onclick="location='/whou/job/info?job_cd=${job.job_cd}'">
-                            <div class="result-img">img</div>
+                            <div class="result-img" style="background-color: #${job.backColor}">img${job.img}</div>
                             <div class="result-cont">
-                                <h4>${job.job_nm } <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
+                                <h4>${job.job_nm} <i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
                                 <p>${job.work}</p>
                             </div>
                         </div>
@@ -169,15 +169,15 @@
                           <c:forEach var="pageNum" begin="${startPage}" end="${endPage}">
 	                          <li class="page-item <c:if test="${currentPage==pageNum}">active</c:if>"><a class="page-link" onclick="sub(${pageNum})" >${pageNum}</a></li>
                           </c:forEach>
-						<c:if test="${endPage < pageCount}">
-                          <li class="page-item">
-                            <a class="page-link" onclick="sub(${startPage+pageBlock})" aria-label="Next">
-                              <span aria-hidden="true">&raquo;</span>
-                            </a>
-                          </li>
-                          </c:if>
-                        </ul>
-                      </nav>
+							<c:if test="${endPage < pageCount}">
+							<li class="page-item">
+								<a class="page-link" onclick="sub(${startPage+pageBlock})" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+							</c:if>
+						</ul>
+					</nav>
                 </div>
                 
             </div>
