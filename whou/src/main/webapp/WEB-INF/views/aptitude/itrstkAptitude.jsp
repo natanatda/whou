@@ -46,14 +46,18 @@
 
 			<div class="row aptitude-content">
 				<div class="col-lg-12 col-xl-12">
-				<div class="progress">
-				  <div class="progress-bar" role="progressbar" aria-label="Example with label" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-				</div>
-				 <div><span>0</span>%</div>
+				<form action="report" method="post" id = "reportForm" onsubmit="return nonBt()">
+				<div class="top-nav">
 					<h3 class="page-count">
 						<span>0</span> / <span>${fn:length(RESULT)}</span>
 					</h3>
-					<form action="report" method="post" id = "reportForm">
+					<div class="progress">
+						<div class="progress-bar" role="progressbar" aria-label="Example with label" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+						<div><span>0</span>%</div>
+					</div>
+					<button type="submit" class="white-btn" formaction="temporarySave" onclick="getPercent()">임시저장</button>
+				</div>
+					
 						<input type="hidden" name="qnum" value="${qnum}">
 						<input type="hidden" name="countQ" value="${fn:length(RESULT)}">
 						<input type="hidden" name="tempSave" value="${param.tempSave != null ? param.tempSave : ''}">
@@ -124,10 +128,10 @@
 		                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 4}" value="4" ${arrList[status.index]=='4' ? 'checked' : ''} autocomplete="off" >
 		                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 4}">4</label>
 		                                    
-		                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 5}" value="5" ${arrList[status.index]=='5' ? 'checked' : ''} autocomplete="off" checked>
+		                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 5}" value="5" ${arrList[status.index]=='5' ? 'checked' : ''} autocomplete="off" >
 		                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 5}">5</label>
 		
-		                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 6}" value="6" ${arrList[status.index]=='6' ? 'checked' : ''} autocomplete="off">
+		                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 6}" value="6" ${arrList[status.index]=='6' ? 'checked' : ''} autocomplete="off" che>
 		                                    <label class="btn btn-outline-primary" for="btnradio${status.index * 7 + 6}">6</label>
 		
 		                                    <input type="radio" class="btn-check" name="btnradio${status.index + 1}" id="btnradio${status.index * 7 + 7}" value="7" ${arrList[status.index]=='7' ? 'checked' : ''} autocomplete="off">
@@ -197,10 +201,10 @@
 												<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 3}" value="3" ${arrList[status.index]=='3' ? 'checked' : ''} autocomplete="off" >
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 3}">${item.answer03}</label>
 		
-												<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 4}" value="4" ${arrList[status.index]=='4' ? 'checked' : ''} autocomplete="off">
+												<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 4}" value="4" ${arrList[status.index]=='4' ? 'checked' : ''} autocomplete="off" checked>
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 4}">${item.answer04}</label>
 		
-												<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 5}" value="5" ${arrList[status.index]=='5' ? 'checked' : ''} autocomplete="off" checked>
+												<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 5}" value="5" ${arrList[status.index]=='5' ? 'checked' : ''} autocomplete="off" >
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 5}">${item.answer05}</label>
 											</div>
 										</li>
@@ -262,7 +266,6 @@
 							<button class="white-btn" onclick="nextPage()">다음</button>
 							 -->
 							<button type="button" class="white-btn" onclick="location='/whou/aptitude/aptitudeMain'">취소</button>
-							<button type="submit" class="white-btn" formaction="temporarySave" onclick="getPercent()">임시저장</button>
 							<button type="submit" class="purple-btn">제출</button>
 						</div>
 					</form>
@@ -275,6 +278,7 @@
 	<script>
 	
 		let lastChk = 0;
+		let count = 0;
 	 	// 최대 3개의 체크박스만 선택 가능하도록 제한
 	    var checkboxes = document.querySelectorAll('input[name="btnradio49"]');
 		var maxLimit = 3;
@@ -289,6 +293,7 @@
 				if (checkbox.checked) {
 					checkedCount++;
 				}
+
 			});
 		
 		    if (checkedCount > maxLimit) {
@@ -324,24 +329,20 @@
 		
 			
 		    if (selectedOrder.length === maxLimit) {
-		      selectedOrder.forEach(function(item, order) {
-		        var label = document.querySelector('label[name="btnradio19"]');
-			    console.log("라벨",label);
-		        label.textContent = label.textContent.replace(/\(\d+\)$/, '(' + (order + 1) + ')');
-		        console.log("라벨이어",label.textContent);
-		      });
 		      lastChk=1;
+		      updateProgress();
+		    }else{
+		    	lastChk=0;
 		    }
 		
-		    console.log("선택 순서:", selectedOrder);
-		    console.log("라첵",lastChk);
+		
 		    //alert(selectedValuesInput.value);
 		  });
 		});
 		// 진척률
  		const percent = ${100/fn:length(RESULT)};
  		const progressBar = document.querySelector('.progress-bar');
- 	    const progressPercent = document.querySelector('.progress+div > span');
+ 	    const progressPercent = document.querySelector('.progress div > span');
  	   	let percentCount=0;
  	    
 
@@ -350,28 +351,38 @@
 	    const countSpan = document.querySelector('.page-count span:first-child');
 	    
  	   	function getCount(){
-	        return document.querySelectorAll('.btn-check:checked').length;
+ 	   		let tempNum = document.querySelectorAll('.btn-check:checked').length;
+	        return tempNum;
  	   	}
- 	   	let count = getCount()+lastChk;
+ 	   	count = getCount();
         countSpan.textContent = count;
 		percentCount = count * percent;
 		percentCountDown = Math.floor(percentCount);
 		progressPercent.textContent = percentCountDown;
 		progressBar.style.width = percentCount + '%';
 	    
-	    radioButtons.forEach(radioButton => {
-	        radioButton.addEventListener('click', () => {
-	        	// 답한 문항 개수
-	            count = document.querySelectorAll('.btn-check:checked').length;
-	            countSpan.textContent = count;
-	            
-	         	// 진척률
-	            percentCount = count * percent;
-	         	percentCountDown = Math.floor(percentCount);
-	            progressPercent.textContent = percentCountDown;
-	            progressBar.style.width = percentCount + '%';
-	        });
-	    });
+		// 라디오 버튼
+		radioButtons.forEach(radioButton => {
+		    radioButton.addEventListener('click', updateProgress);
+		});
+
+		// 체크박스
+		checkboxes.forEach(checkbox => {
+		    checkbox.addEventListener('click', updateProgress);
+		});
+		
+	   function updateProgress(){
+        	// 답한 문항 개수
+            count = document.querySelectorAll('.btn-check:checked').length + lastChk;
+            countSpan.textContent = count;
+   
+         	// 진척률
+            percentCount = count * percent;
+         	percentCountDown = Math.floor(percentCount);
+            progressPercent.textContent = percentCountDown;
+            progressBar.style.width = percentCount + '%';
+	  };
+	  
 	    
 	    
 		
@@ -387,6 +398,13 @@
 			input.name = 'percent';
     		input.value = percentCountDown;
     		form.appendChild(input);
+		}
+		
+		function nonBt(){
+			if(${fn:length(RESULT)} > count){
+				alert('모든 문항에 답변하지 않으면 제출하실 수 없습니다.');
+				return false;
+			}
 		}
     </script>
 	
