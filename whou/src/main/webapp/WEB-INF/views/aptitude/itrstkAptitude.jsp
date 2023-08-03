@@ -55,7 +55,7 @@
 						<div class="progress-bar" role="progressbar" aria-label="Example with label" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 						<div><span>0</span>%</div>
 					</div>
-					<button type="submit" class="white-btn" formaction="temporarySave" onclick="getPercent()">임시저장</button>
+					<button type="submit" class="white-btn" formaction="temporarySave" onclick="submitForm()">임시저장</button>
 				</div>
 					
 						<input type="hidden" name="qnum" value="${qnum}">
@@ -201,7 +201,7 @@
 												<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 3}" value="3" ${arrList[status.index]=='3' ? 'checked' : ''} autocomplete="off" >
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 3}">${item.answer03}</label>
 		
-												<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 4}" value="4" ${arrList[status.index]=='4' ? 'checked' : ''} autocomplete="off" checked>
+												<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 4}" value="4" ${arrList[status.index]=='4' ? 'checked' : ''} autocomplete="off">
 												<label class="btn btn-outline-primary" for="btnradio${status.index * 5 + 4}">${item.answer04}</label>
 		
 												<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 5 + 5}" value="5" ${arrList[status.index]=='5' ? 'checked' : ''} autocomplete="off" >
@@ -406,6 +406,14 @@
 				return false;
 			}
 		}
+		
+		
+		//임시저장 제출하기
+	    function submitForm() {
+	        const form = document.getElementById('reportForm'); // <form> 요소를 가져옵니다.
+	        form.removeAttribute('onsubmit');
+	        form.submit(); // <form> 요소를 제출합니다.
+	    }
     </script>
 	
 		<!-- Bootstrap core JS-->
