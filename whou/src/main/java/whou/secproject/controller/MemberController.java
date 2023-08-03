@@ -723,16 +723,15 @@ public class MemberController {
            if((!aptiTrue)&&(!inteTrue)&&
               (!valueTrue)&&(!majorTrue)&&
               (!certiTrue)) none=true;
+           if(!aptiTrue) redto.setAptitude_jobs(null);
+           if(!inteTrue) redto.setInterest_jobs(null);
+           if(!valueTrue) redto.setValues_score(null);
         }else if((!redtoTrue)&& (!majorTrue) && (!certiTrue)) {
         	none=true;
   		}else if((!redtoTrue) && (majorTrue || certiTrue)) {
   			redto = new RecommandInfoDTO();
   			notTest = true;
   		}
-        if(!aptiTrue) redto.setAptitude_jobs(null);
-        if(!inteTrue) redto.setInterest_jobs(null);
-        if(!valueTrue) redto.setValues_score(null);
-        
         model.addAttribute("testTrue", new ArrayList<Boolean>(Arrays.asList(aptiTrue,inteTrue,valueTrue)));
         
         if(!none) {
@@ -1007,13 +1006,13 @@ public class MemberController {
 	}
 	
 	// 추천 리스트 가져오기
-	   @RequestMapping("/getRecoLi")
-	    public @ResponseBody ArrayList<RecoResultDTO> getRecoLi(@RequestParam("page") int page,
+	@RequestMapping("/getRecoLi")
+		public @ResponseBody ArrayList<RecoResultDTO> getRecoLi(@RequestParam("page") int page,
 	                                       @RequestParam("size") int size, HttpSession session){
-	      String memId = (String)session.getAttribute("memId");
-	      // user_info 테이블에서 세션에 해당하는 num 추출
-	      int userNum = 0;
-	      if(memId != null) userNum=serviceAt.userNumSelect(memId);
+			String memId = (String)session.getAttribute("memId");
+			// user_info 테이블에서 세션에 해당하는 num 추출
+			int userNum = 0;
+			if(memId != null) userNum=serviceAt.userNumSelect(memId);
 	      
 	        CertiDTO certiDTO = new CertiDTO();
 	        certiDTO.setNum(userNum);
@@ -1025,73 +1024,80 @@ public class MemberController {
 	        if(majors!=null) majorC = majors.size();
 	        if(certis!=null) certiC = certis.size();
 	        
-	        SelectDTO selDTO = new SelectDTO();
-	       List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(selDTO, userNum, page+1, size,"*");
-	       SelectDTO selDTO2 = new SelectDTO();
-	       HashMap<String,String> top3NM = serviceRe.getRecoList(selDTO2, userNum);
-	       ArrayList <String> colNM = new ArrayList<String>(
-	             Arrays.asList("APTITUDE_NAME1","APTITUDE_NAME2",
-	                   "APTITUDE_NAME3","INTEREST_NAME1",
-	                   "INTEREST_NAME2","INTEREST_NAME3"));
-	       ArrayList <String> colNM2 = new ArrayList<String>(
-	             Arrays.asList("JOB_CD","TOTAL","APTITUDE1",
-	                   "APTITUDE2","APTITUDE3","INTEREST1",
-	                   "INTEREST2","INTEREST3","VALUE1","VALUE2",
-	                   "VALUE3","VALUE4"));
-	       for(int c = 0 ; c < majorC; c++) colNM2.add("MAJOR"+(c+1));
-	       for(int c = 0 ; c < certiC; c++) colNM2.add("CERTI"+(c+1));
-	       SelectDTO selDTOJ = new SelectDTO();
-	       ArrayList<RecoResultDTO> reres = new ArrayList<RecoResultDTO>();
-	       for(int h = 0 ;  h < recoLi.size(); h++) {
-	          RecoResultDTO reredto = new RecoResultDTO();
-	          int job_cd = recoLi.get(h).get(colNM2.get(0)).intValue();
-	          reredto.setJob_cd(job_cd);
-	          reredto.setJob_nm(serviceRe.getJname(selDTOJ, job_cd));
-	          for(int c = 0; c < 11+majorC+certiC; c++) {
-	             String factor = null, detail = null;
-	             if(c == 0) factor = "직업 일련번호";
-	             else if(c == 1) factor = "총점";
-	             else if(c < 8) {
-	                factor = top3NM.get(colNM.get(c-2));
-	                if(factor==null) factor=(c-1)+"?";
-	                if(1<c&& c<5) detail ="적성";
-	                else detail ="흥미";
-	                if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
-	                   reredto.setDescription(
-	                         "당신의 "+detail+" 중 " +factor+"은 당신의 직업 적합도 종합 점수에 약 "+
-	                               Math.round(recoLi.get(h).get(colNM2.get(c)).doubleValue()*100-100)+"% 기");
-	                }
-	             }
-	             else if(7<c&&c<12) {
-	                if(c==8) factor = "안전지향";
-	                 else if(c==9) factor = "의미지향";
-	                 else if(c==10) factor = "변화지향";
-	                 else if(c==11) factor = "성취지향";
-	                if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
-	                   reredto.setDescription(
-	                         " 표준 "+factor+" 부분에서 당신의 직업 적합도 종합 점수에 약 "+
-	                               Math.round(recoLi.get(h).get(colNM2.get(c)).doubleValue()*100-100)+"% 기");
-	                }
-	             }
-	             else if(c<11+majorC) {
-	                factor = majors.get(c-11);
-	                if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
-	                   reredto.setDescription(
-	                      " 학위 "+factor+" 는 이 직업에서 도움이 되기에 10% 기");
-	                }
-	             }
-	             else if(c<11+majorC+certiC) { 
-	                factor = certis.get(c-11-majorC);
-	                if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
-	                   reredto.setDescription(
-	                      " 자격증 "+factor+" 는 이 직업에서 도움이 되기에 10% 기");
-	                }
-	             }
-	             
-	          }
-	          reres.add(reredto);
-	       }
-	       return reres;
+	        List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(new SelectDTO(), userNum, 1, 5,"*");
+	        HashMap<String,String> top3NM = serviceRe.getRecoList(new SelectDTO(), userNum);
+	        if(top3NM==null) {
+        	   top3NM = new HashMap<String,String>();
+        	   top3NM.put("APTITUDE_NAME1", "적성1");
+        	   top3NM.put("APTITUDE_NAME2", "적성2");
+        	   top3NM.put("APTITUDE_NAME3", "적성3");
+        	   top3NM.put("INTEREST_NAME1", "흥미1");
+        	   top3NM.put("INTEREST_NAME2", "흥미2");
+        	   top3NM.put("INTEREST_NAME3", "흥미3");
+           }
+           ArrayList <String> colNM = new ArrayList<String>(
+                 Arrays.asList("APTITUDE_NAME1","APTITUDE_NAME2",
+                       "APTITUDE_NAME3","INTEREST_NAME1",
+                       "INTEREST_NAME2","INTEREST_NAME3"));
+           ArrayList <String> colNM2 = new ArrayList<String>(
+                 Arrays.asList("JOB_CD","TOTAL","APTITUDE1",
+                       "APTITUDE2","APTITUDE3","INTEREST1",
+                       "INTEREST2","INTEREST3","VALUE1","VALUE2",
+                       "VALUE3","VALUE4"));
+           for(int c = 0 ; c < majorC; c++) colNM2.add("MAJOR"+(c+1));
+           for(int c = 0 ; c < certiC; c++) colNM2.add("CERTI"+(c+1));
+           System.out.println(colNM2);
+           SelectDTO selDTOJ = new SelectDTO();
+           ArrayList<RecoResultDTO> reres = new ArrayList<RecoResultDTO>();
+           for(int h = 0 ;  h < recoLi.size(); h++) {
+              RecoResultDTO reredto = new RecoResultDTO();
+              int job_cd = recoLi.get(h).get(colNM2.get(0)).intValue();
+              reredto.setJob_cd(job_cd);
+              reredto.setJob_nm(serviceRe.getJname(selDTOJ, job_cd));
+              for(int c = 0; c < 11+majorC+certiC; c++) {
+                 String factor = null, detail = null;
+                 if(c == 0) factor = "직업 일련번호";
+                 else if(c == 1) factor = "총점";
+                 else if(c < 8) {
+                    factor = top3NM.get(colNM.get(c-2));
+                    if(factor==null) factor=(c-1)+"?";
+                    if(1<c&& c<5) detail ="적성";
+                    else detail ="흥미";
+                    if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+                       reredto.setDescription(
+                             "당신의 "+detail+" 중 " +factor+"은 당신의 직업 적합도 종합 점수에 약 "+
+                                   Math.round(recoLi.get(h).get(colNM2.get(c)).doubleValue()*100-100)+"% 기");
+                    }
+                 }
+                 else if(7<c&&c<12) {
+                    if(c==8) factor = "안전지향";
+                     else if(c==9) factor = "의미지향";
+                     else if(c==10) factor = "변화지향";
+                     else if(c==11) factor = "성취지향";
+                    if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+                       reredto.setDescription(
+                             " 표준 "+factor+" 부분에서 당신의 직업 적합도 종합 점수에 약 "+
+                                   Math.round(recoLi.get(h).get(colNM2.get(c)).doubleValue()*100-100)+"% 기");
+                    }
+                 }
+                 else if(c<11+majorC) {
+                    factor = majors.get(c-11);
+                    if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+                       reredto.setDescription(
+                          " 학위 "+factor+" 는 이 직업에서 도움이 되기에 10% 기");
+                    }
+                 }
+                 else if(c<11+majorC+certiC) { 
+                    factor = certis.get(c-11-majorC);
+                    if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
+                       reredto.setDescription(
+                          " 자격증 "+factor+" 는 이 직업에서 도움이 되기에 10% 기");
+                    }
+                 }
+              }
+              reres.add(reredto);
+           }
+           return reres;
 	   }
 	   // 컨설팅 번호 입력
 	   @RequestMapping("/insertConsult")

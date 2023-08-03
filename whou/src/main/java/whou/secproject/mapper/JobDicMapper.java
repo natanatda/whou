@@ -23,4 +23,6 @@ public interface JobDicMapper {
 	public void insertJP(JobInsertDTO dto);
 	public void insertJD(JobInsertDTO dto);
 	public void insertJCC(@Param("sort_value") int sort_value, @Param("job_cds") String job_cds);
+	public List<String> getBackColor(int j_cd);
+	public String getImg(int j_cd);
 }

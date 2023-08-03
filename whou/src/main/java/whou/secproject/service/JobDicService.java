@@ -13,4 +13,6 @@ public interface JobDicService {
 	public List<Job_unique_numDTO> getJobNum(String tb_name);
 	public void insert(JobDicDetailResponseDTO dto);
 	public void insertJCC(int sort_value, String job_cds);
+	public String getBackColor(int j_cd);
+	public String getImg(int j_cd);
 }

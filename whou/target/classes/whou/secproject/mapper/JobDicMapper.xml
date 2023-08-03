@@ -36,5 +36,19 @@
 	<insert id ="insertJCC">
 		insert into job_category_cd values(#{sort_value},#{job_cds})
 	</insert>
+	<select id="getBackColor" resultType="String">
+		select t2.color
+		from job_detail t3
+		join (SELECT t1.sort_name,t2.color
+		FROM aptd_factor t1
+		JOIN job_back_color t2 ON t1.aptd_num= t2.sort_value) t2
+		on t3.detail_value = t2.sort_name where job_cd=#{j_cd} and factor_detail='ability_name'
+	</select>
+	
+	<select id ="getImg" resultType="String">
+		SELECT t2.img
+		FROM job_category_cd t1
+		JOIN job_img t2 ON t1.sort_value = t2.sort_value where job_cds=#{j_cd}
+	</select>
 </mapper>
 
