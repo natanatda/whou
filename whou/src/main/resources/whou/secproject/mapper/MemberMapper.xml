@@ -102,6 +102,31 @@
 	<update id="deleteCerti">
 		update user_info set CERTIFICATE=#{db} where email = #{memId}
 	</update>
+	
+	<!-- 회원탈퇴 -->
+	<select id="dropTest_Result">
+		drop table user${userNum}_test_result
+	</select>
+	
+	<select id="dropTest_Save">
+		drop table user${userNum}_test_temporary_save
+	</select>
+	
+	<delete id="deleteUser">
+		delete from whou_user where num = ${userNum}
+	</delete>
+	
+	<delete id="deleteUser_info">
+		delete from user_info where num = ${userNum}
+	</delete>
+	
+	<delete id="deleteRecommand_info">
+		delete from recommand_info where num = ${userNum}
+	</delete>
+	
+	<delete id="deleteModel">
+		delete from whou_model_custom where email = #{email}
+	</delete>
 
 		
 		

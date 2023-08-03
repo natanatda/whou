@@ -40,7 +40,13 @@ public interface MemberMapper {
 	public void deleteMajor(@Param("memId")String memId, @Param("db")String db);
 	public void deleteCerti(@Param("memId")String memId, @Param("db")String db);
 
-	
+	//회원탈퇴
+	public void dropTest_Result(int UserNum);
+	public void dropTest_Save(int UserNum);
+	public void deleteUser_info(int UserNum);
+	public void deleteUser(int UserNum);
+	public void deleteRecommand_info(int UserNum);
+	public void deleteModel(String email);
 	
 	
 	// 마이페이지

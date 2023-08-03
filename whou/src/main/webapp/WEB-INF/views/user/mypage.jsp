@@ -37,18 +37,25 @@
 	.JcardP2{font-size:16px;margin-bottom:20px;}
 </style>
 <style>
- #btnPw:disabled {
+#btnM:disabled {
   background-color: #ddd; /* 비활성화 배경색 */
   color: #888; /* 비활성화 글자색 */
   cursor: not-allowed; /* 비활성화된 버튼에는 커서를 변경하여 마우스 클릭을 방지 */
 }
-
- #btnM:disabled {
+ </style>
+<style>
+#btnPw:disabled {
   background-color: #ddd; /* 비활성화 배경색 */
   color: #888; /* 비활성화 글자색 */
   cursor: not-allowed; /* 비활성화된 버튼에는 커서를 변경하여 마우스 클릭을 방지 */
 }
-
+ </style>
+<style>
+#btnDelete:disabled {
+  background-color: #ddd; /* 비활성화 배경색 */
+  color: #888; /* 비활성화 글자색 */
+  cursor: not-allowed; /* 비활성화된 버튼에는 커서를 변경하여 마우스 클릭을 방지 */
+}
  </style>
  
  
@@ -156,6 +163,7 @@
                                      <c:if test="${mem.join_type == 'whoU'}">
                                         <button class="nav-link" id="nav-pw-tab" data-bs-toggle="tab" data-bs-target="#nav-pw" type="button" role="tab" aria-controls="nav-pw" aria-selected="false">비밀번호 변경</button>
                                      </c:if>
+                                     <button class="nav-link" id="nav-delete-tab" data-bs-toggle="tab" data-bs-target="#nav-delete" type="button" role="tab" aria-controls="nav-delete" aria-selected="false">회원탈퇴</button>
                                    </div>
                                   </nav>
                                  <div class="tab-content" id="nav-tabContent2">
@@ -180,17 +188,17 @@
                                           	<div class="input-item">
                                             	<label for="joinInput" class="form-label">휴대폰</label>
 	                                            <div class="input-box">
-	                                               <input type="text" class="form-control" id="tel" name = "tel" placeholder="'-' 빼고 숫자만 입력" value = "${mem.tel}">
+	                                               <input type="text" class="form-control" id="phone" name = "phone" placeholder="'-' 빼고 숫자만 입력" value = "${mem.tel}">
 	                                               <button type="button" style="border-radius: 8px" class="purple-btn" name="phoneChk" id="phoneChk">인증 요청</button>
 	                                            </div>
-                                               <span class="tel_error" style="color:red; display:none;">형식에 맞게 휴대폰번호를 정확히 입력해주세요.</span>
-                                               <span class="tel_ok" style="color:green; display:none;">인증번호 발송이 완료되었습니다.</br> 휴대폰에서 인증번호를 확인해주십시오.</span>
+                                               <span class="phone_error" style="color:red; display:none;">형식에 맞게 휴대폰번호를 정확히 입력해주세요.</span>
+                                               <span class="phone_ok" style="color:green; display:none;">인증번호 발송이 완료되었습니다.</br> 휴대폰에서 인증번호를 확인해주십시오.</span>
                                             <div class="input-box">
-                                               <input type="text" style="display:none;" class="form-control" id="tel2" name = "tel2" placeholder="인증번호 입력">
+                                               <input type="text" style="display:none;" class="form-control" id="phone2" name = "phone2" placeholder="인증번호 입력">
                                                <button type="button" style="display:none; border-radius: 8px" class="purple-btn" name="phoneChk2" id="phoneChk2">인증 확인</button>
                                          	</div>
-                                              	<span class="tel2_ok" style="color:green; display:none;">인증에 성공하셨습니다.</span>
-                                               	<span class="tel2_error" style="color:red; display:none;">인증에 실패하셨습니다</br>인증번호를 다시 확인해주십시오.</span>
+                                              	<span class="phone2_ok" style="color:green; display:none;">인증에 성공하셨습니다.</span>
+                                               	<span class="phone2_error" style="color:red; display:none;">인증에 실패하셨습니다</br>인증번호를 다시 확인해주십시오.</span>
                                           	</div>
                                           	<div class="input-wrap">
                                              	<button type="submit" style="border-radius: 8px" class="purple-btn btn-xs" id="btnM" disabled>수정</button>
@@ -261,6 +269,30 @@
 			                                    </div>
 			                                    <div class="input-wrap">
 			                                       <button type="submit" style="border-radius: 8px" class="purple-btn btn-xs" id="btnPw" disabled>변경</button>
+			                                    </div>
+	                                 		</form>
+                                 		</div>
+                                    </div><!-- 회원탈퇴 -->
+                                    <div class="tab-pane fade" id="nav-delete" role="tabpanel" aria-labelledby="nav-delete-tab" tabindex="0">
+                                       <div class="chg-info">
+	                                        <form action="/whou/member/deleteUser" method="post">
+											<div class="input-item">
+												<label for="joinInput" class="form-label">휴대폰 본인인증</label>
+												<div class="input-box">
+													<input type="text" class="form-control" id="tel" name="tel" placeholder="'-' 빼고 숫자만 입력" value="${mem.tel}">
+													<button type="button" style="border-radius: 8px" class="purple-btn" name="telChk" id="telChk">인증 요청</button>
+												</div>
+												<span class="tel_error" style="color: red; display: none;">형식에 맞게 휴대폰번호를 정확히 입력해주세요.</span> 
+												<span class="tel_ok" style="color: green; display: none;">인증번호 발송이 완료되었습니다.</br> 휴대폰에서 인증번호를 확인해주십시오.</span>
+												<div class="input-box">
+													<input type="text" style="display: none;" class="form-control" id="tel2" name="tel2" placeholder="인증번호 입력">
+													<button type="button" style="display: none; border-radius: 8px" class="purple-btn" name="telChk2" id="telChk2">인증 확인</button>
+												</div>
+												<span class="tel2_ok" style="color: green; display: none;">인증에 성공하셨습니다.</span>
+												<span class="tel2_error" style="color: red; display: none;">인증에 실패하셨습니다</br>인증번호를 다시 확인해주십시오.</span>
+											</div>
+											<div class="input-wrap">
+			                                       <button type="submit" style="border-radius: 8px" class="purple-btn btn-xs" id="btnDelete" onclick = "deleteUser()" disabled>회원 탈퇴</button>
 			                                    </div>
 	                                 		</form>
                                  		</div>
@@ -1376,8 +1408,10 @@
           
         </script>
         <script>
+      	//회원정보 수정 스크립트
+      	var check = /^[0-9]+$/;
+      	var code2 = "";
       	//연도 유효성 검사
-      	var check = /^[0-9]+$/; 
    		function checkYear() {
    			var birth_year = $("#birth_year").val();
    			if (birth_year.length === 4 && check.test(birth_year)) {
@@ -1394,19 +1428,19 @@
    		//휴대폰 번호 인증
    		$(function(){
 	   		$("#phoneChk").click(function(){
-	   		    var tel = $("#tel").val();
+	   		    var phone = $("#phone").val();
 	   		    
 	   		    //유효성검사
-	   			if(tel.length === 11 && check.test(tel)){
-	   				$('.tel_ok').css("display", "inline-block");
-	   				$('.tel_error').css("display", "none");
+	   			if(phone.length === 11 && check.test(phone)){
+	   				$('.phone_ok').css("display", "inline-block");
+	   				$('.phone_error').css("display", "none");
 	   				
-	   				$("#tel2").css("display", "inline-block");
+	   				$("#phone2").css("display", "inline-block");
 	                $("#phoneChk2").css("display", "inline-block");
 		   		    $.ajax({
 		   		        type:"POST",
 		   		        url:"/whou/member/telChk",
-		   		        data: {tel:tel},
+		   		        data: {tel:phone},
 		   		        cache : false,
 		   		        success:function(numStr){
 		   		            if(numStr == "error"){ //실패시 
@@ -1419,8 +1453,8 @@
 		   		        
 		   		    });
 	   			}else{
-	   				$('.tel_ok').css("display", "none");
-	   				$('.tel_error').css("display", "inline-block");
+	   				$('.phone_ok').css("display", "none");
+	   				$('.phone_error').css("display", "inline-block");
 	   			}
 	   		    
 	   		});
@@ -1428,15 +1462,15 @@
 	 
    		//휴대폰 인증번호 대조
 		$("#phoneChk2").click(function(){
-		    if($("#tel2").val() == code2){ // 위에서 저장한값을 비교
+		    if($("#phone2").val() == code2){ // 위에서 저장한값을 비교
 		         //alert("인증에 성공하셨습니다.")
-		         $('.tel2_ok').css("display", "inline-block");
-	   			 $('.tel2_error').css("display", "none");
+		         $('.phone2_ok').css("display", "inline-block");
+	   			 $('.phone2_error').css("display", "none");
 		         telchk = "성공";
 		    }else{
 		        //alert("인증에 실패하셨습니다.\n인증번호를 다시 입력해주세요.")
-		        $('.tel2_ok').css("display", "none");
-   				$('.tel2_error').css("display", "inline-block");
+		        $('.phone2_ok').css("display", "none");
+   				$('.phone2_error').css("display", "inline-block");
 		    }
 		});
    		
@@ -1444,14 +1478,14 @@
    		    function updateButtonStatus() {
 		        var name = $("#name").val().replace(/ /g, '');
 		        var birth_year = $("#birth_year").val().replace(/ /g, '');
-		        var tel = $("#tel").val().replace(/ /g, '');
+		        var phone = $("#phone").val().replace(/ /g, '');
 
    		        var yearValid = $('.year_error').css("display") === "none";
-   		        var telValid = $('.tel2_error').css("display") === "none" && $('.tel_error').css("display") === "none" && $('.tel2_ok').css("display") === "inline-block" && $('.tel_ok').css("display") === "inline-block";
+   		        var phoneValid = $('.phone2_error').css("display") === "none" && $('.phone_error').css("display") === "none" && $('.phone2_ok').css("display") === "inline-block" && $('.phone_ok').css("display") === "inline-block";
 
    		        // 모든 조건이 만족할 때 버튼 활성화
-	        	if (email !== '' && name !== '' && birth_year !== '' && tel !== '' &&
-	   		        yearValid && telValid) {
+	        	if (email !== '' && name !== '' && birth_year !== '' && phone !== '' &&
+	   		        yearValid && phoneValid) {
 	   		        $("#btnM").prop("disabled", false);
    		        }else {
    		            $("#btnM").prop("disabled", true);
@@ -1460,7 +1494,7 @@
    		    }
 
    		    // 인풋 필드들의 입력값 변경 시에 이벤트 핸들러 할당
-   		    $("#name, #birth_year, #tel").on("input", function() {
+   		    $("#name, #birth_year, #phone").on("input", function() {
    		        updateButtonStatus();
    		    });
    			// 핸드폰 인증 버튼 클릭될 때마다 버튼 상태 업데이트
@@ -1476,14 +1510,14 @@
 	   			var email = $("#email").val().replace(/ /g, '');
 		        var name = $("#name").val().replace(/ /g, '');
 		        var birth_year = $("#birth_year").val().replace(/ /g, '');
-		        var tel = $("#tel").val().replace(/ /g, '');
+		        var phone = $("phone").val().replace(/ /g, '');
   
 	   			//컨트롤러로 보낼 데이터
      		 	var data = {
   	        		email: email,
   	                name: name,
   	                birth_year: birth_year,
-  	                tel: tel,
+  	              	tel: phone,
 	  	        };
 
 	   			$.ajax({
@@ -1555,16 +1589,12 @@
      		      	$('.pw_ok').css("display", "inline-block");
      		      	$('.pw_x').css("display", "none");
      		     	$("#btnPw").prop("disabled", false); // 활성화
-     		 }else if(newPw != newPw2){
+     		 }else{
      				$('.pw_ok').css("display", "none");
      		        $('.pw_x').css("display", "inline-block");
      		       	$("#btnPw").prop("disabled", true); // 비활성화
      		       
-     		 }else if(pw.length === 0){
-     				$('.pw_ok').css("display", "nonek");
-    		       	$('.pw_x').css("display", "none");
-    		       	$("#btnPw").prop("disabled", true); // 비활성화
-      		 }
+     		 }
    		    
    		}
    		
@@ -1591,6 +1621,64 @@
 	   		});
    		});
    		
+   		var code3 = "";
+   		//휴대폰 번호 인증
+   		$(function(){
+	   		$("#telChk").click(function(){
+	   		    var tel = $("#tel").val();
+	   		    
+	   		    //유효성검사
+	   			if(tel.length === 11 && check.test(tel)){
+	   				$('.tel_ok').css("display", "inline-block");
+	   				$('.tel_error').css("display", "none");
+	   				
+	   				$("#tel2").css("display", "inline-block");
+	                $("#telChk2").css("display", "inline-block");
+		   		    $.ajax({
+		   		        type:"POST",
+		   		        url:"/whou/member/telChk",
+		   		        data: {tel:tel},
+		   		        cache : false,
+		   		        success:function(numStr){
+		   		            if(numStr == "error"){ //실패시 
+		   		            }else{//성공시        
+		   		                code3 = numStr; // 성공하면 데이터저장
+		   		            }
+		   		        }
+		   		        
+		   		    });
+	   			}else{
+	   				$('.tel_ok').css("display", "none");
+	   				$('.tel_error').css("display", "inline-block");
+	   			}
+	   		    
+	   		});
+   		});
+	 
+   		//휴대폰 인증번호 대조
+		$("#telChk2").click(function(){
+			
+		    if($("#tel2").val() == code3){ // 위에서 저장한값을 비교
+		         $('.tel2_ok').css("display", "inline-block");
+	   			 $('.tel2_error').css("display", "none");
+	   			$("#btnDelete").prop("disabled", false); // 활성화
+		         telchk = "성공";
+		    }else{
+		        $('.tel2_ok').css("display", "none");
+   				$('.tel2_error').css("display", "inline-block");
+   				$("#btnDelete").prop("disabled", true); // 비활성화
+		    }
+		});
+   		
+   		//회원탈퇴 버튼 클릭시
+   		function deleteUser(){
+   			if (confirm("정말 탈퇴하시겠습니까?")== true) {
+   				//submit 제출하기
+		    } else {
+		    	//submit 제출 막기
+		    	event.preventDefault();
+		    }
+   		}
    		
    		$(".book-button").click(function(){
    		  const book = $(".book-bg");
