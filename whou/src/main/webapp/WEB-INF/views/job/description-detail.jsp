@@ -26,9 +26,29 @@
 		<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 		<script type="module" src="/whou/resources/js/whouModel.js?ver=1"></script>
 		<script src="/whou/resources/js/ai.js"></script>	
+		
+		<!--  kakao share API -->
+		<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.3.0/kakao.min.js"
+		integrity="sha384-70k0rrouSYPWJt7q9rSTKpiTfX6USlMYjZUtr1Du+9o4cGvhPAWxngdtVZDdErlh" crossorigin="anonymous"></script>
+		<script>
+		  Kakao.init('275aa3989621eb23a0f9f8e416aeb814'); // 사용하려는 앱의 JavaScript 키 입력
+		</script>
     </head>
 
  <style>
+ 	.share-bt{
+        padding: 20px 0px;
+	    font-weight: 600;
+	    margin: 10px 20px;
+	    width: 200px;
+	    border-radius: 0.3rem;
+ 	}
+ 	.share-bt:first-child{background-color:#F9D949; color:#;}
+ 	.share-bt:last-child{background-color:#61677A; color:#fff;}
+ 	.modal-body {
+	    display: flex;
+	    justify-content: center;
+	}
  	body{overflow-y:hidden}
   
     @media print {
@@ -85,7 +105,7 @@
                         	<c:if test="${!contain}">
 	                            <li onclick="return bookCheck(${BaseInfo.job_cd},0)"><i class="fa-regular fa-star" style="color: #5c5c5c;"></i></li>
                         	</c:if>
-                            <li><i class="fa-regular fa-thumbs-up" style="color: #5c5c5c;"></i></li>
+                            <li onclick="showShareOptions()"><i class="fa-solid fa-share-nodes" style="color: #5c5c5c;"></i></li>
                             <li class="print-btn"><i class="fa-solid fa-print" style="color: #5c5c5c;"></i></li>
                         </ul>
                         <div class="d-flex">
@@ -374,6 +394,22 @@
             </div>
             <%@ include file="../aiChatBot.jsp" %>
         </section>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="shareModalLabel">공유 옵션</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		        <button class="share-bt" onclick="shareKakao()">카카오톡으로 공유하기</button>
+		        <button class="share-bt" onclick="copyUrl()">URL 복사</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
        
         <!-- Footer-->
         <footer class="container py-5">
@@ -635,6 +671,62 @@
         });
 
 	</script>
+	
+	
+	
+	<script>
+		// 자바스크립트 코드
+		function showShareOptions() {
+		  $('#shareModal').modal('show');
+		}
+		
+		function shareKakao() {
+		    Kakao.Share.sendDefault({
+				objectType: 'feed',
+				content: {
+					title: '[WhoU] ${BaseInfo.job_nm}를 공유했습니다',
+					description: '더 자세한 직업 정보를 알고 싶다면?',
+					imageUrl:
+					  'https://blog.kakaocdn.net/dn/Teu4S/btspTKEQoFi/0ta7ZUvXjCXcLSDicGKQKK/img.png',
+					link: {
+					  // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
+					  mobileWebUrl: 'http://localhost:8080/whou/job/info?job_cd=${BaseInfo.job_cd}',
+					  webUrl: 'http://localhost:8080/whou/job/info?job_cd=${BaseInfo.job_cd}',
+					},
+				},
+				buttons: [
+				  {
+				    title: '자세히 보러가기',
+				    link: {
+				      mobileWebUrl: 'http://localhost:8080/whou/job/info?job_cd=${BaseInfo.job_cd}',
+				      webUrl: 'http://localhost:8080/whou/job/info?job_cd=${BaseInfo.job_cd}',
+				    },
+				  },
+				],
+		    });
+		}
+		
+		function copyUrl() {
+			var urlToCopy = window.location.href; // 현재 페이지의 URL을 얻어옵니다.
+
+			  navigator.clipboard.writeText(urlToCopy)
+			    .then(function() {
+			      alert("URL이 복사되었습니다.");
+			    })
+			    .catch(function(err) {
+			      // 복사 작업이 실패한 경우, 사용자에게 안내합니다.
+			      console.error('URL 복사 실패:', err);
+			      alert("URL 복사에 실패했습니다. 수동으로 복사해주세요.");
+			    });
+		}
+	</script>
+		
+		<script>
+		  
+	</script>
+	
 </body>
     
 </html>
+
+
