@@ -64,17 +64,74 @@
 								<div style="background:pink"></div>
 								<div>${memId}님<br/>환영합니다!</div>
 							</div>
-	                    	<div class="test-cont">
-		                    	<div>
-		                    		<div>
-		                    			<i class="fa-solid fa-circle-info" style="color:#5A3FFF"></i> 진로 성숙도 검사 <span>73% 완성</span>
-		                    		</div>
-		                    		<div class="progress">
-										  <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+							<c:if test="${percent[0] != '0' || percent[1] != '0' || percent[2] != '0' || percent[3] != '0'}">
+		                    	<div class="test-cont">
+			                    	<div id="carouselExampleControls" class="carousel slide carousel-dark " data-bs-ride="carousel">
+									  <div class="carousel-inner">
+										  <c:if test="${percent[0] != '0'}">
+											    <div class="carousel-item">
+							                    	<div>
+							                    		<div>
+							                    			<i class="fa-solid fa-circle-info" style="color:#5A3FFF"></i> 적성 검사 <span>${percent[0]}% 진행중</span>
+							                    		</div>
+							                    		<div class="progress">
+															  <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: ${percent[0]}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+													</div>
+							                    	<button class="purple-btn">적성검사 이어하기</button>
+											    </div>
+						                    </c:if>
+						                    <c:if test="${percent[1] != '0'}">
+											    <div class="carousel-item">
+											      <div>
+							                    		<div>
+							                    			<i class="fa-solid fa-circle-info" style="color:#5A3FFF"></i> 가치관 검사 <span>${percent[1]}% 진행중</span>
+							                    		</div>
+							                    		<div class="progress">
+															  <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: ${percent[1]}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+													</div>
+							                    	<button class="purple-btn" onclick="location='/whou/aptitude/temporarySave?qnum=25&tempSave=tempSave'">가치관검사 이어하기</button>
+											    </div>
+											</c:if>
+											<c:if test="${percent[2] != '0'}">
+											    <div class="carousel-item">
+											      <div>
+							                    		<div>
+							                    			<i class="fa-solid fa-circle-info" style="color:#5A3FFF"></i> 역량 검사 <span>${percent[2]}% 진행중</span>
+							                    		</div>
+							                    		<div class="progress">
+															  <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: ${percent[2]}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+													</div>
+							                    	<button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=27&tempSave=tempSave'">역량검사 이어하기</button>
+											    </div>
+											</c:if>
+											<c:if test="${percent[3] != '0'}">
+											    <div class="carousel-item">
+											      <div>
+							                    		<div>
+							                    			<i class="fa-solid fa-circle-info" style="color:#5A3FFF"></i> 흥미 검사 <span>${percent[3]}% 진행중</span>
+							                    		</div>
+							                    		<div class="progress">
+															  <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: ${percent[3]}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+													</div>
+							                    	<button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=31&tempSave=tempSave'">흥미검사 이어하기</button>
+											    </div>
+											</c:if>
+									  </div>
+									  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+									    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									    <span class="visually-hidden">Previous</span>
+									  </button>
+									  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+									    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+									    <span class="visually-hidden">Next</span>
+									  </button>
 									</div>
-								</div>
-		                    	<button class="purple-btn">검사 이어하기<br/><span>임시저장 중인 검사가 n개 있습니다.</span></button>
-	                    	</div>
+		                    	</div>
+	                    	</c:if>
 	                    	<div class="info-cont">
 		                    	<h6>직업 보기</h6>
 		                    		<ul>
@@ -1658,7 +1715,70 @@
    	
    		});
         </script>
-        
+        <script>
+        $(document).on("click", function(event) {
+            var clickedElement = event.target;
+            var jobSearchLi = $(".jobSearchLi");
+            var isJobListVisible = jobSearchLi.is(":visible");
+
+            // majorList가 보일 때만 작동
+            if (isJobListVisible) {
+                // 클릭된 요소가 majorList 또는 majorList 하위 요소인 경우 아무 동작 없이 리턴
+                if ($(clickedElement).closest(".jobSearchLi").length) {
+                    return;
+                }
+
+                // 인풋 요소들의 값을 비웁니다. 단, majorList 보이고 있던 인풋창만 비우고 나머지는 그대로 유지
+                $("input[name='job']").each(function() {
+                    if ($(this).siblings(".jobSearchLi").is(":visible")) {
+                        $(this).val("");
+                    }
+                });
+
+                // majorList를 숨깁니다.
+                jobSearchLi.empty().hide();
+            }
+        });
+
+        // majorList가 보일 때 이벤트를 등록하고, 숨겨질 때 이벤트를 제거합니다.
+        $(".jobSearchLi").on("show", function() {
+            $(document).on("click", hideJobListOnClickOutside);
+        }).on("hide", function() {
+            $(document).off("click", hideJobListOnClickOutside);
+        });
+
+        // 전공 입력창 외부를 클릭했을 때 majorList를 숨기는 함수
+        function hideJobListOnClickOutside(event) {
+            var clickedElement = event.target;
+            var jobSearchLi = $(".jobSearchLi");
+
+            // 클릭된 요소가 majorList 또는 majorList 하위 요소인 경우 아무 동작 없이 리턴
+            if ($(clickedElement).closest(".jobSearchLi").length) {
+                return;
+            }
+
+            // 인풋 요소들의 값을 비웁니다. 단, majorList 보이고 있던 인풋창만 비우고 나머지는 그대로 유지
+            $("input[name='job']").each(function() {
+                if ($(this).siblings(".jobSearchLi").is(":visible")) {
+                    $(this).val("");
+                }
+            });
+
+            // majorList를 숨깁니다.
+            jobSearchLi.empty().hide();
+        }
+     
+        </script>
+        <script>
+	        // 페이지 로드 시점에 실행되는 함수
+	        document.addEventListener('DOMContentLoaded', function() {
+	        	item = document.querySelector('.carousel-item:first-child')
+	          // 첫 번째 .carousel-item 요소에 'active' 클래스 추가
+	          if(item !== null){	        	  
+	        	  item.classList.add('active');
+	          }
+	        });
+        </script>
     
     </body>
     

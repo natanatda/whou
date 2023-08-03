@@ -109,6 +109,9 @@
 	<select id="getAptitudeRank" resultType="whou.secproject.component.RecommandInfoDTO">
 		select * from recommand_info where num = #{userNum}
 	</select>
+	<select id="getTempSave" resultType="String">
+		select test_percent from user_info where email = #{memId}
+	</select>
 	
 	
 	

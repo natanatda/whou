@@ -360,9 +360,14 @@ public class JobDicServiceImpl implements JobDicService {
 		mapper.insertJCC(sort_value, job_cds);
 	}
 	@Override
-	public String getBackColor(int j_cd) {
-		return mapper.getBackColor(j_cd).get(0);
-	}
+	   public String getBackColor(int j_cd) {
+	      List<String> backColor;
+	      if((backColor=mapper.getBackColor(j_cd))!=null&&backColor.size()!=0)
+	         return backColor.get(0);
+	      else {
+	         return "5a3fff";
+	      }
+	   } 
 	@Override
 	public String getImg(int j_cd) {
 		return mapper.getImg(j_cd);

@@ -168,7 +168,7 @@
                                     <button class="black-btn" onclick = "introOpen(1, 21)">검사소개</button>
                                     <button class="black-btn" onclick = "introOpen(2, 21)">검사결과 예시</button>
                                 </div>
-                                <button class="purple-btn" onclick="valuesStart()">검사시작</button>
+                                <button class="purple-btn" onclick="aptitudeStart()">검사시작</button>
                             </div>
                         </div>
                     </div>

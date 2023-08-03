@@ -402,4 +402,7 @@ public class MemberServiceImpl implements MemberService {
 	public TestReinforcementDTO getTestReinforcement(int num) { // 역량 보완법 가져옴
 		return mapper.getTestReinforcement(num);
 	}
+	public String getTempSave(String memId) {
+		return mapper.getTempSave(memId);
+	}
 }
