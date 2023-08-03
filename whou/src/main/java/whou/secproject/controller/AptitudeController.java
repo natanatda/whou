@@ -39,6 +39,15 @@ public class AptitudeController {
 	@Autowired
 	private AptitudeService service;
 	
+	@RequestMapping("/intro")
+    public String intro(HttpServletRequest request,Model model) {
+		int load = Integer.parseInt(request.getParameter("load"));
+		model.addAttribute("load", load);
+		int qnum = Integer.parseInt(request.getParameter("qnum"));
+		model.addAttribute("load", load);
+		model.addAttribute("qnum", qnum);
+        return "/aptitude/intro";
+    }
 	
 	//설문지 출력하기
 	@RequestMapping("/itrstkAptitude")
