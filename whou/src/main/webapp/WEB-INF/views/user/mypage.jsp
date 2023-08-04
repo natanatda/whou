@@ -854,7 +854,7 @@
                     	<div class="right-bottom-box">
                     		<div class="notice-box">
 								<div>공지사항</div>
-								<div>공지사항가져오셈</div>
+								<div><a href="/whou/cs/noticeDetail?num=${notice.num}">${notice.subject}</a></div>
 							</div>
                     		<ul class="test-list">
                     			<li>안한 검사 이름</li>

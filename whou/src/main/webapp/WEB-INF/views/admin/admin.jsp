@@ -52,6 +52,7 @@
                 <a class="nav-link" href="">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>AdminPage</span></a>
+                    
             </li>
 
             <!-- Divider -->
@@ -197,8 +198,38 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>                        
                     </div>
+                    <input type="button" value="오늘" class="dateSel" data-name="today" />
+                    <input type="button" value="일주일" class="dateSel" data-name="week" />
+                    <input type="button" value="한달" class="dateSel" data-name="month" />
+                    <form action="/whou/cs/admin" method="post">
+                    	<c:if test="${endDate == null}">
+                    		<input type="date" name="startDate" value="${now}" id="startDate"/>
+                    	</c:if>
+                    	<c:if test="${endDate != null }">
+                    		<input type="date" name="startDate" value="${startDate}" id="startDate"/>
+                    	</c:if>
+                    		<input type="date" name="endDate" value="${endDate}" id="endDate"/>
+                    		<input type="hidden" name="jobDateSelect" value="notNull"/>
+                    		<input type="submit" value="조회"/>
+                    	</form><br/>
+                    <div style="width:200px; height:150px; float:left;">
+                    직업 <br/>
+                        <c:forEach var="jobList" items="${searchJobList}">
+	                    	${jobList.job} 
+	                    	${jobList.searchcount}
+	                    	<br/>
+                    	</c:forEach>
+                    </div>
+                    <div style="width:200px; height:150px; float:left;">
+                    검색어 <br/>
+                    	 <c:forEach var="keyList" items="${searchKeyList}">
+	                    	${keyList.keyword} 
+	                    	${keyList.searchcount}
+	                    	<br/>
+                    	</c:forEach>
+                    </div>	
                 </div>
                 <!-- /.container-fluid -->
             </div>
@@ -209,6 +240,44 @@
         </div>
         <!-- End of Content Wrapper -->
     </div>
+    <script>
+    	var startDate = new Date($("#startDate").val());
+
+    	$("#endDate").change(function(){
+	    	var endDate = new Date($("#endDate").val());
+    		if(startDate > endDate){
+    			alert("시작 날짜보다 이전 날짜로 설정하실 수 없습니다.");
+    			$("#endDate").val(startDate.toISOString().substring(0, 10) );
+    		}
+    	});
+    	
+    	$(".dateSel").click(function(){
+    		var sysdate = new Date('${now}');
+    		var name = $(this).data('name');
+    		if('${endDate}' != null){startDate = sysdate;}
+    		switch(name){
+	    		case 'today':
+	    			startDate = sysdate;
+	    			$("#startDate").val(startDate.toISOString().substring(0, 10) );
+	    			$("#endDate").val(startDate.toISOString().substring(0, 10) );
+	    			break;
+	    		case 'week':
+	    			$("#endDate").val(startDate.toISOString().substring(0, 10) );
+	    			startDate.setDate(startDate.getDate()-7);
+	    			$("#startDate").val(startDate.toISOString().substring(0, 10) );
+	    			startDate = sysdate;
+	    			break;
+	    		case 'month':
+	    			$("#endDate").val(startDate.toISOString().substring(0, 10) );
+	    			startDate.setMonth(startDate.getMonth()-1);
+	    			$("#startDate").val(startDate.toISOString().substring(0, 10) );
+	    			startDate = sysdate;
+	    			break;
+	    	}
+    	});
+    	
+    	
+    </script>
 </body>
 
 </html>

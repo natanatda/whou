@@ -57,6 +57,7 @@ import whou.secproject.component.UserInfoDTO;
 import whou.secproject.mapper.MemberMapper;
 import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.repository.RecommendDAO;
+import whou.secproject.service.AdminNoticeService;
 import whou.secproject.service.AptitudeService;
 import whou.secproject.service.MemberService;
 import whou.secproject.service.RecommendService;
@@ -86,6 +87,9 @@ public class MemberController {
 	
 	@Autowired
 	private JobDicApiDAO dao;
+
+	@Autowired
+	private AdminNoticeService adminNoticeService;
 	
 
 	// 북마크
@@ -496,7 +500,6 @@ public class MemberController {
 	      Boolean scoreTrue2 = false;
 	      Boolean scoreTrue3 = false;
 	      Boolean scoreTrue4 = false;
-	      double [] scoreArrDouble = new double[11] ;
 	      if(scoreA != null) {         
 	         String [] scoreArr= scoreA.split("\\+");
 	         ObjectMapper objectMapper = new ObjectMapper();
@@ -507,13 +510,7 @@ public class MemberController {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
 	         }
-	         for(int i=0; i<11; i++) {
-	        	 scoreArrDouble[i] = Double.parseDouble(scoreArr[i]);
-	         }
-	         Arrays.sort(scoreArrDouble);
-	         
 	         model.addAttribute("aptitudeScoreArr", scoresA);
-	         model.addAttribute("aptitudeTop3", scoreArrDouble[8]); // 세번째로 높은 값
 	         scoreTrue1 = true;
 	      }else {
 	         model.addAttribute("aptitudeScoreArr", 0);
@@ -940,14 +937,15 @@ public class MemberController {
         // 마이페이지 left-bar
         // 임시저장 된 % 숫자 가져오기
         String tempSave = service.getTempSave(memId);
-        if(tempSave != null) {
-        	String tempArr[] = tempSave.split(",");
-        	List<String> tempList = new ArrayList<>(Arrays.asList(tempArr));
-        	model.addAttribute("percent",tempList);
-        }else {
-        	model.addAttribute("percent", new ArrayList<>(Arrays.asList("0","0","0","0")));
+        String tempArr[] = tempSave.split(",");
+        List<String> tempList = new ArrayList<>(Arrays.asList(tempArr));
+        model.addAttribute("percent",tempList);
+        
+        int noticeCount = adminNoticeService.noticeCount();
+        if(noticeCount > 0) {
+        	model.addAttribute("notice",adminNoticeService.myPageNotice());
         }
-
+        
       return "/user/mypage";
    }
   	

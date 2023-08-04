@@ -6,12 +6,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.text.html.HTMLDocument;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,11 +22,13 @@ import whou.secproject.component.JobDicListResponseDTO;
 import whou.secproject.component.JobDicListResponseDTO.Jobs;
 import whou.secproject.component.JobDicParamDTO;
 import whou.secproject.component.JobDicValueListDTO;
+import whou.secproject.component.SearchLogDTO;
 import whou.secproject.component.WhouModelCustomDTO;
 import whou.secproject.component.WhouModelDTO;
 import whou.secproject.mapper.MemberMapper;
 import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.service.JobDicService;
+import whou.secproject.service.JobSearchLogService;
 import whou.secproject.service.WhouModelCustomService;
 import whou.secproject.service.WhouModelService;
 
@@ -48,6 +50,9 @@ public class JobController {
 	
 	@Autowired
 	private WhouModelCustomService whouModelCustomService;
+	
+	@Autowired
+	private JobSearchLogService jobSearchLogService;
 	
 	@RequestMapping("/dic")
 	public String goJobDic(Model model,HttpServletRequest request) {
@@ -115,6 +120,17 @@ public class JobController {
 		
 		
 		JobDicListResponseDTO dtoList = dao.getJobDicListSorted(jParam);
+		
+		int searchListCount = 0;
+		if(jobNm != null && jobNm != "") {
+			searchListCount = jobSearchLogService.isSearchList(jobNm);
+			if(searchListCount == 0) {
+				jobSearchLogService.insertSearchList(jobNm);
+			}else {
+				jobSearchLogService.updateSearchList(jobNm);
+			}
+		}
+		
 		count = dtoList.getCount();
 		if(count>0) {
 			int pageCount = count / pageSize + (count % pageSize==0 ? 0 :1);
@@ -283,4 +299,23 @@ public class JobController {
 		return null;
 	}
 	
+	@RequestMapping("insertSearchLog") // 검색 로그
+	public @ResponseBody String insertSearchLog(HttpServletRequest request, SearchLogDTO dto) {
+		HttpSession session = request.getSession();
+		String memId = (String)session.getAttribute("memId");
+		String keyWord = request.getParameter("keyword");
+		
+		if(keyWord == null || keyWord == "") {return "";}
+		if(memId != null) { // 세션 없으면 이메일 게스트로 입력
+			dto.setEmail(memId);
+		}else {
+			dto.setEmail("guest");
+		}
+		System.out.println(dto.getEmail());
+		System.out.println(dto.getJob());
+		System.out.println(dto.getKeyword());
+		
+		jobSearchLogService.insertSearchLog(dto);
+		return "";
+	}
 }
