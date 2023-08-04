@@ -18,13 +18,36 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
-        <script src="/whou/resources/js/ai.js"></script>
+
+		<script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
+		<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+		<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+		<script src="/whou/resources/js/unpkg.com_gsap@3.12.1_dist_gsap.min.js"></script>
+		<script src="/whou/resources/js/ThreeCSG.js"></script>
+        <script type="module" src="/whou/resources/js/whouModel2.js"></script>
+		<script src="/whou/resources/js/ai.js"></script>	
     </head>
-    
+     <style>
+		.loading-wrap{width:100%;
+		    height: 100vh;
+		position: fixed;	
+    z-index:999999;
+    background:#fff;
+    display:none;
+    }
+    .loading-wrap .webgl{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    }
+	</style>
     
 
 <body>
+   <div class="loading-wrap">
+        <canvas class="webgl" ></canvas> <%-- ai --%>
+    </div>
        <!-- Responsive navbar-->
        <%@ include file="../header.jsp" %>
 
@@ -414,10 +437,47 @@
 	        form.removeAttribute('onsubmit');
 	        form.submit(); // <form> 요소를 제출합니다.
 	    }
+
+
     </script>
 	
 		<!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+	    var modelCamera_x = ${brush.camera};
+    	var modelCamera_y = 1;
+    	var modelCamera_z = 3;
+	 	var modelPath = '/whou/resources/whouModel/${brush.path_folder}/${brush.path_gltf}';
+	 	
+	 	var modelWidth = 200;
+    	var modelHeight = 200;
+
+    	
+    	if('${model.headColor}' === ''){
+    		var headColor = '#F781F3';
+    	}else{
+    		headColor = '${model.headColor}';
+    	}
+    	if('${model.armColor}' === ''){
+    		var armColor = '#F781F3';
+    	}else{
+    		armColor = '${model.armColor}';
+    	}
+    	if('${model.cheekColor}' === ''){
+    		var cheekColor = '#DF0101';
+    	}else{
+    		cheekColor = '${model.cheekColor}';
+    	}
+    	if('${model.legColor}' === ''){
+    		var legColor = '#585858';
+    	}else{
+    		legColor = '${model.legColor}';
+    	}
+	    window.onbeforeunload = function () { $('.loading-wrap').show(); }
+	    $(window).load(function () {          //페이지가 로드 되면 로딩 화면을 없애주는 것
+            $('.loading-wrap').hide();
+        });
+        </script>
     </body>
     
 </html>

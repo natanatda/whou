@@ -1,5 +1,6 @@
 package whou.secproject.controller;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,9 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import whou.secproject.component.AdminNoticeDTO;
-import whou.secproject.component.AssistantDTO;
+import whou.secproject.component.SearchLogDTO;
 import whou.secproject.service.AdminNoticeService;
-import whou.secproject.service.AssistantService;
+import whou.secproject.service.JobSearchLogService;
 
 @Controller
 @RequestMapping("/cs/*")
@@ -24,14 +25,41 @@ public class AdminNoticeController {
 	@Autowired
 	private AdminNoticeService adminNoticeService;
 	
+	@Autowired
+	private JobSearchLogService jobSearchLogService;
+	
 	@RequestMapping("admin")
-	public String adminMain(HttpSession session, Model model) {
+	public String adminMain(HttpSession session, Model model, HttpServletRequest request) {
+		// 세션이 없으면 메인으로 이동
 		String email = (String)session.getAttribute("memId");
-		if(email == null) { // 세션이 없으면 메인으로 이동
-			return "redirect:/main";
+		if(email == null) { return "redirect:/main";}
+		
+		// 조회할 날짜
+		String start = request.getParameter("startDate"); 
+		String end = request.getParameter("endDate");
+		String jobDateSelect = request.getParameter("jobDateSelect");
+		String nowDate = LocalDate.now().toString(); // 오늘 날짜
+		
+		int jobCount = jobSearchLogService.isCountJob();
+		int keyCount = jobSearchLogService.isCountKeyWord();
+		
+		List<SearchLogDTO> searchJobList = null;
+		List<SearchLogDTO> searchKeyList = null;
+		if(jobCount > 0) {
+			searchJobList = jobSearchLogService.countJob(jobDateSelect,nowDate,start, end);
 		}
+		if(keyCount > 0) {
+			searchKeyList = jobSearchLogService.countKeyWord(jobDateSelect,nowDate,start, end);
+		}
+		
 		int lv = adminNoticeService.adminUserLvCheck(email); // 세션으로 회원 검사
-		model.addAttribute("lv",lv);			
+		model.addAttribute("searchJobList", searchJobList);
+		model.addAttribute("searchKeyList", searchKeyList);
+		model.addAttribute("lv",lv);	
+		model.addAttribute("now",nowDate);	
+		model.addAttribute("startDate",start);	
+		model.addAttribute("endDate",end);	
+		
 		
 		return "/admin/admin";
 	}

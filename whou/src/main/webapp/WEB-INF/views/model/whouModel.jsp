@@ -26,7 +26,9 @@
  <canvas class="webgl"></canvas>
 
  <script>
- 	var modelCamera = ${model.camera};
+ 	var modelCamera_x = ${model.camera};
+ 	var modelCamera_y = 5;
+ 	var modelCamera_z = 10;
  	var modelPath = '../resources/whouModel/${model.path_folder}/${model.path_gltf}';
  	
  	var isColor = 'no';
@@ -48,29 +50,29 @@
  	
  	var modelMotion = ${model.motion};
  	
- 	if('${modelColor.headColor}' === ''){
-		var headColor = '#FF0080';
+ 	if('${model2.headColor}' === ''){
+		var headColor = '#F781F3';
 	}else{
-		headColor = '${modelColor.headColor}';
+		headColor = '${model2.headColor}';
 	}
-	if('${modelColor.armColor}' === ''){
-		var armColor = '#FF0080';
+	if('${model2.armColor}' === ''){
+		var armColor = '#F781F3';
 	}else{
-		armColor = '${modelColor.armColor}';
+		armColor = '${model2.armColor}';
 	}
-	if('${modelColor.cheekColor}' === ''){
-		var cheekColor = '#FF0080';
+	if('${model2.cheekColor}' === ''){
+		var cheekColor = '#DF0101';
 	}else{
-		cheekColor = '${modelColor.cheekColor}';
+		cheekColor = '${model2.cheekColor}';
 	}
-	if('${modelColor.legColor}' === ''){
-		var legColor = '#FF0080';
+	if('${model2.legColor}' === ''){
+		var legColor = '#585858';
 	}else{
-		legColor = '${modelColor.legColor}';
+		legColor = '${model2.legColor}';
 	}
  	
  </script>
  
-<script type="module" src="../resources/js/whouModel.js?ver=1"></script>
+<script type="module" src="../resources/js/whouModel.js?ver=2"></script>
 </body>
 </html>

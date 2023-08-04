@@ -25,6 +25,8 @@ import whou.secproject.component.RecommandInfoDTO;
 import whou.secproject.repository.AptitudeApiDAO;
 import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.service.AptitudeService;
+import whou.secproject.service.WhouModelCustomService;
+import whou.secproject.service.WhouModelService;
 
 @Controller
 @RequestMapping("/aptitude")
@@ -38,6 +40,12 @@ public class AptitudeController {
 
 	@Autowired
 	private AptitudeService service;
+	
+	@Autowired
+	private WhouModelCustomService whouModelCustomService;
+	
+	@Autowired
+	private WhouModelService whouModelService;
 	
 	@RequestMapping("/intro")
     public String intro(HttpServletRequest request,Model model) {
@@ -81,6 +89,15 @@ public class AptitudeController {
 	    }
 	    model.addAttribute("arrList", arrList);
 	    
+		String email = (String)session.getAttribute("memId");
+		
+		if(email != null) {
+			model.addAttribute("model", whouModelCustomService.customModel(email));
+			userNum=service.userNumSelect(email);
+		}
+		int brush = 995;
+		model.addAttribute("brush", whouModelService.selectModel(brush)); // 붓 장착
+		
 	    return "/aptitude/itrstkAptitude";
 	}
 	public static String listToString(List<String> list, String delimiter) {
@@ -263,6 +280,17 @@ public class AptitudeController {
 
 		
 		System.out.println(aptiTestResultResponse.getRESULT().getUrl());
+
+		
+		String email = (String)session.getAttribute("memId");
+	
+		if(email != null) {
+			model.addAttribute("model", whouModelCustomService.customModel(email));
+			userNum=service.userNumSelect(email);
+		}
+		int brush = 995;
+		model.addAttribute("brush", whouModelService.selectModel(brush)); // 붓 장착
+		
 		return "/aptitude/report";
     }
 

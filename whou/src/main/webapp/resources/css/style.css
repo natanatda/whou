@@ -584,11 +584,20 @@ input[type="date"]{
  #item-ability{display:none;}
 .jobSearchLi {position: absolute;width:300px;background-color: #f9f9f9;border: 1px solid #ccc;padding: 5px;list-style: none;margin: 0;display: none;z-index:1;}
 .jobSearchLi li{position:relative;}
-.chart-wrap {width:100%;display:flex;justify-content: center;}
-.chart-inner{width:500px}
+.chart-wrap {width:100%;}
+.chart-inner{width:60%}
 .chart-inner #interestChart{width:100% !important;height:100% !important;}
-.chart-ranks{margin-left: 70px;}
-.chart-ranks li:first-child{font-weight:500;margin-bottom:10px;font-size:18px;}
+.chart-ranks{width:40%}
+.chart-ranks li:not(:last-child){margin-bottom:14px;}
+.chart-ranks li:not(:first-child){display:flex;gap:20px;justify-content: space-between;padding: 0 20px;}
+.chart-ranks li:first-child{font-weight:700;margin-bottom:20px;font-size:18px;padding: 0 18px;}
+.ic-rank{background:#5a3fff;border-radius: 50%;width: 24px;height: 24px;color:#fff;display:flex;align-items:center;justify-content:center;}
+.chart-ranks li .ic-rank.out{background:#fff;color:#111;}
+.chart-ranks li div:nth-child(2){font-weight:600}
+.test-result-top{display:flex;gap:20px;margin:20px 0;}
+#item-aptitude .card{padding:20px;border:0;border-radius:14px;}
+.carousel-title{display:flex;gap:20px;}
+.carousel-title div:last-child{font-weight:600}
 
 .book-wrap{display:flex;gap:20px;flex-wrap:wrap;}
 .book-wrap .card{width:200px;height:200px;  }

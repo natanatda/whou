@@ -20,9 +20,24 @@
         <link rel="stylesheet" href="/whou/resources/css/style.css">
         <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+		<script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
+		<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+		<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+		<script src="/whou/resources/js/unpkg.com_gsap@3.12.1_dist_gsap.min.js"></script>
+		<script src="/whou/resources/js/ThreeCSG.js"></script>
+        <script type="module" src="/whou/resources/js/whouModel2.js"></script>
+		<script src="/whou/resources/js/ai.js"></script>	
+	
     </head>
- 
+	
 <body>
+   <div class="loading-wrap">
+        <canvas class="webgl" ></canvas> <%-- ai --%>
+    </div>
+
+
+
         <!-- Responsive navbar-->
        <%@ include file="../header.jsp" %>     
     
@@ -31,7 +46,7 @@
 	            <c:if test="${qnum eq '21' || qnum == '21' || qnum eq '31' || qnum == '31'}">
 	            <div class="card">
 	                    <div class="card-body">
-	                        <h3 class="num-title"><span>01</span> 높은 흥미를 나타내는 직업</h3>	                        
+	                        <h3 class="num-title"><span>01</span> 검사결과 요약</h3>	                        
 	                        <div class="top-interest">
 	                            <ul>
 	                            	<c:forEach var="item" items="${rank}" varStatus="status">
@@ -43,7 +58,7 @@
 	                </div>
 	                <div class="card">
 	                    <div class="card-body">
-	                        <h3 class="num-title"><span>02</span> 그래프</h3>
+	                        <h3 class="num-title"><span>02</span> 검사결과 세부사항</h3>
 	                        <div>
 	                            <!-- 다각형 -->
 	                            <canvas id="myChart21"></canvas>
@@ -611,6 +626,42 @@
 	                });
             }
           </script>
+          
+            <script>
+        	var modelCamera_x = ${brush.camera};
+        	var modelCamera_y = 1;
+        	var modelCamera_z = 3;
+		 	var modelPath = '/whou/resources/whouModel/${brush.path_folder}/${brush.path_gltf}';
+		 	
+		 	var modelWidth = 200;
+        	var modelHeight = 200;
+
+        	
+        	if('${model.headColor}' === ''){
+        		var headColor = '#F781F3';
+        	}else{
+        		headColor = '${model.headColor}';
+        	}
+        	if('${model.armColor}' === ''){
+        		var armColor = '#F781F3';
+        	}else{
+        		armColor = '${model.armColor}';
+        	}
+        	if('${model.cheekColor}' === ''){
+        		var cheekColor = '#DF0101';
+        	}else{
+        		cheekColor = '${model.cheekColor}';
+        	}
+        	if('${model.legColor}' === ''){
+        		var legColor = '#585858';
+        	}else{
+        		legColor = '${model.legColor}';
+        	}
+        	$(document).ready(function(){
+     			$(".loading-wrap").hide();
+     		})
+     	
+        </script>
     </body>
     
 </html>

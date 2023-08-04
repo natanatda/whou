@@ -145,7 +145,7 @@
                 <div class="row gx-5 gy-5 justify-content-center">
                   	<c:forEach var="job" items="${jobs}">
                     <div class="col-lg-6 col-xl-4">
-                        <div class="card mb-5 mb-xl-0" onclick="location='/whou/job/info?job_cd=${job.job_cd}'">
+                        <div class="card mb-5 mb-xl-0 jobName" data-name="${job.job_nm}" onclick="location='/whou/job/info?job_cd=${job.job_cd}'">
                             <div class="result-img" style="background-color: #${job.backColor}">
 	                            <div>
 	                            	<img src="/whou/resources/img/${job.img}" />
@@ -382,6 +382,19 @@
 				var form = document.forms['form'];
 	    		return form.appendChild(input);
 			}
+			$(".jobName").click(function(){
+				var jobName = $(this).data('name');
+				console.log(jobName);
+				console.log('${jobNm}');
+				 
+				$.ajax({
+					url: "/whou/job/insertSearchLog",
+					data: {job: jobName, keyword: '${jobNm}'},
+					success: function(result){
+						
+					}
+				});
+			});
         </script>
     </body>
 </html>

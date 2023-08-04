@@ -350,6 +350,13 @@
             yoyo: true,
             duration: 0.8
         })
+           // 몸 회전
+        gsap.to(figure.params, {
+            ry: degreesToRadians(360),
+            repeat: -1,
+            duration: 0.8
+        })
+        
 
         gsap.ticker.add(() => {
             figure.bounce()
