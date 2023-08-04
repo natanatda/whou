@@ -118,4 +118,20 @@ public class MainController {
         model.addAttribute("memId", email);
 	    return "/main"; 
 	}
+	
+	
+	@RequestMapping("/loading")
+	public String loading(Model model, HttpSession session) {
+		String email = (String)session.getAttribute("memId");
+		// ai model 가져오기
+		int userNum = 0;
+		if(email != null) {
+			model.addAttribute("model", whouModelCustomService.customModel(email));
+			userNum=serviceAt.userNumSelect(email);
+		}
+		int brush = 995;
+		model.addAttribute("brush", whouModelService.selectModel(brush)); // 붓 장착
+	return "/load";
+	}
+
 }

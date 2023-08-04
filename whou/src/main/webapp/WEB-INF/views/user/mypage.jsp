@@ -168,7 +168,7 @@
 	                                <div class="nav nav-tabs nav-left" id="nav-tab" role="tablist">
 	                                  <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">검사결과보기</button>
 	                                  <button class="nav-link" id="nav-reco-tab" data-bs-toggle="tab" data-bs-target="#nav-reco" type="button" role="tab" aria-controls="nav-reco" aria-selected="false">추천 받기</button>
-	                                  <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">컨설팅하러가기</button>
+	                                  <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">진로컨설팅</button>
 	                                </div>
 	                              </nav>
 	                        </div>                        
@@ -413,22 +413,81 @@
                                </select>
                                <div id="item-aptitude" class="chart-wrap">
                                   <c:if test="${!scoreTrue1}">
-                                   <canvas id="aptitudeChart" style="display:none;"></canvas>
                                      <div class="empty-box">
                                      	<div>검사결과가 없습니다.</div>
                                      	<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
                                      </div>
+                                     <div class="card">
+		                                 <canvas id="aptitudeChart" style="display:none;"></canvas>
+                                     </div>
                                   </c:if>
                                   <c:if test="${scoreTrue1}">
-                                  	<div class="chart-inner">
-                                      <canvas id="aptitudeChart"></canvas>
-                                    </div>
-                                      <ul class="chart-ranks">
-                                      		<li>적성 TOP3</li>
-                                           <li>▶ ${aptitudeRank.aptitude_name1}</li>                         
-                                           <li>▶ ${aptitudeRank.aptitude_name2}</li>                         
-                                           <li>▶ ${aptitudeRank.aptitude_name3}</li>                         
-                                      </ul>
+	                                  <div class="test-result-top">
+	                                  	<div class="chart-inner card">
+	                                      <canvas id="aptitudeChart"></canvas>
+	                                    </div>
+	                                      <ul class="chart-ranks card">
+	                                      		<li>적성 TOP 5</li>
+	                                           <li>
+	                                           		<div class="ic-rank">1</div>
+	                                           		<div>${aptitudeRank.aptitude_name1}</div>
+	                                           		<span>상위 몇%</span>
+	                                           </li>                         
+	                                           <li>
+	                                           		<div class="ic-rank">2</div>
+	                                           		<div>${aptitudeRank.aptitude_name2}</div>
+	                                           		<span>상위 몇%</span>
+												</li>                         
+	                                           <li>
+	                                           		<div class="ic-rank">3</div>
+	                                           		<div>${aptitudeRank.aptitude_name3}</div>
+	                                           		<span>상위 몇%</span>
+	                                           </li>
+	                                           <li>
+	                                           		<div class="ic-rank out">4</div>
+	                                           		<div>${aptitudeRank.aptitude_name3}</div>
+	                                           		<span>상위 몇%</span>
+	                                           </li>    
+	                                           <li>
+	                                           		<div class="ic-rank out">5</div>
+	                                           		<div>${aptitudeRank.aptitude_name3}</div>
+	                                           		<span>상위 몇%</span>
+	                                           </li>                             
+	                                      </ul>
+	                                  </div>
+	                                  <div class="card">
+	                                  	<div id="carouselExampleControls" class="carousel slide carousel-dark" data-bs-ride="carousel">
+										  <div class="carousel-inner">
+										    <div class="carousel-item active">
+										    	<div class="carousel-title">
+												    <div class="ic-rank">1</div>
+												    <div>${aptitudeRank.aptitude_name1}</div>
+										    	</div>
+										      
+										    </div>
+										    <div class="carousel-item">
+										    	<div class="carousel-title">
+												    <div class="ic-rank">2</div>
+												    <div>${aptitudeRank.aptitude_name1}</div>
+										    	</div>
+										    </div>
+										    <div class="carousel-item">
+										    	<div class="carousel-title">
+												    <div class="ic-rank">3</div>
+												    <div>${aptitudeRank.aptitude_name1}</div>
+										    	</div>
+										    </div>
+										  </div>
+										  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+										    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+										    <span class="visually-hidden">Previous</span>
+										  </button>
+										  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+										    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+										    <span class="visually-hidden">Next</span>
+										  </button>
+										</div>
+	                                  </div>
                                   </c:if>                                  
                                </div>
                                <div id="item-values" class="chart-wrap">
@@ -590,7 +649,7 @@
 												<div class="reco-item">
 													<div >
 														${rere.job_nm}
-														<div onclick="alert('직업선택이 완료 되었습니다.');location='/whou/member/insertConsult?job_cd=${rere.job_cd}'" style="font-size:16px;color:#5a3fff">추천받기</div>
+														<div onclick="alert('직업선택이 완료 되었습니다.');location='/whou/member/insertConsult?job_cd=${rere.job_cd}'" style="font-size:16px;color:#5a3fff">컨설팅받기</div>
 													</div>
 													<div onclick="location='/whou/job/info?job_cd=${rere.job_cd}'">${rere.descriptions}</div>
 												</div>
@@ -845,6 +904,7 @@
        }
         
          // 적성 차트
+         	const aptitudeTop3 = ${aptitudeTop3};
          	let aptitudeScoreArr = 0;
          	let aptitudeNameArr = ["음악능력","수리·논리력","창의력","자연친화력","예술시각능력","공간지각력","대인관계능력","손재능","언어능력","자기성찰능력","신체·운동능력"];
         	if (typeof aptitudeScoreArr !== 'undefined' && aptitudeScoreArr !== null && aptitudeScoreArr !== '') {
@@ -854,14 +914,14 @@
         	
             const ctx21 = document.getElementById('aptitudeChart');
               var myChart21 = new Chart(ctx21, {
-                   type: 'radar',
+                   type: 'bar',
                    data: {
                        labels:aptitudeNameArr,
                        datasets: [
                        {
                            data: aptitudeScoreArr,
-                           backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                           borderColor: 'rgba(255, 99, 132, 1)',
+                           backgroundColor: aptitudeScoreArr.map(score => score >= aptitudeTop3 ? 'rgba(90, 63, 255, 0.8)' : 'rgba(255, 99, 132, 0.5)'),
+                           borderColor: aptitudeScoreArr.map(score => score >= aptitudeTop3 ? 'rgba(57, 37, 189, 1)' : 'rgba(255, 99, 132, 1)'),
                            borderWidth: 1,
                           
                        },              
@@ -1329,7 +1389,7 @@
             const getRecoDiv = document.createElement('div');
             getRecoDiv.innerText = '추천받기';
             getRecoDiv.onclick = function () {
-				alert("직업선택이 완료 되었습니다.");
+				alert("컨설팅 받을 직업 선택이 완료 되었습니다.");
                 location = '/whou/member/insertConsult?job_cd='+data.job_cd;
             };
             getRecoDiv.style.fontSize = "16px";
@@ -1445,22 +1505,22 @@
         	var modelWidth = 200;
         	var modelHeight = 200;
         	if('${model.headColor}' === ''){
-        		var headColor = '#FF0080';
+        		var headColor = '#F781F3';
         	}else{
         		headColor = '${model.headColor}';
         	}
         	if('${model.armColor}' === ''){
-        		var armColor = '#FF0080';
+        		var armColor = '#F781F3';
         	}else{
         		armColor = '${model.armColor}';
         	}
         	if('${model.cheekColor}' === ''){
-        		var cheekColor = '#FF0080';
+        		var cheekColor = '#DF0101';
         	}else{
         		cheekColor = '${model.cheekColor}';
         	}
         	if('${model.legColor}' === ''){
-        		var legColor = '#FF0080';
+        		var legColor = '#585858';
         	}else{
         		legColor = '${model.legColor}';
         	}
