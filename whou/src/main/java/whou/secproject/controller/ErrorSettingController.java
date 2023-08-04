@@ -50,12 +50,12 @@ public class ErrorSettingController {
 @ControllerAdvice
 class GlobalControllerExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public String handleGeneralException(Exception ex, Model model) {
-        // 기타 일반적인 예외에 대한 처리 로직을 여기에 작성합니다.
-        model.addAttribute("code", "errorGeneral");
-        return "error/errorGeneral"; // 일반 에러 페이지의 뷰 이름을 반환합니다.
-    }
+//    @ExceptionHandler(Exception.class)
+//    public String handleGeneralException(Exception ex, Model model) {
+//        // 기타 일반적인 예외에 대한 처리 로직을 여기에 작성합니다.
+//        model.addAttribute("code", "errorGeneral");
+//        return "error/errorGeneral"; // 일반 에러 페이지의 뷰 이름을 반환합니다.
+//    }
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public String handle404Exception(Exception ex, Model model) {

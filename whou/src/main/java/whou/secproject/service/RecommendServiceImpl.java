@@ -114,7 +114,6 @@ public class RecommendServiceImpl implements RecommendService{
 		selDTO.setFullClassName("Double");
 		selDTO.setCol(col);
 		selDTO.setTb_name("JOB_POINT_"+user);
-		selDTO.setOrder(" order by total desc , job_cd asc");
 		selDTO.setEtc("OFFSET "+(count*(page-1))+" ROWS FETCH FIRST "+ count + " ROWS ONLY");
 	    sqlSession.select("whou.secproject.mapper.RecommendMapper.selectInfo", selDTO, resultHandler);
 		sqlSession.close();

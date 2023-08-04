@@ -92,7 +92,9 @@ public class MainController {
         List<HashMap<String,Object>> result = null;
         if(email!=null) {
         	if(serviceRe.tbTrue(userNum)==1) {
-        		List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(new SelectDTO(), userNum, 1, 3,"*");
+        		SelectDTO selDTO = new SelectDTO();
+        		selDTO.setOrder(" order by total desc , job_cd asc");
+        		List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(selDTO, userNum, 1, 3,"*");
         		result = new ArrayList<HashMap<String,Object>>();
         		for(int j = 0 ; j < 3; j++) {
         			HashMap<String,Object> recoMap= new HashMap<String,Object>();
