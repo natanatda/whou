@@ -1,558 +1,708 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
 <!DOCTYPE html>
 <html lang="en">
- <head>
-     <meta charset="utf-8" />
-     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-     <meta name="description" content="" />
-     <meta name="author" content="" />
-     <title>whou</title>
-     <!-- Favicon-->
-     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-     <!-- Bootstrap icons-->
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
-     <!-- Core theme CSS (includes Bootstrap)-->
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-     <link rel="stylesheet" href="/whou/resources/css/style.css">
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://kit.fontawesome.com/dbaea98925.js" crossorigin="anonymous"></script>
-   	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-   	
-  	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-   	<script src="/whou/resources/js/unpkg.com_gsap@3.12.1_dist_gsap.min.js"></script>
-	<script src="/whou/resources/js/ThreeCSG.js"></script>
-	<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-  	<script type="module" src="/whou/resources/js/whouModel.js"></script>
-  	
-     
- </head>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>whou</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<!-- Bootstrap icons-->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="/whou/resources/css/style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://kit.fontawesome.com/dbaea98925.js"
+	crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+	integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/whou/resources/js/unpkg.com_gsap@3.12.1_dist_gsap.min.js"></script>
+<script src="/whou/resources/js/ThreeCSG.js"></script>
+<script
+	src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script type="module" src="/whou/resources/js/whouModel.js"></script>
+
+
+</head>
 <style>
-	.jobMadeCard {position:absolute;left: 105%;top: -200%;width:100%; background-color:white;border:1px solid #cfcfcf;padding:20px;}
-	.JcardP1{font-size:18px;font-weight:700;margin-bottom:10px;}
-	.JcardP2{font-size:16px;margin-bottom:20px;}
+.jobMadeCard {
+	position: absolute;
+	left: 105%;
+	top: -200%;
+	width: 100%;
+	background-color: white;
+	border: 1px solid #cfcfcf;
+	padding: 20px;
+}
+
+.JcardP1 {
+	font-size: 18px;
+	font-weight: 700;
+	margin-bottom: 10px;
+}
+
+.JcardP2 {
+	font-size: 16px;
+	margin-bottom: 20px;
+}
 </style>
 <style>
 #btnM:disabled {
-  background-color: #ddd; /* 비활성화 배경색 */
-  color: #888; /* 비활성화 글자색 */
-  cursor: not-allowed; /* 비활성화된 버튼에는 커서를 변경하여 마우스 클릭을 방지 */
+	background-color: #ddd; /* 비활성화 배경색 */
+	color: #888; /* 비활성화 글자색 */
+	cursor: not-allowed; /* 비활성화된 버튼에는 커서를 변경하여 마우스 클릭을 방지 */
 }
- </style>
+</style>
 <style>
 #btnPw:disabled {
-  background-color: #ddd; /* 비활성화 배경색 */
-  color: #888; /* 비활성화 글자색 */
-  cursor: not-allowed; /* 비활성화된 버튼에는 커서를 변경하여 마우스 클릭을 방지 */
+	background-color: #ddd; /* 비활성화 배경색 */
+	color: #888; /* 비활성화 글자색 */
+	cursor: not-allowed; /* 비활성화된 버튼에는 커서를 변경하여 마우스 클릭을 방지 */
 }
- </style>
+</style>
 <style>
 #btnDelete:disabled {
-  background-color: #ddd; /* 비활성화 배경색 */
-  color: #888; /* 비활성화 글자색 */
-  cursor: not-allowed; /* 비활성화된 버튼에는 커서를 변경하여 마우스 클릭을 방지 */
+	background-color: #ddd; /* 비활성화 배경색 */
+	color: #888; /* 비활성화 글자색 */
+	cursor: not-allowed; /* 비활성화된 버튼에는 커서를 변경하여 마우스 클릭을 방지 */
 }
- </style>
- 
- 
+</style>
+
+
 <body>
-    <%@ include file="../header.jsp" %> 
-    <section class="py-2 mypage-section">
-            <div class="container px-5">
-                <h2 class="page-title">마이페이지</h2>
-                <div class="desc-wrap">
-                    <div class="left-wrap">
-	                    <div class="left-top-wrap">
-	                    	<div class="profile-cont">
-								<div style="background:pink"></div>
-								<div>${memId}님<br/>환영합니다!</div>
+	<%@ include file="../header.jsp"%>
+	<section class="py-2 mypage-section">
+		<div class="container px-5">
+			<h2 class="page-title">마이페이지</h2>
+			<div class="desc-wrap">
+				<div class="left-wrap">
+					<div class="left-top-wrap">
+						<div class="profile-cont">
+							<div style="background: pink"></div>
+							<div>${memId}님<br />환영합니다!
 							</div>
-							<c:if test="${percent[0] != '0' || percent[1] != '0' || percent[2] != '0' || percent[3] != '0'}">
-		                    	<div class="test-cont">
-			                    	<div id="carouselExampleControls" class="carousel slide carousel-dark " data-bs-ride="carousel">
-									  <div class="carousel-inner">
-										  <c:if test="${percent[0] != '0'}">
-											    <div class="carousel-item">
-							                    	<div>
-							                    		<div>
-							                    			<i class="fa-solid fa-circle-info" style="color:#5A3FFF"></i> 적성 검사 <span>${percent[0]}% 진행중</span>
-							                    		</div>
-							                    		<div class="progress">
-															  <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: ${percent[0]}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-														</div>
+						</div>
+						<c:if
+							test="${percent[0] != '0' || percent[1] != '0' || percent[2] != '0' || percent[3] != '0'}">
+							<div class="test-cont">
+								<div id="carouselExampleControls"
+									class="carousel slide carousel-dark " data-bs-ride="carousel">
+									<div class="carousel-inner">
+										<c:if test="${percent[0] != '0'}">
+											<div class="carousel-item">
+												<div>
+													<div>
+														<i class="fa-solid fa-circle-info" style="color: #5A3FFF"></i>
+														적성 검사 <span>${percent[0]}% 진행중</span>
 													</div>
-							                    	<button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=21&tempSave=tempSave'">적성검사 이어하기</button>
-											    </div>
-						                    </c:if>
-						                    <c:if test="${percent[1] != '0'}">
-											    <div class="carousel-item">
-											      <div>
-							                    		<div>
-							                    			<i class="fa-solid fa-circle-info" style="color:#5A3FFF"></i> 가치관 검사 <span>${percent[1]}% 진행중</span>
-							                    		</div>
-							                    		<div class="progress">
-															  <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: ${percent[1]}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-														</div>
+													<div class="progress">
+														<div class="progress-bar" role="progressbar"
+															aria-label="Basic example" style="width: ${percent[0]}%"
+															aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 													</div>
-							                    	<button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=25&tempSave=tempSave'">가치관검사 이어하기</button>
-											    </div>
-											</c:if>
-											<c:if test="${percent[2] != '0'}">
-											    <div class="carousel-item">
-											      <div>
-							                    		<div>
-							                    			<i class="fa-solid fa-circle-info" style="color:#5A3FFF"></i> 역량 검사 <span>${percent[2]}% 진행중</span>
-							                    		</div>
-							                    		<div class="progress">
-															  <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: ${percent[2]}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-														</div>
-													</div>
-							                    	<button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=27&tempSave=tempSave'">역량검사 이어하기</button>
-											    </div>
-											</c:if>
-											<c:if test="${percent[3] != '0'}">
-											    <div class="carousel-item">
-											      <div>
-							                    		<div>
-							                    			<i class="fa-solid fa-circle-info" style="color:#5A3FFF"></i> 흥미 검사 <span>${percent[3]}% 진행중</span>
-							                    		</div>
-							                    		<div class="progress">
-															  <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: ${percent[3]}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-														</div>
-													</div>
-							                    	<button class="purple-btn" onclick="location='/whou/aptitude/itrstkAptitude?qnum=31&tempSave=tempSave'">흥미검사 이어하기</button>
-											    </div>
-											</c:if>
-									  </div>
-									  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-									    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-									    <span class="visually-hidden">Previous</span>
-									  </button>
-									  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-									    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-									    <span class="visually-hidden">Next</span>
-									  </button>
-									</div>
-		                    	</div>
-	                    	</c:if>
-	                    	<div class="info-cont">
-		                    	<h6>직업 보기</h6>
-		                    		<ul>
-		                    			<li class="book-button">
-		                    				<div><i class="fa-solid fa-book"></i> 북마크</div>
-		                    				<div>확인하기 <i class="fa-solid fa-chevron-right" style="color:#333"></i></div>
-		                    			</li>
-		                    		</ul>
-		                    </div>
-	                       
-	                      
-	                        <div class="info-cont">
-		                    	<h6>정보 수정</h6>
-	                    		<ul>
-	                    			<li class="add-info-button">
-	                    				<div>추가 정보 입력</div>
-	                    				<div>입력하기 <i class="fa-solid fa-chevron-right" style="color:#333"></i></div>
-	                    			</li>
-	                    			<li class="chg-info-button">
-	                    				<div>개인 정보 수정</div>
-	                    				<div>수정하기 <i class="fa-solid fa-chevron-right" style="color:#333"></i></div>
-	                    			</li>
-	                    		</ul>
-	                    	</div>
-	                        <div>
-	                            <nav>
-	                                <div class="nav nav-tabs nav-left" id="nav-tab" role="tablist">
-	                                  <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">검사결과보기</button>
-	                                  <button class="nav-link" id="nav-reco-tab" data-bs-toggle="tab" data-bs-target="#nav-reco" type="button" role="tab" aria-controls="nav-reco" aria-selected="false">추천 받기</button>
-	                                  <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">진로컨설팅</button>
-	                                </div>
-	                              </nav>
-	                        </div>                        
-	                    </div>
-                   
-                        <div class="custom-box">
-	                        <div>
-	                       		<canvas class="webgl"></canvas> <%-- ai --%>                        
-	                        </div>
-	                        <div>
-	                        	<a href="/whou/whouModel/modelCustom">커스텀하기 >></a>
-	                        </div>
-                        </div>
-                    </div>
-                    
-                    <div class="right-wrap">
-                    	<div>
-							<!-- 북마크 -->
-							<div class="book-bg">
-	                    		<div class="book-wrap">
-	                                 <c:if test="${books != null }">
-	                                    <c:forEach var="job" items="${jobs}" varStatus="status">
-											<div class="card mb-5 mb-xl-0">
-												<a href="/whou/member/deleteBook?job_cd=${job.job_cd}"><i class="position-absolute top-0 start-100 translate-middle fa-solid fa-circle-minus fa-lg"></i></a>
-												<div class="result-cont">
-													<div onclick="location='/whou/job/info?job_cd=${job.job_cd}'">
-		                                                  <h4>${job.job_nm }<i class="fa-solid fa-chevron-right fa-xs" style="color: #111111;"></i></h4>
-		                                                  <p>${job.works}</p>
-		                                    		</div>
 												</div>
-	                                       </div>
-	                                    </c:forEach>
-	                                 </c:if>
-	                                 <c:if test="${books == null }">
-		                                 <div class="empty-box">
-		                                    <div>북마크한 관심직업이 없습니다.</div>
-		                                    <div>직업정보 탐색 후, 나의 관심직업을 등록해 주세요.</div>
-		                                    <a href="/whou/job/dic">직업정보 >></a>
-		                                 </div>
-	                                 </c:if>
-	                        	</div> 
-                        	</div>
-                        	
-                        	<!-- 개인정보수정 -->
-                        	<div class="chg-info-bg">
-                                  <nav>
-                                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                     <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#nav-info" type="button" role="tab" aria-controls="nav-info" aria-selected="true">기본정보</button>
-                                     <c:if test="${mem.join_type == 'whoU'}">
-                                        <button class="nav-link" id="nav-pw-tab" data-bs-toggle="tab" data-bs-target="#nav-pw" type="button" role="tab" aria-controls="nav-pw" aria-selected="false">비밀번호 변경</button>
-                                     </c:if>
-                                     <button class="nav-link" id="nav-delete-tab" data-bs-toggle="tab" data-bs-target="#nav-delete" type="button" role="tab" aria-controls="nav-delete" aria-selected="false">회원탈퇴</button>
-                                   </div>
-                                  </nav>
-                                 <div class="tab-content" id="nav-tabContent2">
-                                    <div class="tab-pane fade show active" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab" tabindex="0">
-	                                    <div class="chg-info">
-                                	 <h3>기본 정보 <span>정보를 변경하려면 휴대폰 본인인증을 완료하셔야합니다.</span></h3>
-                                         <form name="joinForm" method="post">
-                                            <div class="input-item">
-	                                            <label for="joinInput" class="form-label">이메일</label>
-	                                            <span class="form-control" id="email">${mem.email}</span>
-                                          	</div>
-                                          	<div class="input-item">
-	                                            <label for="joinInput" class="form-label">이름</label>
-	                                            <input type="text" class="form-control" name = "name" id="name" placeholder="이름(실명) 입력" value = "${mem.name}">
-	                                            <input type="hidden" class="form-control" id = "join_type" value ="${mem.join_type}">
-                                          	</div>
-                                          	<div class="input-item">
-	                                            <label for="joinInput" class="form-label">연도</label>
-	                                            <input type="text" class="form-control" name = "birth_year" id="birth_year" placeholder="YYYY" value = "${mem.birth_year}" required oninput = "checkYear()">
-	                                            <span class="year_error" style="color:red; display:none;">형식에 맞게 4자리로 입력해주세요.</span>
-                                          	</div>
-                                          	<div class="input-item">
-                                            	<label for="joinInput" class="form-label">휴대폰</label>
-	                                            <div class="input-box">
-	                                               <input type="text" class="form-control" id="phone" name = "phone" placeholder="'-' 빼고 숫자만 입력" value = "${mem.tel}">
-	                                               <button type="button" style="border-radius: 8px" class="purple-btn" name="phoneChk" id="phoneChk">인증 요청</button>
-	                                            </div>
-                                               <span class="phone_error" style="color:red; display:none;">형식에 맞게 휴대폰번호를 정확히 입력해주세요.</span>
-                                               <span class="phone_ok" style="color:green; display:none;">인증번호 발송이 완료되었습니다.</br> 휴대폰에서 인증번호를 확인해주십시오.</span>
-                                            <div class="input-box">
-                                               <input type="text" style="display:none;" class="form-control" id="phone2" name = "phone2" placeholder="인증번호 입력">
-                                               <button type="button" style="display:none; border-radius: 8px" class="purple-btn" name="phoneChk2" id="phoneChk2">인증 확인</button>
-                                         	</div>
-                                              	<span class="phone2_ok" style="color:green; display:none;">인증에 성공하셨습니다.</span>
-                                               	<span class="phone2_error" style="color:red; display:none;">인증에 실패하셨습니다</br>인증번호를 다시 확인해주십시오.</span>
-                                          	</div>
-                                          	<div class="input-wrap">
-                                             	<button type="submit" style="border-radius: 8px" class="purple-btn btn-xs" id="btnM" disabled>수정</button>
-                                           	</div>
-                                       	</form>
-                                       <div class="chg-addinfo">
-                                       	<div>
-                                      		 <h3>학과 정보</h3>
-			                                 <c:if test="${arrM != null }">
-			                                    <c:forEach var="major" items="${arrM}" varStatus="status">
-				                                  
-														<div class="input-wrap">
-															<span class="form-control" id="major">${major}</span>
-															<i onclick="location='/whou/member/deleteMajor?major=${major}'" class="fa-solid fa-circle-minus fa-lg"></i>
-														</div>
-				                                   
-			                                    </c:forEach>
-			                                 </c:if>
-			                                 <c:if test="${arrM == null }">
-				                                 <div class="empty-box">
-				                                    <div>학과 정보가 없습니다.</div>
-				                                    <div>추가정보입력에서 학과를 등록해 주세요.</div>
-				                                    <a href="/whou/member/mypage?load=2">추가정보입력 >></a>
-				                                 </div>
-			                                 </c:if>
-		                        		</div>
-                                       	<div>
-		                        			<h3>자격증 정보</h3>
-			                                 <c:if test="${arrC != null }">
-			                                    <c:forEach var="certi" items="${arrC}" varStatus="status">
-				                               
-													<div class="input-wrap">
-														<span class="form-control" id="major">${certi}</span>
-														<i onclick="location='/whou/member/deleteCerti?certi=${certi}'" class="fa-solid fa-circle-minus fa-lg"></i>
+												<button class="purple-btn"
+													onclick="location='/whou/aptitude/itrstkAptitude?qnum=21&tempSave=tempSave'">적성검사
+													이어하기</button>
+											</div>
+										</c:if>
+										<c:if test="${percent[1] != '0'}">
+											<div class="carousel-item">
+												<div>
+													<div>
+														<i class="fa-solid fa-circle-info" style="color: #5A3FFF"></i>
+														가치관 검사 <span>${percent[1]}% 진행중</span>
 													</div>
-				                                   
-			                                    </c:forEach>
-			                                 </c:if>
-			                                 <c:if test="${arrC == null }">
-				                                 <div class="empty-box">
-				                                    <div>자격증 정보가 없습니다.</div>
-				                                    <div>추가정보입력에서 자격증을 등록해 주세요.</div>
-				                                    <a href="/whou/member/mypage?load=2">추가정보입력 >></a>
-				                                 </div>
-			                                 </c:if>
-		                        		</div>
-		                        	</div> 
-                                </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="nav-pw" role="tabpanel" aria-labelledby="nav-pw-tab" tabindex="0">
-                                       <div class="chg-info">
-	                                        <form method="post">
-			                                    <div class="input-item">
-		                                            <label for="joinInput" class="form-label">현재 비밀번호</label>
-	                                                <input type="password" class="form-control" name = "pw" id="pw" placeholder="4자리 이상" required oninput = "checkPw()">
-	                                                <span class="pw_xx" style="color:red; display:none;">비밀번호가 일치하지 않습니다.</span>
-			                                  	</div>
-	                                           	<div class="input-item">
-		                                            <label for="joinInput" class="form-label">새 비밀번호</label>
-		                                            <input type="password" class="form-control" name = "newPw" id="newPw" placeholder="4자리 이상" required oninput = "checkNewPw()" disabled>
-		                                            <span class="pw_error" style="color:red; display:none;">형식에 맞게 입력해주세요.</span>
-			                                    </div>
-			                                    <div class="input-item">
-		                                            <label for="joinInput" class="form-label">새 비밀번호 확인</label>
-		                                            <input type="password" class="form-control" name = "newPw2" id="newPw2" placeholder="4자리 이상" required oninput = "checkNewPw2()" disabled> 
-		                                            <span class="pw_ok" style="color:green; display:none;">비밀번호가 일치합니다.</span>
-		                                            <span class="pw_x" style="color:red; display:none;">비밀번호가 일치하지 않습니다.</span>
-			                                    </div>
-			                                    <div class="input-wrap">
-			                                       <button type="submit" style="border-radius: 8px" class="purple-btn btn-xs" id="btnPw" disabled>변경</button>
-			                                    </div>
-	                                 		</form>
-                                 		</div>
-                                    </div><!-- 회원탈퇴 -->
-                                    <div class="tab-pane fade" id="nav-delete" role="tabpanel" aria-labelledby="nav-delete-tab" tabindex="0">
-                                       <div class="chg-info">
-	                                        <form action="/whou/member/deleteUser" method="post">
+													<div class="progress">
+														<div class="progress-bar" role="progressbar"
+															aria-label="Basic example" style="width: ${percent[1]}%"
+															aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
+												</div>
+												<button class="purple-btn"
+													onclick="location='/whou/aptitude/itrstkAptitude?qnum=25&tempSave=tempSave'">가치관검사
+													이어하기</button>
+											</div>
+										</c:if>
+										<c:if test="${percent[2] != '0'}">
+											<div class="carousel-item">
+												<div>
+													<div>
+														<i class="fa-solid fa-circle-info" style="color: #5A3FFF"></i>
+														역량 검사 <span>${percent[2]}% 진행중</span>
+													</div>
+													<div class="progress">
+														<div class="progress-bar" role="progressbar"
+															aria-label="Basic example" style="width: ${percent[2]}%"
+															aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
+												</div>
+												<button class="purple-btn"
+													onclick="location='/whou/aptitude/itrstkAptitude?qnum=27&tempSave=tempSave'">역량검사
+													이어하기</button>
+											</div>
+										</c:if>
+										<c:if test="${percent[3] != '0'}">
+											<div class="carousel-item">
+												<div>
+													<div>
+														<i class="fa-solid fa-circle-info" style="color: #5A3FFF"></i>
+														흥미 검사 <span>${percent[3]}% 진행중</span>
+													</div>
+													<div class="progress">
+														<div class="progress-bar" role="progressbar"
+															aria-label="Basic example" style="width: ${percent[3]}%"
+															aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
+												</div>
+												<button class="purple-btn"
+													onclick="location='/whou/aptitude/itrstkAptitude?qnum=31&tempSave=tempSave'">흥미검사
+													이어하기</button>
+											</div>
+										</c:if>
+									</div>
+									<button class="carousel-control-prev" type="button"
+										data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+										<span class="visually-hidden">Previous</span>
+									</button>
+									<button class="carousel-control-next" type="button"
+										data-bs-target="#carouselExampleControls" data-bs-slide="next">
+										<span class="carousel-control-next-icon" aria-hidden="true"></span>
+										<span class="visually-hidden">Next</span>
+									</button>
+								</div>
+							</div>
+						</c:if>
+						<div class="info-cont">
+							<h6>직업 보기</h6>
+							<ul>
+								<li class="book-button">
+									<div>
+										<i class="fa-solid fa-book"></i> 북마크
+									</div>
+									<div>
+										확인하기 <i class="fa-solid fa-chevron-right" style="color: #333"></i>
+									</div>
+								</li>
+							</ul>
+						</div>
+
+
+						<div class="info-cont">
+							<h6>정보 수정</h6>
+							<ul>
+								<li class="add-info-button">
+									<div>추가 정보 입력</div>
+									<div>
+										입력하기 <i class="fa-solid fa-chevron-right" style="color: #333"></i>
+									</div>
+								</li>
+								<li class="chg-info-button">
+									<div>개인 정보 수정</div>
+									<div>
+										수정하기 <i class="fa-solid fa-chevron-right" style="color: #333"></i>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div>
+							<nav>
+								<div class="nav nav-tabs nav-left" id="nav-tab" role="tablist">
+									<button class="nav-link active" id="nav-home-tab"
+										data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+										role="tab" aria-controls="nav-home" aria-selected="true">검사결과보기</button>
+									<button class="nav-link" id="nav-reco-tab" data-bs-toggle="tab"
+										data-bs-target="#nav-reco" type="button" role="tab"
+										aria-controls="nav-reco" aria-selected="false">추천 받기</button>
+									<button class="nav-link" id="nav-contact-tab"
+										data-bs-toggle="tab" data-bs-target="#nav-contact"
+										type="button" role="tab" aria-controls="nav-contact"
+										aria-selected="false">진로컨설팅</button>
+								</div>
+							</nav>
+						</div>
+					</div>
+
+					<div class="custom-box">
+						<div>
+							<canvas class="webgl"></canvas>
+							<%-- ai --%>
+						</div>
+						<div>
+							<a href="/whou/whouModel/modelCustom">커스텀하기 >></a>
+						</div>
+					</div>
+				</div>
+
+				<div class="right-wrap">
+					<div>
+						<!-- 북마크 -->
+						<div class="book-bg">
+							<div class="book-wrap">
+								<c:if test="${books != null }">
+									<c:forEach var="job" items="${jobs}" varStatus="status">
+										<div class="card mb-5 mb-xl-0">
+											<a href="/whou/member/deleteBook?job_cd=${job.job_cd}"><i
+												class="position-absolute top-0 start-100 translate-middle fa-solid fa-circle-minus fa-lg"></i></a>
+											<div class="result-cont">
+												<div
+													onclick="location='/whou/job/info?job_cd=${job.job_cd}'">
+													<h4>${job.job_nm }<i
+															class="fa-solid fa-chevron-right fa-xs"
+															style="color: #111111;"></i>
+													</h4>
+													<p>${job.works}</p>
+												</div>
+											</div>
+										</div>
+									</c:forEach>
+								</c:if>
+								<c:if test="${books == null }">
+									<div class="empty-box">
+										<div>북마크한 관심직업이 없습니다.</div>
+										<div>직업정보 탐색 후, 나의 관심직업을 등록해 주세요.</div>
+										<a href="/whou/job/dic">직업정보 >></a>
+									</div>
+								</c:if>
+							</div>
+						</div>
+
+						<!-- 개인정보수정 -->
+						<div class="chg-info-bg">
+							<nav>
+								<div class="nav nav-tabs" id="nav-tab" role="tablist">
+									<button class="nav-link active" id="info-tab"
+										data-bs-toggle="tab" data-bs-target="#nav-info" type="button"
+										role="tab" aria-controls="nav-info" aria-selected="true">기본정보</button>
+									<c:if test="${mem.join_type == 'whoU'}">
+										<button class="nav-link" id="nav-pw-tab" data-bs-toggle="tab"
+											data-bs-target="#nav-pw" type="button" role="tab"
+											aria-controls="nav-pw" aria-selected="false">비밀번호 변경</button>
+									</c:if>
+									<button class="nav-link" id="nav-delete-tab"
+										data-bs-toggle="tab" data-bs-target="#nav-delete"
+										type="button" role="tab" aria-controls="nav-delete"
+										aria-selected="false">회원탈퇴</button>
+								</div>
+							</nav>
+							<div class="tab-content" id="nav-tabContent2">
+								<div class="tab-pane fade show active" id="nav-info"
+									role="tabpanel" aria-labelledby="nav-info-tab" tabindex="0">
+									<div class="chg-info">
+										<h3>
+											기본 정보 <span>정보를 변경하려면 휴대폰 본인인증을 완료하셔야합니다.</span>
+										</h3>
+										<form name="joinForm" method="post">
+											<div class="input-item">
+												<label for="joinInput" class="form-label">이메일</label> <span
+													class="form-control" id="email">${mem.email}</span>
+											</div>
+											<div class="input-item">
+												<label for="joinInput" class="form-label">이름</label> <input
+													type="text" class="form-control" name="name" id="name"
+													placeholder="이름(실명) 입력" value="${mem.name}"> <input
+													type="hidden" class="form-control" id="join_type"
+													value="${mem.join_type}">
+											</div>
+											<div class="input-item">
+												<label for="joinInput" class="form-label">연도</label> <input
+													type="text" class="form-control" name="birth_year"
+													id="birth_year" placeholder="YYYY"
+													value="${mem.birth_year}" required oninput="checkYear()">
+												<span class="year_error" style="color: red; display: none;">형식에
+													맞게 4자리로 입력해주세요.</span>
+											</div>
+											<div class="input-item">
+												<label for="joinInput" class="form-label">휴대폰</label>
+												<div class="input-box">
+													<input type="text" class="form-control" id="phone"
+														name="phone" placeholder="'-' 빼고 숫자만 입력"
+														value="${mem.tel}">
+													<button type="button" style="border-radius: 8px"
+														class="purple-btn" name="phoneChk" id="phoneChk">인증
+														요청</button>
+												</div>
+												<span class="phone_error" style="color: red; display: none;">형식에
+													맞게 휴대폰번호를 정확히 입력해주세요.</span> <span class="phone_ok"
+													style="color: green; display: none;">인증번호 발송이
+													완료되었습니다.</br> 휴대폰에서 인증번호를 확인해주십시오.
+												</span>
+												<div class="input-box">
+													<input type="text" style="display: none;"
+														class="form-control" id="phone2" name="phone2"
+														placeholder="인증번호 입력">
+													<button type="button"
+														style="display: none; border-radius: 8px"
+														class="purple-btn" name="phoneChk2" id="phoneChk2">인증
+														확인</button>
+												</div>
+												<span class="phone2_ok" style="color: green; display: none;">인증에
+													성공하셨습니다.</span> <span class="phone2_error"
+													style="color: red; display: none;">인증에 실패하셨습니다</br>인증번호를
+													다시 확인해주십시오.
+												</span>
+											</div>
+											<div class="input-wrap">
+												<button type="submit" style="border-radius: 8px"
+													class="purple-btn btn-xs" id="btnM" disabled>수정</button>
+											</div>
+										</form>
+										<div class="chg-addinfo">
+											<div>
+												<h3>학과 정보</h3>
+												<c:if test="${arrM != null }">
+													<c:forEach var="major" items="${arrM}" varStatus="status">
+
+														<div class="input-wrap">
+															<span class="form-control" id="major">${major}</span> <i
+																onclick="location='/whou/member/deleteMajor?major=${major}'"
+																class="fa-solid fa-circle-minus fa-lg"></i>
+														</div>
+
+													</c:forEach>
+												</c:if>
+												<c:if test="${arrM == null }">
+													<div class="empty-box">
+														<div>학과 정보가 없습니다.</div>
+														<div>추가정보입력에서 학과를 등록해 주세요.</div>
+														<a href="/whou/member/mypage?load=2">추가정보입력 >></a>
+													</div>
+												</c:if>
+											</div>
+											<div>
+												<h3>자격증 정보</h3>
+												<c:if test="${arrC != null }">
+													<c:forEach var="certi" items="${arrC}" varStatus="status">
+
+														<div class="input-wrap">
+															<span class="form-control" id="major">${certi}</span> <i
+																onclick="location='/whou/member/deleteCerti?certi=${certi}'"
+																class="fa-solid fa-circle-minus fa-lg"></i>
+														</div>
+
+													</c:forEach>
+												</c:if>
+												<c:if test="${arrC == null }">
+													<div class="empty-box">
+														<div>자격증 정보가 없습니다.</div>
+														<div>추가정보입력에서 자격증을 등록해 주세요.</div>
+														<a href="/whou/member/mypage?load=2">추가정보입력 >></a>
+													</div>
+												</c:if>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="nav-pw" role="tabpanel"
+									aria-labelledby="nav-pw-tab" tabindex="0">
+									<div class="chg-info">
+										<form method="post">
+											<div class="input-item">
+												<label for="joinInput" class="form-label">현재 비밀번호</label> <input
+													type="password" class="form-control" name="pw" id="pw"
+													placeholder="4자리 이상" required oninput="checkPw()">
+												<span class="pw_xx" style="color: red; display: none;">비밀번호가
+													일치하지 않습니다.</span>
+											</div>
+											<div class="input-item">
+												<label for="joinInput" class="form-label">새 비밀번호</label> <input
+													type="password" class="form-control" name="newPw"
+													id="newPw" placeholder="4자리 이상" required
+													oninput="checkNewPw()" disabled> <span
+													class="pw_error" style="color: red; display: none;">형식에
+													맞게 입력해주세요.</span>
+											</div>
+											<div class="input-item">
+												<label for="joinInput" class="form-label">새 비밀번호 확인</label>
+												<input type="password" class="form-control" name="newPw2"
+													id="newPw2" placeholder="4자리 이상" required
+													oninput="checkNewPw2()" disabled> <span
+													class="pw_ok" style="color: green; display: none;">비밀번호가
+													일치합니다.</span> <span class="pw_x"
+													style="color: red; display: none;">비밀번호가 일치하지 않습니다.</span>
+											</div>
+											<div class="input-wrap">
+												<button type="submit" style="border-radius: 8px"
+													class="purple-btn btn-xs" id="btnPw" disabled>변경</button>
+											</div>
+										</form>
+									</div>
+								</div>
+								<!-- 회원탈퇴 -->
+								<div class="tab-pane fade" id="nav-delete" role="tabpanel"
+									aria-labelledby="nav-delete-tab" tabindex="0">
+									<div class="chg-info">
+										<form action="/whou/member/deleteUser" method="post">
 											<div class="input-item">
 												<label for="joinInput" class="form-label">휴대폰 본인인증</label>
 												<div class="input-box">
-													<input type="text" class="form-control" id="tel" name="tel" placeholder="'-' 빼고 숫자만 입력" value="${mem.tel}">
-													<button type="button" style="border-radius: 8px" class="purple-btn" name="telChk" id="telChk">인증 요청</button>
+													<input type="text" class="form-control" id="tel" name="tel"
+														placeholder="'-' 빼고 숫자만 입력" value="${mem.tel}">
+													<button type="button" style="border-radius: 8px"
+														class="purple-btn" name="telChk" id="telChk">인증
+														요청</button>
 												</div>
-												<span class="tel_error" style="color: red; display: none;">형식에 맞게 휴대폰번호를 정확히 입력해주세요.</span> 
-												<span class="tel_ok" style="color: green; display: none;">인증번호 발송이 완료되었습니다.</br> 휴대폰에서 인증번호를 확인해주십시오.</span>
+												<span class="tel_error" style="color: red; display: none;">형식에
+													맞게 휴대폰번호를 정확히 입력해주세요.</span> <span class="tel_ok"
+													style="color: green; display: none;">인증번호 발송이
+													완료되었습니다.</br> 휴대폰에서 인증번호를 확인해주십시오.
+												</span>
 												<div class="input-box">
-													<input type="text" style="display: none;" class="form-control" id="tel2" name="tel2" placeholder="인증번호 입력">
-													<button type="button" style="display: none; border-radius: 8px" class="purple-btn" name="telChk2" id="telChk2">인증 확인</button>
+													<input type="text" style="display: none;"
+														class="form-control" id="tel2" name="tel2"
+														placeholder="인증번호 입력">
+													<button type="button"
+														style="display: none; border-radius: 8px"
+														class="purple-btn" name="telChk2" id="telChk2">인증
+														확인</button>
 												</div>
-												<span class="tel2_ok" style="color: green; display: none;">인증에 성공하셨습니다.</span>
-												<span class="tel2_error" style="color: red; display: none;">인증에 실패하셨습니다</br>인증번호를 다시 확인해주십시오.</span>
+												<span class="tel2_ok" style="color: green; display: none;">인증에
+													성공하셨습니다.</span> <span class="tel2_error"
+													style="color: red; display: none;">인증에 실패하셨습니다</br>인증번호를
+													다시 확인해주십시오.
+												</span>
 											</div>
 											<div class="input-wrap">
-			                                       <button type="submit" style="border-radius: 8px" class="purple-btn btn-xs" id="btnDelete" onclick = "deleteUser()" disabled>회원 탈퇴</button>
-			                                    </div>
-	                                 		</form>
-                                 		</div>
-                                    </div>
-                                </div>                            
-	                         </div>        
-	                        
-	                        <!-- 추가정보 입력 -->
-	                        <div id="nav-addInfo">
-		                        <form action="/whou/member/updateInfo" method="post">
-		                             <div>
-		                                    <div class="add-wrap">
-		                                        <div class="left-box">
-		                                           <h4>자격증</h4>
-		                                           <div id="qualificationContainer">
-		                                              
-		                                                 <div class="input-wrap">
-		                                                     <input type="text" name="certi" autocomplete="off" placeholder="자격증 명" oninput="checkCerti(this)" /> <i class="fa-solid fa-circle-minus fa-lg"></i>
-		                                                     <ul class="qualificationList"></ul>
-		                                                 </div> 
-		                                            
-		                                           </div>
-		                                           <div class="add-certi-wrap">
-		                                              <div class="add-certi-btn" onclick="addQualification()">
-		                                                  <i class="fa-solid fa-circle-plus fa-lg"></i>
-		                                                  <p>자격증 추가</p>
-		                                              </div>
-		                                          </div>
-		                                        </div>
-		                                        <div class="right-box">
-		                                          <h4>학과정보</h4>
-		                                            <div id="majorContainer">
-		                                              <div class="input-wrap">
-		                                                   <select class="depart-select" name="depart" id="depart">
-		                                                      <option value="대학">대학</option>
-		                                                      <option value="전문대학">전문대학</option>
-		                                                   </select>
-		                                                   <input type="text" name="major" autocomplete="off" placeholder="전공명" oninput="checkMajor(this)" />
-		                                                   <ul class="majorList"></ul>
-		                                              </div>
-		                                              <div class="input-wrap gong2">
-		                                                  <input type="text" name="major" autocomplete="off" placeholder="부전공명/복수전공명" oninput="checkMajor(this)" />
-		                                                  <ul class="majorList"></ul>
-		                                             </div>
-		                                             </div>
-		                                            </div>
-		                                    </div> 
-		                                    <div class="button-wrap">
-		                                        <button type="submit" class="purple-btn" onclick="load()">저장</button>  
-		                                    </div>                                       
-		                                </div>   
-			                        </form> 
-		                    </div>   
-                          <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-                               <select id="testResultSelect">
-                                   <option value="21">적성</option>
-                                   <option value="25">가치관</option>
-                                   <option value="27">역량</option>
-                                   <option value="31">흥미</option>
-                               </select>
-                               <div id="item-aptitude" class="chart-wrap">
-                                  <c:if test="${!scoreTrue1}">
-                                     <div class="empty-box">
-                                     	<div>검사결과가 없습니다.</div>
-                                     	<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
-                                     </div>
-                                     <div class="card">
-		                                 <canvas id="aptitudeChart" style="display:none;"></canvas>
-                                     </div>
-                                  </c:if>
-                                  <c:if test="${scoreTrue1}">
-	                                  <div class="test-result-top">
-	                                  	<div class="chart-inner card">
-	                                      <canvas id="aptitudeChart"></canvas>
-	                                    </div>
-	                                      <ul class="chart-ranks card">
-	                                      		<li>적성 TOP 5</li>
-	                                           <li>
-	                                           		<div class="ic-rank">1</div>
-	                                           		<div>${aptitudeRank.aptitude_name1}</div>
-	                                           		<span>상위 몇%</span>
-	                                           </li>                         
-	                                           <li>
-	                                           		<div class="ic-rank">2</div>
-	                                           		<div>${aptitudeRank.aptitude_name2}</div>
-	                                           		<span>상위 몇%</span>
-												</li>                         
-	                                           <li>
-	                                           		<div class="ic-rank">3</div>
-	                                           		<div>${aptitudeRank.aptitude_name3}</div>
-	                                           		<span>상위 몇%</span>
-	                                           </li>
-	                                           <li>
-	                                           		<div class="ic-rank out">4</div>
-	                                           		<div>${aptitudeRank.aptitude_name3}</div>
-	                                           		<span>상위 몇%</span>
-	                                           </li>    
-	                                           <li>
-	                                           		<div class="ic-rank out">5</div>
-	                                           		<div>${aptitudeRank.aptitude_name3}</div>
-	                                           		<span>상위 몇%</span>
-	                                           </li>                             
-	                                      </ul>
-	                                  </div>
-	                                  <div class="card">
-	                                  	<div id="carouselExampleControls" class="carousel slide carousel-dark" data-bs-ride="carousel">
-										  <div class="carousel-inner">
-										    <div class="carousel-item active">
-										    	<div class="carousel-title">
-												    <div class="ic-rank">1</div>
-												    <div>${aptitudeRank.aptitude_name1}</div>
-										    	</div>
-										      
-										    </div>
-										    <div class="carousel-item">
-										    	<div class="carousel-title">
-												    <div class="ic-rank">2</div>
-												    <div>${aptitudeRank.aptitude_name1}</div>
-										    	</div>
-										    </div>
-										    <div class="carousel-item">
-										    	<div class="carousel-title">
-												    <div class="ic-rank">3</div>
-												    <div>${aptitudeRank.aptitude_name1}</div>
-										    	</div>
-										    </div>
-										  </div>
-										  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-										    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-										    <span class="visually-hidden">Previous</span>
-										  </button>
-										  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-										    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-										    <span class="visually-hidden">Next</span>
-										  </button>
-										</div>
-	                                  </div>
-                                  </c:if>                                  
-                               </div>
-                               <div id="item-values" class="chart-wrap">
-                                  <c:if test="${!scoreTrue3}">
-                                   <canvas id="valuesChart" style="display:none;"></canvas>
-                                   <div class="empty-box">
-                                     	<div>검사결과가 없습니다.</div>
-                                     	<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
-                                     </div>
-                                  </c:if>
-                                  <c:if test="${scoreTrue3}">
-                                  	<div class="chart-inner">
-                                     	<canvas id="valuesChart"></canvas>
-                                     </div>
-                                  </c:if>
-                               </div>
-                               <div id="item-interest" class="chart-wrap">
-                                  <c:if test="${!scoreTrue2}">
-                                      <canvas id="interestChart" style="display:none;"></canvas>
-                                     <div class="empty-box">
-                                     	<div>검사결과가 없습니다.</div>
-                                     	<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
-                                     </div>
-                                  </c:if>
-                                  <c:if test="${scoreTrue2}">
-                                  	<div class="chart-inner">
-                                    	 <canvas id="interestChart"></canvas>
-                                     </div>
-                                      <ul class="chart-ranks">
-                                      		<li>흥미 TOP3</li>
-                                           <li>▶ ${aptitudeRank.interest_name1}</li>                         
-                                           <li>▶ ${aptitudeRank.interest_name2}</li>                         
-                                           <li>▶ ${aptitudeRank.interest_name3}</li>                         
-                                      </ul>
-                                  </c:if>
-                               </div>
-                               <div id="item-ability" class="chart-wrap">
-                                  <c:if test="${!scoreTrue4}">
-                                   <canvas id="abilityChart1" style="display:none;"></canvas>
-                                      <canvas id="abilityChart2" style="display:none;"></canvas>
-                                     <div class="empty-box">
-                                     	<div>검사결과가 없습니다.</div>
-                                     	<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
-                                     </div>
-                                  </c:if>
-                                  <c:if test="${scoreTrue4}">
-                                  	<div class="chart-inner">
-                                      	<canvas id="abilityChart1"></canvas>
-                                      	<canvas id="abilityChart2"></canvas>
-                                      </div>
-                                  </c:if>
-                               </div>
-                            </div>
+												<button type="submit" style="border-radius: 8px"
+													class="purple-btn btn-xs" id="btnDelete"
+													onclick="deleteUser()" disabled>회원 탈퇴</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
 
-		                     <!-- 추천 -->
-		                     <div class="tab-pane fade" id="nav-reco" role="tabpanel" aria-labelledby="nav-reco-tab" tabindex="0">
-		                        <div id="reco-container">
+						<!-- 추가정보 입력 -->
+						<div id="nav-addInfo">
+							<form action="/whou/member/updateInfo" method="post">
+								<div>
+									<div class="add-wrap">
+										<div class="left-box">
+											<h4>자격증</h4>
+											<div id="qualificationContainer">
+
+												<div class="input-wrap">
+													<input type="text" name="certi" autocomplete="off"
+														placeholder="자격증 명" oninput="checkCerti(this)" /> <i
+														class="fa-solid fa-circle-minus fa-lg"></i>
+													<ul class="qualificationList"></ul>
+												</div>
+
+											</div>
+											<div class="add-certi-wrap">
+												<div class="add-certi-btn" onclick="addQualification()">
+													<i class="fa-solid fa-circle-plus fa-lg"></i>
+													<p>자격증 추가</p>
+												</div>
+											</div>
+										</div>
+										<div class="right-box">
+											<h4>학과정보</h4>
+											<div id="majorContainer">
+												<div class="input-wrap">
+													<select class="depart-select" name="depart" id="depart">
+														<option value="대학">대학</option>
+														<option value="전문대학">전문대학</option>
+													</select> <input type="text" name="major" autocomplete="off"
+														placeholder="전공명" oninput="checkMajor(this)" />
+													<ul class="majorList"></ul>
+												</div>
+												<div class="input-wrap gong2">
+													<input type="text" name="major" autocomplete="off"
+														placeholder="부전공명/복수전공명" oninput="checkMajor(this)" />
+													<ul class="majorList"></ul>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="button-wrap">
+										<button type="submit" class="purple-btn" onclick="load()">저장</button>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="tab-content" id="nav-tabContent">
+							<div class="tab-pane fade show active" id="nav-home"
+								role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+								<select id="testResultSelect">
+									<option value="21">적성</option>
+									<option value="25">가치관</option>
+									<option value="27">역량</option>
+									<option value="31">흥미</option>
+								</select>
+								<div id="item-aptitude" class="chart-wrap">
+									<c:if test="${!scoreTrue1}">
+										<div class="empty-box">
+											<div>검사결과가 없습니다.</div>
+											<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
+										</div>
+										<div class="card">
+											<canvas id="aptitudeChart" style="display: none;"></canvas>
+										</div>
+									</c:if>
+									<c:if test="${scoreTrue1}">
+										<div class="test-result-top">
+											<div class="chart-inner card">
+												<canvas id="aptitudeChart"></canvas>
+											</div>
+											<ul class="chart-ranks card">
+												<li>적성 TOP 5</li>
+												<li>
+													<div class="ic-rank">1</div>
+													<div>${aptitudeRank.aptitude_name1}</div> <span>상위
+														몇%</span>
+												</li>
+												<li>
+													<div class="ic-rank">2</div>
+													<div>${aptitudeRank.aptitude_name2}</div> <span>상위
+														몇%</span>
+												</li>
+												<li>
+													<div class="ic-rank">3</div>
+													<div>${aptitudeRank.aptitude_name3}</div> <span>상위
+														몇%</span>
+												</li>
+												<li>
+													<div class="ic-rank out">4</div>
+													<div>${aptitudeRank.aptitude_name3}</div> <span>상위
+														몇%</span>
+												</li>
+												<li>
+													<div class="ic-rank out">5</div>
+													<div>${aptitudeRank.aptitude_name3}</div> <span>상위
+														몇%</span>
+												</li>
+											</ul>
+										</div>
+										<div class="card">
+											<div id="carouselExampleControls"
+												class="carousel slide carousel-dark" data-bs-ride="carousel">
+												<div class="carousel-inner">
+													<div class="carousel-item active">
+														<div class="carousel-title">
+															<div class="ic-rank">1</div>
+															<div>${aptitudeRank.aptitude_name1}</div>
+														</div>
+
+													</div>
+													<div class="carousel-item">
+														<div class="carousel-title">
+															<div class="ic-rank">2</div>
+															<div>${aptitudeRank.aptitude_name1}</div>
+														</div>
+													</div>
+													<div class="carousel-item">
+														<div class="carousel-title">
+															<div class="ic-rank">3</div>
+															<div>${aptitudeRank.aptitude_name1}</div>
+														</div>
+													</div>
+												</div>
+												<button class="carousel-control-prev" type="button"
+													data-bs-target="#carouselExampleControls"
+													data-bs-slide="prev">
+													<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+													<span class="visually-hidden">Previous</span>
+												</button>
+												<button class="carousel-control-next" type="button"
+													data-bs-target="#carouselExampleControls"
+													data-bs-slide="next">
+													<span class="carousel-control-next-icon" aria-hidden="true"></span>
+													<span class="visually-hidden">Next</span>
+												</button>
+											</div>
+										</div>
+									</c:if>
+								</div>
+								<div id="item-values" class="chart-wrap">
+									<c:if test="${!scoreTrue3}">
+										<canvas id="valuesChart" style="display: none;"></canvas>
+										<div class="empty-box">
+											<div>검사결과가 없습니다.</div>
+											<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
+										</div>
+									</c:if>
+									<c:if test="${scoreTrue3}">
+										<div class="chart-inner">
+											<canvas id="valuesChart"></canvas>
+										</div>
+									</c:if>
+								</div>
+								<div id="item-interest" class="chart-wrap">
+									<c:if test="${!scoreTrue2}">
+										<canvas id="interestChart" style="display: none;"></canvas>
+										<div class="empty-box">
+											<div>검사결과가 없습니다.</div>
+											<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
+										</div>
+									</c:if>
+									<c:if test="${scoreTrue2}">
+										<div class="chart-inner">
+											<canvas id="interestChart"></canvas>
+										</div>
+										<ul class="chart-ranks">
+											<li>흥미 TOP3</li>
+											<li>▶ ${aptitudeRank.interest_name1}</li>
+											<li>▶ ${aptitudeRank.interest_name2}</li>
+											<li>▶ ${aptitudeRank.interest_name3}</li>
+										</ul>
+									</c:if>
+								</div>
+								<div id="item-ability" class="chart-wrap">
+									<c:if test="${!scoreTrue4}">
+										<canvas id="abilityChart1" style="display: none;"></canvas>
+										<canvas id="abilityChart2" style="display: none;"></canvas>
+										<div class="empty-box">
+											<div>검사결과가 없습니다.</div>
+											<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
+										</div>
+									</c:if>
+									<c:if test="${scoreTrue4}">
+										<div class="chart-inner">
+											<canvas id="abilityChart1"></canvas>
+											<canvas id="abilityChart2"></canvas>
+										</div>
+									</c:if>
+								</div>
+							</div>
+
+							<!-- 추천 -->
+							<div class="tab-pane fade" id="nav-reco" role="tabpanel"
+								aria-labelledby="nav-reco-tab" tabindex="0">
+								<div id="reco-container">
 									<div class="reco-wrap">
-										<div class="reco-item-container" style="display:flex; justify-content:flex-start; gap:20px;">
-											<div class="reco-tag" style="width:370px; height:170px">
-												<span style="font-weight:600;font-size: 18px;margin-left:5px;">컨설팅 직업 선택</span>
-												<a style="font-size: 12px; margin-left:10px;">마우스를 올릴 시 직업의 정보가 나옵니다</a>
+										<div class="reco-item-container"
+											style="display: flex; justify-content: flex-start; gap: 20px;">
+											<div class="reco-tag" style="width: 370px; height: 170px">
+												<span
+													style="font-weight: 600; font-size: 18px; margin-left: 5px;">컨설팅
+													직업 선택</span> <a style="font-size: 12px; margin-left: 10px;">마우스를
+													올릴 시 직업의 정보가 나옵니다</a>
 												<div id="jobContainer">
-													<div class="input-wrap" style="margin-top:10px;">
-														<input class="jobSearch" type="text" name="job" placeholder="직업 이름" oninput="checkJob(this)" />
+													<div class="input-wrap" style="margin-top: 10px;">
+														<input class="jobSearch" type="text" name="job"
+															placeholder="직업 이름" oninput="checkJob(this)" />
 														<ul class="jobSearchLi">
 															<li>
 																<%-- 
@@ -574,30 +724,42 @@
 														</ul>
 													</div>
 												</div>
-												<div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px;">
-													<c:if test="${jobDetailCunsuling.getBaseInfo().getJob_nm()!=null}">
+												<div
+													style="font-weight: 600; font-size: 18px; margin-left: 5px; margin-top: 20px;">
+													<c:if
+														test="${jobDetailCunsuling.getBaseInfo().getJob_nm()!=null}">
 														나의 현재 직업 : ${jobDetailCunsuling.getBaseInfo().getJob_nm()} 
 													</c:if>
-													<c:if test="${jobDetailCunsuling.getBaseInfo().getJob_nm()==null}">
+													<c:if
+														test="${jobDetailCunsuling.getBaseInfo().getJob_nm()==null}">
 														나의 현재 직업 : 없음 
 													</c:if>
 												</div>
 											</div>
-											<div class="reco-tag" style="width:510px; height:170px;">
-												<span style="font-weight:600;font-size: 18px;margin-left:5px;">우선순위 선택하기</span>
-												<a style="font-size: 12px; margin-left:10px;">선택하지 않을시에는 모두 동일한 중요도로 적용됩니다.</a>
+											<div class="reco-tag" style="width: 510px; height: 170px;">
+												<span
+													style="font-weight: 600; font-size: 18px; margin-left: 5px;">우선순위
+													선택하기</span> <a style="font-size: 12px; margin-left: 10px;">선택하지
+													않을시에는 모두 동일한 중요도로 적용됩니다.</a>
 												<form action="/whou/member/mypage?load=5" method="post">
-													<div style="display:flex; flex-wrap:wrap;align-content:flex-start;">
+													<div
+														style="display: flex; flex-wrap: wrap; align-content: flex-start;">
 														<c:if test="${testTrue !=null}">
-															<c:forEach var="trueByTest" items="${testTrue}" varStatus="loop">
-																<div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px; width:230px;">
-																<c:if test="${loop.index eq 0}">적성</c:if>
-																<c:if test="${loop.index eq 1}">흥미</c:if>
-																<c:if test="${loop.index eq 2}">가치관</c:if>
-																	<select name="importance" style="min-width:50px; margin-left:25px;margin-right:15px;">
-																		<option value="3"<c:if test="${impt.get(loop.index)==3}">selected</c:if> >1</option>
-																		<option value="2"<c:if test="${impt.get(loop.index)==2}">selected</c:if> >2</option>
-																		<option value="1"<c:if test="${impt.get(loop.index)==1}">selected</c:if> >3</option>
+															<c:forEach var="trueByTest" items="${testTrue}"
+																varStatus="loop">
+																<div
+																	style="font-weight: 600; font-size: 18px; margin-left: 5px; margin-top: 20px; width: 230px;">
+																	<c:if test="${loop.index eq 0}">적성</c:if>
+																	<c:if test="${loop.index eq 1}">흥미</c:if>
+																	<c:if test="${loop.index eq 2}">가치관</c:if>
+																	<select name="importance"
+																		style="min-width: 50px; margin-left: 25px; margin-right: 15px;">
+																		<option value="3"
+																			<c:if test="${impt.get(loop.index)==3}">selected</c:if>>1</option>
+																		<option value="2"
+																			<c:if test="${impt.get(loop.index)==2}">selected</c:if>>2</option>
+																		<option value="1"
+																			<c:if test="${impt.get(loop.index)==1}">selected</c:if>>3</option>
 																	</select>
 																	<c:if test="${trueByTest}">응시함</c:if>
 																	<c:if test="${!trueByTest}">응시 안함</c:if>
@@ -605,37 +767,39 @@
 															</c:forEach>
 														</c:if>
 														<c:if test="${testTrue==null}">
-															<div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px; width:230px;">
-																적성
-																<select name="importance" style="min-width:50px; margin-left:25px;margin-right:15px;">
+															<div
+																style="font-weight: 600; font-size: 18px; margin-left: 5px; margin-top: 20px; width: 230px;">
+																적성 <select name="importance"
+																	style="min-width: 50px; margin-left: 25px; margin-right: 15px;">
 																	<option value="3">1</option>
 																	<option value="2">2</option>
 																	<option value="1">3</option>
-																</select>
-																응시 안함
+																</select> 응시 안함
 															</div>
-															<div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px; width:230px;">
-																흥미
-																<select name="importance" style="min-width:50px; margin-left:25px;margin-right:15px;">
+															<div
+																style="font-weight: 600; font-size: 18px; margin-left: 5px; margin-top: 20px; width: 230px;">
+																흥미 <select name="importance"
+																	style="min-width: 50px; margin-left: 25px; margin-right: 15px;">
 																	<option value="3">1</option>
 																	<option value="2">2</option>
 																	<option value="1">3</option>
-																</select>
-																응시 안함
+																</select> 응시 안함
 															</div>
-															<div style="font-weight:600;font-size: 18px;margin-left:5px;margin-top:20px; width:230px;">
-																가치관
-																<select name="importance" style="min-width:50px; margin-left:11px;margin-right:15px;">
+															<div
+																style="font-weight: 600; font-size: 18px; margin-left: 5px; margin-top: 20px; width: 230px;">
+																가치관 <select name="importance"
+																	style="min-width: 50px; margin-left: 11px; margin-right: 15px;">
 																	<option value="3">1</option>
 																	<option value="2">2</option>
 																	<option value="1">3</option>
-																</select>
-																응시 안함
+																</select> 응시 안함
 															</div>
 														</c:if>
-														<div class="button-wrap" style=" margin-top:20px; text-align:right; width:230px;">
-															<button type="submit" class="purple-btn" style="margin-left:10px; width: 80px; display: block; margin-left: auto;margin-right:20px;">적용</button>  
-														</div> 
+														<div class="button-wrap"
+															style="margin-top: 20px; text-align: right; width: 230px;">
+															<button type="submit" class="purple-btn"
+																style="margin-left: 10px; width: 80px; display: block; margin-left: auto; margin-right: 20px;">적용</button>
+														</div>
 													</div>
 												</form>
 											</div>
@@ -643,17 +807,21 @@
 									</div>
 									<c:if test="${!none}">
 										<div id="reco-li-container">
-											<p style="margin-bottom:20px;margin-left:10px;">직업 정보를 보고싶으면 본문의 내용을, 컨설팅을 받고 싶으면 직업 이름을 클릭해주세요</p>
+											<p style="margin-bottom: 20px; margin-left: 10px;">직업 정보를
+												보고싶으면 본문의 내용을, 컨설팅을 받고 싶으면 직업 이름을 클릭해주세요</p>
 											<c:forEach var="rere" items="${reres}">
-											<div class="reco-wrap">
-												<div class="reco-item">
-													<div >
-														${rere.job_nm}
-														<div onclick="alert('직업선택이 완료 되었습니다.');location='/whou/member/insertConsult?job_cd=${rere.job_cd}'" style="font-size:16px;color:#5a3fff">컨설팅받기</div>
+												<div class="reco-wrap">
+													<div class="reco-item">
+														<div>
+															${rere.job_nm}
+															<div
+																onclick="alert('직업선택이 완료 되었습니다.');location='/whou/member/insertConsult?job_cd=${rere.job_cd}'"
+																style="font-size: 16px; color: #5a3fff">컨설팅받기</div>
+														</div>
+														<div
+															onclick="location='/whou/job/info?job_cd=${rere.job_cd}'">${rere.descriptions}</div>
 													</div>
-													<div onclick="location='/whou/job/info?job_cd=${rere.job_cd}'">${rere.descriptions}</div>
 												</div>
-											</div> 
 											</c:forEach>
 										</div>
 										<div class="add-btn" id="add-reco" onclick="getRecoLi()">
@@ -664,58 +832,64 @@
 										<div class="empty-box">
 											<div>추천이 불가능합니다.</div>
 											<div>검사를 보거나, 자격증 및 학과 정보를 기입해주세요.</div>
-											<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>                               
+											<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
 										</div>
 									</c:if>
 								</div>
 							</div>
-		                     <!-- 컨설팅  -->
-                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-                            	<%-- <c:if test="${avilReinforce eq '' || avilReinforce==null || cunsultingNum == 0}">--%>
-                            	<c:if test="${cunsultingNum==0 }">
-	                            	<div class="empty-box">
-	                            		<div>컨설팅을 원한다면 직업적성검사를 받으세요.</div>
-	                            		<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
-	                            	</div>
-                            	</c:if>
-                            	<c:if test="${!(avilReinforce eq '') || avilReinforce!=null }">
-									<div style="padding:0px 10xp;">
+							<!-- 컨설팅  -->
+							<div class="tab-pane fade" id="nav-contact" role="tabpanel"
+								aria-labelledby="nav-contact-tab" tabindex="0">
+								<%-- <c:if test="${avilReinforce eq '' || avilReinforce==null || cunsultingNum == 0}">--%>
+								<c:if test="${cunsultingNum==0 }">
+									<div class="empty-box">
+										<div>컨설팅을 원한다면 직업적성검사를 받으세요.</div>
+										<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
+									</div>
+								</c:if>
+								<c:if test="${!(avilReinforce eq '') || avilReinforce!=null }">
+									<div style="padding: 0px 10xp;">
 										<c:if test="${cunsultingNum > 0}">
-											<div style="margin:0px 10xp;">
-												<div>${memId} 님의 컨설팅이 완료되었습니다.</div>
-				                                <h4>직업 이름 : ${jobDetailCunsuling.getBaseInfo().getJob_nm()}</h4>
-				                                <div>
-				                                	<p>직업설명: ${jobDetailCunsuling.getWorkList().get(0).getWork()}</p>
-				                                </div>
-			                                </div>
-			                                <div class="card">
-											  <div class="card-header">취업 방법</div>
-											  <div class="card-body">
-											  	<c:forEach var="getRecruit" items="${jobDetailCunsuling.getJobReady().getRecruit()}">
-											    <p class="card-text">${getRecruit.recruit}</p>
-			                                	</c:forEach>
-											  </div>
-											</div>
-			                                <div class="card">
-											  <div class="card-header">관련 교육</div>
-											  <div class="card-body">
-			                                	<c:forEach var="getCurriculum" items="${jobDetailCunsuling.getJobReady().getCurriculum()}">
-			                                		<p class="card-text">${getCurriculum.curriculum}</p>
-			                                	</c:forEach>
-											  </div>
-											  
-												
+											<div style="margin: 0px 10xp;">
+												<div>${memId}님의 컨설팅이 완료되었습니다.</div>
+												<h4>직업 이름 :
+													${jobDetailCunsuling.getBaseInfo().getJob_nm()}</h4>
+												<div>
+													<p>직업설명:
+														${jobDetailCunsuling.getWorkList().get(0).getWork()}</p>
+												</div>
 											</div>
 											<div class="card">
-										  
-					                                <div class="card-header">관련학과</div>
-					                                <div class="card-body">
-					                                	<c:forEach var="getDepartList" items="${jobDetailCunsuling.getDepartList()}">
+												<div class="card-header">취업 방법</div>
+												<div class="card-body">
+													<c:forEach var="getRecruit"
+														items="${jobDetailCunsuling.getJobReady().getRecruit()}">
+														<p class="card-text">${getRecruit.recruit}</p>
+													</c:forEach>
+												</div>
+											</div>
+											<div class="card">
+												<div class="card-header">관련 교육</div>
+												<div class="card-body">
+													<c:forEach var="getCurriculum"
+														items="${jobDetailCunsuling.getJobReady().getCurriculum()}">
+														<p class="card-text">${getCurriculum.curriculum}</p>
+													</c:forEach>
+												</div>
+
+
+											</div>
+											<div class="card">
+
+												<div class="card-header">관련학과</div>
+												<div class="card-body">
+													<c:forEach var="getDepartList"
+														items="${jobDetailCunsuling.getDepartList()}">
 					                                		${getDepartList.depart_name},
 					                                	</c:forEach>
-													  <div style="height:300px;">
-													  	<canvas id="chartCanvas"></canvas>
-													  	<script>
+													<div style="height: 300px;">
+														<canvas id="chartCanvas"></canvas>
+														<script>
 														  	function getSpecificColor(index) {
 														    	  const colors = [
 														    		  '#FF6D60', '#F7D060', '#F3E99F', '#98D8AA',
@@ -768,13 +942,12 @@
 																options: options3,
 															});
 													  	</script>
-													  </div>
-													    <div>
-												  	${jobDetailCunsuling.getMajorChart().get(0).getSource()}
-												  </div>
-												  </div>
-												  
-												  </div>
+													</div>
+													<div>
+														${jobDetailCunsuling.getMajorChart().get(0).getSource()}</div>
+												</div>
+
+											</div>
 											<!-- 
 			                                <div>
 			                                	종사자 전공 계열 분포 : 
@@ -787,90 +960,97 @@
 			                                	${jobDetailCunsuling.getMajorChart().get(0).getSource()}
 			                                </div>
 			                                 -->
-			                                 
-			                                 <c:if test="${jobDetailCunsuling.getJobReady().getCertificate().get(0) != null }">
-				                                 <div class="card">
+
+											<c:if
+												test="${jobDetailCunsuling.getJobReady().getCertificate().get(0) != null }">
+												<div class="card">
 													<div class="card-header">자격증</div>
 													<div class="card-body">
-														<c:forEach var="getCertificate" items="${jobDetailCunsuling.getJobReady().getCertificate()}">
-								                 			<p class="card-text">${getCertificate.certificate}</p>
-								                 		</c:forEach>
+														<c:forEach var="getCertificate"
+															items="${jobDetailCunsuling.getJobReady().getCertificate()}">
+															<p class="card-text">${getCertificate.certificate}</p>
+														</c:forEach>
 													</div>
 												</div>
 											</c:if>
-			                                
-			                                <div class="card">
-			                                	<div class="card-header">요구 능력</div>
-			                                	<div class="card-body">
-			                                		<c:forEach var="getAbilityList" items="${jobDetailCunsuling.getAbilityList()}">
+
+											<div class="card">
+												<div class="card-header">요구 능력</div>
+												<div class="card-body">
+													<c:forEach var="getAbilityList"
+														items="${jobDetailCunsuling.getAbilityList()}">
 			                                			${getAbilityList.ability_name}
 			                                		</c:forEach>
-			                                	</div>
-		                                	</div>
-		                                	<div>
-		                                	     <div class="card">
-				                                	<div class="card-header">직업적성검사 결과</div>
-				                                	<div class="card-body">
-				                                		<c:forEach var="i" begin="0" end="${fn:length(needAvil)}">
-														    <c:set var="currentNeedAvil" value="${needAvil[i]}" />
-														    <c:set var="currentAvilArrValue" value="${avilArrValue[i]}" />
-														    <c:set var="currentReinDTO" value="${reinDTO[i]}" />
-														    <c:if test="${currentNeedAvil != null && currentAvilArrValue < 55}">
+												</div>
+											</div>
+											<div>
+												<div class="card">
+													<div class="card-header">직업적성검사 결과</div>
+													<div class="card-body">
+														<c:forEach var="i" begin="0" end="${fn:length(needAvil)}">
+															<c:set var="currentNeedAvil" value="${needAvil[i]}" />
+															<c:set var="currentAvilArrValue"
+																value="${avilArrValue[i]}" />
+															<c:set var="currentReinDTO" value="${reinDTO[i]}" />
+															<c:if
+																test="${currentNeedAvil != null && currentAvilArrValue < 55}">
 														        ${currentNeedAvil}영역이 ${currentAvilArrValue}점으로 보완이 필요합니다.
 														        아래와 같은 방법을 통해 보완할 수 있습니다.
 																
 																<ol>
-															        <li>${currentReinDTO.getMethod01()}</li>
-															        <li>${currentReinDTO.getMethod02()}</li>
-															        <li>${currentReinDTO.getMethod03()}</li>
-															        <li>${currentReinDTO.getMethod04()}</li>
-															        <li>${currentReinDTO.getMethod05()}</li>
-															        <li>${currentReinDTO.getMethod06()}</li>
-															        <li>${currentReinDTO.getMethod07()}</li>
-															        <li>${currentReinDTO.getMethod08()}</li>
-															        <li>${currentReinDTO.getMethod09()}</li>
-															        <li>${currentReinDTO.getMethod10()}</li>
-														        </ol>
-														    </c:if>
-														
-														    <c:if test="${currentNeedAvil != null && currentAvilArrValue > 55 && currentAvilArrValue < 101}">
+																	<li>${currentReinDTO.getMethod01()}</li>
+																	<li>${currentReinDTO.getMethod02()}</li>
+																	<li>${currentReinDTO.getMethod03()}</li>
+																	<li>${currentReinDTO.getMethod04()}</li>
+																	<li>${currentReinDTO.getMethod05()}</li>
+																	<li>${currentReinDTO.getMethod06()}</li>
+																	<li>${currentReinDTO.getMethod07()}</li>
+																	<li>${currentReinDTO.getMethod08()}</li>
+																	<li>${currentReinDTO.getMethod09()}</li>
+																	<li>${currentReinDTO.getMethod10()}</li>
+																</ol>
+															</c:if>
+
+															<c:if
+																test="${currentNeedAvil != null && currentAvilArrValue > 55 && currentAvilArrValue < 101}">
 														        ${currentNeedAvil}영역이 ${currentAvilArrValue}점으로 준수합니다. 
 														        자격증과 기타 활동을 위주로 수행하시는 것을 추천드립니다.
 														    </c:if>
 														</c:forEach>
-				                                	</div>
-			                                	</div>
-			                                
-			                                </div>
-				                        </c:if>
-				                      
+													</div>
+												</div>
+
+											</div>
+										</c:if>
+
 									</div>
 								</c:if>
 							</div>
-                            
-						
-                          </div>
-                    	</div>
-                    	<div class="right-bottom-box">
-                    		<div class="notice-box">
-								<div>공지사항</div>
-								<div><a href="/whou/cs/noticeDetail?num=${notice.num}">${notice.subject}</a></div>
-							</div>
-                    		<ul class="test-list">
-                    			<li>안한 검사 이름</li>
-                    			<li>안한 검사 이름</li>
-                    			<li>안한 검사 이름</li>
-                    			<li>안한 검사 이름</li>
-                    		</ul>
-                    	</div>
-                    </div>
-                </div>    
-            </div>
-        </section>
-        <%@ include file="../footer.jsp" %> 
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
+
+
+						</div>
+					</div>
+					<div class="right-bottom-box">
+						<div class="notice-box">
+							<div>공지사항</div>
+							<%-- 								<div><a href="/whou/cs/noticeDetail?num=${notice.num}">${notice.subject}</a></div> --%>
+						</div>
+						<ul class="test-list">
+							<li>안한 검사 이름</li>
+							<li>안한 검사 이름</li>
+							<li>안한 검사 이름</li>
+							<li>안한 검사 이름</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<%@ include file="../footer.jsp"%>
+	<!-- Bootstrap core JS-->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
 
         
         let load = "${load}";
@@ -904,8 +1084,10 @@
        }
         
          // 적성 차트
-         	const aptitudeTop3 = ${aptitudeTop3};
-         	let aptitudeScoreArr = 0;
+      		const aptitudeTop3 = ${aptitudeTop3};
+         	let aptitudeScoreArr = [0];
+         	const backColor = aptitudeScoreArr.map(score => score >= aptitudeTop3 ? 'rgba(90, 63, 255, 0.8)' : 'rgba(255, 99, 132, 0.5)');
+         	const edgeColor = aptitudeScoreArr.map(score => score >= aptitudeTop3 ? 'rgba(57, 37, 189, 1)' : 'rgba(255, 99, 132, 1)');
          	let aptitudeNameArr = ["음악능력","수리·논리력","창의력","자연친화력","예술시각능력","공간지각력","대인관계능력","손재능","언어능력","자기성찰능력","신체·운동능력"];
         	if (typeof aptitudeScoreArr !== 'undefined' && aptitudeScoreArr !== null && aptitudeScoreArr !== '') {
         		aptitudeScoreArr = ${aptitudeScoreArr};
@@ -920,8 +1102,8 @@
                        datasets: [
                        {
                            data: aptitudeScoreArr,
-                           backgroundColor: aptitudeScoreArr.map(score => score >= aptitudeTop3 ? 'rgba(90, 63, 255, 0.8)' : 'rgba(255, 99, 132, 0.5)'),
-                           borderColor: aptitudeScoreArr.map(score => score >= aptitudeTop3 ? 'rgba(57, 37, 189, 1)' : 'rgba(255, 99, 132, 1)'),
+                           backgroundColor: backColor,
+                           borderColor: edgeColor,
                            borderWidth: 1,
                           
                        },              
@@ -1497,7 +1679,7 @@
 		});
 		
         </script>
-       <script>
+	<script>
 	       var modelCamera_x = 0;
 		   	var modelCamera_y = 1;
 		   	var modelCamera_z = 3;
@@ -1530,7 +1712,7 @@
             
           
         </script>
-        <script>
+	<script>
       	//회원정보 수정 스크립트
       	var check = /^[0-9]+$/;
       	var code2 = "";
@@ -1869,7 +2051,7 @@
    	
    		});
         </script>
-        <script>
+	<script>
         $(document).on("click", function(event) {
             var clickedElement = event.target;
             var jobSearchLi = $(".jobSearchLi");
@@ -1923,7 +2105,7 @@
         }
      
         </script>
-        <script>
+	<script>
 	        // 페이지 로드 시점에 실행되는 함수
 	        document.addEventListener('DOMContentLoaded', function() {
 	        	item = document.querySelector('.carousel-item:first-child')
@@ -1933,7 +2115,7 @@
 	          }
 	        });
         </script>
-    
-    </body>
-    
+
+</body>
+
 </html>

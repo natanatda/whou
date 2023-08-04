@@ -500,6 +500,8 @@ public class MemberController {
 	      Boolean scoreTrue2 = false;
 	      Boolean scoreTrue3 = false;
 	      Boolean scoreTrue4 = false;
+          double [] scoreArrDouble = new double[11] ;
+          double aptitudeTop3 = 0;
 	      if(scoreA != null) {         
 	         String [] scoreArr= scoreA.split("\\+");
 	         ObjectMapper objectMapper = new ObjectMapper();
@@ -510,11 +512,18 @@ public class MemberController {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
 	         }
-	         model.addAttribute("aptitudeScoreArr", scoresA);
+             for(int i=0; i<11; i++) {
+                 scoreArrDouble[i] = Double.parseDouble(scoreArr[i]);
+             }
+             Arrays.sort(scoreArrDouble);
+             aptitudeTop3 =scoreArrDouble[8];
+             
+             model.addAttribute("aptitudeScoreArr", scoresA);
 	         scoreTrue1 = true;
 	      }else {
 	         model.addAttribute("aptitudeScoreArr", 0);
 	      }
+	      model.addAttribute("aptitudeTop3", aptitudeTop3); // 세번째로 높은 값
 	      
 	      // 적성 차트 이름
 	      String scoreName = serviceAt.getAptitudeScoreName(userNum);
