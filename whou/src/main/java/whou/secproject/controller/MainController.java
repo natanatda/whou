@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import whou.secproject.component.AssistantDTO;
 import whou.secproject.component.SelectDTO;
+import whou.secproject.component.WhouModelDTO;
 import whou.secproject.service.AptitudeService;
 import whou.secproject.service.AssistantService;
 import whou.secproject.service.MainService;
@@ -54,6 +55,7 @@ public class MainController {
 		String email = (String)session.getAttribute("memId");
 		// ai model 가져오기
 		int userNum = 0;
+		int sortValue = 995; // 조건문 해당 안 되면 붓 들게 하기
 		if(email != null) {
 			model.addAttribute("model", whouModelCustomService.customModel(email));
 			userNum=serviceAt.userNumSelect(email);
@@ -68,13 +70,24 @@ public class MainController {
 		Integer cunsultingNum = 0;
         if(email!= null) {
         	cunsultingNum = memService.getCunsultingNum(userNum);
-        	if(cunsultingNum==null)cunsultingNum = 0;
+        	if(cunsultingNum != null) {
+        		// 모델 무기(?)
+            	sortValue = whouModelService.selectSortValue(cunsultingNum); // 컨설팅 직업번호로 검색
+    			if(sortValue == 0) { // 머리 위에 가방 대신 손에가방 들게 함
+    				sortValue = 994;
+    			}
+        	}
+        	else cunsultingNum = 0;
         }		
-        int brush = 995;
+        
 		String icon = service.selectIcon(cunsultingNum);
 		if(icon==null) icon="fa-solid fa-user";
+		
+		WhouModelDTO whouModel = whouModelService.selectModel(sortValue);
+		if(whouModel.getColor() == null) {whouModel.setColor("noColor");} // 무기에 색 없으면 noColor 대입  
+		
 		model.addAttribute("icon", icon);
-		model.addAttribute("brush", whouModelService.selectModel(brush)); // 붓 장착
+		model.addAttribute("modelItem", whouModel); // 붓 장착
 		
 		
 		// 추천 글 가져오기

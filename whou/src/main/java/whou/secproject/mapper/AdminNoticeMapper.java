@@ -12,6 +12,8 @@ public interface AdminNoticeMapper {
 	public List<AdminNoticeDTO> noticeList(@Param("start")int start, @Param("end")int end);
 	// 검색
 	public List<AdminNoticeDTO> noticeSearch(Map<String,Object> noticeSearch);
+	// 마이페이지 공지사항
+	public List<AdminNoticeDTO> myPageNotice();
 	// 상세보기
 	public AdminNoticeDTO noticeDetail(int num);
 	// 글작성

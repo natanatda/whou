@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+<mapper namespace="whou.secproject.mapper.JobSearchLogMapper">
+	
+	<select id="isSearchList" resultType="int">
+		select count(*) from search_list where keyword=#{keyWord}
+	</select>
+	
+	<select id="isCountJob" resultType="int">
+		select count(job) from search_log
+	</select>
+	
+	<select id="isCountKeyWord" resultType="int">
+		select count(keyword) from search_log
+	</select>
+	
+	
+	<select id="countJob" resultType="whou.secproject.component.SearchLogDTO">
+		select job, searchcount
+			FROM ( SELECT job, searchcount, ROW_NUMBER() OVER (ORDER BY searchcount DESC) AS job_rownum
+			    FROM ( SELECT job, COUNT(job) AS searchcount 
+			    	FROM search_log WHERE TO_CHAR(reg, 'YYYY-MM-DD') 
+		<if test="jobDateSelect != null">
+			BETWEEN #{startDate} AND #{endDate} GROUP BY job) ) 
+		</if>
+		<if test="jobDateSelect == null">
+			= #{nowDate} GROUP BY job) )
+		</if>
+		WHERE<![CDATA[ job_rownum <= 5 ]]>
+	</select>
+		
+	<select id="countKeyWord" resultType="whou.secproject.component.SearchLogDTO">
+		select keyword, searchcount
+		FROM ( SELECT keyword, searchcount, ROW_NUMBER() OVER (ORDER BY searchcount DESC) AS keyword_rownum
+			    FROM ( SELECT keyword, COUNT(keyword) AS searchcount 
+			    	FROM search_log WHERE TO_CHAR(reg, 'YYYY-MM-DD')
+		<if test="keyDateSelect != null">
+			BETWEEN #{keyStartDate} AND #{keyEndDate} GROUP BY keyword) )
+		</if>
+		
+		<if test="keyDateSelect == null">
+			= #{nowDate} GROUP BY keyword) )	
+		</if>
+		WHERE<![CDATA[ keyword_rownum <= 5 ]]>
+	</select>
+	
+	<insert id="insertSearchList">
+		insert into search_list values(search_list_seq.NEXTVAL,#{keyWord},1)
+	</insert>
+	
+	<update id="updateSearchList">
+		update search_list set search_count = search_count + 1 where keyword=#{keyWord}
+	</update>
+	
+	<insert id="insertSearchLog">
+		insert into search_log values(search_log_seq.NEXTVAL,#{email},#{job},#{keyword},sysdate)
+	</insert>
+</mapper>

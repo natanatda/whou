@@ -19,6 +19,11 @@
 		]]>
 	</select>
 	
+	<select id="myPageNotice" resultType="whou.secproject.component.AdminNoticeDTO">
+		select * from (select num,writer,subject,reg,content,readcount,rownum r from 
+		(select * from notice order by reg desc )) where r = 1 order by reg desc;
+	</select>
+	
 	<select id="noticeDetail" resultType="whou.secproject.component.AdminNoticeDTO">
 		<include refid="notice"/> where num=#{num}	
 	</select> 

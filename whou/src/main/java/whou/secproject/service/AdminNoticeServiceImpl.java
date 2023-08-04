@@ -26,6 +26,11 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 	}
 
 	@Override
+	public List<AdminNoticeDTO> myPageNotice() {
+		return adminNoticeMapper.myPageNotice();
+	}
+
+	@Override
 	public List<AdminNoticeDTO> noticeSearch(Map<String, Object> noticeSearch) {
 		return adminNoticeMapper.noticeSearch(noticeSearch); // 검색
 	}

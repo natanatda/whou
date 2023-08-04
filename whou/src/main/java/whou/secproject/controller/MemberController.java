@@ -57,6 +57,7 @@ import whou.secproject.component.UserInfoDTO;
 import whou.secproject.mapper.MemberMapper;
 import whou.secproject.repository.JobDicApiDAO;
 import whou.secproject.repository.RecommendDAO;
+import whou.secproject.service.AdminNoticeService;
 import whou.secproject.service.AptitudeService;
 import whou.secproject.service.MemberService;
 import whou.secproject.service.RecommendService;
@@ -86,6 +87,9 @@ public class MemberController {
 	
 	@Autowired
 	private JobDicApiDAO dao;
+
+	@Autowired
+	private AdminNoticeService adminNoticeService;
 	
 
 	// 북마크
@@ -936,7 +940,12 @@ public class MemberController {
         String tempArr[] = tempSave.split(",");
         List<String> tempList = new ArrayList<>(Arrays.asList(tempArr));
         model.addAttribute("percent",tempList);
-
+        
+        int noticeCount = adminNoticeService.noticeCount();
+        if(noticeCount > 0) {
+        	model.addAttribute("notice",adminNoticeService.myPageNotice());
+        }
+        
       return "/user/mypage";
    }
   	

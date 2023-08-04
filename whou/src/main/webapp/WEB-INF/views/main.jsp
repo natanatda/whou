@@ -316,30 +316,30 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <%-- 모델 --%>
         <script>
-        	var modelCamera_x = ${brush.camera};
+        	var modelCamera_x = ${modelItem.camera};
         	var modelCamera_y = 1;
         	var modelCamera_z = 3;
-		 	var modelPath = '/whou/resources/whouModel/${brush.path_folder}/${brush.path_gltf}';
+		 	var modelPath = '/whou/resources/whouModel/${modelItem.path_folder}/${modelItem.path_gltf}';
 		 	
 		 	var modelWidth = 350;
         	var modelHeight = 200;
 		 	
-		 	if('${brush.color}' != 'noColor'){
-		 		var modelColor = '${brush.color}';
+		 	if('${modelItem.color}' != 'noColor'){
+		 		var modelColor = ${modelItem.color};
 		 	}
-		 	var modelScale_x = ${brush.scale_x};
-		 	var modelScale_y = ${brush.scale_y};
-		 	var modelScale_z = ${brush.scale_z};
+		 	var modelScale_x = ${modelItem.scale_x};
+		 	var modelScale_y = ${modelItem.scale_y};
+		 	var modelScale_z = ${modelItem.scale_z};
 		 	
-		 	var modelPosition_x = ${brush.position_x};
-		 	var modelPosition_y = ${brush.position_y};
-		 	var modelPosition_z = ${brush.position_z};
+		 	var modelPosition_x = ${modelItem.position_x};
+		 	var modelPosition_y = ${modelItem.position_y};
+		 	var modelPosition_z = ${modelItem.position_z};
 		 	
-		 	var modelRotation_x = ${brush.rotation_x};
-		 	var modelRotation_y = ${brush.rotation_y};
-		 	var modelRotation_z = ${brush.rotation_z};
+		 	var modelRotation_x = ${modelItem.rotation_x};
+		 	var modelRotation_y = ${modelItem.rotation_y};
+		 	var modelRotation_z = ${modelItem.rotation_z};
 		 	
-		 	var modelMotion = ${brush.motion};
+		 	var modelMotion = ${modelItem.motion};
         	
         	if('${model.headColor}' === ''){
         		var headColor = '#F781F3';
