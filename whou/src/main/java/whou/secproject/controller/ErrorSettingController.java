@@ -31,10 +31,10 @@ public class ErrorSettingController {
 		return "error/errorGeneral";
 	}*/
 
-	@RequestMapping("/error")
-    public String handleError() {
-        return "error/errorGeneral"; // 일반 에러 페이지의 뷰 이름을 반환합니다.
-    }
+//	@RequestMapping("/error")
+//    public String handleError() {
+//        return "error/errorGeneral"; // 일반 에러 페이지의 뷰 이름을 반환합니다.
+//    }
 
     @RequestMapping("/error404")
     public String handle404Error() {

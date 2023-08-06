@@ -12,9 +12,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -491,14 +488,7 @@ public class MemberController {
 		if(memId != null) {
 			userNum=serviceAt.userNumSelect(memId);
 		}
-		
-		// user_info의 num을 이용하여 cunsulting_num(직업백과 job_cd) 컬럼 값 get
-        Integer cunsultingNum = 0;
-        if(memId != null) {
-        	cunsultingNum = service.getCunsultingNum(userNum);
-        	if(cunsultingNum==null)cunsultingNum = 0;
-        }
-        
+			
 		// ai model 가져오기
 		if(memId != null) {
 			model.addAttribute("model", serviceMo.customModel(memId));
@@ -510,9 +500,11 @@ public class MemberController {
 	      Boolean scoreTrue2 = false;
 	      Boolean scoreTrue3 = false;
 	      Boolean scoreTrue4 = false;
-	      ObjectMapper objectMapper = new ObjectMapper();
+          double [] scoreArrDouble = new double[11] ;
+          double aptitudeTop3 = 0;
 	      if(scoreA != null) {         
 	         String [] scoreArr= scoreA.split("\\+");
+	         ObjectMapper objectMapper = new ObjectMapper();
 	         String scoresA = null;
 	         try {
 	            scoresA = objectMapper.writeValueAsString(scoreArr);
@@ -520,19 +512,27 @@ public class MemberController {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
 	         }
-	         model.addAttribute("aptitudeScoreArr", scoresA);
+             for(int i=0; i<11; i++) {
+                 scoreArrDouble[i] = Double.parseDouble(scoreArr[i]);
+             }
+             Arrays.sort(scoreArrDouble);
+             aptitudeTop3 =scoreArrDouble[8];
+             
+             model.addAttribute("aptitudeScoreArr", scoresA);
 	         scoreTrue1 = true;
 	      }else {
 	         model.addAttribute("aptitudeScoreArr", 0);
 	      }
+	      model.addAttribute("aptitudeTop3", aptitudeTop3); // 세번째로 높은 값
 	      
 	      // 적성 차트 이름
 	      String scoreName = serviceAt.getAptitudeScoreName(userNum);
 	      if(scoreName != null) {
 	         String [] scoreNameArr= scoreName.split("\\+");
+	         ObjectMapper objectMapperName = new ObjectMapper();
 	         String scoresName = null;
 	         try {
-	            scoresName = objectMapper.writeValueAsString(scoreNameArr);
+	            scoresName = objectMapperName.writeValueAsString(scoreNameArr);
 	         } catch (JsonProcessingException e) {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
@@ -548,9 +548,10 @@ public class MemberController {
 	      String scoreI = serviceAt.getInterestScore(userNum);
 	      if(scoreI != null) {
 	         String [] scoreArrI= scoreI.split("\\+");
+	         ObjectMapper objectMapperI = new ObjectMapper();
 	         String scoresI = null;
 	         try {
-	            scoresI = objectMapper.writeValueAsString(scoreArrI);
+	            scoresI = objectMapperI.writeValueAsString(scoreArrI);
 	         } catch (JsonProcessingException e) {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
@@ -566,9 +567,10 @@ public class MemberController {
 	      String scoreV = serviceAt.getValuesScore(userNum);
 	      if(scoreV != null) {
 	         String [] scoreArrV= scoreV.split("\\,");
+	         ObjectMapper objectMapperV = new ObjectMapper();
 	         String scoresV = null;
 	         try {
-	            scoresV = objectMapper.writeValueAsString(scoreArrV);
+	            scoresV = objectMapperV.writeValueAsString(scoreArrV);
 	         } catch (JsonProcessingException e) {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
@@ -621,7 +623,12 @@ public class MemberController {
 	          }
         
         
-        
+        // user_info의 num을 이용하여 cunsulting_num(직업백과 job_cd) 컬럼 값 get
+        Integer cunsultingNum = 0;
+        if(memId != null) {
+        	cunsultingNum = service.getCunsultingNum(userNum);
+        	if(cunsultingNum==null)cunsultingNum = 0;
+        }
         
     	List<String> needAvil = new ArrayList<>();//직업의 능력
     	if(cunsultingNum>0) {
@@ -742,8 +749,6 @@ public class MemberController {
             List<Integer> importances = serviceRe.getImportances(userNum); // 중요도
         	boolean importanceTrue = importances!=null; // 중요도 여부
         	if(!importanceTrue) importances = new ArrayList<Integer>(Arrays.asList(1,1,1));
-        	AtomicReference<List<Integer>> importancesRef = new AtomicReference<>(importances);
-
         	model.addAttribute("impt", importances);
         	
             if(serviceRe.updateTrue(userNum)==1) {
@@ -766,25 +771,22 @@ public class MemberController {
             	if(serviceRe.tbTrue(userNum)==1) serviceRe.dropTable(userNum);
             	serviceRe.createJobPoint(userNum, majorC, certiC);
               
-            	AtomicInteger i = new AtomicInteger(0);
-            	scores.entrySet().forEach(entry -> {
-            	    List<String> jobNum = jobNumList.get(i.get());
-            	    if (jobNum != null) {
-            	        List<Double> normalize = redao.normalizePer(entry.getKey(), entry.getValue(), importancesRef.get().get(i.getAndIncrement())).subList(0, 3);
-            	        IntStream.range(0, normalize.size())
-            	                .forEach(j -> {
-            	                    double d = normalize.get(j);
-            	                    StringTokenizer st = new StringTokenizer(jobNum.get(j), ",");
-            	                    while (st.hasMoreTokens()) {
-            	                        int f = jList.indexOf(Integer.parseInt(st.nextToken()));
-            	                        jobScore.set(f, jobScore.get(f) * d);
-            	                        jobScorePoint[f][3 * (i.get() - 1) + j] = d;
-            	                    }
-            	                });
-            	    }
-            	});
-
-
+            	int i = 0;
+            	for (Map.Entry<ArrayList<Double>, Double> entry : scores.entrySet()) {
+            		List<String> jobNum = jobNumList.get(i); // 해당하는 직업의 jcd
+            		if(jobNum!=null) {
+            			List<Double> normalize= redao.normalizePer(entry.getKey(), entry.getValue(), importances.get(i++)).subList(0, 3); // 3개만 적용
+            			for(int j = 0 ; j < normalize.size(); j++) {
+            				double d = normalize.get(j); // 1.38~~
+            				StringTokenizer st = new StringTokenizer(jobNum.get(j),",");
+            				while(st.hasMoreTokens( )) {
+            					int f = jList.indexOf(Integer.parseInt(st.nextToken()));
+            					jobScore.set(f, jobScore.get(f)*d);
+            					jobScorePoint[f][3*(i-1)+j] = normalize.get(j);
+            				}
+            			}
+            		}
+            	}
               
             	List<Integer> valueList = null;
             	if(valueTrue) {
@@ -835,27 +837,11 @@ public class MemberController {
             		serviceRe.insertJobPoint(userNum,jList.get(idx),jobScore.get(idx), jobScorePoint[idx], majorC, certiC);
             	}
             }
-            SelectDTO recoSelDTO = new SelectDTO();
-            ArrayList<String> colsList = new ArrayList<String>(
-            		Arrays.asList("aptitude1","aptitude2","aptitude3",
-            				"interest1","interest2", "interest3"));
-    		recoSelDTO.setOrder(" order by total desc , job_cd asc");
-            List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(recoSelDTO, userNum, 1, 5,"*");
-            recoSelDTO.setOrder(" order by aptitude1 desc, total desc , job_cd asc");
-            List<HashMap<String, BigDecimal>> recoApti1= serviceRe.getJobPoint(recoSelDTO, userNum, 1, 5,"*");
-            recoSelDTO.setOrder(" order by aptitude2 desc, total desc , job_cd asc");
-            List<HashMap<String, BigDecimal>> recoApti2= serviceRe.getJobPoint(recoSelDTO, userNum, 1, 5,"*");
-            recoSelDTO.setOrder(" order by aptitude3 desc, total desc , job_cd asc");
-            List<HashMap<String, BigDecimal>> recoApti3= serviceRe.getJobPoint(recoSelDTO, userNum, 1, 5,"*");
-            recoSelDTO.setOrder(" order by interest1 desc, total desc , job_cd asc");
-            List<HashMap<String, BigDecimal>> recoInte1= serviceRe.getJobPoint(recoSelDTO, userNum, 1, 5,"*");
-            recoSelDTO.setOrder(" order by interest2 desc, total desc , job_cd asc");
-            List<HashMap<String, BigDecimal>> recoInte2= serviceRe.getJobPoint(recoSelDTO, userNum, 1, 5,"*");
-            recoSelDTO.setOrder(" order by interest3 desc, total desc , job_cd asc");
-            List<HashMap<String, BigDecimal>> recoInte3= serviceRe.getJobPoint(recoSelDTO, userNum, 1, 5,"*");
-            HashMap<String,String> top3NM = null;
-            if(!notTest) top3NM = serviceRe.getRecoList(new SelectDTO(), userNum);
-            if(top3NM==null) {
+            
+           List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(new SelectDTO(), userNum, 1, 5,"*");
+           HashMap<String,String> top3NM = null;
+           if(!notTest) top3NM = serviceRe.getRecoList(new SelectDTO(), userNum);
+           if(top3NM==null) {
         	   top3NM = new HashMap<String,String>();
         	   top3NM.put("APTITUDE_NAME1", "적성1");
         	   top3NM.put("APTITUDE_NAME2", "적성2");
@@ -931,9 +917,6 @@ public class MemberController {
            model.addAttribute("reres", reres);
         }
         model.addAttribute("none", none);
-        
-        
-        
         
         //회원정보수정
         MemberDTO mem = service.getUser(userNum);
@@ -1063,9 +1046,8 @@ public class MemberController {
 	        int majorC = 0 , certiC = 0;
 	        if(majors!=null) majorC = majors.size();
 	        if(certis!=null) certiC = certis.size();
-	        SelectDTO selDTO = new SelectDTO();
-			selDTO.setOrder(" order by total desc , job_cd asc");
-	        List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(selDTO, userNum, page+1, size,"*");
+	        
+	        List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(new SelectDTO(), userNum, page+1, size,"*");
 	        HashMap<String,String> top3NM = serviceRe.getRecoList(new SelectDTO(), userNum);
 	        if(top3NM==null) {
         	   top3NM = new HashMap<String,String>();
