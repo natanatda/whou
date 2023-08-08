@@ -119,6 +119,18 @@ public class RecommendServiceImpl implements RecommendService{
 		sqlSession.close();
 		return resultHandler.getSel();
 	}
+	@Override
+	public List<HashMap<String, BigDecimal>> getJobPointNM(SelectDTO selDTO, int user, int page, int count, String col){
+		SqlSession sqlSession = sqlSessionFactory.openSession(); // 1 5 2 5 
+		SelectResultHandler<BigDecimal> resultHandler = new SelectResultHandler<BigDecimal>();
+		selDTO.setFullClassName("Double");
+		selDTO.setCol(col);
+		selDTO.setTb_name("(SELECT t2.job_nm,t1.* FROM job_point_"+user+" t1 JOIN job_info t2 ON t1.job_cd = t2.job_cd)");
+		selDTO.setEtc("OFFSET "+(count*(page-1))+" ROWS FETCH FIRST "+ count + " ROWS ONLY");
+		sqlSession.select("whou.secproject.mapper.RecommendMapper.selectInfo", selDTO, resultHandler);
+		sqlSession.close();
+		return resultHandler.getSel();
+	}
 	
 	@Override
 	public HashMap<String, String> getRecoList(SelectDTO selDTO, int user) {

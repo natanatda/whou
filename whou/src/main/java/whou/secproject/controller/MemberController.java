@@ -12,6 +12,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -502,9 +505,9 @@ public class MemberController {
 	      Boolean scoreTrue4 = false;
           double [] scoreArrDouble = new double[11] ;
           double aptitudeTop3 = 0;
+          ObjectMapper objectMapper = new ObjectMapper();
 	      if(scoreA != null) {         
 	         String [] scoreArr= scoreA.split("\\+");
-	         ObjectMapper objectMapper = new ObjectMapper();
 	         String scoresA = null;
 	         try {
 	            scoresA = objectMapper.writeValueAsString(scoreArr);
@@ -749,6 +752,8 @@ public class MemberController {
             List<Integer> importances = serviceRe.getImportances(userNum); // 중요도
         	boolean importanceTrue = importances!=null; // 중요도 여부
         	if(!importanceTrue) importances = new ArrayList<Integer>(Arrays.asList(1,1,1));
+        	AtomicReference<List<Integer>> importancesRef = new AtomicReference<>(importances);
+
         	model.addAttribute("impt", importances);
         	
             if(serviceRe.updateTrue(userNum)==1) {
@@ -771,23 +776,24 @@ public class MemberController {
             	if(serviceRe.tbTrue(userNum)==1) serviceRe.dropTable(userNum);
             	serviceRe.createJobPoint(userNum, majorC, certiC);
               
-            	int i = 0;
-            	for (Map.Entry<ArrayList<Double>, Double> entry : scores.entrySet()) {
-            		List<String> jobNum = jobNumList.get(i); // 해당하는 직업의 jcd
-            		if(jobNum!=null) {
-            			List<Double> normalize= redao.normalizePer(entry.getKey(), entry.getValue(), importances.get(i++)).subList(0, 3); // 3개만 적용
-            			for(int j = 0 ; j < normalize.size(); j++) {
-            				double d = normalize.get(j); // 1.38~~
-            				StringTokenizer st = new StringTokenizer(jobNum.get(j),",");
-            				while(st.hasMoreTokens( )) {
-            					int f = jList.indexOf(Integer.parseInt(st.nextToken()));
-            					jobScore.set(f, jobScore.get(f)*d);
-            					jobScorePoint[f][3*(i-1)+j] = normalize.get(j);
-            				}
-            			}
-            		}
-            	}
-              
+            	AtomicInteger i = new AtomicInteger(0);
+            	scores.entrySet().forEach(entry -> {
+            	    List<String> jobNum = jobNumList.get(i.get());
+            	    if (jobNum != null) {
+            	        List<Double> normalize = redao.normalizePer(entry.getKey(), entry.getValue(), importancesRef.get().get(i.getAndIncrement())).subList(0, 3);
+            	        IntStream.range(0, normalize.size())
+            	                .forEach(j -> {
+            	                    double d = normalize.get(j);
+            	                    StringTokenizer st = new StringTokenizer(jobNum.get(j), ",");
+            	                    while (st.hasMoreTokens()) {
+            	                        int f = jList.indexOf(Integer.parseInt(st.nextToken()));
+            	                        jobScore.set(f, jobScore.get(f) * d);
+            	                        jobScorePoint[f][3 * (i.get() - 1) + j] = d;
+            	                    }
+            	                });
+            	    }
+            	});
+            	
             	List<Integer> valueList = null;
             	if(valueTrue) {
             		valueList = redao.valueTokenizer(redto.getValues_score(), ",");
@@ -838,10 +844,62 @@ public class MemberController {
             	}
             }
             
-           List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(new SelectDTO(), userNum, 1, 5,"*");
-           HashMap<String,String> top3NM = null;
-           if(!notTest) top3NM = serviceRe.getRecoList(new SelectDTO(), userNum);
-           if(top3NM==null) {
+            SelectDTO recoSelDTO = new SelectDTO();
+            
+    		recoSelDTO.setOrder(" order by total desc , job_cd asc");
+            List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(recoSelDTO, userNum, 1, 5,"*");
+            
+            ArrayList<List<HashMap<String,BigDecimal>>> recoAptis= null;
+            ArrayList<List<HashMap<String,BigDecimal>>> recoIntes= null;
+            ArrayList<List<HashMap<String,BigDecimal>>> recoValues= null;
+            
+    		recoSelDTO.setOrder(" order by total desc , job_cd asc");
+            double highValueOfTest = serviceRe.getJobPoint(recoSelDTO,userNum,1,1,"total").get(0).get("TOTAL").doubleValue();
+            model.addAttribute("highValueOfTest", highValueOfTest);
+            if(aptiTrue) {
+            	recoAptis= new ArrayList<List<HashMap<String,BigDecimal>>>(3);
+            	List<HashMap<String, BigDecimal>> recoCol = null;
+            	for(int colN = 1; colN <=3; colN++) {
+            		recoSelDTO.setOrder(" order by aptitude"+colN+" desc, total desc , job_cd asc");
+            		recoCol = serviceRe.getJobPointNM(recoSelDTO, userNum, 1, 8,"job_nm,total,aptitude"+colN);
+            		recoAptis.add(recoCol);
+            	}
+            }
+            
+            if(inteTrue) {
+            	recoIntes= new ArrayList<List<HashMap<String,BigDecimal>>>(3);
+            	List<HashMap<String, BigDecimal>> recoCol = null;
+            	for(int colN = 1; colN <=3; colN++) {
+            		recoSelDTO.setOrder(" order by interest"+colN+" desc, total desc , job_cd asc");
+            		recoCol = serviceRe.getJobPointNM(recoSelDTO, userNum, 1, 8,"job_nm,total,interest"+colN);
+            		recoIntes.add(recoCol);
+            	}
+            }
+            
+            if(valueTrue) {
+            	recoValues= new ArrayList<List<HashMap<String,BigDecimal>>>(4);
+            	List<HashMap<String, BigDecimal>> recoCol = null;
+            	for(int colN = 1; colN <=4; colN++) {
+            		recoSelDTO.setOrder(" order by value"+colN+" desc, total desc , job_cd asc");
+            		recoCol = serviceRe.getJobPointNM(recoSelDTO, userNum, 1, 8,"job_nm,total,value"+colN);
+            		recoValues.add(recoCol);
+            	}
+            }
+            
+            String jsonRecoAptis=null;
+            try {
+                jsonRecoAptis = objectMapper.writeValueAsString(recoAptis);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                // Handle the exception accordingly
+            }
+            model.addAttribute("recoAptis", jsonRecoAptis);
+            model.addAttribute("recoIntes", recoIntes);
+            model.addAttribute("recoValues", recoValues);
+            
+            HashMap<String,String> top3NM = null;
+            if(!notTest) top3NM = serviceRe.getRecoList(new SelectDTO(), userNum);
+            if(top3NM==null) {
         	   top3NM = new HashMap<String,String>();
         	   top3NM.put("APTITUDE_NAME1", "적성1");
         	   top3NM.put("APTITUDE_NAME2", "적성2");

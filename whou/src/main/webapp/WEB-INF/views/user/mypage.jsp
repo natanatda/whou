@@ -559,6 +559,17 @@
 										</div>
 										<div class="card">
 											<canvas id="aptitudeChart" style="display: none;"></canvas>
+											<canvas id="aptiChart1" style="display: none;"></canvas>
+											<canvas id="aptiChart2" style="display: none;"></canvas>
+											<canvas id="aptiChart3" style="display: none;"></canvas>
+											<%-- 
+											<canvas id="inteChart1" style="display: none;"></canvas>
+											<canvas id="inteChart2" style="display: none;"></canvas>
+											<canvas id="inteChart3" style="display: none;"></canvas>
+											<canvas id="valueChart1" style="display: none;"></canvas>
+											<canvas id="valueChart2" style="display: none;"></canvas>
+											<canvas id="valueChart3" style="display: none;"></canvas>
+											 --%>
 										</div>
 									</c:if>
 									<c:if test="${scoreTrue1}">
@@ -604,18 +615,26 @@
 															<div class="ic-rank">1</div>
 															<div>${aptitudeRank.aptitude_name1}</div>
 														</div>
-
+														<div class="chart-inner card">
+															<canvas id="aptiChart1"></canvas>
+														</div>
 													</div>
 													<div class="carousel-item">
 														<div class="carousel-title">
 															<div class="ic-rank">2</div>
 															<div>${aptitudeRank.aptitude_name1}</div>
 														</div>
+														<div class="chart-inner card">
+															<canvas id="aptiChart2"></canvas>
+														</div>
 													</div>
 													<div class="carousel-item">
 														<div class="carousel-title">
 															<div class="ic-rank">3</div>
 															<div>${aptitudeRank.aptitude_name1}</div>
+														</div>
+														<div class="chart-inner card">
+															<canvas id="aptiChart3"></canvas>
 														</div>
 													</div>
 												</div>
@@ -1677,6 +1696,66 @@
 		    var jobMadeCard = $(".jobMadeCard");
 		    jobMadeCard.hide();
 		});
+		
+		var recoAptis = ${recoAptis};
+		
+		recoApti1 = recoAptis[0];
+		const labels = Object.keys(recoApti1[0]); // ['TOTAL', 'APTITUDE1']
+	    const recoAptis_apti1 = recoApti1.map((item) => item[labels[0]]);
+	    const recoAptis_total1 = recoApti1.map((item) => item[labels[1]]);
+	    const recoAptis_job_nm1 = recoApti1.map((item) => item[labels[2]]);
+	    
+		recoApti2 = recoAptis[1];
+	    const recoAptis_apti2 = recoApti2.map((item) => item[labels[0]]);
+	    const recoAptis_total2 = recoApti2.map((item) => item[labels[1]]);
+	    const recoAptis_job_nm2 = recoApti2.map((item) => item[labels[2]]);
+	    
+		recoApti3 = recoAptis[2];
+	    const recoAptis_apti3 = recoApti3.map((item) => item[labels[0]]);
+	    const recoAptis_total3 = recoApti3.map((item) => item[labels[1]]);
+	    const recoAptis_job_nm3 = recoApti3.map((item) => item[labels[2]]);
+	    
+	    
+	    var maxPoint=${highValueOfTest};
+	    function createChart(chartId,j_nm_labels,dataTest,dataTotal){
+	        const ctx21_1 = document.getElementById(chartId);
+			var myChart21_1 = new Chart(ctx21_1, {
+				type: 'bar',
+				data: {
+					labels:j_nm_labels,
+					datasets: [
+				          {
+				            label: labels[0],
+				            data: dataTest,
+				            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Customize the color
+				            borderColor: 'rgba(75, 192, 192, 1)', // Customize the border color
+				            borderWidth: 1, // Border width of bars
+				          },
+				          {
+				            label: labels[1],
+				            data: dataTotal,
+				            backgroundColor: 'rgba(255, 99, 132, 0.2)', // Customize the color
+				            borderColor: 'rgba(255, 99, 132, 1)', // Customize the border color
+				            borderWidth: 1, // Border width of bars
+				          },
+				        ],
+					},
+				options: {
+			        responsive: true,
+					scale: {                                          
+						min: 0,
+						max: maxPoint,
+						ticks: {
+							stepSize:maxPoint/5
+						}
+					}
+				}
+			});
+	    	
+	    }
+	    createChart("aptiChart1",recoAptis_job_nm1,recoAptis_apti1,recoAptis_total1);
+	    createChart("aptiChart2",recoAptis_job_nm2,recoAptis_apti2,recoAptis_total2);
+	    createChart("aptiChart3",recoAptis_job_nm3,recoAptis_apti3,recoAptis_total3);
 		
         </script>
 	<script>

@@ -19,6 +19,7 @@ public interface RecommendService {
 	public void createJobPoint(int num, int major, int certi);
 	public void insertJobPoint(int num, int job_cd, double total, double [] detail, int major, int certi);
 	public List<HashMap<String, BigDecimal>> getJobPoint(SelectDTO selDTO,int user, int page, int count,String col);
+	public List<HashMap<String, BigDecimal>> getJobPointNM(SelectDTO selDTO,int user, int page, int count,String col);
 	public HashMap<String, String> getRecoList(SelectDTO selDTO, int user);
 	public void dropTable(int num);
 	public String getJname(SelectDTO selDTO, int job_cd);
