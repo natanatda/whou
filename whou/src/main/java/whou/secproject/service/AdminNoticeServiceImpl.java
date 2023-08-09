@@ -26,7 +26,7 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 	}
 
 	@Override
-	public List<AdminNoticeDTO> myPageNotice() {
+	public AdminNoticeDTO myPageNotice() {
 		return adminNoticeMapper.myPageNotice();
 	}
 

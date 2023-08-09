@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import whou.secproject.component.AdminNoticeDTO;
 import whou.secproject.component.SearchLogDTO;
@@ -28,9 +29,42 @@ public class AdminNoticeController {
 	@Autowired
 	private JobSearchLogService jobSearchLogService;
 	
+	// admin page
 	@RequestMapping("admin")
 	public String adminMain(HttpSession session, Model model, HttpServletRequest request) {
 		// 세션이 없으면 메인으로 이동
+		String email = (String)session.getAttribute("memId");
+		if(email == null) { return "redirect:/main";}
+		int lv = adminNoticeService.adminUserLvCheck(email); // 세션으로 회원 검사
+		
+		// 조회할 날짜
+		String start = request.getParameter("startDate"); 
+		String end = request.getParameter("endDate");
+		String jobDateSelect = request.getParameter("jobDateSelect");
+		String nowDate = LocalDate.now().toString(); // 오늘 날짜
+		int rownum = 5;
+		int jobCount = jobSearchLogService.isCountJob();
+		int keyCount = jobSearchLogService.isCountKeyWord();
+		
+		List<SearchLogDTO> searchJobList = null;
+		List<SearchLogDTO> searchKeyList = null;
+		if(jobCount > 0) {
+			searchJobList = jobSearchLogService.countJob(jobDateSelect,nowDate,start, end, rownum);
+		}
+		if(keyCount > 0) {
+			searchKeyList = jobSearchLogService.countKeyWord(jobDateSelect,nowDate,start, end, rownum);
+		}
+		model.addAttribute("searchJobList", searchJobList);
+		model.addAttribute("searchKeyList", searchKeyList);
+		model.addAttribute("lv",lv);	
+		model.addAttribute("now",nowDate);	
+		model.addAttribute("startDate",start);	
+		model.addAttribute("endDate",end);	
+		
+		return "/admin/admin";
+	}
+	@RequestMapping("searchDetail")
+	public String searchDetail(Model model, HttpServletRequest request, HttpSession session) {
 		String email = (String)session.getAttribute("memId");
 		if(email == null) { return "redirect:/main";}
 		
@@ -40,29 +74,35 @@ public class AdminNoticeController {
 		String jobDateSelect = request.getParameter("jobDateSelect");
 		String nowDate = LocalDate.now().toString(); // 오늘 날짜
 		
+		int lv = adminNoticeService.adminUserLvCheck(email); // 세션으로 회원 검사
+		String rownumString = request.getParameter("rownum");
+		if(rownumString == null) {rownumString = "5";}
+		int rownum = Integer.parseInt(rownumString);
+		
 		int jobCount = jobSearchLogService.isCountJob();
 		int keyCount = jobSearchLogService.isCountKeyWord();
 		
 		List<SearchLogDTO> searchJobList = null;
 		List<SearchLogDTO> searchKeyList = null;
+		
 		if(jobCount > 0) {
-			searchJobList = jobSearchLogService.countJob(jobDateSelect,nowDate,start, end);
+			searchJobList = jobSearchLogService.countJob(jobDateSelect,nowDate,start, end, rownum);
 		}
 		if(keyCount > 0) {
-			searchKeyList = jobSearchLogService.countKeyWord(jobDateSelect,nowDate,start, end);
+			searchKeyList = jobSearchLogService.countKeyWord(jobDateSelect,nowDate,start, end, rownum);
 		}
 		
-		int lv = adminNoticeService.adminUserLvCheck(email); // 세션으로 회원 검사
 		model.addAttribute("searchJobList", searchJobList);
 		model.addAttribute("searchKeyList", searchKeyList);
-		model.addAttribute("lv",lv);	
+		model.addAttribute("rownum",rownum);	
+		model.addAttribute("lv",lv);		
+		model.addAttribute("jobDateSelect",jobDateSelect);	
 		model.addAttribute("now",nowDate);	
 		model.addAttribute("startDate",start);	
 		model.addAttribute("endDate",end);	
 		
-		
-		return "/admin/admin";
-	}
+		return "/admin/searchDetail";
+	} // admin page end
 	
 	@RequestMapping("notice")
 	public String noticeList(Model model, HttpServletRequest request, HttpSession session) {

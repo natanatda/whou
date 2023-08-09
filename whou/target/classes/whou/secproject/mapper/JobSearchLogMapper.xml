@@ -28,7 +28,7 @@
 		<if test="jobDateSelect == null">
 			= #{nowDate} GROUP BY job) )
 		</if>
-		WHERE<![CDATA[ job_rownum <= 5 ]]>
+		WHERE<![CDATA[ job_rownum <= #{rownum} ]]>
 	</select>
 		
 	<select id="countKeyWord" resultType="whou.secproject.component.SearchLogDTO">
@@ -43,7 +43,7 @@
 		<if test="keyDateSelect == null">
 			= #{nowDate} GROUP BY keyword) )	
 		</if>
-		WHERE<![CDATA[ keyword_rownum <= 5 ]]>
+		WHERE<![CDATA[ keyword_rownum <= #{rownum} ]]>
 	</select>
 	
 	<insert id="insertSearchList">
