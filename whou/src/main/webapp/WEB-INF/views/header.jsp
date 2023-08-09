@@ -14,7 +14,7 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0">
-                        <a class="navbar-brand main-logo" href="/whou/main"><img src="/whou/resources/img/logo.svg"></a>
+                        <a class="navbar-brand main-logo" href="/whou/main"><img src="/whou/resources/img/logo.svg" /></a>
                         <li class="nav-item"><a class="nav-link" href="/whou/job/dic">직업정보</a></li>
                         <li class="nav-item"><a class="nav-link" href="/whou/aptitude/aptitudeMain">진로검사</a></li>
                         <li class="nav-item dropdown">
@@ -35,14 +35,10 @@
 				            <li><a class="dropdown-item" href="/whou/cs/faq">FAQ</a></li>
 				          </ul>
 				        </li>
-				        <li class="nav-item dropdown">
-				          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-				            채용정보
+				        <li class="nav-item">
+				          <a class="nav-link" href="/whou/job/calendar" >
+				            채용달력
 				          </a>
-				          <ul class="dropdown-menu">
-				            <li><a class="dropdown-item" href="/whou/job/calendar">채용달력</a></li>
-				            <li><a class="dropdown-item" href="">채용정보</a></li>
-				          </ul>
 				        </li>
                     </ul>
                 </div>

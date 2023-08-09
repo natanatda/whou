@@ -494,7 +494,7 @@ input[type="date"]{
 .desc-icon-box li:last-child{border-right: 0;}
 
 
-.desc-wrap .right-wrap{width:80%;margin-left: 20px;}
+.desc-wrap .right-wrap{width:80%;margin-left: 20px;margin-right: 330px;}
 .desc-wrap .right-wrap .nav-tabs{border:0;margin-left: 10px;}
 .desc-wrap .right-wrap .nav-tabs .nav-link{border:0;color:#111;}
 .desc-wrap .right-wrap .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{color:#111;background-color: #593fff2a;font-weight: 600;}
