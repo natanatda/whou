@@ -30,13 +30,13 @@ public class JobSearchLogServiceImpl implements JobSearchLogService{
 	}
 
 	@Override
-	public List<SearchLogDTO> countJob(String jobDateSelect, String nowDate, String start, String end) {
-		return jobSearchLogMapper.countJob(jobDateSelect, nowDate, start, end);
+	public List<SearchLogDTO> countJob(String jobDateSelect, String nowDate, String start, String end,int rownum) {
+		return jobSearchLogMapper.countJob(jobDateSelect, nowDate, start, end, rownum);
 	}
 
 	@Override
-	public List<SearchLogDTO> countKeyWord(String keyDateSelect, String nowDate, String start, String end) {
-		return jobSearchLogMapper.countKeyWord(keyDateSelect, nowDate, start, end);
+	public List<SearchLogDTO> countKeyWord(String keyDateSelect, String nowDate, String start, String end,int rownum) {
+		return jobSearchLogMapper.countKeyWord(keyDateSelect, nowDate, start, end, rownum);
 	}
 
 	@Override

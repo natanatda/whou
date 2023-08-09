@@ -100,10 +100,7 @@
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
-                     <!-- Divider -->
-           
-
-            <!-- Heading -->
+             <!-- Heading -->
             <div class="sidebar-heading">
                 Search
             </div>
@@ -111,7 +108,6 @@
                 <a class="nav-link" href="/whou/cs/searchDetail">
                     <span>SearchDetail</span></a>
             </li>
-            
         </ul>
         <!-- End of Sidebar -->
 
@@ -146,78 +142,17 @@
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">AdminPage</h1>
+                        <h1 class="h3 mb-0 text-gray-800">SearchDetail</h1>
                     </div>
 
                     <!-- Content Row -->
                     <div class="row">
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Notice</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            	<a href="/whou/cs/noticeWriteForm">작성</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                FAQ</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            	<a href="/whou/cs/faqWriteForm">작성</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                            	ChatBot
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            	<a href="/whou/assistant/aiList">수정 & 작성</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                        
+                        
                     </div>
-                    <h3>Search Top 5</h3>
                     <input type="button" value="오늘" class="dateSel btn" data-name="today" />
                     <input type="button" value="일주일" class="dateSel btn" data-name="week" />
                     <input type="button" value="한달" class="dateSel btn" data-name="month" />
-                    <form action="/whou/cs/admin" method="post">
+                    <form action="/whou/cs/searchDetail" method="post">
                     	<c:if test="${endDate == null}">
                     		<input type="date" name="startDate" value="${now}" id="startDate"/>
                     	</c:if>
@@ -228,18 +163,43 @@
                     		<input type="hidden" name="jobDateSelect" value="notNull"/>
                     		<input type="submit" class="btn" value="조회"/>
                     	</form><br/>
-                    <div style="width:300px; float:left;">
-					<c:if test="${searchJobList eq '[]'}"> <%-- list null처리 --%>
-						조회된 직업 데이터가 없습니다.
-					</c:if>
-                    	<canvas id="job-chart" width="300" height="300"></canvas>
+                    <div style="width:400px;">
+                    <div style="width:200px; float:left;">
+                    직업 <br/>
+                        <c:forEach var="jobList" items="${searchJobList}" varStatus="status">
+                        	${status.count}
+	                    	${jobList.job} 
+	                    	${jobList.searchcount}회
+	                    	<br/>
+                    	</c:forEach>
                     </div>
-                    <div style="width:300px; float:left;">
-					<c:if test="${searchKeyList eq '[]'}">
-						조회된 검색어 데이터가 없습니다.                    
-                    </c:if>                    	
-                    	<canvas id="key-chart" width="300" height="300"></canvas>
+                    <div style="width:200px; float:left;">
+                    검색어 <br/>
+                    	 <c:forEach var="keyList" items="${searchKeyList}" varStatus="status">
+                    	 	${status.count}
+	                    	${keyList.keyword} 
+	                    	${keyList.searchcount}회
+	                    	<br/>
+                    	</c:forEach>
                     </div>
+                    
+                    </div>
+                    
+					<div style="clear:left;">
+						<form action="/whou/cs/searchDetail" method="post">
+							<input type="hidden" name="rownum" value="${rownum + 5}"/>
+							<input type="hidden" name="jobDateSelect" value="${jobDateSelect }"/>
+							<c:if test="${endDate == null}">
+								<input type="hidden" name="startDate" value="${now}" />
+							</c:if>
+							<c:if test="${endDate != null }">
+								<input type="hidden" name="startDate" value="${startDate}" />
+							</c:if>
+							<input type="hidden" name="endDate" value="${endDate}" />
+							<input type="submit" class="btn" value="더보기"/>
+						</form>
+                   	</div>
+                    	
                 </div>
                 <!-- /.container-fluid -->
             </div>
@@ -288,48 +248,6 @@
 	    			break;
 	    	}
     	});
-    	
-    	// 직업 차트
-    	if ("${searchJobList}" != "[]"){
-	        new Chart(document.getElementById("job-chart"), {
-	            type: 'pie',
-	            data: {
-	              labels: ["${searchJobList[0].job}", "${searchJobList[1].job}", "${searchJobList[2].job}", "${searchJobList[3].job}", "${searchJobList[4].job}"],
-	              datasets: [{
-	                label: "검색횟수",
-	                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-	                data: ['${searchJobList[0].searchcount}','${searchJobList[1].searchcount}','${searchJobList[2].searchcount}','${searchJobList[3].searchcount}','${searchJobList[4].searchcount}']
-	              }]
-	            },
-	            options: {
-	              title: {
-	                display: true,
-	               	text: "직업 TOP5"
-	              }
-	            }
-	        });
-    	}
-
-    	// 키워드 차트
-    	if ("${searchKeyList}" != "[]"){
-        new Chart(document.getElementById("key-chart"), {
-            type: 'pie',
-            data: {
-              labels: ["${searchKeyList[0].keyword}", "${searchKeyList[1].keyword}", "${searchKeyList[2].keyword}", "${searchKeyList[3].keyword}", "${searchKeyList[4].keyword}"],
-              datasets: [{
-                label: "검색횟수",
-                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-                data: ['${searchKeyList[0].searchcount}','${searchKeyList[1].searchcount}','${searchKeyList[2].searchcount}','${searchKeyList[3].searchcount}','${searchKeyList[4].searchcount}']
-              }]
-            },
-            options: {
-              title: {
-                display: true,
-               	text: "검색어 TOP5"
-              }
-            }
-        });
-    	}
     </script>
 </body>
 

@@ -13,7 +13,7 @@ public interface AdminNoticeService {
 	// 검색
 	public List<AdminNoticeDTO> noticeSearch(Map<String,Object> noticeSearch);
 	// 마이페이지 공지사항
-	public List<AdminNoticeDTO> myPageNotice();
+	public AdminNoticeDTO myPageNotice();
 	// 상세보기
 	public AdminNoticeDTO noticeDetail(int num);
 	// 글작성
