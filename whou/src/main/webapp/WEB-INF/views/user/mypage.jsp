@@ -557,7 +557,7 @@
 											<div>검사결과가 없습니다.</div>
 											<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
 										</div>
-										<div class="card">
+										<div class="card" style="display: none;">
 											<canvas id="aptitudeChart" style="display: none;"></canvas>
 											<canvas id="aptiChart1" style="display: none;"></canvas>
 											<canvas id="aptiChart2" style="display: none;"></canvas>
@@ -663,7 +663,7 @@
 										</div>
 									</c:if>
 									<c:if test="${scoreTrue3}">
-										<div class="chart-inner">
+										<div class="chart-inner card">
 											<canvas id="valuesChart"></canvas>
 										</div>
 									</c:if>
@@ -768,7 +768,7 @@
 										</div>
 									</c:if>
 									<c:if test="${scoreTrue4}">
-										<div class="chart-inner">
+										<div class="chart-inner card">
 											<canvas id="abilityChart1"></canvas>
 											<canvas id="abilityChart2"></canvas>
 										</div>
