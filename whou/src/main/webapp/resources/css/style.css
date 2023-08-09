@@ -128,7 +128,7 @@ button.join-email i{position: absolute;left: 16px;top:24px;}
 .question-dt-info:last-child{right:68px;left:auto}
 .question-dt-info::before{
   position: absolute;
-  content:'';left: 50%; bottom:-34px;width: 10px; height: 32px; margin-left: -5px;
+  content:'';left: 50%; bottom:-28px;width: 10px; height: 32px; margin-left: -5px;
   background-image: url(/whou/resources/img/ic-arrow-down.svg);
   background-size: 10px 32px;
   background-position: 0 0;}

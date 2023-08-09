@@ -1779,37 +1779,37 @@
 		
 		recoApti1 = recoAptis[0];
 		const labels = Object.keys(recoApti1[0]); // ['TOTAL', 'APTITUDE1']
-	    const recoAptis_apti1 = recoApti1.map((item) => item[labels[0]]);
-	    const recoAptis_total1 = recoApti1.map((item) => item[labels[1]]);
+	    const recoAptis_apti1 = recoApti1.map((item) => item['APTITUDE1']*10);
+	    const recoAptis_total1 = recoApti1.map((item) => item['TOTAL']*10);
 	    const recoAptis_job_nm1 = recoApti1.map((item) => item[labels[2]]);
 	    
 		recoApti2 = recoAptis[1];
-	    const recoAptis_apti2 = recoApti2.map((item) => item[labels[0]]);
-	    const recoAptis_total2 = recoApti2.map((item) => item[labels[1]]);
+	    const recoAptis_apti2 = recoApti2.map((item) => item['APTITUDE2']*10);
+	    const recoAptis_total2 = recoApti2.map((item) => item[labels[1]]*10);
 	    const recoAptis_job_nm2 = recoApti2.map((item) => item[labels[2]]);
 	    
 		recoApti3 = recoAptis[2];
-	    const recoAptis_apti3 = recoApti3.map((item) => item[labels[0]]);
-	    const recoAptis_total3 = recoApti3.map((item) => item[labels[1]]);
+	    const recoAptis_apti3 = recoApti3.map((item) => item['APTITUDE3']*10);
+	    const recoAptis_total3 = recoApti3.map((item) => item[labels[1]]*10);
 	    const recoAptis_job_nm3 = recoApti3.map((item) => item[labels[2]]);
 	    
 	    recoInte1 = recoIntes[0];
 		const labels1 = Object.keys(recoInte1[0]); // ['TOTAL', 'APTITUDE1']
-	    const recoIntes_apti1 = recoInte1.map((item) => item[labels1[0]]);
-	    const recoIntes_total1 = recoInte1.map((item) => item[labels1[1]]);
+	    const recoIntes_apti1 = recoInte1.map((item) => item['INTEREST1']*10);
+	    const recoIntes_total1 = recoInte1.map((item) => item[labels1[1]]*10);
 	    const recoIntes_job_nm1 = recoInte1.map((item) => item[labels1[2]]);
 	    
 	    recoInte2 = recoIntes[1];
-	    const recoIntes_apti2 = recoInte2.map((item) => item[labels1[0]]);
-	    const recoIntes_total2 = recoInte2.map((item) => item[labels1[1]]);
+	    const recoIntes_apti2 = recoInte2.map((item) => item['INTEREST2']*10);
+	    const recoIntes_total2 = recoInte2.map((item) => item[labels1[1]]*10);
 	    const recoIntes_job_nm2 = recoInte2.map((item) => item[labels1[2]]);
 	    
 	    recoInte3 = recoIntes[2];
-	    const recoIntes_apti3 = recoInte3.map((item) => item[labels1[0]]);
-	    const recoIntes_total3 = recoInte3.map((item) => item[labels1[1]]);
+	    const recoIntes_apti3 = recoInte3.map((item) => item['INTEREST3']*10);
+	    const recoIntes_total3 = recoInte3.map((item) => item[labels1[1]]*10);
 	    const recoIntes_job_nm3 = recoInte3.map((item) => item[labels1[2]]);
 	    
-	    var maxPoint=${highValueOfTest};
+	    var maxPoint=${highValueOfTest}*10;
 	    function createChart(chartId,j_nm_labels,dataTest,dataTotal){
 
 	        const ctx21_1 = document.getElementById(chartId);
@@ -1838,9 +1838,9 @@
 			      
 					scale: {                                          
 						min: 0,
-						max: 10,
+						max: maxPoint,
 						ticks: {
-							stepSize:1
+							stepSize:maxPoint/5
 						}
 					}
 				}
