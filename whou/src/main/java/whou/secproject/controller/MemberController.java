@@ -854,7 +854,7 @@ public class MemberController {
             ArrayList<List<HashMap<String,BigDecimal>>> recoValues= null;
             
     		recoSelDTO.setOrder(" order by total desc , job_cd asc");
-            double highValueOfTest = serviceRe.getJobPoint(recoSelDTO,userNum,1,1,"total").get(0).get("TOTAL").doubleValue();
+            double highValueOfTest = serviceRe.getJobPoint(recoSelDTO,userNum,1,1,"total").get(0).get("TOTAL").intValue()+1;
             model.addAttribute("highValueOfTest", highValueOfTest);
             if(aptiTrue) {
             	recoAptis= new ArrayList<List<HashMap<String,BigDecimal>>>(3);
@@ -1104,8 +1104,9 @@ public class MemberController {
 	        int majorC = 0 , certiC = 0;
 	        if(majors!=null) majorC = majors.size();
 	        if(certis!=null) certiC = certis.size();
-	        
-	        List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(new SelectDTO(), userNum, page+1, size,"*");
+	        SelectDTO recoLiSel = new SelectDTO();
+	        recoLiSel.setOrder(" order by total desc , job_cd asc");
+	        List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(recoLiSel, userNum, page+1, size,"*");
 	        HashMap<String,String> top3NM = serviceRe.getRecoList(new SelectDTO(), userNum);
 	        if(top3NM==null) {
         	   top3NM = new HashMap<String,String>();
