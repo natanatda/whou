@@ -134,7 +134,7 @@
                 <div class="result-top">
                     <p class="result-top-txt">총 <span>${count}</span>건이 검색되었습니다</p>
                     <div class="result-top-right">
-                        <input type ="submit" class="square-btn" value="적용" onclick="getTabName('${clickTabId}')" >
+                        <input type ="submit" class="square-btn" value="적용" onclick="getTabName('${clickTabId}')"  style="visibility: hidden;">
                         <!-- 
 	                        <div><i class="fa-solid fa-table-cells fa-lg"></i></div>
 	                        <div><i class="fa-solid fa-bars fa-lg"></i></div>

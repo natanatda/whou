@@ -88,7 +88,7 @@
                             </div>
                             
                             <div class="col-lg-4 mb-5 mb-lg-0">
-                                <c:if test="${memId == null}">
+                                <c:if test="${recoLi3 == null}">
 	                                <div class="feature mb-3"><i class="fa-solid fa-leaf"></i></div>
                                 	<h2 class="h5">직업 컨설팅</h2>
                                 	 <p>
@@ -97,7 +97,7 @@
                                     직업 검사를 실행 시에는 저희가 정보를 전부 가져갈 수 있다는점 인지해주세요!
                                 	</p>
                                 </c:if>
-                                <c:if test="${memId != null}">
+                                <c:if test="${recoLi3 != null}">
                                 	<div class="feature mb-3"><i class="${recoLi3[1].talents[1].SORT_ICON}"></i></div>
                                 	<h2 class="h5">${recoLi3[1].J_NM}</h2>
                                 	<p>${recoLi3[1].work}</p>
@@ -106,7 +106,7 @@
                             </div>
                             
                             <div class="col-lg-4">
-                                <c:if test="${memId == null}">
+                                <c:if test="${recoLi3 == null}">
 	                                <div class="feature mb-3"><i class="bi bi-toggles2"></i></div>
                                 	<h2 class="h5">직업 관련정보</h2>
                                 	 <p>
@@ -115,7 +115,7 @@
                                     직업 검사를 실행 시에는 저희가 정보를 전부 가져갈 수 있다는점 인지해주세요!
                                 	</p>
                                 </c:if>
-                                <c:if test="${memId != null}">
+                                <c:if test="${recoLi3 != null}">
                                 	<div class="feature mb-3"><i class="${recoLi3[2].talents[1].SORT_ICON}"></i></div>
                                 	<h2 class="h5">${recoLi3[2].J_NM}</h2>
                                 	<p>${recoLi3[2].work}</p>

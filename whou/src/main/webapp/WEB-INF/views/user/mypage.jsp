@@ -557,7 +557,7 @@
 											<div>검사결과가 없습니다.</div>
 											<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
 										</div>
-										<div class="card">
+										<div class="card" style="display: none;">
 											<canvas id="aptitudeChart" style="display: none;"></canvas>
 											<canvas id="aptiChart1" style="display: none;"></canvas>
 											<canvas id="aptiChart2" style="display: none;"></canvas>
@@ -616,7 +616,7 @@
 															<div>${aptitudeRank.aptitude_name1}</div>
 														</div>
 														<div class="chart-inner card">
-															<canvas id="aptiChart1"></canvas>
+															<canvas id="aptiChart1" width="500px"></canvas>
 														</div>
 													</div>
 													<div class="carousel-item">
@@ -663,7 +663,7 @@
 										</div>
 									</c:if>
 									<c:if test="${scoreTrue3}">
-										<div class="chart-inner">
+										<div class="chart-inner card">
 											<canvas id="valuesChart"></canvas>
 										</div>
 									</c:if>
@@ -768,7 +768,7 @@
 										</div>
 									</c:if>
 									<c:if test="${scoreTrue4}">
-										<div class="chart-inner">
+										<div class="chart-inner card">
 											<canvas id="abilityChart1"></canvas>
 											<canvas id="abilityChart2"></canvas>
 										</div>
@@ -940,12 +940,18 @@
 									<div style="padding: 0px 10xp;">
 										<c:if test="${cunsultingNum > 0}">
 											<div style="margin: 0px 10xp;">
-												<div>${memId}님의 컨설팅이 완료되었습니다.</div>
-												<h4>직업 이름 :
-													${jobDetailCunsuling.getBaseInfo().getJob_nm()}</h4>
-												<div>
-													<p>직업설명:
-														${jobDetailCunsuling.getWorkList().get(0).getWork()}</p>
+												<h4>${memId}님의 컨설팅이 완료되었습니다.</h4>
+											</div>
+											<div class="card">
+												<div class="card-header">직업 이름</div>
+												<div class="card-body">
+													${jobDetailCunsuling.getBaseInfo().getJob_nm()}
+												</div>
+											</div>
+											<div class="card">
+												<div class="card-header">직업 설명</div>
+												<div class="card-body">
+													${jobDetailCunsuling.getWorkList().get(0).getWork()}
 												</div>
 											</div>
 											<div class="card">
@@ -1137,8 +1143,11 @@
 	</section>
 	<%@ include file="../footer.jsp"%>
 	<!-- Bootstrap core JS-->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
+
+        
         let load = "${load}";
         
         if(load === "2"){
@@ -1153,9 +1162,10 @@
         }else if(load === "4"){
         	 $(".nav-link").removeClass("active");
        	 	 $(".tab-pane").removeClass("active show");
-       	 
-         	 $("#nav-book-tab").addClass("active");
-         	 $("#nav-book").addClass("active show");
+       	 	 
+       	 	$("#nav-tabContent").hide();
+         	 $(".book-bg").show();
+         	 
        }else if(load === "5"){
         	$(".nav-link").removeClass("active");
        		$(".tab-pane").removeClass("active show");
@@ -1771,38 +1781,38 @@
 		const labels = Object.keys(recoApti1[0]); // ['TOTAL', 'APTITUDE1']
 	    const recoAptis_apti1 = recoApti1.map((item) => item['APTITUDE1']*10);
 	    const recoAptis_total1 = recoApti1.map((item) => item['TOTAL']*10);
-	    const recoAptis_job_nm1 = recoApti1.map((item) => item['JOB_NM']);
+	    const recoAptis_job_nm1 = recoApti1.map((item) => item[labels[2]]);
 	    
 		recoApti2 = recoAptis[1];
 	    const recoAptis_apti2 = recoApti2.map((item) => item['APTITUDE2']*10);
-	    const recoAptis_total2 = recoApti2.map((item) => item['TOTAL']*10);
+	    const recoAptis_total2 = recoApti2.map((item) => item[labels[1]]*10);
 	    const recoAptis_job_nm2 = recoApti2.map((item) => item[labels[2]]);
 	    
 		recoApti3 = recoAptis[2];
-	    const recoAptis_apti3 = recoApti3.map((item) => item["APTITUDE3"]*10);
+	    const recoAptis_apti3 = recoApti3.map((item) => item['APTITUDE3']*10);
 	    const recoAptis_total3 = recoApti3.map((item) => item[labels[1]]*10);
 	    const recoAptis_job_nm3 = recoApti3.map((item) => item[labels[2]]);
 	    
 	    recoInte1 = recoIntes[0];
 		const labels1 = Object.keys(recoInte1[0]); // ['TOTAL', 'APTITUDE1']
-	    const recoIntes_apti1 = recoInte1.map((item) => item["iNTEREST1"]*10);
-	    const recoIntes_total1 = recoInte1.map((item) => item[labels1[1]]);
+	    const recoIntes_apti1 = recoInte1.map((item) => item['INTEREST1']*10);
+	    const recoIntes_total1 = recoInte1.map((item) => item[labels1[1]]*10);
 	    const recoIntes_job_nm1 = recoInte1.map((item) => item[labels1[2]]);
 	    
 	    recoInte2 = recoIntes[1];
-	    const recoIntes_apti2 = recoInte2.map((item) => item[labels1[0]]);
-	    const recoIntes_total2 = recoInte2.map((item) => item[labels1[1]]);
+	    const recoIntes_apti2 = recoInte2.map((item) => item['INTEREST2']*10);
+	    const recoIntes_total2 = recoInte2.map((item) => item[labels1[1]]*10);
 	    const recoIntes_job_nm2 = recoInte2.map((item) => item[labels1[2]]);
 	    
 	    recoInte3 = recoIntes[2];
-	    const recoIntes_apti3 = recoInte3.map((item) => item[labels1[0]]);
-	    const recoIntes_total3 = recoInte3.map((item) => item[labels1[1]]);
+	    const recoIntes_apti3 = recoInte3.map((item) => item['INTEREST3']*10);
+	    const recoIntes_total3 = recoInte3.map((item) => item[labels1[1]]*10);
 	    const recoIntes_job_nm3 = recoInte3.map((item) => item[labels1[2]]);
 	    
 	    var maxPoint=${highValueOfTest}*10;
-	    
 	    function createChart(chartId,j_nm_labels,dataTest,dataTotal){
-	        ctx21_1 = document.getElementById(chartId);
+
+	        const ctx21_1 = document.getElementById(chartId);
 			var myChart21_1 = new Chart(ctx21_1, {
 				type: 'bar',
 				data: {
@@ -1825,7 +1835,7 @@
 				        ],
 					},
 				options: {
-			        responsive: true,
+			      
 					scale: {                                          
 						min: 0,
 						max: maxPoint,
@@ -1835,6 +1845,7 @@
 					}
 				}
 			});
+	    	
 	    }
 	    createChart("aptiChart1",recoAptis_job_nm1,recoAptis_apti1,recoAptis_total1);
 	    createChart("aptiChart2",recoAptis_job_nm2,recoAptis_apti2,recoAptis_total2);
@@ -1843,7 +1854,8 @@
 	    createChart("inteChart1",recoIntes_job_nm1,recoIntes_apti1,recoIntes_total1);
 	    createChart("inteChart2",recoIntes_job_nm2,recoIntes_apti2,recoIntes_total2);
 	    createChart("inteChart3",recoIntes_job_nm3,recoIntes_apti3,recoIntes_total3);
-	</script>
+		
+        </script>
 	<script>
 	       var modelCamera_x = 0;
 		   	var modelCamera_y = 1;
