@@ -595,7 +595,9 @@ input[type="date"]{
 .chart-ranks li .ic-rank.out{background:#fff;color:#111;}
 .chart-ranks li div:nth-child(2){font-weight:600}
 .test-result-top{display:flex;gap:20px;margin:20px 0;}
-#item-aptitude .card{padding:20px;border:0;border-radius:14px;}
+
+#carouselExampleControls .chart-inner{width:100%;}
+:is(#item-interest, #item-aptitude) .card{padding:20px;border:0;border-radius:14px;}
 .carousel-title{display:flex;gap:20px;}
 .carousel-title div:last-child{font-weight:600}
 
