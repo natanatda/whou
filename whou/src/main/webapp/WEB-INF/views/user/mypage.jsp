@@ -616,7 +616,7 @@
 															<div>${aptitudeRank.aptitude_name1}</div>
 														</div>
 														<div class="chart-inner card">
-															<canvas id="aptiChart1" width="500px"></canvas>
+															<canvas id="aptiChart1"></canvas>
 														</div>
 													</div>
 													<div class="carousel-item">
@@ -1137,11 +1137,8 @@
 	</section>
 	<%@ include file="../footer.jsp"%>
 	<!-- Bootstrap core JS-->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
-
-        
         let load = "${load}";
         
         if(load === "2"){
@@ -1772,23 +1769,23 @@
 		
 		recoApti1 = recoAptis[0];
 		const labels = Object.keys(recoApti1[0]); // ['TOTAL', 'APTITUDE1']
-	    const recoAptis_apti1 = recoApti1.map((item) => item[labels[0]]);
-	    const recoAptis_total1 = recoApti1.map((item) => item[labels[1]]);
-	    const recoAptis_job_nm1 = recoApti1.map((item) => item[labels[2]]);
+	    const recoAptis_apti1 = recoApti1.map((item) => item['APTITUDE1']*10);
+	    const recoAptis_total1 = recoApti1.map((item) => item['TOTAL']*10);
+	    const recoAptis_job_nm1 = recoApti1.map((item) => item['JOB_NM']);
 	    
 		recoApti2 = recoAptis[1];
-	    const recoAptis_apti2 = recoApti2.map((item) => item[labels[0]]);
-	    const recoAptis_total2 = recoApti2.map((item) => item[labels[1]]);
+	    const recoAptis_apti2 = recoApti2.map((item) => item['APTITUDE2']*10);
+	    const recoAptis_total2 = recoApti2.map((item) => item['TOTAL']*10);
 	    const recoAptis_job_nm2 = recoApti2.map((item) => item[labels[2]]);
 	    
 		recoApti3 = recoAptis[2];
-	    const recoAptis_apti3 = recoApti3.map((item) => item[labels[0]]);
-	    const recoAptis_total3 = recoApti3.map((item) => item[labels[1]]);
+	    const recoAptis_apti3 = recoApti3.map((item) => item["APTITUDE3"]*10);
+	    const recoAptis_total3 = recoApti3.map((item) => item[labels[1]]*10);
 	    const recoAptis_job_nm3 = recoApti3.map((item) => item[labels[2]]);
 	    
 	    recoInte1 = recoIntes[0];
 		const labels1 = Object.keys(recoInte1[0]); // ['TOTAL', 'APTITUDE1']
-	    const recoIntes_apti1 = recoInte1.map((item) => item[labels1[0]]);
+	    const recoIntes_apti1 = recoInte1.map((item) => item["iNTEREST1"]*10);
 	    const recoIntes_total1 = recoInte1.map((item) => item[labels1[1]]);
 	    const recoIntes_job_nm1 = recoInte1.map((item) => item[labels1[2]]);
 	    
@@ -1802,10 +1799,10 @@
 	    const recoIntes_total3 = recoInte3.map((item) => item[labels1[1]]);
 	    const recoIntes_job_nm3 = recoInte3.map((item) => item[labels1[2]]);
 	    
-	    var maxPoint=${highValueOfTest};
+	    var maxPoint=${highValueOfTest}*10;
+	    
 	    function createChart(chartId,j_nm_labels,dataTest,dataTotal){
-
-	        const ctx21_1 = document.getElementById(chartId);
+	        ctx21_1 = document.getElementById(chartId);
 			var myChart21_1 = new Chart(ctx21_1, {
 				type: 'bar',
 				data: {
@@ -1828,17 +1825,16 @@
 				        ],
 					},
 				options: {
-			      
+			        responsive: true,
 					scale: {                                          
 						min: 0,
-						max: 10,
+						max: maxPoint,
 						ticks: {
-							stepSize:1
+							stepSize:maxPoint/5
 						}
 					}
 				}
 			});
-	    	
 	    }
 	    createChart("aptiChart1",recoAptis_job_nm1,recoAptis_apti1,recoAptis_total1);
 	    createChart("aptiChart2",recoAptis_job_nm2,recoAptis_apti2,recoAptis_total2);
@@ -1847,8 +1843,7 @@
 	    createChart("inteChart1",recoIntes_job_nm1,recoIntes_apti1,recoIntes_total1);
 	    createChart("inteChart2",recoIntes_job_nm2,recoIntes_apti2,recoIntes_total2);
 	    createChart("inteChart3",recoIntes_job_nm3,recoIntes_apti3,recoIntes_total3);
-		
-        </script>
+	</script>
 	<script>
 	       var modelCamera_x = 0;
 		   	var modelCamera_y = 1;
