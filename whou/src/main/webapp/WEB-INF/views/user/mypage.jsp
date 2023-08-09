@@ -608,7 +608,7 @@
 										</div>
 										<div class="card">
 											<div id="carouselExampleControls"
-												class="carousel slide carousel-dark" data-bs-ride="carousel">
+												class="carousel slide carousel-dark">
 												<div class="carousel-inner">
 													<div class="carousel-item active">
 														<div class="carousel-title">
@@ -616,7 +616,7 @@
 															<div>${aptitudeRank.aptitude_name1}</div>
 														</div>
 														<div class="chart-inner card">
-															<canvas id="aptiChart1"></canvas>
+															<canvas id="aptiChart1" width="500px"></canvas>
 														</div>
 													</div>
 													<div class="carousel-item">
@@ -677,15 +677,85 @@
 										</div>
 									</c:if>
 									<c:if test="${scoreTrue2}">
-										<div class="chart-inner">
-											<canvas id="interestChart"></canvas>
+										<div class="test-result-top">
+											<div class="chart-inner card">
+												<canvas id="interestChart"></canvas>
+											</div>
+											<ul class="chart-ranks card">
+												<li>흥미 TOP 5</li>
+												<li>
+													<div class="ic-rank">1</div>
+													<div>${aptitudeRank.interest_name1}</div> <span>상위
+														몇%</span>
+												</li>
+												<li>
+													<div class="ic-rank">2</div>
+													<div>${aptitudeRank.interest_name2}</div> <span>상위
+														몇%</span>
+												</li>
+												<li>
+													<div class="ic-rank">3</div>
+													<div>${aptitudeRank.interest_name3}</div> <span>상위
+														몇%</span>
+												</li>
+												<li>
+													<div class="ic-rank out">4</div>
+													<div>${aptitudeRank.interest_name3}</div> <span>상위
+														몇%</span>
+												</li>
+												<li>
+													<div class="ic-rank out">5</div>
+													<div>${aptitudeRank.interest_name3}</div> <span>상위
+														몇%</span>
+												</li>
+											</ul>
 										</div>
-										<ul class="chart-ranks">
-											<li>흥미 TOP3</li>
-											<li>▶ ${aptitudeRank.interest_name1}</li>
-											<li>▶ ${aptitudeRank.interest_name2}</li>
-											<li>▶ ${aptitudeRank.interest_name3}</li>
-										</ul>
+										<div class="card">
+											<div id="carouselExampleControls"
+												class="carousel slide carousel-dark">
+												<div class="carousel-inner">
+													<div class="carousel-item active">
+														<div class="carousel-title">
+															<div class="ic-rank">1</div>
+															<div>${aptitudeRank.interest_name1}</div>
+														</div>
+														<div class="chart-inner card">
+															<canvas id="inteChart1" width="500px"></canvas>
+														</div>
+													</div>
+													<div class="carousel-item">
+														<div class="carousel-title">
+															<div class="ic-rank">2</div>
+															<div>${aptitudeRank.interest_name2}</div>
+														</div>
+														<div class="chart-inner card">
+															<canvas id="inteChart2"></canvas>
+														</div>
+													</div>
+													<div class="carousel-item">
+														<div class="carousel-title">
+															<div class="ic-rank">3</div>
+															<div>${aptitudeRank.interest_name3}</div>
+														</div>
+														<div class="chart-inner card">
+															<canvas id="inteChart3"></canvas>
+														</div>
+													</div>
+												</div>
+												<button class="carousel-control-prev" type="button"
+													data-bs-target="#carouselExampleControls"
+													data-bs-slide="prev">
+													<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+													<span class="visually-hidden">Previous</span>
+												</button>
+												<button class="carousel-control-next" type="button"
+													data-bs-target="#carouselExampleControls"
+													data-bs-slide="next">
+													<span class="carousel-control-next-icon" aria-hidden="true"></span>
+													<span class="visually-hidden">Next</span>
+												</button>
+											</div>
+										</div>
 									</c:if>
 								</div>
 								<div id="item-ability" class="chart-wrap">
@@ -1055,11 +1125,11 @@
 							<%-- 								<div><a href="/whou/cs/noticeDetail?num=${notice.num}">${notice.subject}</a></div> --%>
 						</div>
 						<ul class="test-list">
-							<li>안한 검사 이름</li>
-							<li>안한 검사 이름</li>
-							<li>안한 검사 이름</li>
-							<li>안한 검사 이름</li>
-						</ul>
+	                     <c:if test="${!scoreTrue1}"><li onclick="location='/whou/aptitude/intro?load=1&qnum=21'">적성검사 하러가기</li></c:if>
+	                     <c:if test="${!scoreTrue2}"><li onclick="location='/whou/aptitude/intro?load=1&qnum=31'">흥미검사 하러가기</li></c:if>
+	                     <c:if test="${!scoreTrue3}"><li onclick="location='/whou/aptitude/intro?load=1&qnum=25'">가치관검사 하러가기</li></c:if>
+	                     <c:if test="${!scoreTrue4}"><li onclick="location='/whou/aptitude/intro?load=1&qnum=27'">역량검사 하러가기</li></c:if>
+	                  </ul>
 					</div>
 				</div>
 			</div>
@@ -1148,7 +1218,7 @@
              
             const ctx31 = document.getElementById('interestChart');
               var myChart31 = new Chart(ctx31, {
-                   type: 'radar',
+                   type: 'bar',
                    data: {
                        labels:['자연과학','AI·소프트웨어','공학','법률·행정','복지','교육','예술·미디어','스포츠','마케팅','금융·경영','여가·관광','보건의료', '농생명', '환경', '제조', '물류·운송·유통', '설계·건축·토목'],
                        datasets: [
@@ -1181,7 +1251,7 @@
           
             const ctx25 = document.getElementById('valuesChart');
               var myChart25 = new Chart(ctx25, {
-                   type: 'radar',
+                   type: 'bar',
                    data: {
                        labels:['안정성', '보수', '일과 삶의 균형', '즐거움','소속감','자기계발', '도전성', '영향력', '사회적 기여','성취','사회적 인정','자율성'],
                        datasets: [
@@ -1215,7 +1285,7 @@
             
             const ctx271 = document.getElementById('abilityChart1');
               var myChart271 = new Chart(ctx271, {
-                   type: 'radar',
+                   type: 'bar',
                    data: {
                        labels:['자기이해', '직업이해', '진로탐색', '진로계획'],
                        datasets: [
@@ -1244,7 +1314,7 @@
             
               const ctx272 = document.getElementById('abilityChart2');
                 var myChart272 = new Chart(ctx272, {
-                     type: 'radar',
+                     type: 'bar',
                      data: {
                          labels:['낙관성', '지속성', '호기심', '유연성', '도전성', '의사소통'],
                          datasets: [
@@ -1519,13 +1589,13 @@
 
             // 선택된 값에 따라 해당 아이템을 보여줌
             if (selectedValue === '21') {
-                $('#item-aptitude').css("display","flex");
+                $('#item-aptitude').css("display","block");
             } else if (selectedValue === '31') {
-                $('#item-interest').css("display","flex");
+                $('#item-interest').css("display","block");
             } else if (selectedValue === '25') {
-                $('#item-values').css("display","flex");
+                $('#item-values').css("display","block");
             }else if (selectedValue === '27') {
-                $('#item-ability').css("display","flex");
+                $('#item-ability').css("display","block");
             }
         });
         
@@ -1698,6 +1768,7 @@
 		});
 		
 		var recoAptis = ${recoAptis};
+		var recoIntes = ${recoIntes};
 		
 		recoApti1 = recoAptis[0];
 		const labels = Object.keys(recoApti1[0]); // ['TOTAL', 'APTITUDE1']
@@ -1715,9 +1786,25 @@
 	    const recoAptis_total3 = recoApti3.map((item) => item[labels[1]]);
 	    const recoAptis_job_nm3 = recoApti3.map((item) => item[labels[2]]);
 	    
+	    recoInte1 = recoIntes[0];
+		const labels1 = Object.keys(recoInte1[0]); // ['TOTAL', 'APTITUDE1']
+	    const recoIntes_apti1 = recoInte1.map((item) => item[labels1[0]]);
+	    const recoIntes_total1 = recoInte1.map((item) => item[labels1[1]]);
+	    const recoIntes_job_nm1 = recoInte1.map((item) => item[labels1[2]]);
+	    
+	    recoInte2 = recoIntes[1];
+	    const recoIntes_apti2 = recoInte2.map((item) => item[labels1[0]]);
+	    const recoIntes_total2 = recoInte2.map((item) => item[labels1[1]]);
+	    const recoIntes_job_nm2 = recoInte2.map((item) => item[labels1[2]]);
+	    
+	    recoInte3 = recoIntes[2];
+	    const recoIntes_apti3 = recoInte3.map((item) => item[labels1[0]]);
+	    const recoIntes_total3 = recoInte3.map((item) => item[labels1[1]]);
+	    const recoIntes_job_nm3 = recoInte3.map((item) => item[labels1[2]]);
 	    
 	    var maxPoint=${highValueOfTest};
 	    function createChart(chartId,j_nm_labels,dataTest,dataTotal){
+
 	        const ctx21_1 = document.getElementById(chartId);
 			var myChart21_1 = new Chart(ctx21_1, {
 				type: 'bar',
@@ -1741,12 +1828,12 @@
 				        ],
 					},
 				options: {
-			        responsive: true,
+			      
 					scale: {                                          
 						min: 0,
-						max: maxPoint,
+						max: 10,
 						ticks: {
-							stepSize:maxPoint/5
+							stepSize:1
 						}
 					}
 				}
@@ -1756,6 +1843,10 @@
 	    createChart("aptiChart1",recoAptis_job_nm1,recoAptis_apti1,recoAptis_total1);
 	    createChart("aptiChart2",recoAptis_job_nm2,recoAptis_apti2,recoAptis_total2);
 	    createChart("aptiChart3",recoAptis_job_nm3,recoAptis_apti3,recoAptis_total3);
+	    
+	    createChart("inteChart1",recoIntes_job_nm1,recoIntes_apti1,recoIntes_total1);
+	    createChart("inteChart2",recoIntes_job_nm2,recoIntes_apti2,recoIntes_total2);
+	    createChart("inteChart3",recoIntes_job_nm3,recoIntes_apti3,recoIntes_total3);
 		
         </script>
 	<script>

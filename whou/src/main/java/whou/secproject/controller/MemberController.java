@@ -886,16 +886,18 @@ public class MemberController {
             	}
             }
             
-            String jsonRecoAptis=null;
+            String jsonRecoAptis=null, jsonRecoIntes=null, jsonRecoValues=null;
             try {
                 jsonRecoAptis = objectMapper.writeValueAsString(recoAptis);
+                jsonRecoIntes = objectMapper.writeValueAsString(recoIntes);
+                jsonRecoValues = objectMapper.writeValueAsString(recoValues);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
                 // Handle the exception accordingly
             }
             model.addAttribute("recoAptis", jsonRecoAptis);
-            model.addAttribute("recoIntes", recoIntes);
-            model.addAttribute("recoValues", recoValues);
+            model.addAttribute("recoIntes", jsonRecoIntes);
+            model.addAttribute("recoValues", jsonRecoValues);
             
             HashMap<String,String> top3NM = null;
             if(!notTest) top3NM = serviceRe.getRecoList(new SelectDTO(), userNum);
@@ -1104,8 +1106,10 @@ public class MemberController {
 	        int majorC = 0 , certiC = 0;
 	        if(majors!=null) majorC = majors.size();
 	        if(certis!=null) certiC = certis.size();
-	        
-	        List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(new SelectDTO(), userNum, page+1, size,"*");
+	        SelectDTO recoSelDTO = new SelectDTO();
+    		recoSelDTO.setOrder(" order by total desc , job_cd asc");
+
+	        List<HashMap<String, BigDecimal>> recoLi= serviceRe.getJobPoint(recoSelDTO, userNum, page+1, size,"*");
 	        HashMap<String,String> top3NM = serviceRe.getRecoList(new SelectDTO(), userNum);
 	        if(top3NM==null) {
         	   top3NM = new HashMap<String,String>();
