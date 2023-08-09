@@ -940,12 +940,18 @@
 									<div style="padding: 0px 10xp;">
 										<c:if test="${cunsultingNum > 0}">
 											<div style="margin: 0px 10xp;">
-												<div>${memId}님의 컨설팅이 완료되었습니다.</div>
-												<h4>직업 이름 :
-													${jobDetailCunsuling.getBaseInfo().getJob_nm()}</h4>
-												<div>
-													<p>직업설명:
-														${jobDetailCunsuling.getWorkList().get(0).getWork()}</p>
+												<h4>${memId}님의 컨설팅이 완료되었습니다.</h4>
+											</div>
+											<div class="card">
+												<div class="card-header">직업 이름</div>
+												<div class="card-body">
+													${jobDetailCunsuling.getBaseInfo().getJob_nm()}
+												</div>
+											</div>
+											<div class="card">
+												<div class="card-header">직업 설명</div>
+												<div class="card-body">
+													${jobDetailCunsuling.getWorkList().get(0).getWork()}
 												</div>
 											</div>
 											<div class="card">
@@ -1156,9 +1162,10 @@
         }else if(load === "4"){
         	 $(".nav-link").removeClass("active");
        	 	 $(".tab-pane").removeClass("active show");
-       	 
-         	 $("#nav-book-tab").addClass("active");
-         	 $("#nav-book").addClass("active show");
+       	 	 
+       	 	$("#nav-tabContent").hide();
+         	 $(".book-bg").show();
+         	 
        }else if(load === "5"){
         	$(".nav-link").removeClass("active");
        		$(".tab-pane").removeClass("active show");
