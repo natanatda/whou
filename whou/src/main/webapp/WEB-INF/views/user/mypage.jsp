@@ -627,7 +627,7 @@
 													<div class="carousel-item">
 														<div class="carousel-title">
 															<div class="ic-rank">2</div>
-															<div>${aptitudeRank.aptitude_name1}</div>
+															<div>${aptitudeRank.aptitude_name2}</div>
 														</div>
 														<div class="chart-inner card">
 															<canvas id="aptiChart2"></canvas>
@@ -636,7 +636,7 @@
 													<div class="carousel-item">
 														<div class="carousel-title">
 															<div class="ic-rank">3</div>
-															<div>${aptitudeRank.aptitude_name1}</div>
+															<div>${aptitudeRank.aptitude_name3}</div>
 														</div>
 														<div class="chart-inner card">
 															<canvas id="aptiChart3"></canvas>
