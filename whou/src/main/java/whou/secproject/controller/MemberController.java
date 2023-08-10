@@ -754,7 +754,8 @@ public class MemberController {
         LinkedHashMap<String, Integer> sortedValueRank = null;
         ArrayList<List<Integer>> Apti_jobs= null;
         ArrayList<List<Integer>> Inte_jobs= null;
-        
+        ArrayList<String> arrs2 = new ArrayList<String>();
+
         if(aptiTrue) {
         	aptiRank = new LinkedHashMap<String,Double>();
         	Apti_jobs = new ArrayList<List<Integer>>();
@@ -767,9 +768,10 @@ public class MemberController {
         		if(tals.equals("자아성찰능력")) tals = "자기성찰능력";
         		if(t<5) aptiRank.put(tals, aptiScore.get(index));
         		Apti_jobs.add(serviceRe.getJobLi(tals));
+        		arrs2.add(tals);
         	}
         }
-        
+        ArrayList<String> arrs = new ArrayList<String>();
         if(inteTrue) {
         	inteRank = new LinkedHashMap<String,Double>();
         	List<String> inteLabel = new ArrayList<String>(Arrays.asList("자연과학","AI·소프트웨어","공학","법률·행정","복지","교육","예술·미디어","스포츠","마케팅","금융·경영","여가·관광","보건의료", "농생명", "환경", "제조", "물류·운송·유통", "설계·건축·토목"));
@@ -790,6 +792,7 @@ public class MemberController {
         	for (Map.Entry<String, Double> entry : entryList) {
         		sortedInteRank.put(entry.getKey(), entry.getValue());
         		Inte_jobs.add(serviceRe.getInteLi(entry.getKey()));
+        		arrs.add(entry.getKey());
         	}
         }
         if(valueTrue) {
@@ -831,6 +834,9 @@ public class MemberController {
         model.addAttribute("inteRank", sortedInteRank);
         model.addAttribute("valueRank", sortedValueRank);
         
+        System.out.println("aptiRank : "+aptiRank);
+        System.out.println("inteRank : "+sortedInteRank);
+        System.out.println("valueRank : "+sortedValueRank);
         if(!none) {
             String [] impt = request.getParameterValues("importance");
             if(impt != null) {
@@ -878,6 +884,11 @@ public class MemberController {
             	                .forEach(j -> {
             	                    double d = normalize.get(j);
         	                    	List<Integer> jobNum = jobNums.get(j);
+        	                    	if(i.get()==1) {
+        	                    		System.out.println(j+" : "+d+" : "+arrs2.get(j)+" : "+jobNum);
+        	                    	}else if(i.get()==2) {
+        	                    		System.out.println(j+" : "+d+" : "+arrs.get(j)+" : "+jobNum);
+        	                    	}
         	                    	int len2 = jobNum.size();
         	                    	for(int n=0; n<len2; n++) {
         	                    		int f = jList.indexOf(jobNum.get(n));
