@@ -55,7 +55,19 @@
                     <span>AdminPage</span></a>
                     
             </li>
-
+            <hr class="sidebar-divider">
+			<!-- Heading -->
+            <div class="sidebar-heading">
+                admin
+            </div>
+            <li class="nav-item">
+                <a class="nav-link" href="/whou/admin/adminList">
+                    <span>AdminList</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/whou/admin/adminJoin">
+                    <span>AdminJoinForm</span></a>
+            </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -110,8 +122,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/whou/cs/searchDetail">
                     <span>SearchDetail</span></a>
-            </li>
-            
+            </li>                       
         </ul>
         <!-- End of Sidebar -->
 

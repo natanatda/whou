@@ -158,6 +158,16 @@
 		SELECT lv FROM whou_user WHERE email = #{email}
 	</select>
 	
+	<!-- 관리자 페이지 -->
+	<select id="getAdmin" resultType="whou.secproject.component.MemberDTO">
+		select * from whou_user where lv = 2
+	</select>
+
+	<insert id="adminInsert">
+		insert into whou_user (num, email, pw, name, birth_year, tel, lv, join_type) values(user_seq.NEXTVAL, #{email}, #{pw}, #{name}, #{birth_year}, #{tel}, 2, #{join_type})
+	</insert>
 	
-	
+	<delete id="deleteAdmin">
+		delete from whou_user where email = #{email}
+	</delete>
 </mapper>
