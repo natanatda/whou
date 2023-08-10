@@ -22,11 +22,11 @@
 			FROM ( SELECT job, searchcount, ROW_NUMBER() OVER (ORDER BY searchcount DESC) AS job_rownum
 			    FROM ( SELECT job, COUNT(job) AS searchcount 
 			    	FROM search_log WHERE TO_CHAR(reg, 'YYYY-MM-DD') 
-		<if test="jobDateSelect != null">
-			BETWEEN #{startDate} AND #{endDate} GROUP BY job) ) 
-		</if>
-		<if test="jobDateSelect == null">
+		<if test="jobDateSelect == null or jobDateSelect.equals('')">
 			= #{nowDate} GROUP BY job) )
+		</if>
+		<if test="jobDateSelect != null and !jobDateSelect.equals('')">
+			BETWEEN #{startDate} AND #{endDate} GROUP BY job) ) 
 		</if>
 		WHERE<![CDATA[ job_rownum <= #{rownum} ]]>
 	</select>
@@ -36,13 +36,13 @@
 		FROM ( SELECT keyword, searchcount, ROW_NUMBER() OVER (ORDER BY searchcount DESC) AS keyword_rownum
 			    FROM ( SELECT keyword, COUNT(keyword) AS searchcount 
 			    	FROM search_log WHERE TO_CHAR(reg, 'YYYY-MM-DD')
-		<if test="keyDateSelect != null">
+		<if test="keyDateSelect == null or keyDateSelect.equals('')">
+			= #{nowDate} GROUP BY keyword) )	
+		</if>
+		<if test="keyDateSelect != null and !keyDateSelect.equals('')">
 			BETWEEN #{keyStartDate} AND #{keyEndDate} GROUP BY keyword) )
 		</if>
 		
-		<if test="keyDateSelect == null">
-			= #{nowDate} GROUP BY keyword) )	
-		</if>
 		WHERE<![CDATA[ keyword_rownum <= #{rownum} ]]>
 	</select>
 	

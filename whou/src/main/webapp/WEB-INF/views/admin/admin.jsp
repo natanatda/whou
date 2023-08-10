@@ -117,25 +117,21 @@
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
             <!-- Main Content -->
             <div id="content">
-
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-				
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-
                     <!-- Topbar Search -->
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <div class="input-group-append">
-                        <a  href="/whou/main">main</a>
-                                    <i class="fas fa-search fa-sm"></i>
+		                        <a href="/whou/main">main</a>
+								<i class="fas fa-search fa-sm"></i>
                             </div>
                         </div>
                     </form>
@@ -151,7 +147,6 @@
 
                     <!-- Content Row -->
                     <div class="row">
-
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
@@ -214,9 +209,9 @@
                         </div>                        
                     </div>
                     <h3>Search Top 5</h3>
-                    <input type="button" value="오늘" class="dateSel btn" data-name="today" />
-                    <input type="button" value="일주일" class="dateSel btn" data-name="week" />
-                    <input type="button" value="한달" class="dateSel btn" data-name="month" />
+                    <input type="button" value="오늘" class="dateSel btn btn-secondary" data-name="today" />
+                    <input type="button" value="일주일" class="dateSel btn btn-secondary" data-name="week" />
+                    <input type="button" value="한달" class="dateSel btn btn-secondary" data-name="month" />
                     <form action="/whou/cs/admin" method="post">
                     	<c:if test="${endDate == null}">
                     		<input type="date" name="startDate" value="${now}" id="startDate"/>
@@ -224,22 +219,46 @@
                     	<c:if test="${endDate != null }">
                     		<input type="date" name="startDate" value="${startDate}" id="startDate"/>
                     	</c:if>
-                    		<input type="date" name="endDate" value="${endDate}" id="endDate"/>
+                    		<input type="date" name="endDate" value="${endDate}" id="endDate" required="required"/>
                     		<input type="hidden" name="jobDateSelect" value="notNull"/>
-                    		<input type="submit" class="btn" value="조회"/>
+                    		<input type="submit" class="btn btn-secondary" value="조회"/>
                     	</form><br/>
-                    <div style="width:300px; float:left;">
-					<c:if test="${searchJobList eq '[]'}"> <%-- list null처리 --%>
-						조회된 직업 데이터가 없습니다.
-					</c:if>
-                    	<canvas id="job-chart" width="300" height="300"></canvas>
-                    </div>
-                    <div style="width:300px; float:left;">
-					<c:if test="${searchKeyList eq '[]'}">
-						조회된 검색어 데이터가 없습니다.                    
-                    </c:if>                    	
-                    	<canvas id="key-chart" width="300" height="300"></canvas>
-                    </div>
+					<div class="col-xl-4 col-lg-5" style="width:300px; float:left;">
+						<div class="card shadow mb-4" >
+							<!-- Card Header - Dropdown -->
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">직업</h6>
+							</div>
+							<!-- Card Body -->
+							<div class="card-body">
+								<div class="chart-pie pt-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+									<canvas id="job-chart" width="300" height="300" style="display: block; height: 216px; width: 382px;" class="chartjs-render-monitor"></canvas>
+								</div>
+								<hr>
+								<c:if test="${empty searchJobList}"> <%-- list null처리 --%>
+									조회된 직업 데이터가 없습니다.
+								</c:if>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-5" style="width:300px; float:left;">
+						<div class="card shadow mb-4" >
+							<!-- Card Header - Dropdown -->
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">검색어</h6>
+							</div>
+							<!-- Card Body -->
+							<div class="card-body">
+								<div class="chart-pie pt-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+									<canvas id="key-chart" width="300" height="300" style="display: block; height: 216px; width: 382px;" class="chartjs-render-monitor"></canvas>
+								</div>
+							<hr>
+							<c:if test="${empty searchKeyList}">
+								조회된 검색어 데이터가 없습니다.                    
+							</c:if>
+							</div>
+						</div>
+					</div>
                 </div>
                 <!-- /.container-fluid -->
             </div>
@@ -255,12 +274,13 @@
     	var startDate = new Date($("#startDate").val());
 		// 조회 날짜 바꾸면 동작하는 이벤트
     	$("#endDate").change(function(){
-	    	var endDate = new Date($("#endDate").val());
-    		if(startDate > endDate){
+    		var endDate = new Date($("#endDate").val());
+	    	var changeDate = new Date($("#startDate").val());
+    		if(changeDate > endDate){
     			alert("시작 날짜보다 이전 날짜로 설정하실 수 없습니다.");
     			
     			// 시작 날짜 인코딩해서 입력 (2023-00-00)
-    			$("#endDate").val(startDate.toISOString().substring(0, 10) ); 
+    			$("#endDate").val(changeDate.toISOString().substring(0, 10) ); 
     		}
     	});
     	// 오늘, 일주일, 한달 버튼 누르면 동작하는 이벤트

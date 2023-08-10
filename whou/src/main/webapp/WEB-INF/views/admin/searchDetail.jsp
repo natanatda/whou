@@ -28,7 +28,6 @@
 		</script>
 	</c:if>
 </head>
-
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -145,13 +144,9 @@
                         <h1 class="h3 mb-0 text-gray-800">SearchDetail</h1>
                     </div>
 
-                    <!-- Content Row -->
-                    <div class="row">
-                        
-                    </div>
-                    <input type="button" value="오늘" class="dateSel btn" data-name="today" />
-                    <input type="button" value="일주일" class="dateSel btn" data-name="week" />
-                    <input type="button" value="한달" class="dateSel btn" data-name="month" />
+                    <input type="button" value="오늘" class="dateSel btn btn-secondary" data-name="today" />
+                    <input type="button" value="일주일" class="dateSel btn btn-secondary" data-name="week" />
+                    <input type="button" value="한달" class="dateSel btn btn-secondary" data-name="month" />
                     <form action="/whou/cs/searchDetail" method="post">
                     	<c:if test="${endDate == null}">
                     		<input type="date" name="startDate" value="${now}" id="startDate"/>
@@ -159,36 +154,66 @@
                     	<c:if test="${endDate != null }">
                     		<input type="date" name="startDate" value="${startDate}" id="startDate"/>
                     	</c:if>
-                    		<input type="date" name="endDate" value="${endDate}" id="endDate"/>
+                    		<input type="date" name="endDate" value="${endDate}" id="endDate" required="required" />
                     		<input type="hidden" name="jobDateSelect" value="notNull"/>
-                    		<input type="submit" class="btn" value="조회"/>
-                    	</form><br/>
-                    <div style="width:400px;">
-                    <div style="width:200px; float:left;">
-                    직업 <br/>
-                        <c:forEach var="jobList" items="${searchJobList}" varStatus="status">
-                        	${status.count}
-	                    	${jobList.job} 
-	                    	${jobList.searchcount}회
-	                    	<br/>
-                    	</c:forEach>
-                    </div>
-                    <div style="width:200px; float:left;">
-                    검색어 <br/>
-                    	 <c:forEach var="keyList" items="${searchKeyList}" varStatus="status">
-                    	 	${status.count}
-	                    	${keyList.keyword} 
-	                    	${keyList.searchcount}회
-	                    	<br/>
-                    	</c:forEach>
-                    </div>
-                    
+                    		<input type="submit" class="btn btn-secondary" value="조회"/>
+                    </form>
+	
+                    <div style="width:800px;">
+                    	<div style="width:400px; float:left;">
+                    		<p>직업</p>
+                    		<c:if test="${empty searchJobList}">
+                    			<p>조회된 데이터가 없습니다.</p>
+                    		</c:if>
+                    		<table>
+                    			<c:if test="${not empty searchJobList}">
+                    				<thead style="text-align:center;">
+			                    		<tr>
+			                    			<th>순위</th>
+			                    			<th>직업</th>
+			                    			<th>횟수</th>
+			                    		</tr>
+			                    	</thead>
+                    			</c:if>
+                        		<c:forEach var="jobList" items="${searchJobList}" varStatus="status">
+                        			<tr>
+			                        	<td>${status.count}</td>
+			                        	<td>${jobList.job}</td>
+			                        	<td>${jobList.searchcount}회</td>
+			                    	</tr>
+                    			</c:forEach>
+                    		</table>
+                    	</div>
+	                    <div style="width:400px; float:left;">
+		                    <p>검색어</p>
+		                    <c:if test="${empty searchKeyList}">
+		                    	<p>조회된 데이터가 없습니다.</p>
+		                    </c:if>
+		                    <table>
+			                    <c:if test="${not empty searchKeyList}">
+			                    	<thead>
+			                    		<tr>
+			                    			<th>순위</th>
+			                    			<th>검색어</th>
+			                    			<th>횟수</th>
+			                    		</tr>
+			                    	</thead>
+			                    </c:if>
+		                    	 <c:forEach var="keyList" items="${searchKeyList}" varStatus="status">
+									<tr>
+			                        	<td>${status.count}</td>
+			                        	<td>${keyList.keyword}</td>
+			                        	<td>${keyList.searchcount}회</td>
+			                    	</tr>
+		                    	</c:forEach>
+	                    	</table>
+	                    </div>
                     </div>
                     
 					<div style="clear:left;">
 						<form action="/whou/cs/searchDetail" method="post">
 							<input type="hidden" name="rownum" value="${rownum + 5}"/>
-							<input type="hidden" name="jobDateSelect" value="${jobDateSelect }"/>
+							<input type="hidden" name="jobDateSelect" value="${jobDateSelect}"/>
 							<c:if test="${endDate == null}">
 								<input type="hidden" name="startDate" value="${now}" />
 							</c:if>
@@ -196,7 +221,9 @@
 								<input type="hidden" name="startDate" value="${startDate}" />
 							</c:if>
 							<input type="hidden" name="endDate" value="${endDate}" />
-							<input type="submit" class="btn" value="더보기"/>
+							<c:if test="${not empty searchJobList and not empty searchKeyList}"> <%-- 리스트 두 개 다 '[]'가 아닐 경우 동작 --%>
+								<input type="submit" class="btn btn-secondary" value="더보기"/>
+							</c:if>
 						</form>
                    	</div>
                     	
@@ -216,11 +243,12 @@
 		// 조회 날짜 바꾸면 동작하는 이벤트
     	$("#endDate").change(function(){
 	    	var endDate = new Date($("#endDate").val());
-    		if(startDate > endDate){
+	    	var changeDate = new Date($("#startDate").val());
+    		if(changeDate > endDate){
     			alert("시작 날짜보다 이전 날짜로 설정하실 수 없습니다.");
     			
     			// 시작 날짜 인코딩해서 입력 (2023-00-00)
-    			$("#endDate").val(startDate.toISOString().substring(0, 10) ); 
+    			$("#endDate").val(changeDate.toISOString().substring(0, 10) ); 
     		}
     	});
     	// 오늘, 일주일, 한달 버튼 누르면 동작하는 이벤트

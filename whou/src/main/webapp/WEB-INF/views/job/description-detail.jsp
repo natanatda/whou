@@ -108,27 +108,33 @@
                             <li onclick="showShareOptions()"><i class="fa-solid fa-share-nodes" style="color: #5c5c5c;"></i></li>
                             <li class="print-btn"><i class="fa-solid fa-print" style="color: #5c5c5c;"></i></li>
                         </ul>
-                        <div class="d-flex">
-                            <div class="desc-item">
-                                <i class="fa-regular fa-credit-card" style="color: #4d4d4d;"></i>
-                                <span>평균연봉</span>
-                            </div>
-                            <div>${BaseInfo.wage} 만원</div>
-                        </div>
-                        <div class="d-flex">
-                            <div class="desc-item">
-                                <i class="fa-solid fa-house" style="color: #4d4d4d;"></i>
-                                <span>일&middot;가정균형</span>
-                            </div>
-                            <div>${BaseInfo.wlb}</div>
-                        </div>
-                        <div class="d-flex">
-                            <div class="desc-item">
-                                <i class="fa-solid fa-users" style="color: #4d4d4d;"></i>
-                                <span>사회공헌</span>
-                            </div>
-                            <div>${BaseInfo.social}</div>
-                        </div>
+                            <c:if test="${BaseInfo.wage != null}">
+		                        <div class="d-flex">
+		                            <div class="desc-item">
+		                                <i class="fa-regular fa-credit-card" style="color: #4d4d4d;"></i>
+		                                <span>평균연봉</span>
+		                            </div>
+			                            <div>${BaseInfo.wage} 만원</div>
+		                        </div>
+                            </c:if>
+                            <c:if test="${BaseInfo.wlb != null}">
+		                        <div class="d-flex">
+		                            <div class="desc-item">
+		                                <i class="fa-solid fa-house" style="color: #4d4d4d;"></i>
+		                                <span>일&middot;가정균형</span>
+		                            </div>
+		                            <div>${BaseInfo.wlb}</div>
+		                        </div>
+		                   </c:if>
+		                   <c:if test="${BaseInfo.social != null}">
+		                        <div class="d-flex">
+		                            <div class="desc-item">
+		                                <i class="fa-solid fa-users" style="color: #4d4d4d;"></i>
+		                                <span>사회공헌</span>
+		                            </div>
+		                            <div>${BaseInfo.social}</div>
+		                        </div>
+	                        </c:if>
                     </div>
                     <div class="right-wrap">
                         <nav>
@@ -141,10 +147,12 @@
                           </nav>
                           <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-                                <div class="content-item">
-                                    <p class="icon-title">관련 직업명</p>
-                                    <div class="content-box">${BaseInfo.job_nm}</div>
-                                </div>
+	                            <c:if test="${BaseInfo.rel_job_nm != null}"> 
+	                                <div class="content-item">
+	                                    <p class="icon-title">관련 직업명</p>
+	                                    <div class="content-box">${BaseInfo.rel_job_nm}</div>
+	                                </div>
+                                </c:if>   
                                 <div class="content-item">
                                     <p class="icon-title">관련 학과 및 관련 자격</p>
                                     <p class="semi-title">﻿ο 관련 학과</p>
@@ -205,12 +213,6 @@
 										    <div style="margin-bottom: 4px;">- ${Research.research}</div>
 										</c:forEach>
                                     </div>
-                                    <p>관련 자료</p>
-                                    <div class="content-box">
-										<c:forEach var="RelJinSol" items="${relJinSol}">
-										    - ${RelJinSol.subject}</br>
-										</c:forEach>
-                                    </div>
                                 </div>
                                 <div class="content-item">
                                     <p class="icon-title">준비방법</p>
@@ -220,19 +222,23 @@
 										    <div style="margin-bottom: 4px;">- ${Curriculum.curriculum}</div>
 										</c:forEach>
                                     </div>
-                                    <p class="semi-title">﻿﻿﻿﻿ο 직업훈련</p>
-                                    <div class="content-box">
-										<c:forEach var="Training" items="${JobReady.training}">
-										    <div style="margin-bottom: 4px;">- ${Training.training}</div>
-										</c:forEach>
-                                    </div>
-                                    <p class="semi-title">﻿﻿﻿﻿ο 관련 자격증</p>
-                                    <div class="content-box">
-										<c:forEach var="Certificate" items="${JobReady.certificate}">
-										    <div style="margin-bottom: 4px;">- ${Certificate.certificate}</div>
-										</c:forEach>
-                                    </div>
-                                    <p class="semi-title">﻿﻿﻿﻿ο 입직 및 취업방법</p>
+									<c:forEach var="Training" items="${JobReady.training}">
+	                                    <c:if test="${Training.training != null}">
+		                                    <p class="semi-title">﻿﻿﻿﻿ο 직업훈련</p>
+		                                    <div class="content-box">
+												    <div style="margin-bottom: 4px;">- ${Training.training}</div>
+		                                    </div>
+	                                    </c:if>
+									</c:forEach>
+									<c:forEach var="Certificate" items="${JobReady.certificate}">
+	                                    <c:if test="${Certificate.certificate != null}">
+	                                    	<p class="semi-title">﻿﻿﻿﻿ο 관련 자격증</p>
+		                                    <div class="content-box">
+												    <div style="margin-bottom: 4px;">- ${Certificate.certificate}</div>
+		                                    </div>
+	                                    </c:if>
+									</c:forEach>
+                                    <p class="semi-title">﻿﻿﻿﻿ο 입직 및 취업방법 </p>
                                     <div class="content-box">
 										<c:forEach var="Recruit" items="${JobReady.recruit}">
 										    <div style="margin-bottom: 4px;">- ${Recruit.recruit}</div>
@@ -257,136 +263,146 @@
 										    ${Forecast.forecast}</br>
 										</c:forEach>
                                     </div>
-                                    <p class="semi-title">﻿﻿﻿﻿ο 임금수준 및 직업만족도</p>
-                                    <div class="flex-box">
-	                                    <div class="content-box" style="width:150px">
-	                                    	<p style="font-weight: 600;">평균 연봉</p>
-	                                    	<p style="font-weight: 600; color:green;">${BaseInfo.wage} 만원</p>
+                                    <c:if test="${BaseInfo.wage != null}">
+	                                    <p class="semi-title">﻿﻿﻿﻿ο 임금수준 및 직업만족도</p>
+	                                    <div class="flex-box">
+		                                    <div class="content-box" style="width:150px">
+		                                    	<p style="font-weight: 600;">평균 연봉</p>
+		                                    	<p style="font-weight: 600; color:green;">${BaseInfo.wage} 만원</p>
+		                                    </div>
+		                                    <div>
+												${BaseInfo.wage_source}
+		                                    </div>
 	                                    </div>
-	                                    <div>
-											${BaseInfo.wage_source}
+                                    </c:if>
+                                    <c:if test="${BaseInfo.satisfication != 0.0}">
+	                                    <div class="flex-box">
+		                                    <div class="content-box" style="width:150px">
+		                                    	<p style="font-weight: 600;">직업 만족도</p>
+												<p style="font-weight: 600; color:green;">${BaseInfo.satisfication} %</p>
+											</div>
+			                                <div>	
+												${BaseInfo.satisfi_source}
+		                                    </div>
 	                                    </div>
-                                    </div>
-                                    <div class="flex-box">
-	                                    <div class="content-box" style="width:150px">
-	                                    	<p style="font-weight: 600;">직업 만족도</p>
-											<p style="font-weight: 600; color:green;">${BaseInfo.satisfication} %</p>
-										</div>
-		                                <div>	
-											${BaseInfo.satisfi_source}
+                                    </c:if>
+	                                    <p class="semi-title">﻿﻿﻿﻿ο 학력분포 및 전공계열</p>
+	                                   	<div class="flex-box">                                   	
+		                                    <div class="content-box">
+			                                    <c:forEach var="EduChart" items="${eduChart}">
+													<c:set var="chart_name" value="${EduChart.chart_name.split(',')}"/>
+													<c:set var="chart_data" value="${EduChart.chart_data.split(',')}"/>
+														<c:forEach var="name" items="${chart_name}" varStatus="status">
+													    </c:forEach>
+													    <div>
+													    	<c:if test="${EduChart.chart_data != '0,0,0,0,0,0'}">
+						                                    	<p style="text-align:center; font-weight: 400;">학력분포</p>
+													    		<canvas id="EduChart" width="400" height="400"></canvas>
+													    	</c:if>
+													    </div>
+													    ${EduChart.source}
+												</c:forEach>
+		                                    </div>
+		                                    <div class="content-box">
+												<c:forEach var="MajorChart" items="${majorChart}">
+													<c:set var="major" value="${MajorChart.major.split(',')}"/>
+													<c:set var="major_data" value="${MajorChart.major_data.split(',')}"/>
+														<c:forEach var="major" items="${major}" varStatus="status">
+													    </c:forEach>
+													    <div>
+													    	<c:if test="${MajorChart.major_data != '0,0,0,0,0,0,0'}">
+						                                    	<p style="text-align:center; font-weight: 400;">전공계열</p>
+														    	<canvas id="MajorChart" width="400" height="400"></canvas>
+													    	</c:if>
+													    </div>
+													    ${MajorChart.source}
+												</c:forEach>
+		                                    </div>
 	                                    </div>
-                                    </div>
-                                    <p class="semi-title">﻿﻿﻿﻿ο 학력분포 및 전공계열</p>
-                                   	<div class="flex-box">                                   	
-	                                    <div class="content-box">
-	                                    	<p style="text-align:center; font-weight: 400;">학력분포</p>
-											<c:forEach var="EduChart" items="${eduChart}">
-												<c:set var="chart_name" value="${EduChart.chart_name.split(',')}"/>
-												<c:set var="chart_data" value="${EduChart.chart_data.split(',')}"/>
-													<c:forEach var="name" items="${chart_name}" varStatus="status">
-												    </c:forEach>
-												    <div>
-												    	<canvas id="EduChart" width="400" height="400"></canvas>
-												    </div>
-												    ${EduChart.source}
-											</c:forEach>
-	                                    </div>
-	                                    <div class="content-box">
-	                                    	<p style="text-align:center; font-weight: 400;">전공계열</p>
-											<c:forEach var="MajorChart" items="${majorChart}">
-												<c:set var="major" value="${MajorChart.major.split(',')}"/>
-												<c:set var="major_data" value="${MajorChart.major_data.split(',')}"/>
-													<c:forEach var="major" items="${major}" varStatus="status">
-												    </c:forEach>
-												    <div>
-												    	<canvas id="MajorChart" width="400" height="400"></canvas>
-												    </div>
-												    ${MajorChart.source}
-											</c:forEach>
-	                                    </div>
-                                    </div>
                                 </div>
                                 <div class="content-item">
-                                    <p class="icon-title">한국의 직업지표</p>
                                     <c:forEach var="IndicatorChart" items="${indicatorChart}">
+                                    <c:if test="${IndicatorChart.indicator_data != '0.0,0.0,0.0,0.0,0.0,0.0,0.0'}">
+									    <p class="icon-title">한국의 직업지표</p>
 									    <canvas id="IndicatorChart" width="400" height="200"></canvas>
 									    ${IndicatorChart.source}
+									</c:if>
 									</c:forEach>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-	                           	<p class="icon-title">업무수행능력</p>
-	                           	<div class="content-item ">
-	                           		<div class="table-wrap desc-table">
-								        <table>
-								            <tr>
-								                <th>중요도</th>
-								                <th>능력명</th>
-								                <th>설명</th>
-								            </tr>
-								            <c:forEach var="perform" items="${performList}" varStatus="status">
-								                <tr>
-								                    <td>${perform.importance}</td>
-								                    <td>${perform.perform}</td>
-								                    <td>${perform.inform}</td>
-								                </tr>
-								            </c:forEach>
-								        </table>
-								    </div>
-								    <c:forEach var="perform" items="${performList}" varStatus="status">
-									    <c:if test="${status.last}">
-									        ${perform.source}
-									    </c:if>
-									</c:forEach>
-								</div>
-							    <p class="icon-title">지식중요도</p>
-	                           	<div class="content-item ">
-	                           		<div class="table-wrap desc-table">
-			                           	<table>
-								            <tr>
-								                <th>중요도</th>
-								                <th>능력명</th>
-								                <th>설명</th>
-								            </tr>
-								            <c:forEach var="k" items="${knowledge}" varStatus="status">
-								                <tr>
-								                    <td>${k.importance}</td>
-								                    <td>${k.knowledge}</td>
-								                    <td>${k.inform}</td>
-								                </tr>
-								            </c:forEach>
-								        </table>
-							     	</div>
-	                                <c:forEach var="k" items="${knowledge}" varStatus="status">
-									    <c:if test="${status.last}">
-									        ${k.source}
-									    </c:if>
-									</c:forEach>
-	                            </div>
-	                            <p class="icon-title">업무환경</p>
-	                            <div class="content-item ">
-	                           		<div class="table-wrap desc-table">
-			                           	<table>
-								            <tr>
-								                <th>중요도</th>
-								                <th>능력명</th>
-								                <th>설명</th>
-								            </tr>
-								            <c:forEach var="E" items="${environment}" varStatus="status">
-								                <tr>
-								                    <td>${E.importance}</td>
-								                    <td>${E.environment}</td>
-								                    <td>${E.inform}</td>
-								                </tr>
-								            </c:forEach>
-								        </table>
-							     	</div>
-	                                <c:forEach var="E" items="${environment}" varStatus="status">
-									    <c:if test="${status.last}">
-									        ${E.source}
-									    </c:if>
-									</c:forEach>
-	                            </div>
+		                           	<p class="icon-title">업무수행능력</p>
+		                           	<div class="content-item ">
+		                           		<div class="table-wrap desc-table">
+									        <table>
+									            <tr>
+									                <th>중요도</th>
+									                <th>능력명</th>
+									                <th>설명</th>
+									            </tr>
+					                            <c:forEach var="perform" items="${performList}" varStatus="status">
+									                <tr>
+									                    <td>${perform.importance}</td>
+									                    <td>${perform.perform}</td>
+									                    <td>${perform.inform}</td>
+									                </tr>
+						                         </c:forEach>
+									        </table>
+									    </div>
+									    <c:forEach var="perform" items="${performList}" varStatus="status">
+										    <c:if test="${status.last}">
+										        ${perform.source}
+										    </c:if>
+										</c:forEach>
+									</div>
+								    <p class="icon-title">지식중요도</p>
+		                           	<div class="content-item ">
+		                           		<div class="table-wrap desc-table">
+				                           	<table>
+									            <tr>
+									                <th>중요도</th>
+									                <th>능력명</th>
+									                <th>설명</th>
+									            </tr>
+									            <c:forEach var="k" items="${knowledge}" varStatus="status">
+									                <tr>
+									                    <td>${k.importance}</td>
+									                    <td>${k.knowledge}</td>
+									                    <td>${k.inform}</td>
+									                </tr>
+									            </c:forEach>
+									        </table>
+								     	</div>
+		                                <c:forEach var="k" items="${knowledge}" varStatus="status">
+										    <c:if test="${status.last}">
+										        ${k.source}
+										    </c:if>
+										</c:forEach>
+		                            </div>
+		                            <p class="icon-title">업무환경</p>
+		                            <div class="content-item ">
+		                           		<div class="table-wrap desc-table">
+				                           	<table>
+									            <tr>
+									                <th>중요도</th>
+									                <th>능력명</th>
+									                <th>설명</th>
+									            </tr>
+									            <c:forEach var="E" items="${environment}" varStatus="status">
+									                <tr>
+									                    <td>${E.importance}</td>
+									                    <td>${E.environment}</td>
+									                    <td>${E.inform}</td>
+									                </tr>
+									            </c:forEach>
+									        </table>
+								     	</div>
+		                                <c:forEach var="E" items="${environment}" varStatus="status">
+										    <c:if test="${status.last}">
+										        ${E.source}
+										    </c:if>
+										</c:forEach>
+		                            </div>
 	                         </div>
                           </div>
                     </div>

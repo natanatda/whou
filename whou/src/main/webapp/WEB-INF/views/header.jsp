@@ -19,7 +19,7 @@
                         <li class="nav-item"><a class="nav-link" href="/whou/aptitude/aptitudeMain">진로검사</a></li>
                         <li class="nav-item dropdown">
 				          <a class="nav-link dropdown-toggle" href="/whou/cs/notice" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-				            진로정보
+				            진로탐색
 				          </a>
 				          <ul class="dropdown-menu">
 				            <li><a class="dropdown-item" href="/whou/education/majorList">학과정보</a></li>
@@ -45,10 +45,14 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <c:if test="${memId != null}">
-                        
-                        	<li class="nav-item"><a class="nav-link" href="/whou/member/mypage?load=6">진로컨설팅</a></li>
-                        	<li class="nav-item"><a class="nav-link" href="/whou/member/mypage">마이페이지</a></li>
-                        	<li class="nav-item"><a class="nav-link" href="/whou/member/logout">로그아웃</a></li>
+                        		<c:if test="${level == '1'}">
+                        			<li class="nav-item"><a class="nav-link" href="/whou/member/mypage?load=6">진로컨설팅</a></li>
+                        			<li class="nav-item"><a class="nav-link" href="/whou/member/mypage">마이페이지</a></li>
+                        		</c:if>
+	                        	<c:if test="${level == '2'}">
+                        			<li class="nav-item"><a class="nav-link" href="/whou/cs/admin">관리자페이지</a></li>
+                        		</c:if>
+	                        	<li class="nav-item"><a class="nav-link" href="/whou/member/logout">로그아웃</a></li>
                         </c:if>
                         <c:if test="${memId == null}">
                         	<li class="nav-item"><a class="nav-link" href="/whou/member/login">로그인/회원가입</a></li>

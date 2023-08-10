@@ -221,7 +221,7 @@ public class RecommendServiceImpl implements RecommendService{
 			SelectResultHandler<Object> resultHandler = new SelectResultHandler<Object>();
 			selDTO.setCol("JOB_CD,JOB_NM");
 			selDTO.setTb_name("JOB_INFO");
-			selDTO.setConditions(Arrays.asList("JOB_NM like '"+job_nm+"%'"));
+			selDTO.setConditions(Arrays.asList("JOB_NM like '%"+job_nm+"%'"));
 			selDTO.setOrder(" order by job_cd");
 			sqlSession.select("whou.secproject.mapper.RecommendMapper.selectInfo", selDTO, resultHandler);
 			sqlSession.close();

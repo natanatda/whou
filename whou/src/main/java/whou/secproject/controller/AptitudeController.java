@@ -309,12 +309,19 @@ public class AptitudeController {
 		// 퍼센트 정보 추가하기
 		int [] percents = service.getPercent(userNum);
 		String percentStr = request.getParameter("percent");
+		System.out.println("받아온 퍼센트임!!1111"+percentStr);
 		int percent = 0;
-		if(percentStr!=null) percent = Integer.parseInt(percentStr);
+		if(percentStr!=null) {
+			percent = Integer.parseInt(percentStr);
+			System.out.println("받아온 퍼센트임!!2222"+percent);
+		}
 		if(qnum.equals("21")) percents[0] = percent;
 		else if(qnum.equals("25")) percents[1] = percent;
 		else if(qnum.equals("27")) percents[2] = percent;
 		else if(qnum.equals("31")) percents[3] = percent;
+		for(int a : percents) {
+			System.out.println("몇퍼센트?"+a);
+		}
 		service.updatePercent(userNum, percents);
 		
 		//검사25의 49번 문제 예외처리

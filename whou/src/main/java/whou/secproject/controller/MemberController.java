@@ -143,12 +143,15 @@ public class MemberController {
 	
 	//로그인
 	@RequestMapping("/loginPro")
-	public @ResponseBody String  loginPro(String email, String pw, HttpServletRequest request) {
+	public @ResponseBody String loginPro(String email, String pw, HttpServletRequest request) {
 		String dpw = service.login(email);
+		int level = service.level(email);
+		System.out.println("레벨머야?"+level);
 		System.out.println(dpw);
 		HttpSession session = request.getSession();
 		if(pw.equals(dpw)) {
 			session.setAttribute("memId", email);
+			session.setAttribute("level", level);
 			System.out.println("비번 일치");
 		}
 		return dpw;

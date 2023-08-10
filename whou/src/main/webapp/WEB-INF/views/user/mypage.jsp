@@ -105,7 +105,7 @@
 							test="${percent[0] != '0' || percent[1] != '0' || percent[2] != '0' || percent[3] != '0'}">
 							<div class="test-cont">
 								<div id="carouselExampleControls"
-									class="carousel slide carousel-dark " data-bs-ride="carousel">
+									class="carousel slide carousel-dark" data-bs-ride="carousel">
 									<div class="carousel-inner">
 										<c:if test="${percent[0] != '0'}">
 											<div class="carousel-item">
@@ -193,6 +193,22 @@
 								</div>
 							</div>
 						</c:if>
+						<div style="margin-bottom:20px">
+							<nav>
+								<div class="nav nav-tabs nav-left" id="nav-tab" role="tablist">
+									<button class="nav-link active" id="nav-home-tab"
+										data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+										role="tab" aria-controls="nav-home" aria-selected="true">검사결과보기</button>
+									<button class="nav-link" id="nav-reco-tab" data-bs-toggle="tab"
+										data-bs-target="#nav-reco" type="button" role="tab"
+										aria-controls="nav-reco" aria-selected="false">추천 받기</button>
+									<button class="nav-link" id="nav-contact-tab"
+										data-bs-toggle="tab" data-bs-target="#nav-contact"
+										type="button" role="tab" aria-controls="nav-contact"
+										aria-selected="false">진로컨설팅</button>
+								</div>
+							</nav>
+						</div>
 						<div class="info-cont">
 							<h6>직업 보기</h6>
 							<ul>
@@ -225,22 +241,7 @@
 								</li>
 							</ul>
 						</div>
-						<div>
-							<nav>
-								<div class="nav nav-tabs nav-left" id="nav-tab" role="tablist">
-									<button class="nav-link active" id="nav-home-tab"
-										data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
-										role="tab" aria-controls="nav-home" aria-selected="true">검사결과보기</button>
-									<button class="nav-link" id="nav-reco-tab" data-bs-toggle="tab"
-										data-bs-target="#nav-reco" type="button" role="tab"
-										aria-controls="nav-reco" aria-selected="false">추천 받기</button>
-									<button class="nav-link" id="nav-contact-tab"
-										data-bs-toggle="tab" data-bs-target="#nav-contact"
-										type="button" role="tab" aria-controls="nav-contact"
-										aria-selected="false">진로컨설팅</button>
-								</div>
-							</nav>
-						</div>
+
 					</div>
 
 					<div class="custom-box">
@@ -551,6 +552,9 @@
 									<option value="27">역량</option>
 									<option value="31">흥미</option>
 								</select>
+								<div class="button-wrap">
+										<button class="purple-btn" onclick="reco()">추천받기</button>
+								</div>
 								<div id="item-aptitude" class="chart-wrap">
 									<c:if test="${!scoreTrue1}">
 										<div class="empty-box">
@@ -562,10 +566,10 @@
 											<canvas id="aptiChart1" style="display: none;"></canvas>
 											<canvas id="aptiChart2" style="display: none;"></canvas>
 											<canvas id="aptiChart3" style="display: none;"></canvas>
-											<%-- 
 											<canvas id="inteChart1" style="display: none;"></canvas>
 											<canvas id="inteChart2" style="display: none;"></canvas>
 											<canvas id="inteChart3" style="display: none;"></canvas>
+											<%-- 
 											<canvas id="valueChart1" style="display: none;"></canvas>
 											<canvas id="valueChart2" style="display: none;"></canvas>
 											<canvas id="valueChart3" style="display: none;"></canvas>
@@ -573,6 +577,7 @@
 										</div>
 									</c:if>
 									<c:if test="${scoreTrue1}">
+							
 										<div class="test-result-top">
 											<div class="chart-inner card">
 												<canvas id="aptitudeChart"></canvas>
@@ -607,8 +612,8 @@
 											</ul>
 										</div>
 										<div class="card">
-											<div id="carouselExampleControls"
-												class="carousel slide carousel-dark">
+											<div id="carouselExampleControls1"
+												class="carousel slide carousel-dark" data-bs-ride="carousel">
 												<div class="carousel-inner">
 													<div class="carousel-item active">
 														<div class="carousel-title">
@@ -622,7 +627,7 @@
 													<div class="carousel-item">
 														<div class="carousel-title">
 															<div class="ic-rank">2</div>
-															<div>${aptitudeRank.aptitude_name1}</div>
+															<div>${aptitudeRank.aptitude_name2}</div>
 														</div>
 														<div class="chart-inner card">
 															<canvas id="aptiChart2"></canvas>
@@ -631,25 +636,21 @@
 													<div class="carousel-item">
 														<div class="carousel-title">
 															<div class="ic-rank">3</div>
-															<div>${aptitudeRank.aptitude_name1}</div>
+															<div>${aptitudeRank.aptitude_name3}</div>
 														</div>
 														<div class="chart-inner card">
 															<canvas id="aptiChart3"></canvas>
 														</div>
 													</div>
 												</div>
-												<button class="carousel-control-prev" type="button"
-													data-bs-target="#carouselExampleControls"
-													data-bs-slide="prev">
-													<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-													<span class="visually-hidden">Previous</span>
-												</button>
-												<button class="carousel-control-next" type="button"
-													data-bs-target="#carouselExampleControls"
-													data-bs-slide="next">
-													<span class="carousel-control-next-icon" aria-hidden="true"></span>
-													<span class="visually-hidden">Next</span>
-												</button>
+												  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls1" data-bs-slide="prev">
+												    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+												    <span class="visually-hidden">Previous</span>
+												  </button>
+												  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls1" data-bs-slide="next">
+												    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+												    <span class="visually-hidden">Next</span>
+												  </button>
 											</div>
 										</div>
 									</c:if>
@@ -711,8 +712,8 @@
 											</ul>
 										</div>
 										<div class="card">
-											<div id="carouselExampleControls"
-												class="carousel slide carousel-dark">
+											<div id="carouselExampleControls2"
+												class="carousel slide carousel-dark" data-bs-ride="carousel">
 												<div class="carousel-inner">
 													<div class="carousel-item active">
 														<div class="carousel-title">
@@ -743,13 +744,13 @@
 													</div>
 												</div>
 												<button class="carousel-control-prev" type="button"
-													data-bs-target="#carouselExampleControls"
+													data-bs-target="carouselExampleControls2"
 													data-bs-slide="prev">
 													<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 													<span class="visually-hidden">Previous</span>
 												</button>
 												<button class="carousel-control-next" type="button"
-													data-bs-target="#carouselExampleControls"
+													data-bs-target="carouselExampleControls2"
 													data-bs-slide="next">
 													<span class="carousel-control-next-icon" aria-hidden="true"></span>
 													<span class="visually-hidden">Next</span>
@@ -896,19 +897,17 @@
 									</div>
 									<c:if test="${!none}">
 										<div id="reco-li-container">
-											<p style="margin-bottom: 20px; margin-left: 10px;">직업 정보를
-												보고싶으면 본문의 내용을, 컨설팅을 받고 싶으면 직업 이름을 클릭해주세요</p>
+											<p style="margin-bottom: 20px; margin-left: 10px;font-size:18px;">직업 정보를
+												보고싶으면 <strong>직업 이름</strong>을, 컨설팅을 받고 싶으면 <strong>컨설팅받기</strong>를 클릭해주세요</p>
 											<c:forEach var="rere" items="${reres}">
 												<div class="reco-wrap">
 													<div class="reco-item">
-														<div>
-															${rere.job_nm}
-															<div
-																onclick="alert('직업선택이 완료 되었습니다.');location='/whou/member/insertConsult?job_cd=${rere.job_cd}'"
-																style="font-size: 16px; color: #5a3fff">컨설팅받기</div>
-														</div>
 														<div
-															onclick="location='/whou/job/info?job_cd=${rere.job_cd}'">${rere.descriptions}</div>
+															onclick="location='/whou/job/info?job_cd=${rere.job_cd}'">${rere.job_nm}</div>													
+														<div>${rere.descriptions}</div>
+														<div
+															onclick="confirm('선택하신 직업으로 컨설팅 받으시겠습니까?')?location='/whou/member/insertConsult?job_cd=${rere.job_cd}':false;"
+															style="font-size: 16px; color: #5a3fff">컨설팅받기</div>
 													</div>
 												</div>
 											</c:forEach>
@@ -926,209 +925,265 @@
 									</c:if>
 								</div>
 							</div>
-							<!-- 컨설팅  -->
-							<div class="tab-pane fade" id="nav-contact" role="tabpanel"
-								aria-labelledby="nav-contact-tab" tabindex="0">
-								<%-- <c:if test="${avilReinforce eq '' || avilReinforce==null || cunsultingNum == 0}">--%>
-								<c:if test="${cunsultingNum==0 }">
-									<div class="empty-box">
-										<div>컨설팅을 원한다면 직업적성검사를 받으세요.</div>
-										<a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
-									</div>
-								</c:if>
-								<c:if test="${!(avilReinforce eq '') || avilReinforce!=null }">
-									<div style="padding: 0px 10xp;">
-										<c:if test="${cunsultingNum > 0}">
-											<div style="margin: 0px 10xp;">
-												<h4>${memId}님의 컨설팅이 완료되었습니다.</h4>
-											</div>
-											<div class="card">
-												<div class="card-header">직업 이름</div>
-												<div class="card-body">
-													${jobDetailCunsuling.getBaseInfo().getJob_nm()}
-												</div>
-											</div>
-											<div class="card">
-												<div class="card-header">직업 설명</div>
-												<div class="card-body">
-													${jobDetailCunsuling.getWorkList().get(0).getWork()}
-												</div>
-											</div>
-											<div class="card">
-												<div class="card-header">취업 방법</div>
-												<div class="card-body">
-													<c:forEach var="getRecruit"
-														items="${jobDetailCunsuling.getJobReady().getRecruit()}">
-														<p class="card-text">${getRecruit.recruit}</p>
-													</c:forEach>
-												</div>
-											</div>
-											<div class="card">
-												<div class="card-header">관련 교육</div>
-												<div class="card-body">
-													<c:forEach var="getCurriculum"
-														items="${jobDetailCunsuling.getJobReady().getCurriculum()}">
-														<p class="card-text">${getCurriculum.curriculum}</p>
-													</c:forEach>
-												</div>
-
-
-											</div>
-											<div class="card">
-
-												<div class="card-header">관련학과</div>
-												<div class="card-body">
-													<c:forEach var="getDepartList"
-														items="${jobDetailCunsuling.getDepartList()}">
-					                                		${getDepartList.depart_name},
-					                                	</c:forEach>
-													<div style="height: 300px;">
-														<canvas id="chartCanvas"></canvas>
-														<script>
-														  	function getSpecificColor(index) {
-														    	  const colors = [
-														    		  '#FF6D60', '#F7D060', '#F3E99F', '#98D8AA',
-														    		  '#3AA6B9', '#F0F0F0', '#F9D949', '#F45050',
-														    		  '#F7C8E0', '#DFFFD8', '#B4E4FF', '#95BDFF',
-														    		  '#6F69AC', '#95DAC1', '#C56183',
-														    	  ];
-														    	  return colors[index % colors.length]; // 인덱스에 따라서 색상을 반복해서 사용합니다.
-															}
-														  	var charLabel = [
-														        <c:forEach items="${majorChartMajor}" var="chartMajorLabel" varStatus="status">
-														            '${chartMajorLabel}'<c:if test="${not status.last}">,</c:if>
-														        </c:forEach>
-														    ];
-														  	var chartData = [
-														        <c:forEach items="${majorChartMajorData}" var="chartMajorData" varStatus="status">
-														            '${chartMajorData}'<c:if test="${not status.last}">,</c:if>
-														        </c:forEach>
-														    ];
-														  	const canvas3 = document.getElementById("chartCanvas");
-													    	const data3 = {
-													    	    	  labels: charLabel,
-													    	    	  datasets: [
-													    	    	    {
-													    	    	      label: "종사자의 전공 계열",
-													    	    	      data: chartData,
-													    	    	      backgroundColor: Array.from({ length: charLabel.length }, (_, index) => getSpecificColor(index)), // 무작위 색상을 5000개 생성하여 배열로 설정,
-													    	    	      hoverOffset: 4,
-													    	    	    },
-													    	    	  ],
-													    	    	};
-													    	const options3 = {
-													    			plugins: {
-													    				responsive: false,
-													    				title: {
-													    					display: true,
-													    					position: 'bottom',
-													    					text: '종사자의 전공 계열',
-													    					font: { size: 20, weight: 'bold' },
-													    					},
-													    			    legend: {
-													    			    	position: 'right',
-													    			    	},
-																	},
-															};
 			
-															new Chart(canvas3, {
-																type: "doughnut",
-																data: data3,
-																options: options3,
-															});
-													  	</script>
-													</div>
-													<div>
-														${jobDetailCunsuling.getMajorChart().get(0).getSource()}</div>
-												</div>
+							<!-- 컨설팅  -->
+		                     <div class="tab-pane fade" id="nav-contact" role="tabpanel"
+		                        aria-labelledby="nav-contact-tab" tabindex="0">
+		                        <%-- <c:if test="${avilReinforce eq '' || avilReinforce==null || cunsultingNum == 0}">--%>
+		                        <c:if test="${cunsultingNum==0 }">
+		                           <div class="empty-box">
+		                              <div>컨설팅을 원한다면 직업적성검사를 받으세요.</div>
+		                              <a href="/whou/aptitude/aptitudeMain">검사하러가기 >></a>
+		                           </div>
+		                        </c:if>
+		                        <c:if test="${!(avilReinforce eq '') || avilReinforce!=null }">
+		                           <div style="padding: 0px 10xp;">
+		                              <c:if test="${cunsultingNum > 0}">
+		                                 <div style="margin: 0px 10xp;">
+		                                    <h4>${memId}님의 컨설팅이 완료되었습니다.</h4>
+		                                 </div>
+		                                 <div class="card">
+		                                    <div class="card-header">직업 이름</div>
+		                                    <div class="card-body">
+		                                       ${jobDetailCunsuling.getBaseInfo().getJob_nm()}
+		                                    </div>
+		                                 </div>
+		                                 <div class="card">
+		                                    <div class="card-header">직업 설명</div>
+		                                    <div class="card-body">
+		                                       <c:forEach var="getWorkList"
+		                                          items="${jobDetailCunsuling.getWorkList()}">
+		                                          <p class="card-text">
+		                                             <div style="display:flex;">
+		                                                <div style="padding-right: 10px;"><i class="fa-solid fa-chevron-right"></i></div>
+		                                                <div>${getWorkList.work}</div></p>
+		                                             </div>
+		                                       </c:forEach>
+		                                    </div>
+		                                 </div>
+		                                 <div class="card">
+		                                    <div class="card-header">취업 방법</div>
+		                                    <div class="card-body">
+		                                       <c:forEach var="getRecruit"
+		                                          items="${jobDetailCunsuling.getJobReady().getRecruit()}">
+		                                          <p class="card-text">${getRecruit.recruit}</p>
+		                                       </c:forEach>
+		                                    </div>
+		                                 </div>
+		                                 <div class="card">
+		                                    <div class="card-header">관련 교육</div>
+		                                    <div class="card-body">
+		                                       <c:forEach var="getCurriculum"
+		                                          items="${jobDetailCunsuling.getJobReady().getCurriculum()}">
+		                                          <p class="card-text">${getCurriculum.curriculum}</p>
+		                                       </c:forEach>
+		                                    </div>
+		                                 </div>
+		                                 <div class="card">
+		                                    <div class="card-header">연봉 정보</div>
+		                                    <div class="card-body">
+		                                       평균 연봉 : ${jobDetailCunsuling.getBaseInfo().getWage()}만 원<br><br>
+		                                       ${jobDetailCunsuling.getBaseInfo().getWage_source()}<br><br>
+		                                    </div>
+		                                 </div>
+		                                 <c:if test="${jobDetailCunsuling.getDepartList().get(0).getDepart_id() != null}">
+		                                    <div class="card">
+		                                       <div class="card-header">관련학과</div>
+		                                       <div class="card-body">
+		                                          <c:forEach var="getDepartList"
+		                                             items="${jobDetailCunsuling.getDepartList()}">
+		                                             <c:if test="${!getDepartList.depart_name.equals(jobDetailCunsuling.getDepartList().get(0).getDepart_name())}">
+		                                                ,
+		                                             </c:if>
+		                                                        ${getDepartList.depart_name}
+		                                                  </c:forEach>
+		                                                  <div style="display:flex;">
+		                                             <div style="height: 280px; width:400px;" class="mb-4">
+		                                                <canvas id="chartCanvas"></canvas>
+		                                                <script>
+		                                                     function getSpecificColor(index) {
+		                                                         const colors = [
+		                                                            '#FF6D60', '#F7D060', '#F3E99F', '#98D8AA',
+		                                                            '#3AA6B9', '#F0F0F0', '#F9D949', '#F45050',
+		                                                            '#F7C8E0', '#DFFFD8', '#B4E4FF', '#95BDFF',
+		                                                            '#6F69AC', '#95DAC1', '#C56183',
+		                                                         ];
+		                                                         return colors[index % colors.length]; // 인덱스에 따라서 색상을 반복해서 사용합니다.
+		                                                   }
+		                                                     var charLabel = [
+		                                                        <c:forEach items="${majorChartMajor}" var="chartMajorLabel" varStatus="status">
+		                                                            '${chartMajorLabel}'<c:if test="${not status.last}">,</c:if>
+		                                                        </c:forEach>
+		                                                    ];
+		                                                     var chartData = [
+		                                                        <c:forEach items="${majorChartMajorData}" var="chartMajorData" varStatus="status">
+		                                                            '${chartMajorData}'<c:if test="${not status.last}">,</c:if>
+		                                                        </c:forEach>
+		                                                    ];
+		                                                     const canvas3 = document.getElementById("chartCanvas");
+		                                                    const data3 = {
+		                                                             labels: charLabel,
+		                                                             datasets: [
+		                                                               {
+		                                                                 label: "종사자의 전공 계열",
+		                                                                 data: chartData,
+		                                                                 backgroundColor: Array.from({ length: charLabel.length }, (_, index) => getSpecificColor(index)), // 무작위 색상을 5000개 생성하여 배열로 설정,
+		                                                                 hoverOffset: 4,
+		                                                               },
+		                                                             ],
+		                                                           };
+		                                                    const options3 = {
+		                                                          plugins: {
+		                                                             responsive: false,
+		                                                             title: {
+		                                                                display: true,
+		                                                                position: 'bottom',
+		                                                                text: '종사자의 전공 계열',
+		                                                                font: { size: 20, weight: 'bold' },
+		                                                                },
+		                                                              legend: {
+		                                                                 position: 'right',
+		                                                                 },
+		                                                         },
+		                                                   };
+		               
+		                                                   new Chart(canvas3, {
+		                                                      type: "doughnut",
+		                                                      data: data3,
+		                                                      options: options3,
+		                                                   });
+		                                                  </script>
+		                                                <div> ${jobDetailCunsuling.getMajorChart().get(0).getSource()}</div>
+		                                               </div>
+		                                               
+		                                               <div style="height: 280px; width:400px;" class="mb-4">
+		                                                <canvas id="chartCanvas2"></canvas>
+		                                                <script>
+		                                                     var charLabel2 = ['중졸이하','고졸','전문대졸','대졸','대학원졸','박사졸'];
+		                                                     var chartData2 = [${jobDetailCunsuling.getEduChart().get(0).getChart_data()} ];
+		                                                     const canvas4 = document.getElementById("chartCanvas2");
+		                                                    const data4 = {
+		                                                             labels: charLabel2,
+		                                                             datasets: [
+		                                                               {
+		                                                                 label: "종사자 학력 수준",
+		                                                                 data: chartData2,
+		                                                                 backgroundColor: Array.from({ length: charLabel.length }, (_, index) => getSpecificColor(index)), // 무작위 색상을 5000개 생성하여 배열로 설정,
+		                                                                 hoverOffset: 4,
+		                                                               },
+		                                                             ],
+		                                                           };
+		                                                    const options4 = {
+		                                                          plugins: {
+		                                                             responsive: false,
+		                                                             title: {
+		                                                                display: true,
+		                                                                position: 'bottom',
+		                                                                text: '종사자 학력 수준',
+		                                                                font: { size: 20, weight: 'bold' },
+		                                                                },
+		                                                              legend: {
+		                                                                 position: 'right',
+		                                                                 },
+		                                                         },
+		                                                   };
+		               
+		                                                   new Chart(canvas4, {
+		                                                      type: "doughnut",
+		                                                      data: data4,
+		                                                      options: options4,
+		                                                   });
+		                                                  </script>
+		                                                <div> ${jobDetailCunsuling.getEduChart().get(0).getSource()}</div>
+		                                             </div>
+		                                       </div>
+		                                    </div>
+		                                 </div>
+                                    <%-- 
+                                            <div>
+                                               종사자 전공 계열 분포 : 
+                                               <c:forEach var="majorChartMajor" items="${majorChartMajor}">
+                                                  ${majorChartMajor}
+                                               </c:forEach>
+                                               <c:forEach var="majorChartMajorData" items="${majorChartMajorData}">
+                                                  ${majorChartMajorData}%
+                                               </c:forEach>
+                                               ${jobDetailCunsuling.getMajorChart().get(0).getSource()}
+                                            </div>
+                                             --%>
+                                 </c:if>
+                                 <c:if
+                                    test="${jobDetailCunsuling.getJobReady().getCertificate().get(0) != null }">
+                                    <div class="card">
+                                       <div class="card-header">자격증</div>
+                                       <div class="card-body">
+                                          <c:forEach var="getCertificate"
+                                             items="${jobDetailCunsuling.getJobReady().getCertificate()}">
+                                             <p class="card-text">${getCertificate.certificate}</p>
+                                          </c:forEach>
+                                       </div>
+                                    </div>
+                                 </c:if>
 
-											</div>
-											<!-- 
-			                                <div>
-			                                	종사자 전공 계열 분포 : 
-			                                	<c:forEach var="majorChartMajor" items="${majorChartMajor}">
-			                                		${majorChartMajor}
-			                                	</c:forEach>
-			                                	<c:forEach var="majorChartMajorData" items="${majorChartMajorData}">
-			                                		${majorChartMajorData}%
-			                                	</c:forEach>
-			                                	${jobDetailCunsuling.getMajorChart().get(0).getSource()}
-			                                </div>
-			                                 -->
+                                 <div class="card">
+                                    <div class="card-header">요구 능력</div>
+                                    <div class="card-body">
+                                       <c:forEach var="getAbilityList"
+                                          items="${jobDetailCunsuling.getAbilityList()}">
+                                                  ${getAbilityList.ability_name}
+                                               </c:forEach>
+                                    </div>
+                                 </div>
+                                 <div>
+                                    <div class="card">
+                                       <div class="card-header">직업적성검사 결과</div>
+                                       <div class="card-body">
+                                          <c:forEach var="i" begin="0" end="${fn:length(needAvil)}">
+                                             <c:set var="currentNeedAvil" value="${needAvil[i]}" />
+                                             <c:set var="currentAvilArrValue"
+                                                value="${avilArrValue[i]}" />
+                                             <c:set var="currentReinDTO" value="${reinDTO[i]}" />
+                                             <c:if
+                                                test="${currentNeedAvil != null && currentAvilArrValue < 55}">
+                                                  ${currentNeedAvil}영역이 ${currentAvilArrValue}점으로 보완이 필요합니다.
+                                                  아래와 같은 방법을 통해 보완할 수 있습니다.
+                                                
+                                                <ol>
+                                                   <li>${currentReinDTO.getMethod01()}</li>
+                                                   <li>${currentReinDTO.getMethod02()}</li>
+                                                   <li>${currentReinDTO.getMethod03()}</li>
+                                                   <li>${currentReinDTO.getMethod04()}</li>
+                                                   <li>${currentReinDTO.getMethod05()}</li>
+                                                   <li>${currentReinDTO.getMethod06()}</li>
+                                                   <li>${currentReinDTO.getMethod07()}</li>
+                                                   <li>${currentReinDTO.getMethod08()}</li>
+                                                   <li>${currentReinDTO.getMethod09()}</li>
+                                                   <li>${currentReinDTO.getMethod10()}</li>
+                                                </ol>
+                                             </c:if>
 
-											<c:if
-												test="${jobDetailCunsuling.getJobReady().getCertificate().get(0) != null }">
-												<div class="card">
-													<div class="card-header">자격증</div>
-													<div class="card-body">
-														<c:forEach var="getCertificate"
-															items="${jobDetailCunsuling.getJobReady().getCertificate()}">
-															<p class="card-text">${getCertificate.certificate}</p>
-														</c:forEach>
-													</div>
-												</div>
-											</c:if>
+                                             <c:if
+                                                test="${currentNeedAvil != null && currentAvilArrValue > 55 && currentAvilArrValue < 101}">
+                                                  ${currentNeedAvil}영역이 ${currentAvilArrValue}점으로 준수합니다. 
+                                                  자격증과 기타 활동을 위주로 수행하시는 것을 추천드립니다.
+                                              </c:if>
+                                          </c:forEach>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </c:if>
 
-											<div class="card">
-												<div class="card-header">요구 능력</div>
-												<div class="card-body">
-													<c:forEach var="getAbilityList"
-														items="${jobDetailCunsuling.getAbilityList()}">
-			                                			${getAbilityList.ability_name}
-			                                		</c:forEach>
-												</div>
-											</div>
-											<div>
-												<div class="card">
-													<div class="card-header">직업적성검사 결과</div>
-													<div class="card-body">
-														<c:forEach var="i" begin="0" end="${fn:length(needAvil)}">
-															<c:set var="currentNeedAvil" value="${needAvil[i]}" />
-															<c:set var="currentAvilArrValue"
-																value="${avilArrValue[i]}" />
-															<c:set var="currentReinDTO" value="${reinDTO[i]}" />
-															<c:if
-																test="${currentNeedAvil != null && currentAvilArrValue < 55}">
-														        ${currentNeedAvil}영역이 ${currentAvilArrValue}점으로 보완이 필요합니다.
-														        아래와 같은 방법을 통해 보완할 수 있습니다.
-																
-																<ol>
-																	<li>${currentReinDTO.getMethod01()}</li>
-																	<li>${currentReinDTO.getMethod02()}</li>
-																	<li>${currentReinDTO.getMethod03()}</li>
-																	<li>${currentReinDTO.getMethod04()}</li>
-																	<li>${currentReinDTO.getMethod05()}</li>
-																	<li>${currentReinDTO.getMethod06()}</li>
-																	<li>${currentReinDTO.getMethod07()}</li>
-																	<li>${currentReinDTO.getMethod08()}</li>
-																	<li>${currentReinDTO.getMethod09()}</li>
-																	<li>${currentReinDTO.getMethod10()}</li>
-																</ol>
-															</c:if>
-
-															<c:if
-																test="${currentNeedAvil != null && currentAvilArrValue > 55 && currentAvilArrValue < 101}">
-														        ${currentNeedAvil}영역이 ${currentAvilArrValue}점으로 준수합니다. 
-														        자격증과 기타 활동을 위주로 수행하시는 것을 추천드립니다.
-														    </c:if>
-														</c:forEach>
-													</div>
-												</div>
-
-											</div>
-										</c:if>
-
-									</div>
-								</c:if>
-							</div>
+                           </div>
+                        </c:if>
+                     </div>
 
 
-						</div>
-					</div>
+                  </div>
+               </div>
 					<div class="right-bottom-box">
 						<div class="notice-box">
 							<div>공지사항</div>
-							<%-- 								<div><a href="/whou/cs/noticeDetail?num=${notice.num}">${notice.subject}</a></div> --%>
+							<div><a href="/whou/cs/noticeDetail?num=${notice.num}">${notice.subject}</a></div>
 						</div>
 						<ul class="test-list">
 	                     <c:if test="${!scoreTrue1}"><li onclick="location='/whou/aptitude/intro?load=1&qnum=21'">적성검사 하러가기</li></c:if>
@@ -1178,7 +1233,12 @@
             $("#nav-contact-tab").addClass("active");
             $("#nav-contact").addClass("active show");
        }
-        
+        function reco(){
+        	$(".nav-link").removeClass("active");
+       		$(".tab-pane").removeClass("active show");
+         	$("#nav-reco-tab").addClass("active");
+         	$("#nav-reco").addClass("active show");
+        }
          // 적성 차트
       		const aptitudeTop3 = ${aptitudeTop3};
          	let aptitudeScoreArr = [0];
@@ -1655,6 +1715,7 @@
         }; 
 
         // Function to generate the dynamic HTML content
+
         function generateDynamicHTML(data) {
             const recoWrapDiv = document.createElement('div');
             recoWrapDiv.className = 'reco-wrap';
@@ -1665,9 +1726,9 @@
             const jobNameDiv = document.createElement('div');
             jobNameDiv.innerText = data.job_nm;
             const getRecoDiv = document.createElement('div');
-            getRecoDiv.innerText = '추천받기';
+            getRecoDiv.innerText = '컨설팅받기';
             getRecoDiv.onclick = function () {
-				alert("컨설팅 받을 직업 선택이 완료 되었습니다.");
+				alert("선택하신 직업으로 컨설팅 받으시겠습니까?");
                 location = '/whou/member/insertConsult?job_cd='+data.job_cd;
             };
             getRecoDiv.style.fontSize = "16px";
@@ -1678,9 +1739,9 @@
             jobDescriptionDiv.onclick = function () {
                 location = '/whou/job/info?job_cd='+data.job_cd;
             };
-			jobNameDiv.appendChild(getRecoDiv);
             recoItemDiv.appendChild(jobNameDiv);
             recoItemDiv.appendChild(jobDescriptionDiv);
+            recoItemDiv.appendChild(getRecoDiv);
             recoWrapDiv.appendChild(recoItemDiv);
 			
             const dynamicContentDiv = document.getElementById('reco-li-container');
@@ -1776,49 +1837,38 @@
 		
 		var recoAptis = ${recoAptis};
 		var recoIntes = ${recoIntes};
-		const labels = ['TOTAL', 'APTITUDE1','JOB_NM'];
-
-		if(recoAptis!=null){
-			recoApti1 = recoAptis[0];
-		    const recoAptis_apti1 = recoApti1.map((item) => item['APTITUDE1']*10);
-		    const recoAptis_total1 = recoApti1.map((item) => item['TOTAL']*10);
-		    const recoAptis_job_nm1 = recoApti1.map((item) => item[labels[2]]);
-		    
-			recoApti2 = recoAptis[1];
-		    const recoAptis_apti2 = recoApti2.map((item) => item['APTITUDE2']*10);
-		    const recoAptis_total2 = recoApti2.map((item) => item[labels[1]]*10);
-		    const recoAptis_job_nm2 = recoApti2.map((item) => item[labels[2]]);
-		    
-			recoApti3 = recoAptis[2];
-		    const recoAptis_apti3 = recoApti3.map((item) => item['APTITUDE3']*10);
-		    const recoAptis_total3 = recoApti3.map((item) => item[labels[1]]*10);
-		    const recoAptis_job_nm3 = recoApti3.map((item) => item[labels[2]]);
-		    
-		    createChart("aptiChart1",recoAptis_job_nm1,recoAptis_apti1,recoAptis_total1);
-		    createChart("aptiChart2",recoAptis_job_nm2,recoAptis_apti2,recoAptis_total2);
-		    createChart("aptiChart3",recoAptis_job_nm3,recoAptis_apti3,recoAptis_total3);
-		}
 		
-	    if(recoIntes!=null){
-	    	recoInte1 = recoIntes[0];
-			const labels1 = Object.keys(recoInte1[0]); // ['TOTAL', 'APTITUDE1']
-		    const recoIntes_apti1 = recoInte1.map((item) => item['INTEREST1']*10);
-		    const recoIntes_total1 = recoInte1.map((item) => item[labels1[1]]*10);
-		    const recoIntes_job_nm1 = recoInte1.map((item) => item[labels1[2]]);
-		    
-		    recoInte2 = recoIntes[1];
-		    const recoIntes_apti2 = recoInte2.map((item) => item['INTEREST2']*10);
-		    const recoIntes_total2 = recoInte2.map((item) => item[labels1[1]]*10);
-		    const recoIntes_job_nm2 = recoInte2.map((item) => item[labels1[2]]);
-		    
-		    recoInte3 = recoIntes[2];
-		    const recoIntes_apti3 = recoInte3.map((item) => item['INTEREST3']*10);
-		    const recoIntes_total3 = recoInte3.map((item) => item[labels1[1]]*10);
-		    const recoIntes_job_nm3 = recoInte3.map((item) => item[labels1[2]]);
-		    createChart("inteChart1",recoIntes_job_nm1,recoIntes_apti1,recoIntes_total1);
-		    createChart("inteChart2",recoIntes_job_nm2,recoIntes_apti2,recoIntes_total2);
-		    createChart("inteChart3",recoIntes_job_nm3,recoIntes_apti3,recoIntes_total3);
-	    }
+		recoApti1 = recoAptis[0];
+		const labels = Object.keys(recoApti1[0]); // ['TOTAL', 'APTITUDE1']
+	    const recoAptis_apti1 = recoApti1.map((item) => item["APTITUDE1"]*10);
+	    const recoAptis_total1 = recoApti1.map((item) => item['TOTAL']*10);
+	    const recoAptis_job_nm1 = recoApti1.map((item) => item[labels[2]]);
+	    
+		recoApti2 = recoAptis[1];
+	    const recoAptis_apti2 = recoApti2.map((item) => item["APTITUDE2"]*10);
+	    const recoAptis_total2 = recoApti2.map((item) => item['TOTAL']*10);
+	    const recoAptis_job_nm2 = recoApti2.map((item) => item[labels[2]]);
+	    
+		recoApti3 = recoAptis[2];
+	    const recoAptis_apti3 = recoApti3.map((item) => item["APTITUDE3"]*10);
+	    const recoAptis_total3 = recoApti3.map((item) => item['TOTAL']*10);
+	    const recoAptis_job_nm3 = recoApti3.map((item) => item[labels[2]]);
+	    
+	    recoInte1 = recoIntes[0];
+		const labels1 = Object.keys(recoInte1[0]); // ['TOTAL', 'APTITUDE1']
+	    const recoIntes_apti1 = recoInte1.map((item) => item["INTEREST1"]*10);
+	    const recoIntes_total1 = recoInte1.map((item) => item['TOTAL']*10);
+	    const recoIntes_job_nm1 = recoInte1.map((item) => item[labels1[2]]);
+	    
+	    recoInte2 = recoIntes[1];
+	    const recoIntes_apti2 = recoInte2.map((item) => item["INTEREST2"]*10);
+	    const recoIntes_total2 = recoInte2.map((item) => item['TOTAL']*10);
+	    const recoIntes_job_nm2 = recoInte2.map((item) => item[labels1[2]]);
+	    
+	    recoInte3 = recoIntes[2];
+	    const recoIntes_apti3 = recoInte3.map((item) => item['INTEREST3']*10);
+	    const recoIntes_total3 = recoInte3.map((item) => item['TOTAL']*10);
+	    const recoIntes_job_nm3 = recoInte3.map((item) => item[labels1[2]]);
 	    
 	    var maxPoint=${highValueOfTest}*10;
 	    function createChart(chartId,j_nm_labels,dataTest,dataTotal){
@@ -1830,14 +1880,14 @@
 					labels:j_nm_labels,
 					datasets: [
 				          {
-				            label: labels[0],
+				            label: labels[1],
 				            data: dataTest,
 				            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Customize the color
 				            borderColor: 'rgba(75, 192, 192, 1)', // Customize the border color
 				            borderWidth: 1, // Border width of bars
 				          },
 				          {
-				            label: labels[1],
+				            label: labels[0],
 				            data: dataTotal,
 				            backgroundColor: 'rgba(255, 99, 132, 0.2)', // Customize the color
 				            borderColor: 'rgba(255, 99, 132, 1)', // Customize the border color
@@ -1858,14 +1908,13 @@
 			});
 	    	
 	    }
-
+	    createChart("aptiChart1",recoAptis_job_nm1,recoAptis_apti1,recoAptis_total1);
+	    createChart("aptiChart2",recoAptis_job_nm2,recoAptis_apti2,recoAptis_total2);
+	    createChart("aptiChart3",recoAptis_job_nm3,recoAptis_apti3,recoAptis_total3);
 	    
-
-	    
-	    //console.log(${aptiRank});
-	    //console.log(${inteRank});
-	    //console.log(${valueRank});
-		
+	    createChart("inteChart1",recoIntes_job_nm1,recoIntes_apti1,recoIntes_total1);
+	    createChart("inteChart2",recoIntes_job_nm2,recoIntes_apti2,recoIntes_total2);
+	    createChart("inteChart3",recoIntes_job_nm3,recoIntes_apti3,recoIntes_total3);
 		
         </script>
 	<script>
