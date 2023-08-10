@@ -898,13 +898,15 @@
 									<c:if test="${!none}">
 										<div id="reco-li-container">
 											<p style="margin-bottom: 20px; margin-left: 10px;font-size:18px;">직업 정보를
-												보고싶으면 <strong>직업 이름</strong>을, 컨설팅을 받고 싶으면 <strong>컨설팅받기</strong>를 클릭해주세요</p>
+												보고싶으면 <strong>직업 이름</strong>을, 컨설팅을 받고 싶으면 <strong>컨설팅받기</strong>를 클릭해주세요<br>
+												<span style="font-size:16px;">적합도는 가장 높은 직업 적합도 총 점수를 기준으로 계산합니다</span>
+												</p>
 											<c:forEach var="rere" items="${reres}">
 												<div class="reco-wrap">
 													<div class="reco-item">
 														<div onclick="location='/whou/job/info?job_cd=${rere.job_cd}'">
 															${rere.job_nm}
-															<p style="font-size:16px;">적합도 : ${(rere.total/highValueOfTest)*100}%</p>
+															<p style="font-size:16px;">적합도 : ${Math.round((rere.total/highValueOfTest)*100000)/1000}%</p>
 														</div>
 														<div>${rere.descriptions}</div>
 														<div
@@ -1727,7 +1729,7 @@
 
             const jobNameDiv = document.createElement('div');
             jobNameDiv.innerHTML=  data.job_nm+'<p style="font-size:16px;">'
-            + '적합도 : '+Math.round((data.total/${highValueOfTest}) * 1000) / 10+'%'+'</p>';
+            + '적합도 : '+Math.round((data.total/${highValueOfTest}) * 100000) / 1000+'%'+'</p>';
             const getRecoDiv = document.createElement('div');
             getRecoDiv.innerText = '컨설팅받기';
             getRecoDiv.onclick = function () {
