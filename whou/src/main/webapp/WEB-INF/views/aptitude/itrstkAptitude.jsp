@@ -192,7 +192,7 @@
 											<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 4 + 2}" value="2" ${arrList[status.index]=='2' ? 'checked' : ''} autocomplete="off">
 											<label class="btn btn-outline-primary" for="btnradio${status.index * 4 + 2}">${item.answer02}</label>
 	
-											<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 4 + 3}" value="3" ${arrList[status.index]=='3' ? 'checked' : ''} autocomplete="off" checked>
+											<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 4 + 3}" value="3" ${arrList[status.index]=='3' ? 'checked' : ''} autocomplete="off">
 											<label class="btn btn-outline-primary" for="btnradio${status.index * 4 + 3}">${item.answer03}</label>
 	
 											<input type="radio" class="btn-check" name="btnradio${status.index+1}" id="btnradio${status.index * 4 + 4}" value="4" ${arrList[status.index]=='4' ? 'checked' : ''} autocomplete="off">

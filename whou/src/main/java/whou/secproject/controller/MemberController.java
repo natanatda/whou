@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -746,6 +747,90 @@ public class MemberController {
   		}
         model.addAttribute("testTrue", new ArrayList<Boolean>(Arrays.asList(aptiTrue,inteTrue,valueTrue)));
         
+        LinkedHashMap<String,Double> aptiRank = null;
+        LinkedHashMap<String,Double> inteRank = null;
+        LinkedHashMap<String,Double> sortedInteRank = null;
+        LinkedHashMap<String,Integer> valueRank = null;
+        LinkedHashMap<String, Integer> sortedValueRank = null;
+        ArrayList<List<Integer>> Apti_jobs= null;
+        ArrayList<List<Integer>> Inte_jobs= null;
+        
+        if(aptiTrue) {
+        	aptiRank = new LinkedHashMap<String,Double>();
+        	Apti_jobs = new ArrayList<List<Integer>>();
+        	List<String> aptiLabel = redao.Tokenizer(redto.getAbc3(), "\\+");
+        	List<Double> aptiScore = redao.doubleTokenizer(redto.getAptitude_score(), "\\+");
+        	List<Integer> aptiIndex = new ArrayList<Integer>(Arrays.asList(1,4,7,10,2,5,8,11,3,6,9));
+        	for(int t = 0; t<aptiLabel.size(); t++) {
+        		Integer index = aptiIndex.get(t)-1;
+        		String tals = aptiLabel.get(index);
+        		if(tals.equals("자아성찰능력")) tals = "자기성찰능력";
+        		if(t<5) aptiRank.put(tals, aptiScore.get(index));
+        		Apti_jobs.add(serviceRe.getJobLi(tals));
+        	}
+        }
+        
+        if(inteTrue) {
+        	inteRank = new LinkedHashMap<String,Double>();
+        	List<String> inteLabel = new ArrayList<String>(Arrays.asList("자연과학","AI·소프트웨어","공학","법률·행정","복지","교육","예술·미디어","스포츠","마케팅","금융·경영","여가·관광","보건의료", "농생명", "환경", "제조", "물류·운송·유통", "설계·건축·토목"));
+        	List<Double> inteScore = redao.doubleTokenizer(redto.getInterest_score(), "\\+");
+        	for(int t = 0; t<inteLabel.size(); t++) {
+        		inteRank.put(inteLabel.get(t), inteScore.get(t));
+        	}
+        	List<Map.Entry<String, Double>> entryList = new ArrayList<>(inteRank.entrySet());
+        	
+        	Collections.sort(entryList, new Comparator<Map.Entry<String, Double>>() {
+        		@Override
+        		public int compare(Map.Entry<String, Double> entry1, Map.Entry<String, Double> entry2) {
+        			return Double.compare(entry2.getValue(), entry1.getValue()); // Sorting in descending order
+        		}
+        	});
+        	Inte_jobs = new ArrayList<List<Integer>>(); 
+        	sortedInteRank = new LinkedHashMap<>();
+        	for (Map.Entry<String, Double> entry : entryList) {
+        		sortedInteRank.put(entry.getKey(), entry.getValue());
+        		Inte_jobs.add(serviceRe.getInteLi(entry.getKey()));
+        	}
+        }
+        if(valueTrue) {
+        	valueRank = new LinkedHashMap<String,Integer>();
+        	List<String> valueLabel = new ArrayList<String>(Arrays.asList("안정성","보수","일과 삶의 균형","즐거움","소속감","자기계발","도전성","영향력","사회적 기여","성취","사회적 안정","자율성"));
+        	List<Integer> valueScore = redao.valueTokenizer(redto.getValues_score(), ",");
+        	for(int t = 0; t < valueLabel.size(); t++) valueRank.put(valueLabel.get(t), valueScore.get(t));
+        	List<Map.Entry<String, Integer>> entryList = new ArrayList<>(valueRank.entrySet());
+        	
+        	Collections.sort(entryList, new Comparator<Map.Entry<String, Integer>>() {
+        		@Override
+        		public int compare(Map.Entry<String, Integer> entry1, Map.Entry<String, Integer> entry2) {
+        			return Integer.compare(entry2.getValue(), entry1.getValue()); // Sorting in descending order
+        		}
+        	});
+        	sortedValueRank = new LinkedHashMap<>();
+        	for (Map.Entry<String, Integer> entry : entryList) {
+        		sortedValueRank.put(entry.getKey(), entry.getValue());
+        	}
+        }
+	     
+        
+        
+//        String jsonAptiRank=null, jsonInteRank=null, jsonValueRank=null;
+//        try {
+//            jsonAptiRank= objectMapper.writeValueAsString(aptiRank);
+//            jsonInteRank= objectMapper.writeValueAsString(sortedInteRank);
+//            jsonValueRank= objectMapper.writeValueAsString(sortedValueRank);
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//            // Handle the exception accordingly
+//        }
+//        
+//        model.addAttribute("aptiRank", jsonAptiRank);
+//        model.addAttribute("inteRank", jsonInteRank);
+//        model.addAttribute("valueRank", jsonValueRank);
+        
+        model.addAttribute("aptiRank", aptiRank);
+        model.addAttribute("inteRank", sortedInteRank);
+        model.addAttribute("valueRank", sortedValueRank);
+        
         if(!none) {
             String [] impt = request.getParameterValues("importance");
             if(impt != null) {
@@ -763,12 +848,17 @@ public class MemberController {
             	List<String> valueCd = serviceRe.getValueCd("values_common"); // 가치 평균
             	List<Integer> jList = serviceRe.allJobCd("job_info"); // 직업 일련번호
             	int jC = jList.size(); // 직업 수
-              
+            	
+            	
             	List<String> scoreStrs = Arrays.asList( // 점수 리스트
             			redto.getAptitude_score(),redto.getInterest_score()); 
               
-            	List<ArrayList<String>> jobNumList = Arrays.asList( // 해당 직업 리스트
-            			redto.getAptitude_jobs(),redto.getInterest_jobs());
+//            	List<ArrayList<String>> jobNumList = Arrays.asList( // 해당 직업 리스트
+//            			redto.getAptitude_jobs(),redto.getInterest_jobs());
+            	
+            	//
+            	List<ArrayList<List<Integer>>> jobNumList = Arrays.asList( // 해당 직업 리스트(정렬됨)
+            			Apti_jobs,Inte_jobs);
               
             	List<String> limitStrs = Arrays.asList("\\+","\\+"); // 구분자
             	
@@ -781,21 +871,42 @@ public class MemberController {
               
             	AtomicInteger i = new AtomicInteger(0);
             	scores.entrySet().forEach(entry -> {
-            	    List<String> jobNum = jobNumList.get(i.get());
-            	    if (jobNum != null) {
-            	        List<Double> normalize = redao.normalizePer(entry.getKey(), entry.getValue(), importancesRef.get().get(i.getAndIncrement())).subList(0, 3);
+            		ArrayList<List<Integer>> jobNums = jobNumList.get(i.get());
+            	    if (jobNums != null) {
+            	        List<Double> normalize = redao.normalizePer(entry.getKey(), entry.getValue(), importancesRef.get().get(i.getAndIncrement()));
             	        IntStream.range(0, normalize.size())
             	                .forEach(j -> {
             	                    double d = normalize.get(j);
-            	                    StringTokenizer st = new StringTokenizer(jobNum.get(j), ",");
-            	                    while (st.hasMoreTokens()) {
-            	                        int f = jList.indexOf(Integer.parseInt(st.nextToken()));
-            	                        jobScore.set(f, jobScore.get(f) * d);
-            	                        jobScorePoint[f][3 * (i.get() - 1) + j] = d;
-            	                    }
+        	                    	List<Integer> jobNum = jobNums.get(j);
+        	                    	int len2 = jobNum.size();
+        	                    	for(int n=0; n<len2; n++) {
+        	                    		int f = jList.indexOf(jobNum.get(n));
+        	                    		jobScore.set(f, jobScore.get(f) * d);
+        	                    		if(j<3) jobScorePoint[f][3 * (i.get() - 1) + j] = d;
+        	                    	}
             	                });
+            	    }else {
+            	    	i.getAndIncrement();
             	    }
             	});
+            	
+//            	AtomicInteger i = new AtomicInteger(0);
+//            	scores.entrySet().forEach(entry -> {
+//            		List<String> jobNum = jobNumList.get(i.get());
+//            		if (jobNum != null) {
+//            			List<Double> normalize = redao.normalizePer(entry.getKey(), entry.getValue(), importancesRef.get().get(i.getAndIncrement())).subList(0, 3);
+//            			IntStream.range(0, normalize.size())
+//            			.forEach(j -> {
+//            				double d = normalize.get(j);
+//            				StringTokenizer st = new StringTokenizer(jobNum.get(j), ",");
+//            				while (st.hasMoreTokens()) {
+//            					int f = jList.indexOf(Integer.parseInt(st.nextToken()));
+//            					jobScore.set(f, jobScore.get(f) * d);
+//            					jobScorePoint[f][3 * (i.get() - 1) + j] = d;
+//            				}
+//            			});
+//            		}
+//            	});
             	
             	List<Integer> valueList = null;
             	if(valueTrue) {
@@ -980,6 +1091,10 @@ public class MemberController {
            model.addAttribute("reres", reres);
         }
         model.addAttribute("none", none);
+        
+        // 순위
+        
+        
         
         //회원정보수정
         MemberDTO mem = service.getUser(userNum);
