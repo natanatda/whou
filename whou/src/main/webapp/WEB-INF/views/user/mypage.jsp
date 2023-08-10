@@ -902,8 +902,10 @@
 											<c:forEach var="rere" items="${reres}">
 												<div class="reco-wrap">
 													<div class="reco-item">
-														<div
-															onclick="location='/whou/job/info?job_cd=${rere.job_cd}'">${rere.job_nm}</div>													
+														<div onclick="location='/whou/job/info?job_cd=${rere.job_cd}'">
+															${rere.job_nm}
+															<p style="font-size:16px;">적합도 : ${(rere.total/highValueOfTest)*100}%</p>
+														</div>
 														<div>${rere.descriptions}</div>
 														<div
 															onclick="confirm('선택하신 직업으로 컨설팅 받으시겠습니까?')?location='/whou/member/insertConsult?job_cd=${rere.job_cd}':false;"
@@ -1724,7 +1726,8 @@
             recoItemDiv.className = 'reco-item';
 
             const jobNameDiv = document.createElement('div');
-            jobNameDiv.innerText = data.job_nm;
+            jobNameDiv.innerHTML=  data.job_nm+'<p style="font-size:16px;">'
+            + '적합도 : '+Math.round((data.total/${highValueOfTest}) * 1000) / 10+'%'+'</p>';
             const getRecoDiv = document.createElement('div');
             getRecoDiv.innerText = '컨설팅받기';
             getRecoDiv.onclick = function () {
@@ -1868,12 +1871,12 @@
 	    const recoIntes_apti3 = recoInte3.map((item) => item['INTEREST3']*10);
 	    const recoIntes_total3 = recoInte3.map((item) => item['TOTAL']*10);
 	    const recoIntes_job_nm3 = recoInte3.map((item) => item[labels[2]]);
+	    
 	    console.log(recoInte1);
 	    console.log(recoInte2);
 	    console.log(recoInte3);
 	    var maxPoint=${highValueOfTest}*10;
 	    function createChart(chartId,j_nm_labels,dataTest,dataTotal){
-
 	        const ctx21_1 = document.getElementById(chartId);
 			var myChart21_1 = new Chart(ctx21_1, {
 				type: 'bar',
