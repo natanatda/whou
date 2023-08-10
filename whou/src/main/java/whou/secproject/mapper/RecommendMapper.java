@@ -30,4 +30,6 @@ public interface RecommendMapper {
 	public void insertConsult(@Param("user")int user,@Param("job_cd") int job_cd);
 	//public LinkedHashMap<Integer,String> getJob_NM(String job_nm);
 	public void setImportances(@Param("user")int user,@Param("impt")String impt);
+	public List<Integer> getJobLi(String tals);
+
 }

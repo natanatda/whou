@@ -327,11 +327,17 @@ public class AptitudeController {
     	}
     	System.out.println("임시저장"+answers);
     	
+    	
     	AptitudeTestTemporarySaveDTO dto = new AptitudeTestTemporarySaveDTO();
     	
     	String tempSave = request.getParameter("tempSave");
     	
-    	
+		List<String>answers2 = new ArrayList<>();
+		for(int i=0; i < 153; i++) {
+			String str = (int)(Math.random()*4+1)+"";
+			answers2.add(str);
+		}
+		answers = answers2;
     	//임시 저장한 걸 다시 임시 저장한 경우
 		if(tempSave.equals("tempSave")) {
 			service.temporarySaveUpdate(answers, dto, qnum, userNum);

@@ -15,7 +15,6 @@ public class SelectResultHandler<T> implements ResultHandler<HashMap<String, T>>
     @Override
     public void handleResult(ResultContext<? extends HashMap<String, T>> resultContext) {
         HashMap<String, T> object = resultContext.getResultObject();
-        System.out.println("object "+object);
         sel.add(object); // 결과를 리스트에 추가하거나 다른 작업을 수행할 수 있음
     }
 
