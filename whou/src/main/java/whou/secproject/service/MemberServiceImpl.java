@@ -505,4 +505,19 @@ public class MemberServiceImpl implements MemberService {
 	public int level(String email) {
 		return mapper.level(email);
 	}
+	// 관리자 회원가입
+	@Override
+	public void adminInsert(MemberDTO dto) {
+		mapper.adminInsert(dto);
+	}
+	// 관리자 리스트
+	@Override
+	public List<MemberDTO> getAdmin() {
+		return mapper.getAdmin();
+	}
+	// 관리자 삭제
+	@Override
+	public void deleteAdmin(String email) {
+		mapper.deleteAdmin(email);
+	}
 }
