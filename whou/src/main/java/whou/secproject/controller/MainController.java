@@ -53,9 +53,9 @@ public class MainController {
 	public String main(Model model, HttpSession session) {
 		
 		String email = (String)session.getAttribute("memId");
-		int level = (int)session.getAttribute("level");
-		model.addAttribute("level",level);
-		System.out.println("레벨머냐"+level);
+//		int level = (Integer)session.getAttribute("level");
+//		model.addAttribute("level",level);
+//		System.out.println("레벨머냐"+level);
 		// ai model 가져오기
 		int userNum = 0;
 		int sortValue = 995; // 조건문 해당 안 되면 붓 들게 하기

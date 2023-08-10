@@ -1855,21 +1855,22 @@
 	    const recoAptis_job_nm3 = recoApti3.map((item) => item[labels[2]]);
 	    
 	    recoInte1 = recoIntes[0];
-		const labels1 = Object.keys(recoInte1[0]); // ['TOTAL', 'APTITUDE1']
 	    const recoIntes_apti1 = recoInte1.map((item) => item["INTEREST1"]*10);
 	    const recoIntes_total1 = recoInte1.map((item) => item['TOTAL']*10);
-	    const recoIntes_job_nm1 = recoInte1.map((item) => item[labels1[2]]);
+	    const recoIntes_job_nm1 = recoInte1.map((item) => item[labels[2]]);
 	    
 	    recoInte2 = recoIntes[1];
 	    const recoIntes_apti2 = recoInte2.map((item) => item["INTEREST2"]*10);
 	    const recoIntes_total2 = recoInte2.map((item) => item['TOTAL']*10);
-	    const recoIntes_job_nm2 = recoInte2.map((item) => item[labels1[2]]);
+	    const recoIntes_job_nm2 = recoInte2.map((item) => item[labels[2]]);
 	    
 	    recoInte3 = recoIntes[2];
 	    const recoIntes_apti3 = recoInte3.map((item) => item['INTEREST3']*10);
 	    const recoIntes_total3 = recoInte3.map((item) => item['TOTAL']*10);
-	    const recoIntes_job_nm3 = recoInte3.map((item) => item[labels1[2]]);
-	    
+	    const recoIntes_job_nm3 = recoInte3.map((item) => item[labels[2]]);
+	    console.log(recoInte1);
+	    console.log(recoInte2);
+	    console.log(recoInte3);
 	    var maxPoint=${highValueOfTest}*10;
 	    function createChart(chartId,j_nm_labels,dataTest,dataTotal){
 
