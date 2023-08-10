@@ -154,7 +154,9 @@
 	</select>
 	
 	
-	
+	<select id="level" resultType="int">
+		SELECT lv FROM whou_user WHERE email = #{email}
+	</select>
 	
 	
 	

@@ -501,4 +501,8 @@ public class MemberServiceImpl implements MemberService {
 	public String getTempSave(String memId) {
 		return mapper.getTempSave(memId);
 	}
+	
+	public int level(String email) {
+		return mapper.level(email);
+	}
 }

@@ -411,9 +411,7 @@
             progressBar.style.width = percentCount + '%';
 	  };
 	  
-	    
-	    
-		
+		// 퍼센트 정보 추가하기
 		function getPercent(){
 			count = document.querySelectorAll('.btn-check:checked').length;
             countSpan.textContent = count;
@@ -440,6 +438,7 @@
 	    function submitForm() {
 	        const form = document.getElementById('reportForm'); // <form> 요소를 가져옵니다.
 	        form.removeAttribute('onsubmit');
+	        getPercent();
 	        form.submit(); // <form> 요소를 제출합니다.
 	    }
 
