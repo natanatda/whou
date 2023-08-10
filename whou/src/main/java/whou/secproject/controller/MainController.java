@@ -53,9 +53,11 @@ public class MainController {
 	public String main(Model model, HttpSession session) {
 		
 		String email = (String)session.getAttribute("memId");
-		int level = (int)session.getAttribute("level");
-		model.addAttribute("level",level);
-		System.out.println("레벨머냐"+level);
+		
+		Integer level = (Integer)session.getAttribute("level");
+		if(level != null) {			
+			model.addAttribute("level",level);
+		}
 		// ai model 가져오기
 		int userNum = 0;
 		int sortValue = 995; // 조건문 해당 안 되면 붓 들게 하기
@@ -150,6 +152,24 @@ public class MainController {
 		int brush = 995;
 		model.addAttribute("brush", whouModelService.selectModel(brush)); // 붓 장착
 	return "/load";
+	}
+	
+	@RequestMapping("/index")
+	public String index() {
+
+	return "/index";
+	}
+	
+	@RequestMapping("/index2")
+	public String index2() {
+
+	return "/index2";
+	}
+	
+	@RequestMapping("/index3")
+	public String index3() {
+
+	return "/index3";
 	}
 
 }
