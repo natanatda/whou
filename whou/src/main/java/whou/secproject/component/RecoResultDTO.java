@@ -9,6 +9,7 @@ public class RecoResultDTO {
 	private int job_cd;
 	private String job_nm;
 	private String description;
+	private double total;
 	private ArrayList<String> descriptionLi = new ArrayList<String>();
 	private String descriptions;
 	public void setDescription(String description) {

@@ -1053,6 +1053,7 @@ public class MemberController {
               RecoResultDTO reredto = new RecoResultDTO();
               int job_cd = recoLi.get(h).get(colNM2.get(0)).intValue();
               reredto.setJob_cd(job_cd);
+              reredto.setTotal(recoLi.get(h).get(colNM2.get(1)).doubleValue());
               reredto.setJob_nm(serviceRe.getJname(selDTOJ, job_cd));
               if(recoLi.get(h).get(colNM2.get(1)).doubleValue()<=1.0) break;
               for(int c = 0; c < 12+majorC+certiC; c++) {
@@ -1268,6 +1269,7 @@ public class MemberController {
               if(recoLi.get(h).get(colNM2.get(1)).doubleValue()<=1.0) break;
               int job_cd = recoLi.get(h).get(colNM2.get(0)).intValue();
               reredto.setJob_cd(job_cd);
+              reredto.setTotal(recoLi.get(h).get(colNM2.get(1)).doubleValue());
               reredto.setJob_nm(serviceRe.getJname(selDTOJ, job_cd));
               for(int c = 0; c < 12+majorC+certiC; c++) {
                  String factor = null, detail = null;
