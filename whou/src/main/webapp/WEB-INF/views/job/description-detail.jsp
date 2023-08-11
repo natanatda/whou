@@ -36,6 +36,7 @@
     </head>
 
  <style>
+
  	.share-bt{
         padding: 20px 0px;
 	    font-weight: 600;
@@ -49,7 +50,7 @@
 	    display: flex;
 	    justify-content: center;
 	}
- 	body{overflow-y:hidden}
+
   
     @media print {
      html, body { -webkit-print-color-adjust:exact; width: 210mm; height: 297mm; } 
@@ -78,7 +79,7 @@
         <!-- Responsive navbar-->
        <%@ include file="../header.jsp" %>  
        <c:if test="${slide == null}">
-          <div class="ai-wrap">
+          <div class="ai-wrap active">
 			<div>
 	       		<canvas class="webgl"></canvas>
 	       	</div> 
@@ -450,6 +451,31 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script>
+	      var aiWrapElement = document.querySelector('.ai-wrap');
+	      var body = document.querySelector('body');
+	        if(aiWrapElement.classList.contains('active')){
+		      	body.style.overflowY = 'hidden';
+		      }
+        
+	        function checkAndClose() {
+	      	  var aiWrapElement = document.querySelector('.ai-wrap');
+	        	var body = document.querySelector('body');
+	      	    aiWrapElement.style.transition = 'max-width 0.5s ease-out'; // 슬라이드 애니메이션 설정
+	      	    aiWrapElement.style.maxWidth = '0'; // 요소를 왼쪽으로 슬라이드하여 사라지게 함
+	      	  	
+		      	body.style.overflowY = 'auto';
+		
+	      	    setTimeout(function() {
+	      	    aiWrapElement.style.display = 'none'; //  alert(aiWrapElement.style.display);
+	      	    }, 500); // 0.5초(500ms) 후에 요소를 숨김 (transition 속성과 동일한 시간)
+	      	  
+	      	}
+	
+
+
+	   
+        </script>
+        <script>
             const triggerTabList = document.querySelectorAll('#myTab button')
 				triggerTabList.forEach(triggerEl => {
 				  const tabTrigger = new bootstrap.Tab(triggerEl)
@@ -595,19 +621,8 @@
 	            }
 	        });
 	        
-	        function checkAndClose() {
-	        	  var aiWrapElement = document.querySelector('.ai-wrap');
-	        	  var body = document.querySelector('body');
-	        	  if (aiWrapElement) {
-	        	    aiWrapElement.style.transition = 'max-width 0.5s ease-out'; // 슬라이드 애니메이션 설정
-	        	    aiWrapElement.style.maxWidth = '0'; // 요소를 왼쪽으로 슬라이드하여 사라지게 함
-	        	    body.style.overflowY = 'auto';
-	        	    setTimeout(function() {
-	        	      aiWrapElement.style.display = 'none'; // 슬라이드 애니메이션이 완료되면 요소를 숨김
-	        	    }, 500); // 0.5초(500ms) 후에 요소를 숨김 (transition 속성과 동일한 시간)
-	        	  }
-	        	 
-	        	}
+	    
+	   
 	    </script>
 	    <%-- 모델 --%>
 	    <script>
@@ -693,56 +708,52 @@
 	
 	
 	<script>
-		// 자바스크립트 코드
-		function showShareOptions() {
-		  $('#shareModal').modal('show');
-		}
+      // 공유하기
+      const currentUrl = window.location.href;
+      // 자바스크립트 코드
+      function showShareOptions() {
+        $('#shareModal').modal('show');
+      }
+      
+      function shareKakao() {
+          Kakao.Share.sendDefault({
+            objectType: 'feed',
+            content: {
+               title: '[WhoU] ${BaseInfo.job_nm}를 공유했습니다',
+               description: '더 자세한 직업 정보를 알고 싶다면?',
+               imageUrl:
+                 'https://blog.kakaocdn.net/dn/Teu4S/btspTKEQoFi/0ta7ZUvXjCXcLSDicGKQKK/img.png',
+               link: {
+                 // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
+                 mobileWebUrl: currentUrl,
+                 webUrl: currentUrl,
+               },
+            },
+            buttons: [
+              {
+                title: '자세히 보러가기',
+                link: {
+                  mobileWebUrl: currentUrl,
+                  webUrl: currentUrl,
+                },
+              },
+            ],
+          });
+      }
+      
+      function copyUrl() {
+           navigator.clipboard.writeText(currentUrl)
+             .then(function() {
+               alert("URL이 복사되었습니다.");
+             })
+             .catch(function(err) {
+               // 복사 작업이 실패한 경우, 사용자에게 안내합니다.
+               console.error('URL 복사 실패:', err);
+               alert("URL 복사에 실패했습니다. 수동으로 복사해주세요.");
+             });
+      }
+   </script>
 		
-		function shareKakao() {
-		    Kakao.Share.sendDefault({
-				objectType: 'feed',
-				content: {
-					title: '[WhoU] ${BaseInfo.job_nm}를 공유했습니다',
-					description: '더 자세한 직업 정보를 알고 싶다면?',
-					imageUrl:
-					  'https://blog.kakaocdn.net/dn/Teu4S/btspTKEQoFi/0ta7ZUvXjCXcLSDicGKQKK/img.png',
-					link: {
-					  // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
-					  mobileWebUrl: 'http://localhost:8080/whou/job/info?job_cd=${BaseInfo.job_cd}',
-					  webUrl: 'http://localhost:8080/whou/job/info?job_cd=${BaseInfo.job_cd}',
-					},
-				},
-				buttons: [
-				  {
-				    title: '자세히 보러가기',
-				    link: {
-				      mobileWebUrl: 'http://localhost:8080/whou/job/info?job_cd=${BaseInfo.job_cd}',
-				      webUrl: 'http://localhost:8080/whou/job/info?job_cd=${BaseInfo.job_cd}',
-				    },
-				  },
-				],
-		    });
-		}
-		
-		function copyUrl() {
-			var urlToCopy = window.location.href; // 현재 페이지의 URL을 얻어옵니다.
-
-			  navigator.clipboard.writeText(urlToCopy)
-			    .then(function() {
-			      alert("URL이 복사되었습니다.");
-			    })
-			    .catch(function(err) {
-			      // 복사 작업이 실패한 경우, 사용자에게 안내합니다.
-			      console.error('URL 복사 실패:', err);
-			      alert("URL 복사에 실패했습니다. 수동으로 복사해주세요.");
-			    });
-		}
-	</script>
-		
-		<script>
-		  
-	</script>
-	
 </body>
     
 </html>

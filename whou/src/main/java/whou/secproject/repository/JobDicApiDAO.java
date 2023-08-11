@@ -42,7 +42,6 @@ public class JobDicApiDAO {
 	        if (jParam.getSearchJobCd() != null) 
 	        	builder.queryParam("searchJobCd", URLEncoder.encode(jParam.getSearchJobCd(), "UTF-8"));
 	        uri = builder.build(true).toUri();
-	        System.out.println(uri);
 	    } catch (UnsupportedEncodingException e1) {
 	        e1.printStackTrace();
 	    }
@@ -57,8 +56,6 @@ public class JobDicApiDAO {
 	    String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
 
 	    // 로깅을 활용한 디버깅
-	    if(responseBody.length()>60) System.out.println("API 응답: " + responseBody.substring(0,60));
-	    else System.out.println("API 응답: " + responseBody);
 	    
 	    try {
 	        ObjectMapper objectMapper = new ObjectMapper();
@@ -79,7 +76,6 @@ public class JobDicApiDAO {
 					.queryParam("seq", URLEncoder.encode(String.valueOf(seq), "UTF-8"))
 					.build(true)
 					.toUri();
-			System.out.println(uri);
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
@@ -93,7 +89,6 @@ public class JobDicApiDAO {
 		String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
 		
 		// 로깅을 활용한 디버깅
-		System.out.println("API 응답: " + responseBody.substring(0,60));
 		
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();

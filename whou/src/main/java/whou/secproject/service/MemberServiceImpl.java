@@ -165,11 +165,9 @@ public class MemberServiceImpl implements MemberService {
 				
 		if(certi!=null) {
 			certiArr = certi.split(",");
-			System.out.println("자격증이 널이 아님");
 		}else {
 			certi = "";
 			certiArr = certi.split(",");
-			System.out.println("자격증이 널임");
 
 		}
 		
@@ -187,7 +185,6 @@ public class MemberServiceImpl implements MemberService {
 			CertiSet.add(arrC);
 		}
 		
-		System.out.println("////////자격증 셋///////"+CertiSet);
 		
 		for(String arrM : majorArr) {
 			MajorSet.add(arrM);
@@ -293,13 +290,11 @@ public class MemberServiceImpl implements MemberService {
 //	    URL url = new URL(apiURL);
 //	    HttpURLConnection con = (HttpURLConnection)url.openConnection();
 //	    con.setRequestMethod("GET");
-//	    System.out.println("header Str: " + headerStr);
 //	    if(headerStr != null && !headerStr.equals("") ) {
 //	      con.setRequestProperty("Authorization", headerStr);
 //	    }
 //	    int responseCode = con.getResponseCode();
 //	    BufferedReader br;
-//	    System.out.println("responseCode="+responseCode);
 //	    if(responseCode == 200) { // 정상 호출
 //	      br = new BufferedReader(new InputStreamReader(con.getInputStream()));
 //	    } else {  // 에러 발생
@@ -376,7 +371,6 @@ public class MemberServiceImpl implements MemberService {
 
 			// 결과 코드가 200이라면 성공
 			int responseCode = conn.getResponseCode();
-			System.out.println("responseCode : " + responseCode);
 
 			// 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
 			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -386,7 +380,6 @@ public class MemberServiceImpl implements MemberService {
 			while ((line = br.readLine()) != null) {
 				result += line;
 			}
-			System.out.println("response body : " + result);
 
 			// Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
 			JsonParser parser = new JsonParser();
@@ -395,8 +388,6 @@ public class MemberServiceImpl implements MemberService {
 			access_Token = element.getAsJsonObject().get("access_token").getAsString();
 			refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
 
-			System.out.println("access_token : " + access_Token);
-			System.out.println("refresh_token : " + refresh_Token);
 
 			br.close();
 			bw.close();
@@ -431,11 +422,9 @@ public class MemberServiceImpl implements MemberService {
 			while ((line = br.readLine()) != null) {
 				result += line;
 			}
-			System.out.println("response body : " + result);
 
 			JsonParser parser = new JsonParser();
 			JsonElement element = parser.parse(result);
-			System.out.println("==========" + element);
 
 			if (element.getAsJsonObject().has("kakao_account")) {
 				JsonObject kakaoAccount = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
@@ -443,7 +432,6 @@ public class MemberServiceImpl implements MemberService {
 				// element에 이메일이 있는지 확인 - 사용자가 선택동의를 안해주면 email이 없음
 				if (kakaoAccount.has("email")) {
 					email = kakaoAccount.get("email").getAsString();
-					System.out.println("Email: " + email);
 					// 이메일 값 처리 또는 반환
 				}
 			}
@@ -474,11 +462,11 @@ public class MemberServiceImpl implements MemberService {
 	// 휴대폰번호 인증
 	@Override
 	public void telChk(String tel, String numStr) {
-		DefaultMessageService messageService = NurigoApp.INSTANCE.initialize("NCSGRV3UKNCELVIM",
-				"BNYAU0IXAKIDYBDYQKUSN6ZFBHS0DSXV", "https://api.coolsms.co.kr");
+		DefaultMessageService messageService = NurigoApp.INSTANCE.initialize("NCS4XRPYVUNL7XQ8",
+				"72A0UQWSG2MFLWJRXZYARI2AU1ARQWVM", "https://api.coolsms.co.kr");
 		// Message 패키지가 중복될 경우 net.nurigo.sdk.message.model.Message로 치환하여 주세요
 		Message message = new Message();
-		message.setFrom("01023492565");
+		message.setFrom("01093501996");
 		message.setTo(tel);
 		message.setText("[whoU] 인증번호 " + "[" + numStr + "]" + " 를 입력하세요.");
 
@@ -487,10 +475,7 @@ public class MemberServiceImpl implements MemberService {
 			messageService.send(message);
 		} catch (NurigoMessageNotReceivedException exception) {
 			// 발송에 실패한 메시지 목록을 확인할 수 있습니다!
-			System.out.println(exception.getFailedMessageList());
-			System.out.println(exception.getMessage());
 		} catch (Exception exception) {
-			System.out.println(exception.getMessage());
 		}
 
 	}

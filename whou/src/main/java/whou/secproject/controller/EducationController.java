@@ -77,7 +77,6 @@ public class EducationController {
 		
 		// 모든 결과 불러오기
 		EducationMajorResponseDTO responseDTO = dao.getMajorApi(paramDTO);
-		System.out.println("여기까지는 되는 건가요?"+responseDTO);
 		
 		
 		// 결과 총 개수 세기
@@ -107,7 +106,6 @@ public class EducationController {
 			paramDTO.setMajorSeq(majorSeq);
 			
 			EducationMajorResponseDTO responseDTO = dao.getMajorApi(paramDTO);
-			System.out.println("학교 상세 responseDTO "+responseDTO.getDataSearch().getContent().get(0));
 			
 			List<String> fieldItemList = new ArrayList<>();
 			List<String> fieldDataList = new ArrayList<>();
@@ -149,12 +147,7 @@ public class EducationController {
 		EducationHrdParamDTO hrdParam = new EducationHrdParamDTO();
 		String trainGb = request.getParameter("trainGb");
 		String urlParam = "";
-		System.out.println("실행함?");
-		System.out.println("trainGb "+trainGb);
-		System.out.println("pageNum "+request.getParameter("pageNum"));
-		System.out.println("sort "+request.getParameter("sort"));
 		if(trainGb != null) {
-			System.out.println("실행함111?");
 			
 			hrdParam.setTrainGb(trainGb);
 			String setSrchNcs1 = request.getParameter("setSrchNcs1"); //setSrchNcs1와 setSrchKeco1에 사용

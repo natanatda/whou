@@ -88,18 +88,12 @@ public class AptitudeServiceImpl implements AptitudeService{
 //	         String present = defaultCr.elementToSb(driver, tag, new StringBuilder()).toString().replaceAll("\\n", "+")+"+";
 //	         
 //	         
-//	         System.out.println();
-//	         System.out.println("tobody 크롤링 "+present);
-//	         System.out.println();
 //	         int startIndex = present.indexOf("검사결과+");
 //	         int endIndex = present.substring(startIndex + 6).indexOf("+");
 //
 //	         while(present.contains("검사결과+")) {
 //	            sb.append(present.substring(startIndex, endIndex + startIndex + 6 + 1));
 //	            present = present.substring(endIndex + startIndex + 6);
-//	            System.out.println();
-//	            System.out.println("cutting한거"+sb);
-//	            System.out.println();
 //	            startIndex = present.indexOf("검사결과+");
 //	            endIndex = present.substring(startIndex + 6).indexOf("+");
 //	         }
@@ -108,7 +102,6 @@ public class AptitudeServiceImpl implements AptitudeService{
 //	         String preparation3 = preparation2.substring(0, preparation2.length() / 2);
 //	         String preparation4 = preparation2.substring(preparation2.length() / 2);
 //
-//	         System.out.println(preparation2);
 //	         driver.quit(); // WebDriver 종료
 //
 //	         dto.setTest27_4(preparation3);
@@ -121,8 +114,6 @@ public class AptitudeServiceImpl implements AptitudeService{
 	                preparation.append(element.getText());
 	            }
 	            String present=preparation.toString().replaceAll("\\n", "+")+"+";
-	            System.out.println("크롤링 값    "+present);
-	            System.out.println();
 
 	            int startIndex = present.indexOf("검사결과+");
 	            int endIndex = present.substring(startIndex + 5).indexOf("+");
@@ -140,7 +131,6 @@ public class AptitudeServiceImpl implements AptitudeService{
 	                
 	                // 원하는 작업을 수행합니다.
 	                result += present.substring(startIndex, endIndex + startIndex + 5 + 1);
-	                System.out.println("&&&&& 자른 것 좀 보자 &&&&&&&" + present.substring(startIndex, endIndex + startIndex + 5 + 1));
 	                
 	                // present를 잘라냅니다.
 	                present = present.substring(endIndex + startIndex + 5);
@@ -159,7 +149,6 @@ public class AptitudeServiceImpl implements AptitudeService{
 	            //DB에 넣으려고 검사 크롤링 값 dto에 셋하기
 	    		dto.setTest27_4(preparation3);
 	    		dto.setTest27_5(preparation4);
-	    		System.out.println(preparation4);
 	      }
 
 	      // 가치관
@@ -185,7 +174,6 @@ public class AptitudeServiceImpl implements AptitudeService{
 
 	         // 가치 점수 정보 가져오기
 	         dto.setTest25_2(plus.elementToSb(driver, tagList[3], sb).toString());
-	         System.out.println(sb);
 	         sb.delete(0, sb.length());
 
 	         // 가치 유형 정보 가져오기
@@ -439,8 +427,6 @@ public class AptitudeServiceImpl implements AptitudeService{
 		    .map(String::trim) // 공백 제거
 		    .filter(value -> value != null && !value.isEmpty())
 		    .collect(Collectors.toList());
-		    System.out.println("27의 결과 리스트" + result);
-		    System.out.println("dto.getTest27_5()" + dto.getTest27_5());
 		}
 		
 		
@@ -459,7 +445,6 @@ public class AptitudeServiceImpl implements AptitudeService{
 		    .map(String::trim) // 공백 제거
 		    .filter(value -> value != null && !value.isEmpty())
 		    .collect(Collectors.toList());
-		    System.out.println("25의 결과 리스트" + result);
 		}
 		
 		return result;
@@ -471,7 +456,6 @@ public class AptitudeServiceImpl implements AptitudeService{
 	@Override
 	public void temporarySaveInsert(List<String> answers, AptitudeTestTemporarySaveDTO dto, String qnum, int userNum) {
 		
-		System.out.println("테이블 새로 만듦"+userNum);
 		StringBuilder answer = new StringBuilder();
 		for(int i = 0; i<answers.size(); i++) {
 	    	answer.append(i+1).append("=").append(answers.get(i)).append(" ");
@@ -479,7 +463,6 @@ public class AptitudeServiceImpl implements AptitudeService{
 	    		answer.append(i+1).append("=").append("");
 	    }
 	    answer.setLength(answer.length() - 1); 
-	    System.out.println(answer);
 	    dto.setTest_num(Integer.parseInt(qnum));
 	    dto.setTest_answers(answer.toString());
 	    
@@ -751,7 +734,6 @@ public class AptitudeServiceImpl implements AptitudeService{
 				  sb.append(",").append(mapper.valuesJob(job_cd));
 			  }
 		  }		  
-		  System.out.println(sb.toString());
 		  return sb.toString();
 	}
 

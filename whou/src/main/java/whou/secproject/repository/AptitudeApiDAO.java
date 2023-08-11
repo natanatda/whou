@@ -51,7 +51,6 @@ public class AptitudeApiDAO {
 	    String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
 
 	    // 로깅을 활용한 디버깅
-	    System.out.println("API 응답: " + responseBody.substring(0,60));
 	    
 	    AptitudeTestResponseDTO aptitudeResponse = null;
 	    try {
@@ -59,7 +58,6 @@ public class AptitudeApiDAO {
 	        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 	        aptitudeResponse = objectMapper.readValue(responseBody, AptitudeTestResponseDTO.class);
 	        
-	        System.out.println("에러 이유"+aptitudeResponse.getERROR_REASON());
 	    } catch (JsonProcessingException e) {
 	        e.printStackTrace();
 	    }
@@ -85,7 +83,6 @@ public class AptitudeApiDAO {
 	    for(int i = 0; i<answers.size(); i++)
 	    	answer.append(i+1).append("=").append(answers.get(i)).append(" ");
 	    answer.setLength(answer.length() - 1); 
-	    System.out.println(answer);
 	    atrr.setAnswers(answer.toString());
 	    
 		try {
@@ -121,7 +118,6 @@ public class AptitudeApiDAO {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)); 
 			String line;
 			while ((line = reader.readLine()) != null) {
-				System.out.println(line);
 				response.append(line);
 			}
 			
@@ -134,7 +130,6 @@ public class AptitudeApiDAO {
 			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			
 			aptiTestResultResponse = objectMapper.readValue(response.toString(), AptitudeTestResultResponseDTO.class);
-			System.out.println(aptiTestResultResponse.getRESULT().getUrl());
 			//https://www.career.go.kr/inspct/web/psycho/able/report?seq=NjMzODQxNDA
 		} catch (Exception e) {
 			e.printStackTrace();

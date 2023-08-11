@@ -59,7 +59,7 @@
 	                <div class="card">
 	                    <div class="card-body">
 	                        <h3 class="num-title"><span>02</span> 검사결과 세부사항</h3>
-	                        <div>
+	                        <div style="width:600px;margin: 0 auto;">
 	                            <!-- 다각형 -->
 	                            <canvas id="myChart21"></canvas>
 	                        </div>   
@@ -260,7 +260,9 @@
 		                        </div>
 		                         <h3 class="num-title"><span>02</span> 그래프</h3>
 		                        <div>
-		                        	<canvas id="myChart3"></canvas>
+		                        	 <div style="width:600px;margin: 0 auto;">
+		                        		<canvas id="myChart3"></canvas>
+		                        	</div>
 		                        	<div class="table-wrap desc-table">
 			                            <table>
 			                                <colgroup>
@@ -400,7 +402,9 @@
                         </div>
                         <h3 class="num-title"><span>02</span> 그래프</h3>
                         <div>
-                            <canvas id="myChart"></canvas>
+                        	 <div style="width:600px;margin: 0 auto;">
+                            	<canvas id="myChart"></canvas>
+                            </div>
                              <div class="table-wrap desc-table">
 	                            <table>
 	                                <colgroup>
@@ -437,7 +441,9 @@
 	                            </table>
                        		</div>                  
                             <!-- 다각형 -->
-                            <canvas id="myChart2"></canvas>
+	                             <div style="width:600px;margin: 0 auto;">
+	                            	<canvas id="myChart2"></canvas>
+	                            </div>
                                <div class="table-wrap desc-table">
 	                            <table>
 	                                <colgroup>
@@ -486,7 +492,9 @@
                     </div>
                 </div>
 			    </c:if>
-             <button onclick="location='/whou/member/mypage'">진로컨설팅 받으러가기</button>
+			    <div style="display:flex;justify-content:flex-end;">			    
+	             	<button onclick="location='/whou/member/mypage'" class="purple-btn" style="padding: 20px;border-radius: 8px;font-size: 18px;">진로컨설팅 받으러가기 >></button>
+			    </div>
              </div>
         </section>
    

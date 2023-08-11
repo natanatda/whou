@@ -61,7 +61,6 @@ public class AptitudeController {
 	@RequestMapping("/itrstkAptitude")
 	public String getAptitudeTestByNum(Model model, HttpServletRequest request) throws IOException {
 		String qnum = request.getParameter("qnum");
-		System.out.println(qnum);
 	    model.addAttribute("RESULT", dao.getAptitudeTestByNum(qnum).getRESULT());
 	    model.addAttribute("qnum", qnum);
 	    HttpSession session = request.getSession();
@@ -114,6 +113,19 @@ public class AptitudeController {
 		String qnum = request.getParameter("qnum");
 		model.addAttribute("qnum", qnum);
 		
+		// 퍼센트 정보 추가하기
+		int [] percents = service.getPercent(userNum);
+		String percentStr = request.getParameter("percent");
+		int percent = 0;
+		if(percentStr!=null) {
+			percent = Integer.parseInt(percentStr);
+		}
+		if(qnum.equals("21")) percents[0] = 0;
+		else if(qnum.equals("25")) percents[1] = 0;
+		else if(qnum.equals("27")) percents[2] = 0;
+		else if(qnum.equals("31")) percents[3] = 0;
+		
+		service.updatePercent(userNum, percents);
 		
 		//검사25의 49번 문제 예외처리
     	for(int i=1; i<=Integer.parseInt(countQ);i++) {
@@ -162,11 +174,9 @@ public class AptitudeController {
 				dtoRe.setInterest_name1(testJob.get(0));
 				dtoRe.setInterest_name2(testJob.get(1));
 				dtoRe.setInterest_name3(testJob.get(2));
-				System.out.println("@!#@#!@#! : " + testJob);
 				for(int i = 0; i < reportResultArr.size(); i++) {
 					for(int j = 0; j <reportResultArr.get(i).length; j++) {
 						String jobListItem = reportResultArr.get(i)[j].toString();
-//						System.out.println("%%%%%%%%%%%%%%%%%%%%: " + jobListItem);
 						String interesteJob = service.jobSelect(jobListItem);
 						 if(j==0) {
 							 sb.append(interesteJob);
@@ -177,7 +187,6 @@ public class AptitudeController {
 					if(i == 0) dtoRe.setInterest_job1(sb.toString());	
 					else if(i  == 1) dtoRe.setInterest_job2(sb.toString());
 					else if(i == 2 ) dtoRe.setInterest_job3(sb.toString());
-					System.out.println("%%%%%%%%%%%%%%%%%%%%: "+ sb);
 					sb.delete(0, sb.length());
 				}
 				dtoRe.setInterest_score(dto.getTest31_2());
@@ -198,18 +207,15 @@ public class AptitudeController {
 					jParam.setPageIndex("1");
 					JobDicListResponseDTO jdlrDTO = daoJob.getJobDicListSorted(jParam);	
 					int total = jdlrDTO.getCount();
-					System.out.println("@@@토탈입ㄴㅣ다"+total);
 					int count = total / 10;
 					String [] jobListCd = new String[total];
 
 					
 					for(int i = 1; i <= count+1; i++) {
 						jParam.setPageIndex(i+"");
-						System.out.println(jParam.getPageIndex());
 						jdlrDTO = daoJob.getJobDicListSorted(jParam);
 						for(int j = 0; j < jdlrDTO.getJobs().size(); j++) {
 							jobListCd[(i-1)*10+j] = jdlrDTO.getJobs().get(j).getJob_cd()+"";
-							System.out.println("토탈입디다 @@@@@! : "+jobListCd[(i-1)*10+j]);
 						}
 					}
 					String jobListCode = String.join(",", jobListCd);
@@ -225,9 +231,6 @@ public class AptitudeController {
 						dtoRe.setAptitude_name3(list);
 						dtoRe.setAptitude_job3(jobListCode);
 					}
-//					System.out.println("@@@@@@@@@@@@@@@@@@@@ 적성 코드: "+ dtoRe.getAptitude_name1() + " /// " + dtoRe.getAptitude_name2()+ " /// " + dtoRe.getAptitude_name3());
-//					System.out.println("@@@@@@@@@@@@@@@@@@@@ 적성 코드: "+ dtoRe.getAptitude_job1() + " /// " + dtoRe.getAptitude_job2()+ " /// " + dtoRe.getAptitude_job3());
-//					System.out.println("@@@@@@@@@@@@@@@@@@@@ 적성 코드: "+ jobListCode);
 					num++;
 				}
 				dtoRe.setAptitude_score(dto.getTest21_2());
@@ -263,7 +266,6 @@ public class AptitudeController {
 				}
 				String score = String.join(",", updatedList4);
 				service.valuesUpdate(score, userNum);
-				System.out.println("가치관 점수 12개 :" + score);
 			
 			}
 			// 검사할때마다 userinfo에 1로 업데이트
@@ -279,7 +281,6 @@ public class AptitudeController {
 		model.addAttribute("job",service.crawlingSplitJob(dto,qnum));
 
 		
-		System.out.println(aptiTestResultResponse.getRESULT().getUrl());
 
 		
 		String email = (String)session.getAttribute("memId");
@@ -309,18 +310,15 @@ public class AptitudeController {
 		// 퍼센트 정보 추가하기
 		int [] percents = service.getPercent(userNum);
 		String percentStr = request.getParameter("percent");
-		System.out.println("받아온 퍼센트임!!1111"+percentStr);
 		int percent = 0;
 		if(percentStr!=null) {
 			percent = Integer.parseInt(percentStr);
-			System.out.println("받아온 퍼센트임!!2222"+percent);
 		}
 		if(qnum.equals("21")) percents[0] = percent;
 		else if(qnum.equals("25")) percents[1] = percent;
 		else if(qnum.equals("27")) percents[2] = percent;
 		else if(qnum.equals("31")) percents[3] = percent;
 		for(int a : percents) {
-			System.out.println("몇퍼센트?"+a);
 		}
 		service.updatePercent(userNum, percents);
 		
@@ -332,19 +330,18 @@ public class AptitudeController {
 				answers.add(request.getParameter("btnradio"+i));
     		}
     	}
-    	System.out.println("임시저장"+answers);
     	
     	
     	AptitudeTestTemporarySaveDTO dto = new AptitudeTestTemporarySaveDTO();
     	
     	String tempSave = request.getParameter("tempSave");
     	
-		List<String>answers2 = new ArrayList<>();
-		for(int i=0; i < 153; i++) {
-			String str = (int)(Math.random()*4+1)+"";
-			answers2.add(str);
-		}
-		answers = answers2;
+//		List<String>answers2 = new ArrayList<>();
+//		for(int i=0; i < 153; i++) {
+//			String str = (int)(Math.random()*4+1)+"";
+//			answers2.add(str);
+//		}
+//		answers = answers2;
     	//임시 저장한 걸 다시 임시 저장한 경우
 		if(tempSave.equals("tempSave")) {
 			service.temporarySaveUpdate(answers, dto, qnum, userNum);
@@ -385,7 +382,6 @@ public class AptitudeController {
 			// 세션으로 이름 꺼내기
 			String name = service.getName(memId);
 			model.addAttribute("name",name);
-			System.out.println(name);
 			
 			//진행한 검사
 			List<AptitudeTestValueDTO> valueList = service.getRecentTest(dto1, userNum);
@@ -393,7 +389,6 @@ public class AptitudeController {
 			String [] valueDateArr = {"-","-","-","-"}; 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 			for (int i = 0; i < valueList.size() && i < 4; i++) {
-				System.out.println(valueList.get(i).getMax_test_date());
 			    AptitudeTestValueDTO testValue = valueList.get(i);
 			    int testNum = testValue.getTest_num();
 			    Timestamp timestamp = testValue.getMax_test_date();

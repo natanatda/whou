@@ -318,9 +318,12 @@
         <script>
         	var modelCamera_x = ${modelItem.camera};
         	var modelCamera_y = 1;
-        	var modelCamera_z = 3;
+        	var modelCamera_z = 5;
 		 	var modelPath = '/whou/resources/whouModel/${modelItem.path_folder}/${modelItem.path_gltf}';
-		 	
+		 	if(${modelItem.path_gltf == "medicine_scene.gltf"}){
+		 		modelCamera_y = -0.2;
+	        	modelCamera_z = 6;
+		 	}
 		 	var modelWidth = 350;
         	var modelHeight = 200;
 		 	

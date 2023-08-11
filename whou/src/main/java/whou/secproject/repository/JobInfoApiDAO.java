@@ -64,7 +64,6 @@ public class JobInfoApiDAO {
 	    String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
 
 	    // 로깅을 활용한 디버깅
-	    System.out.println("API 응답: " + responseBody.substring(0,60));
 	    
 	    try {
 	        ObjectMapper objectMapper = new ObjectMapper();
@@ -110,7 +109,6 @@ public class JobInfoApiDAO {
 		String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
 		
 		// 로깅을 활용한 디버깅
-		System.out.println("API 응답: " + responseBody.substring(0,60));
 		
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -152,7 +150,6 @@ public class JobInfoApiDAO {
 		String responseBody = new String(responseBodyBytes, StandardCharsets.UTF_8);
 		
 		// 로깅을 활용한 디버깅
-		System.out.println("API 응답: " + responseBody.substring(0,60));
 		
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();

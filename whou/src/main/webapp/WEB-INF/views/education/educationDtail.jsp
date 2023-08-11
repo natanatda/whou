@@ -51,24 +51,24 @@
                           <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active edu-detail-div1" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                                 <div class="content-item edu-detail-div2">
-                                    <p class="icon-title"><i class="fa-sharp fa-solid fa-circle-chevron-right"></i>학과 설명</p>
+                                    <p class="icon-title">학과 설명</p>
                                     <div class="content-box">${RESULT.getSummary()}</div>
                                 </div>
                                 <div class="content-item edu-detail-div2">
-                                    <p class="icon-title"><i class="fa-sharp fa-solid fa-circle-chevron-right"></i>흥미와 적성</p>
+                                    <p class="icon-title">흥미와 적성</p>
                                     <div class="content-box">${RESULT.getInterest()}</div>
                                 </div>
                                 <div class="content-item edu-detail-div2">
-                                    <p class="icon-title"><i class="fa-sharp fa-solid fa-circle-chevron-right"></i>관련 자격증</p>
+                                    <p class="icon-title">관련 자격증</p>
                                     <div class="content-box">${RESULT.getQualifications()}</div>
                                 </div>
                                 <div class="content-item edu-detail-div2">
-                                    <p class="icon-title"><i class="fa-sharp fa-solid fa-circle-chevron-right"></i>관련 직업</p>
+                                    <p class="icon-title">관련 직업</p>
                                     
                                     <div class="content-box">${RESULT.getJob()}</div>
                                 </div>
                                 <div class="content-item edu-detail-div2">
-                                    <p class="icon-title"><i class="fa-sharp fa-solid fa-circle-chevron-right"></i>졸업 후 진출 분야</p>
+                                    <p class="icon-title">졸업 후 진출 분야</p>
                                     <c:forEach items="${RESULT.getEnterFields()}" var="enterFields" varStatus="status">
                                     	<div class="content-box edu-graduate">${enterFields.getGraduate() }</div>
                                     	<div class="content-box edu-description">${enterFields.getDescription() }</div>
@@ -76,7 +76,7 @@
                                     </c:forEach>
                                 </div>
                                 <div class="content-item edu-detail-div2">
-                                    <p class="icon-title"><i class="fa-sharp fa-solid fa-circle-chevron-right"></i>세부관련학과</p>
+                                    <p class="icon-title">세부관련학과</p>
                                     <div class="content-box">${RESULT.getDepartment()}</div>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                             		<c:forEach items="${RESULT.getUniversities()}" var="enterUniversities" varStatus="status">
 	                            		<tr>
 	                            			<td>${enterUniversities.getArea()}</td>
-	                            			<td class="edu-detail-table-td"><a href="${enterUniversities.getSchoolURL()}">${enterUniversities.getSchoolName()}</a></td>
+	                            			<td class="edu-detail-table-td"><a href="${enterUniversities.getSchoolURL()}" target="_blank">${enterUniversities.getSchoolName()}</a></td>
 	                            			<td>${enterUniversities.getMajorName()}</td>
 	                            		</tr>
                             		</c:forEach>
@@ -98,9 +98,13 @@
                             </div>
                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
                             	<div class="content-item">
-                                   	<canvas id="applicantChartCanvas"></canvas>
-									<canvas id="fieldChartCanvas"></canvas>
-									<canvas id="salaryChartCanvas"></canvas>
+                            	
+                                   	<canvas id="applicantChartCanvas" style="width:1200px; height:450px; padding:30px;"></canvas>
+                            	
+                                   	<div class="d-flex">
+										<canvas id="fieldChartCanvas" style="width:800px; height:500px; padding:30px;"></canvas>
+										<canvas id="salaryChartCanvas" style="width:800px; height:500px; padding:30px;"></canvas>
+                                   	</div>
                                 </div>
 							<span>*자료 출처 : 커리어넷 </span>
                             </div>
@@ -240,6 +244,7 @@
     	    	  ],
     	    	};
     	const options3 = {
+    			responsive: false,
     			plugins: {
     				title: {
     					display: true,
@@ -280,6 +285,7 @@
     	  ],
     	};
     	const options1 = {
+    			responsive: false,
     			plugins: {
     				title: {
     					display: true,
@@ -319,6 +325,7 @@
     	    	  ],
     	    	};
     	const options2 = {
+    			responsive: false,
     			plugins: {
     				title: {
     					display: true,

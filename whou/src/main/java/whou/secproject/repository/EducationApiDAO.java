@@ -74,7 +74,6 @@ public class EducationApiDAO {
 	        	builder.queryParam("majorSeq", URLEncoder.encode(majorParam.getMajorSeq(), "UTF-8"));
 						
 			uri = builder.build(true).toUri();
-			System.out.println(uri);
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
@@ -89,7 +88,6 @@ public class EducationApiDAO {
 	    try {
 	        ObjectMapper objectMapper = new ObjectMapper();
 	        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-	        System.out.println("DeserializationFeature 했다! "+objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false));
 	        educationMajorResponseDTO = objectMapper.readValue(responseBody, EducationMajorResponseDTO.class);
 	    } catch (JsonProcessingException e) {
 	        e.printStackTrace();
