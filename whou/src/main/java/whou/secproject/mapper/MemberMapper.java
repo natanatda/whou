@@ -14,10 +14,11 @@ public interface MemberMapper {
 	//회원가입&로그인
 	public int count(String tel);
 	public int check(String email);
+	public int num(String email);
 	public String join_type(String email);
 	public String login(String email);
 	public String getEmail(@Param("name") String name, @Param("tel") String tel);
-	public void insert2(String email);
+	public void insert2(@Param("email")String email, @Param("num")int num);
 	public void insertPro(MemberDTO dto);
 	
 	//추가정보(자격증&학과)

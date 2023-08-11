@@ -98,17 +98,23 @@ public class MemberServiceImpl implements MemberService {
 	public int check(String email) {
 		return mapper.check(email);
 	}
+	
+	// 회원번호 가져오기
+	@Override
+	public int num(String email) {
+		return mapper.num(email);
+	}
 
 	// 가입타입이 맞는지 확인
 	@Override
 	public String join_type(String email) {
 		return mapper.join_type(email);
 	}
-
+	
 	// user_info테이블에 추가
 	@Override
-	public void insert2(String email) {
-		mapper.insert2(email);
+	public void insert2(String email, int num) {
+		mapper.insert2(email, num);
 	}
 
 	// whou_user테이블에 추가

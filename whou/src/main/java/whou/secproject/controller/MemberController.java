@@ -439,6 +439,7 @@ public class MemberController {
 		
 		
   	    System.out.println(dto);
+  		
   	    int count = service.count(dto.getTel());
   	    int check = service.check(dto.getEmail());
   	    System.out.println(count);
@@ -451,12 +452,12 @@ public class MemberController {
   	    }else if(count == 0 && check == 0){
   	    	result = 0;
   	    	service.insertPro(dto);
-  		  	service.insert2(dto.getEmail());
+  	    	int userNum = 0;
+	  		int num = serviceAt.userNumSelect(dto.getEmail());
+  		  	service.insert2(dto.getEmail(), num);
   	        session.setAttribute("memId", dto.getEmail());
 	  	    String memId = (String)session.getAttribute("memId");
-	  		int userNum = 0;
-	  		userNum=serviceAt.userNumSelect(memId);
-  	        serviceAt.createTableSet(userNum);
+  	        serviceAt.createTableSet(num);
   	    }
   	    System.out.println(result);
   	    return result;
