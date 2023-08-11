@@ -276,5 +276,27 @@ public class RecommendServiceImpl implements RecommendService{
 	public void setImportances(int user,String [] arr) {
 		mapper.setImportances(user, String.join(",", arr));
 	}
+	@Override
+	public List<Integer> getJobLi(String tals){
+		return mapper.getJobLi(tals);
+	}
+	
+	@Override
+	public List<Integer> getInteLi(String tals){
+		SelectDTO selDTO = new SelectDTO();
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		SelectResultHandler<String> resultHandler = new SelectResultHandler<String>();
+		selDTO.setCol("JOB_CDS");
+		selDTO.setTb_name("JOB_INTE_CD");
+		selDTO.setConditions(Arrays.asList("INTE_NM='"+tals+"'"));
+		sqlSession.select("whou.secproject.mapper.RecommendMapper.selectInfo", selDTO, resultHandler);
+		sqlSession.close();
+		StringTokenizer st = new StringTokenizer(resultHandler.getSelOne().get(selDTO.getCol()),",");
+		ArrayList<Integer> arr = new ArrayList<Integer>();
+		while(st.hasMoreTokens()) {
+			arr.add(Integer.parseInt(st.nextToken()));
+		}
+		return arr;
+	}
 
 }

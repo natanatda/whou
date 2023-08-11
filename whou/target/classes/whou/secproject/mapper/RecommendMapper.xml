@@ -94,4 +94,7 @@
 	<update id = "setImportances">
 		update user_info set factor_important = #{impt} where num=#{user}
 	</update>
+	<select id="getJobLi" resultType="int">
+		select JOB_CD from job_detail where factor_detail = 'ability_name' and detail_value = #{tals}
+	</select>
 </mapper>

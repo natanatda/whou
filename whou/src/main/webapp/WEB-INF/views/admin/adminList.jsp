@@ -21,12 +21,6 @@
     <!-- Custom styles for this template-->
     <link href="../resources/css/sb-admin-2.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<c:if test="${lv != 2}"> <%-- 레벨 검사 --%>
-		<script>
-			alert("잘못된 접근입니다.");
-			history.back();
-		</script>
-	</c:if>
 </head>
 <body id="page-top">
 
@@ -60,7 +54,7 @@
                 admin
             </div>
             <li class="nav-item">
-                <a class="nav-link" href="/whou/admin/adminList">
+                <a class="nav-link" href="/whou/admin/adminJoin">
                     <span>AdminList</span></a>
             </li>
             <li class="nav-item">
@@ -153,92 +147,39 @@
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">SearchDetail</h1>
+                        <h1 class="h3 mb-0 text-gray-800">AdminList</h1>
                     </div>
-
-                    <input type="button" value="오늘" class="dateSel btn btn-secondary" data-name="today" />
-                    <input type="button" value="일주일" class="dateSel btn btn-secondary" data-name="week" />
-                    <input type="button" value="한달" class="dateSel btn btn-secondary" data-name="month" />
-                    <form action="/whou/cs/searchDetail" method="post">
-                    	<c:if test="${endDate == null}">
-                    		<input type="date" name="startDate" value="${now}" id="startDate"/>
-                    	</c:if>
-                    	<c:if test="${endDate != null }">
-                    		<input type="date" name="startDate" value="${startDate}" id="startDate"/>
-                    	</c:if>
-                    		<input type="date" name="endDate" value="${endDate}" id="endDate" required="required" />
-                    		<input type="hidden" name="jobDateSelect" value="notNull"/>
-                    		<input type="submit" class="btn btn-secondary" value="조회"/>
-                    </form>
-	
                     <div style="width:800px;">
                     	<div style="width:400px; float:left;">
-                    		<p>직업</p>
-                    		<c:if test="${empty searchJobList}">
+                    		<c:if test="${empty adminList}">
                     			<p>조회된 데이터가 없습니다.</p>
                     		</c:if>
                     		<table>
-                    			<c:if test="${not empty searchJobList}">
-                    				<thead style="text-align:center;">
+                    			<c:if test="${not empty adminList}">
+                    				<thead>
 			                    		<tr>
-			                    			<th>순위</th>
-			                    			<th>직업</th>
-			                    			<th>횟수</th>
+			                    			<th>아이디</th>
+			                    			<th>비밀번호</th>
+			                    			<th></th>
+			                    			
+			                    			
 			                    		</tr>
 			                    	</thead>
                     			</c:if>
-                        		<c:forEach var="jobList" items="${searchJobList}" varStatus="status">
+                    			
+                        		<c:forEach var="adminList" items="${adminList}" varStatus="status">
                         			<tr>
-			                        	<td>${status.count}</td>
-			                        	<td>${jobList.job}</td>
-			                        	<td>${jobList.searchcount}회</td>
+                        			
+			                        	<td>${adminList.email}</td>
+			                        	<td>${adminList.pw}</td>
+				                        	<td><input type="button" class="btn delete" value="삭제" data-email="${adminList.email}"/></td>
+			                        	<c:if test="${adminList.email ne 'tmdgnsdl1534@naver.com' }">
+			                        	</c:if>
 			                    	</tr>
                     			</c:forEach>
                     		</table>
                     	</div>
-	                    <div style="width:400px; float:left;">
-		                    <p>검색어</p>
-		                    <c:if test="${empty searchKeyList}">
-		                    	<p>조회된 데이터가 없습니다.</p>
-		                    </c:if>
-		                    <table>
-			                    <c:if test="${not empty searchKeyList}">
-			                    	<thead>
-			                    		<tr>
-			                    			<th>순위</th>
-			                    			<th>검색어</th>
-			                    			<th>횟수</th>
-			                    		</tr>
-			                    	</thead>
-			                    </c:if>
-		                    	 <c:forEach var="keyList" items="${searchKeyList}" varStatus="status">
-									<tr>
-			                        	<td>${status.count}</td>
-			                        	<td>${keyList.keyword}</td>
-			                        	<td>${keyList.searchcount}회</td>
-			                    	</tr>
-		                    	</c:forEach>
-	                    	</table>
-	                    </div>
-                    </div>
-                    
-					<div style="clear:left;">
-						<form action="/whou/cs/searchDetail" method="post">
-							<input type="hidden" name="rownum" value="${rownum + 5}"/>
-							<input type="hidden" name="jobDateSelect" value="${jobDateSelect}"/>
-							<c:if test="${endDate == null}">
-								<input type="hidden" name="startDate" value="${now}" />
-							</c:if>
-							<c:if test="${endDate != null }">
-								<input type="hidden" name="startDate" value="${startDate}" />
-							</c:if>
-							<input type="hidden" name="endDate" value="${endDate}" />
-							<c:if test="${not empty searchJobList and not empty searchKeyList}"> <%-- 리스트 두 개 다 '[]'가 아닐 경우 동작 --%>
-								<input type="submit" class="btn btn-secondary" value="더보기"/>
-							</c:if>
-						</form>
-                   	</div>
-                    	
+                    </div>	
                 </div>
                 <!-- /.container-fluid -->
             </div>
@@ -250,44 +191,14 @@
         <!-- End of Content Wrapper -->
     </div>
     <script>
-    	// 시작 날짜
-    	var startDate = new Date($("#startDate").val());
-		// 조회 날짜 바꾸면 동작하는 이벤트
-    	$("#endDate").change(function(){
-	    	var endDate = new Date($("#endDate").val());
-	    	var changeDate = new Date($("#startDate").val());
-    		if(changeDate > endDate){
-    			alert("시작 날짜보다 이전 날짜로 설정하실 수 없습니다.");
-    			
-    			// 시작 날짜 인코딩해서 입력 (2023-00-00)
-    			$("#endDate").val(changeDate.toISOString().substring(0, 10) ); 
-    		}
+    	$(".delete").click(function(){
+    		var email = $(this).data('email');
+    		if(confirm("삭제 하시겠습니까?") == true){
+				location='/whou/admin/adminDelete?email='+email;	
+			}
     	});
-    	// 오늘, 일주일, 한달 버튼 누르면 동작하는 이벤트
-    	$(".dateSel").click(function(){
-    		var sysdate = new Date('${now}');
-    		var name = $(this).data('name');
-    		if('${endDate}' != null){startDate = sysdate;}
-    		switch(name){
-	    		case 'today':
-	    			startDate = sysdate; // 시작 날짜에 서버 시간 대입
-	    			$("#startDate").val(startDate.toISOString().substring(0, 10) );
-	    			$("#endDate").val(startDate.toISOString().substring(0, 10) );
-	    			break;
-	    		case 'week':
-	    			$("#endDate").val(startDate.toISOString().substring(0, 10) );
-	    			startDate.setDate(startDate.getDate()-7);
-	    			$("#startDate").val(startDate.toISOString().substring(0, 10) );
-	    			startDate = sysdate;
-	    			break;
-	    		case 'month':
-	    			$("#endDate").val(startDate.toISOString().substring(0, 10) );
-	    			startDate.setMonth(startDate.getMonth()-1);
-	    			$("#startDate").val(startDate.toISOString().substring(0, 10) );
-	    			startDate = sysdate;
-	    			break;
-	    	}
-    	});
+    	
+    	
     </script>
 </body>
 

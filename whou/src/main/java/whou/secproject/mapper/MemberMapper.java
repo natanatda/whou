@@ -61,5 +61,10 @@ public interface MemberMapper {
 
 	// level 가져오기
 	public int level(String email);
-
+	
+	// 관리자 페이지
+	public void adminInsert(MemberDTO dto);
+	public List<MemberDTO> getAdmin();
+	public void deleteAdmin(String email);
+	
 }

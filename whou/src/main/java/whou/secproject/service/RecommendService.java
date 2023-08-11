@@ -33,4 +33,7 @@ public interface RecommendService {
 	public HashMap<String, String> getJobFactor(int job_cd);
 
 	public HashMap<String,String> getJobTagByTal(String tals);
+	public List<Integer> getJobLi(String tals);
+	public List<Integer> getInteLi(String tals);
+
 }

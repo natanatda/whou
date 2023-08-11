@@ -55,6 +55,18 @@ public class RecommendDAO {
 		while(st.hasMoreTokens()) answer.add(Integer.parseInt(st.nextToken()));
 		return answer;
 	}
+	public List<Double> doubleTokenizer(String input, String limit) {
+		List<Double> answer = new ArrayList<Double>();
+		StringTokenizer st = new StringTokenizer(input, limit);
+		while(st.hasMoreTokens()) answer.add(Double.parseDouble(st.nextToken()));
+		return answer;
+	}
+	public List<String> Tokenizer(String input, String limit) {
+		List<String> answer = new ArrayList<String>();
+		StringTokenizer st = new StringTokenizer(input, limit);
+		while(st.hasMoreTokens()) answer.add(st.nextToken());
+		return answer;
+	}
 	public ArrayList<Double> normalizePer(ArrayList<Double> score, double total, int important){
 		ArrayList<Double> result = new ArrayList<Double>();
 		for(Double s : score) result.add(Math.pow(Math.sqrt(s/total), important));
