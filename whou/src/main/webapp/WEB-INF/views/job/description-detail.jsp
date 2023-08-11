@@ -172,7 +172,7 @@
                                     <p class="icon-title">하는일</p>
                                     <div class="content-box">
 										<c:forEach var="work" items="${workList}">
-											<div style="margin-bottom: 4px;">- ${work.work}</div>
+											<div style="margin-bottom: 4px;">• ${work.work}</div>
 										</c:forEach>
                                     </div>
                                 </div>
@@ -189,13 +189,13 @@
                                     <p class="semi-title">﻿ο 적성</p>
                                     <div class="content-box">
 										<c:forEach var="Aptitude" items="${aptitudeList}">
-										    - ${Aptitude.aptitude}</br>
+										    • ${Aptitude.aptitude}</br>
 										</c:forEach>
                                     </div>
                                     <p class="semi-title">﻿ο 흥미</p>
                                     <div class="content-box">
 										<c:forEach var="Interest" items="${interestList}">
-										    - ${Interest.interest}</br>
+										    • ${Interest.interest}</br>
 										</c:forEach>
                                     </div>
                                 </div>
@@ -210,7 +210,9 @@
                                     <p class="semi-title">﻿﻿﻿﻿ο 진로 탐색 활동</p>
                                     <div class="content-box">
 										<c:forEach var="Research" items="${researchList}">
-										    <div style="margin-bottom: 4px;">- ${Research.research}</div>
+											<c:if test="${Research != null}">
+										    	<div style="margin-bottom: 4px;">• ${Research.research}</div>
+											</c:if>
 										</c:forEach>
                                     </div>
                                 </div>
@@ -219,14 +221,14 @@
                                     <p class="semi-title">﻿﻿﻿﻿ο 정규교육과정</p>
                                     <div class="content-box">
 										<c:forEach var="Curriculum" items="${JobReady.curriculum}">
-										    <div style="margin-bottom: 4px;">- ${Curriculum.curriculum}</div>
+										    <div style="margin-bottom: 4px;">• ${Curriculum.curriculum}</div>
 										</c:forEach>
                                     </div>
 									<c:forEach var="Training" items="${JobReady.training}">
 	                                    <c:if test="${Training.training != null}">
 		                                    <p class="semi-title">﻿﻿﻿﻿ο 직업훈련</p>
 		                                    <div class="content-box">
-												    <div style="margin-bottom: 4px;">- ${Training.training}</div>
+												    <div style="margin-bottom: 4px;">• ${Training.training}</div>
 		                                    </div>
 	                                    </c:if>
 									</c:forEach>
@@ -234,14 +236,14 @@
 	                                    <c:if test="${Certificate.certificate != null}">
 	                                    	<p class="semi-title">﻿﻿﻿﻿ο 관련 자격증</p>
 		                                    <div class="content-box">
-												    <div style="margin-bottom: 4px;">- ${Certificate.certificate}</div>
+												    <div style="margin-bottom: 4px;">• ${Certificate.certificate}</div>
 		                                    </div>
 	                                    </c:if>
 									</c:forEach>
                                     <p class="semi-title">﻿﻿﻿﻿ο 입직 및 취업방법 </p>
                                     <div class="content-box">
 										<c:forEach var="Recruit" items="${JobReady.recruit}">
-										    <div style="margin-bottom: 4px;">- ${Recruit.recruit}</div>
+										    <div style="margin-bottom: 4px;">• ${Recruit.recruit}</div>
 										</c:forEach>
                                     </div>
                                 </div>
@@ -249,7 +251,7 @@
                                     <p class="icon-title">관련기관</p>
                                     <div class="content-box">
 										<c:forEach var="JobRelOrg" items="${jobRelOrg}">
-										    - ${JobRelOrg.rel_org} <a href="${JobRelOrg.rel_org_url}">${JobRelOrg.rel_org_url}</a></br>
+										    • ${JobRelOrg.rel_org} <a href="${JobRelOrg.rel_org_url}">${JobRelOrg.rel_org_url}</a></br>
 										</c:forEach>
                                     </div>
                                 </div>

@@ -15,10 +15,11 @@ import whou.secproject.component.UserInfoDTO;
 public interface MemberService {
     public int count(String tel);
     public int check(String email);
+    public int num(String email);
     public String join_type(String email);
     public String login(String email);
     public String getEmail(String name, String tel);
-    public void insert2(String email);
+    public void insert2(String email, int num);
     public void insertPro(MemberDTO dto);
     public String getAccessToken (String authorize_code);
     public String getUserInfo (String access_Token);

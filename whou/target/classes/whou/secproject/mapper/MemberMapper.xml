@@ -8,7 +8,7 @@
 	</insert>
 	
 	<insert id="insert2">
-		insert into user_info (num, email) values(userInfo_seq.NEXTVAL, #{email})
+		insert into user_info (num, email) values(#{num}, #{email})
 	</insert>
 	
 	<insert id="insertPro">
@@ -27,6 +27,10 @@
 	
 	<select id="check" resultType="int">
 		select count(*) from whou_user where email = #{email}
+	</select>
+	
+	<select id="num" resultType="int">
+		select num from whou_user where email = #{email}
 	</select>
 	
 	<select id="join_type" resultType="String">
