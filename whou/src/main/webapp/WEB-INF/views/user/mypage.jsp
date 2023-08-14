@@ -843,7 +843,12 @@
 							<div class="tab-pane fade" id="nav-reco" role="tabpanel"
 								aria-labelledby="nav-reco-tab" tabindex="0">
 								<div id="reco-container">
-									<div class="card">설명</div>
+									<div class="card" style="border:0;margin-bottom:20px;padding:20px;background:#5a3fff;color:#fff;">
+										<h3>활용Tip!</h3>
+										<strong>[추천 받기]</strong>에서 선택한 직업으로 진로컨설팅을 진행합니다.<br>
+										<strong>[정보 수정]-[추가 정보 입력]</strong>에 작성된 자격증 및 학력 정보와 <strong>[추천 받기]-[우선순위 선택하기], [진로검사]</strong>가 컨설팅에 영향을 미칩니다.<br>
+										보다 정확한 진로 컨설팅을 희망하신다면 <strong>[진로 검사]와 [정보 수정]-[추가 정보 입력], [우선순위 선택하기]</strong>를 반드시 기입 바랍니다.
+									</div>
 									<div class="reco-wrap">
 										<div class="reco-item-container"
 											style="display: flex; justify-content: flex-start; gap: 20px;">
@@ -1229,16 +1234,16 @@
                                                   아래와 같은 방법을 통해 보완할 수 있습니다.
                                                 
                                                 <ol>
-																	<li>${currentReinDTO.getMethod01()}</li>
-																	<li>${currentReinDTO.getMethod02()}</li>
-																	<li>${currentReinDTO.getMethod03()}</li>
-																	<li>${currentReinDTO.getMethod04()}</li>
-																	<li>${currentReinDTO.getMethod05()}</li>
-																	<li>${currentReinDTO.getMethod06()}</li>
-																	<li>${currentReinDTO.getMethod07()}</li>
-																	<li>${currentReinDTO.getMethod08()}</li>
-																	<li>${currentReinDTO.getMethod09()}</li>
-																	<li>${currentReinDTO.getMethod10()}</li>
+																	<li><i class="fa-solid fa-chevron-right"></i> ${currentReinDTO.getMethod01()}</li>
+																	<li><i class="fa-solid fa-chevron-right"></i> ${currentReinDTO.getMethod02()}</li>
+																	<li><i class="fa-solid fa-chevron-right"></i> ${currentReinDTO.getMethod03()}</li>
+																	<li><i class="fa-solid fa-chevron-right"></i> ${currentReinDTO.getMethod04()}</li>
+																	<li><i class="fa-solid fa-chevron-right"></i> ${currentReinDTO.getMethod05()}</li>
+																	<li><i class="fa-solid fa-chevron-right"></i> ${currentReinDTO.getMethod06()}</li>
+																	<li><i class="fa-solid fa-chevron-right"></i> ${currentReinDTO.getMethod07()}</li>
+																	<li><i class="fa-solid fa-chevron-right"></i> ${currentReinDTO.getMethod08()}</li>
+																	<li><i class="fa-solid fa-chevron-right"></i> ${currentReinDTO.getMethod09()}</li>
+																	<li><i class="fa-solid fa-chevron-right"></i> ${currentReinDTO.getMethod10()}</li>
 																</ol>
 															</c:if>
 

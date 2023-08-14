@@ -75,9 +75,9 @@
 	                                <div class="feature mb-3"><i class="bi bi-collection"></i></div>
                                 	<h2 class="h5">직업 검사받기</h2>
                                 	 <p>
-                                    직업 검사를 했을 시에는 저희가 기분이 좋아요!
-                                    직업 검사를 해야만 저희가 직업 컨설팅을 해드릴 수 있어요!
-                                    직업 검사를 실행 시에는 저희가 정보를 전부 가져갈 수 있다는점 인지해주세요!
+                                	 	무엇을 해야할지 고민이 큰 분들에게 추천드려요.
+                                	 	검사를 통해 자신의 강점과 흥미를 파악할 수 있습니다.
+                                	 	결과를 확인하시어 다양한 진로를 항해하고 적합한 직업을 whoU와 함께 찾아보세요.
                                 	</p>
                                 </c:if>
                                 <c:if test="${recoLi3 != null}">
@@ -92,9 +92,9 @@
 	                                <div class="feature mb-3"><i class="fa-solid fa-leaf"></i></div>
                                 	<h2 class="h5">직업 컨설팅</h2>
                                 	 <p>
-                                    직업 검사를 했을 시에는 저희가 기분이 좋아요!
-                                    직업 검사를 해야만 저희가 직업 컨설팅을 해드릴 수 있어요!
-                                    직업 검사를 실행 시에는 저희가 정보를 전부 가져갈 수 있다는점 인지해주세요!
+	                                    whoU는 적합한 직업을 추천해드린 후 이력 사항을 기초로 컨설팅해드려요.
+	                                   	해당 직업에 대한 연봉 정보부터 취업방법, 그 직업을 갖기 위한 사용자의 강점과 보완점을 분석해서 알려드려요. 
+	                                   	
                                 	</p>
                                 </c:if>
                                 <c:if test="${recoLi3 != null}">
@@ -110,9 +110,9 @@
 	                                <div class="feature mb-3"><i class="bi bi-toggles2"></i></div>
                                 	<h2 class="h5">직업 관련정보</h2>
                                 	 <p>
-                                    직업 검사를 했을 시에는 저희가 기분이 좋아요!
-                                    직업 검사를 해야만 저희가 직업 컨설팅을 해드릴 수 있어요!
-                                    직업 검사를 실행 시에는 저희가 정보를 전부 가져갈 수 있다는점 인지해주세요!
+	                                    여러 직업에 대한 자세한 정보를 제공해요.
+	                                    하는 일 뿐만아니라 해당 직업과 관련된 통계 자료도 제공해요.
+	                                    자세한 직업 정보가 궁금하시다면 [직업정보] 메뉴를 이용해보세요.
                                 	</p>
                                 </c:if>
                                 <c:if test="${recoLi3 != null}">
@@ -137,7 +137,7 @@
                     <p class="fw-bolder">당신만을 위한 검사가 기다리고 있어요.</p>
                     <p class="main-text">직업 검사를 받아보세요.</p>
                 </div>
-                <p class="add-btn mb-5"><a href="/whou/aptitude/aptitudeMain">추가 검사 보기 </a><i class="fa-solid fa-chevron-right fa-xs" style="color: #f9fafa;"></i></p>
+                <p class="add-btn mb-5"></p>
                 <div class="row gx-4 justify-content-center">
                     <!-- 직업적성검사 -->
                     <div class="col-lg-6 col-xl-3">
@@ -148,14 +148,6 @@
                                 <div class="d-flex test-cont-info">
                                     <div>
                                         <ul>
-                                            <li>중</li>
-                                            <li>20분</li>
-                                            <li>66문항</li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <ul>
-                                            <li>고</li>
                                             <li>30분</li>
                                             <li>88문항</li>
                                         </ul>
@@ -167,11 +159,8 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="button-wrap">
-                                    <button class="black-btn">검사소개</button>
-                                    <button class="black-btn">검사결과 예시</button>
-                                </div>
-                                <button class="purple-btn">검사시작</button>
+                                
+                                <button class="purple-btn" onclick="location='/whou/aptitude/aptitudeMain'">자세히 보러가기</button>
                             </div>
                         </div>
                     </div>
@@ -179,21 +168,13 @@
                     <div class="col-lg-6 col-xl-3">
                         <div class="card mb-5 mb-xl-0 test-cont-wrap">
                             <div class="card-body p-4">
-                                <h4>직업적성검사</h4>
+                                <h4>직업가치관검사</h4>
                                 <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
                                 <div class="d-flex test-cont-info">
                                     <div>
                                         <ul>
-                                            <li>중</li>
-                                            <li>20분</li>
-                                            <li>66문항</li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <ul>
-                                            <li>고</li>
-                                            <li>30분</li>
-                                            <li>88문항</li>
+                                            <li>15~20분</li>
+                                            <li>49문항</li>
                                         </ul>
                                     </div>
                                     <div>
@@ -203,11 +184,8 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="button-wrap">
-                                    <button class="black-btn">검사소개</button>
-                                    <button class="black-btn">검사결과 예시</button>
-                                </div>
-                                <button class="purple-btn">검사시작</button>
+                             
+                                <button class="purple-btn" onclick="location='/whou/aptitude/aptitudeMain'">자세히 보러가기</button>
                             </div>
                         </div>
                     </div>
@@ -215,21 +193,13 @@
                     <div class="col-lg-6 col-xl-3">
                         <div class="card mb-5 mb-xl-0 test-cont-wrap">
                             <div class="card-body p-4">
-                                <h4>직업적성검사</h4>
+                                <h4>진로개발역량검사</h4>
                                 <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
                                 <div class="d-flex test-cont-info">
                                     <div>
                                         <ul>
-                                            <li>중</li>
                                             <li>20분</li>
-                                            <li>66문항</li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <ul>
-                                            <li>고</li>
-                                            <li>30분</li>
-                                            <li>88문항</li>
+                                            <li>53문항</li>
                                         </ul>
                                     </div>
                                     <div>
@@ -239,11 +209,8 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="button-wrap">
-                                    <button class="black-btn">검사소개</button>
-                                    <button class="black-btn">검사결과 예시</button>
-                                </div>
-                                <button class="purple-btn">검사시작</button>
+                       
+                                <button class="purple-btn" onclick="location='/whou/aptitude/aptitudeMain'">자세히 보러가기</button>
                             </div>
                         </div>
                     </div>
@@ -251,21 +218,13 @@
                     <div class="col-lg-6 col-xl-3">
                         <div class="card mb-5 mb-xl-0 test-cont-wrap">
                             <div class="card-body p-4">
-                                <h4>직업적성검사</h4>
+                                <h4>직업흥미검사</h4>
                                 <p class="test-cont-desc">직업과 관련된 다양한 능력을 어느 정도로 갖추고 있는지 알아 볼 수 있습니다.</p>
                                 <div class="d-flex test-cont-info">
                                     <div>
                                         <ul>
-                                            <li>중</li>
-                                            <li>20분</li>
-                                            <li>66문항</li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <ul>
-                                            <li>고</li>
-                                            <li>30분</li>
-                                            <li>88문항</li>
+                                            <li>15~20분</li>
+                                            <li>153문항</li>
                                         </ul>
                                     </div>
                                     <div>
@@ -275,11 +234,8 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="button-wrap">
-                                    <button class="black-btn">검사소개</button>
-                                    <button class="black-btn">검사결과 예시</button>
-                                </div>
-                                <button class="purple-btn">검사시작</button>
+
+                                <button class="purple-btn" onclick="location='/whou/aptitude/aptitudeMain'">자세히 보러가기</button>
                             </div>
                         </div>
                     </div>

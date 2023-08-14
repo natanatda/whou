@@ -274,7 +274,7 @@ input[type="date"]{
     font-weight: 700;
     color: #5A3FFF;
     margin-left: 95px;
-    margin-top: 12px;}
+    margin-top: 12px;word-break: keep-all;}
 
 /* main-content */
 .main-content{color:#5A3FFF;text-align: center;}
@@ -697,7 +697,7 @@ div #user p{font-weight:500;}
 .ai-text-btns > div:last-child{justify-content: flex-end;display: flex;    margin-top: 30px;}
 
 
-
+#reco-container strong{display:contents;font-size: 16px;}
 @media (max-width: 1200px){
    .navbar-nav{gap:20px;}
    .navbar-expand-lg .navbar-nav .nav-link{padding-left:0;}
