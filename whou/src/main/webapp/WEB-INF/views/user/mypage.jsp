@@ -2189,14 +2189,15 @@
    		    });
    		    
    		    
-   		    //회원가입 버튼 클릭시 컨트롤러로
+   		    // 회원정보 수정
 	   		$("#btnM").click(function() {
+	   		
 	   		  if (!$(this).prop("disabled")) {
 	   			  
-	   			var email = $("#email").val().replace(/ /g, '');
+	   			var email = $("#email").text().replace(/ /g, '');
 		        var name = $("#name").val().replace(/ /g, '');
 		        var birth_year = $("#birth_year").val().replace(/ /g, '');
-		        var phone = $("phone").val().replace(/ /g, '');
+		        var phone = $("#phone").val().replace(/ /g, '');
   
 	   			//컨트롤러로 보낼 데이터
      		 	var data = {
@@ -2215,6 +2216,7 @@
 		   		        alert("오류가 발생했습니다.\n다시 시도해주세요.");
 		   		  },
 	  		      success:function(result){
+	  		    	  console.log(result)
   		        	if(result === "1"){
 		                	alert("회원정보가 성공적으로 변경되었습니다.")
 		                	location.href = '/whou/member/mypage?load=3';

@@ -64,7 +64,7 @@
 
 .cont_test_intro .panel_exam_guide .type_dropmenu .link_selected .ico_arrow {
    right: 19px;
-   background-image: url(../img/sp_intro_popup.png);
+/*    background-image: url(../img/sp_intro_popup.png); */
    background-size: 273px 262px;
    background-position: -256px -237px;
    width: 12px;
@@ -105,7 +105,7 @@
    position: absolute;
    top: 8px;
    right: 20px;
-   background-image: url(../img/sp_intro_popup.png);
+/*    background-image: url(../img/sp_intro_popup.png); */
    background-size: 273px 262px;
    background-position: -256px -221px;
    width: 14px;
@@ -205,7 +205,7 @@
 
 .cont_test_intro .stat_type1 dt:before {
    left: 4px;
-   background-image: url(../img/sp_intro_popup.png);
+/*    background-image: url(../img/sp_intro_popup.png); */
    background-size: 273px 262px;
    background-position: -256px 0px;
    width: 17px;
@@ -222,7 +222,7 @@
 }
 
 .cont_test_intro .stat_type2 dt:before {
-   background-image: url(../img/sp_intro_popup.png);
+/*    background-image: url(../img/sp_intro_popup.png); */
    background-size: 273px 262px;
    background-position: -206px -150px;
    width: 18px;
@@ -241,7 +241,7 @@
 .cont_test_intro .stat_type3 dt:before {
    top: 2px;
    left: 6px;
-   background-image: url(../img/sp_intro_popup.png);
+/*    background-image: url(../img/sp_intro_popup.png); */
    background-size: 273px 262px;
    background-position: -256px -67px;
    width: 15px;
@@ -1338,9 +1338,13 @@
          </c:if>
       </div>
         <div class="tab-pane fade" id="nav-result" role="tabpanel" aria-labelledby="nav-result-tab" tabindex="0">
-            <!-- 검사결과예시 내용 작성 -->
-            <h2>검사결과예시</h2>
-            <p>검사결과예시 내용을 여기에 작성하세요.</p>
+            <div class="cont_test_intro">
+	            <!-- 검사결과예시 내용 작성 -->
+	            <h2 class="tit_test_intro">검사결과예시</h2>
+	            <div>
+	            	<img style="width: 100%;" src="/whou/resources/img/ex.png">
+	            </div>
+            </div>
         </div>
     </div>
     
@@ -1348,21 +1352,31 @@
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        let load = "${load}";
-        const link = $(".nav-link");
-        if (load == 1) {
-             $(".nav-link").removeClass("active");
-             $(".tab-pane").removeClass("active show");
-             
-               $("#nav-intro-tab").addClass("active");
-               $("#nav-intro").addClass("active show");
-        } else if (load == 2) {
-           link.removeClass("active");
-            $(".tab-pane").removeClass("active show");
-            
-              $("#nav-result-tab").addClass("active");
-              $("#nav-result").addClass("active show");
-        }
+    let load = "${load}";
+    const link = $(".nav-link");
+    if (load == 1) {
+        $(".nav-link").removeClass("active");
+        $(".tab-pane").removeClass("active show");
+        $("#nav-intro").show();
+        $("#nav-intro-tab").addClass("active");
+        $("#nav-intro").addClass("active show");
+    } else if (load == 2) {
+        $(".nav-link").removeClass("active");
+        $(".tab-pane").removeClass("active show");
+        $("#nav-intro").hide();
+        $("#nav-result").show();
+        $("#nav-result-tab").addClass("active");
+        $("#nav-result").addClass("active show");
+    }
+    
+    link.click(function() {
+        $(".nav-link").removeClass("active");
+        $(".tab-pane").removeClass("active show").hide(); // 이전 탭의 내용 숨김
+        $(this).addClass("active");
+        const targetTab = $($(this).data("bs-target"));
+        targetTab.show(); // 클릭한 탭의 내용을 보이게 설정
+        targetTab.addClass("active show");
+    });
     </script>
 </body>
         
