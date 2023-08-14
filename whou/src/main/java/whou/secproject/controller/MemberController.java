@@ -234,11 +234,12 @@ public class MemberController {
   		return result;
   	}
   	
-  	//비밀번호 변경
+  	// 회원정보 수정
   	@RequestMapping("/updateUser")
   	public @ResponseBody String updateUser(MemberDTO dto, HttpServletRequest request) {
   		//HttpSession session = request.getSession();
 		//String memId = (String)session.getAttribute("memId");
+  		System.out.println(dto);
   		String result = "0";
   		try {
   	        service.updateUser(dto);
@@ -458,6 +459,7 @@ public class MemberController {
             numStr+=ran;
         }
         service.telChk(tel, numStr);
+        System.out.println(numStr);
         return numStr;
     }	
   	

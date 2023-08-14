@@ -171,5 +171,11 @@ public class MainController {
 
 	return "/index3";
 	}
+	
+	@RequestMapping("/indexMain")
+	public String indexMain() {
+
+	return "/indexMain";
+	}
 
 }
