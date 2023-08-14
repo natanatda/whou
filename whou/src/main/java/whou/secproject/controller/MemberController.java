@@ -678,21 +678,17 @@ public class MemberController {
 	    			List<TestReinforcementDTO> reinDTO=new ArrayList<>();
 	    			for(int i=0; i<needAvil.size(); i++) {
 	    				switch(needAvil.get(i)) {
-	    				case "음악능력": avilArrValue[i]=avilArrDouble[0]; avilNum=0; break;
-	//	        		case "예술시각능력": avilArrValue[i]=avilArrDouble[1]; avilNum=1; break;
-	    				case "예술시각능력": avilArrValue[i]=1000; avilNum=1; break;
-	//	        		case "언어능력": avilArrValue[i]=avilArrDouble[2]; avilNum=2; break;
-	    				case "언어능력": avilArrValue[i]=1000; avilNum=2; break;
-	    				case "수리·논리력": avilArrValue[i]=avilArrDouble[3]; avilNum=3; break;
-	    				case "공간지각력": avilArrValue[i]=avilArrDouble[4]; avilNum=4; break;
-	//	        		case "자기성찰능력": avilArrValue[i]=avilArrDouble[5]; avilNum=5; break;
-	    				case "자기성찰능력": avilArrValue[i]=1000; avilNum=5; break;
-	    				case "창의력": avilArrValue[i]=avilArrDouble[6]; avilNum=6; break;
-	//	        		case "대인관계능력": avilArrValue[i]=avilArrDouble[7]; avilNum=7; break;
-	    				case "대인관계능력": avilArrValue[i]=1000; avilNum=7; break;
-	    				case "신체·운동능력": avilArrValue[i]=avilArrDouble[8]; avilNum=8; break;
-	    				case "자연친화력": avilArrValue[i]=avilArrDouble[9]; avilNum=9; break;
-	    				case "손재능": avilArrValue[i]=avilArrDouble[10]; avilNum=10; break;
+		    				case "음악능력": avilArrValue[i]=avilArrDouble[0]; avilNum=0; break;
+			        		case "예술시각능력": avilArrValue[i]=avilArrDouble[1]; avilNum=1; break;
+			        		case "언어능력": avilArrValue[i]=avilArrDouble[2]; avilNum=2; break;
+		    				case "수리·논리력": avilArrValue[i]=avilArrDouble[3]; avilNum=3; break;
+		    				case "공간지각력": avilArrValue[i]=avilArrDouble[4]; avilNum=4; break;
+			        		case "자기성찰능력": avilArrValue[i]=avilArrDouble[5]; avilNum=5; break;
+		    				case "창의력": avilArrValue[i]=avilArrDouble[6]; avilNum=6; break;
+			        		case "대인관계능력": avilArrValue[i]=avilArrDouble[7]; avilNum=7; break;
+		    				case "신체·운동능력": avilArrValue[i]=avilArrDouble[8]; avilNum=8; break;
+		    				case "자연친화력": avilArrValue[i]=avilArrDouble[9]; avilNum=9; break;
+		    				case "손재능": avilArrValue[i]=avilArrDouble[10]; avilNum=10; break;
 	    				}
 	    				reinDTO.add(service.getTestReinforcement(avilNum));
 	    			}
