@@ -65,7 +65,7 @@
 	<script>
 		function deleteNotice(){
 			if(confirm("삭제 하시겠습니까?") == true){
-				lodation='location=/whou/cs/noticeDelete?num=${notice.num}'	
+				location='/whou/cs/noticeDelete?num=${notice.num}';	
 			}			
 		}
 	</script>

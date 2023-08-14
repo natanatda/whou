@@ -172,8 +172,8 @@
                         			
 			                        	<td>${adminList.email}</td>
 			                        	<td>${adminList.pw}</td>
-				                        	<td><input type="button" class="btn delete" value="삭제" data-email="${adminList.email}"/></td>
 			                        	<c:if test="${adminList.email ne 'tmdgnsdl1534@naver.com' }">
+				                        	<td><input type="button" class="btn delete" value="삭제" data-email="${adminList.email}"/></td>
 			                        	</c:if>
 			                    	</tr>
                     			</c:forEach>

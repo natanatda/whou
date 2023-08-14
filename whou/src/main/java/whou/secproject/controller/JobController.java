@@ -181,13 +181,11 @@ public class JobController {
        WhouModelDTO whouModel = whouModelService.selectModel(modelNum);
        if(whouModel.getColor() == null) {whouModel.setColor("noColor");}
        
-       System.out.println("seq == " +seq);
        jobDetail= dao.getJobDicDetail(seq);
        
        String data = jobDetail.getIndicatorChart().get(0).getIndicator_data();
        String major_data = jobDetail.getMajorChart().get(0).getMajor_data();
        String edu_data = jobDetail.getEduChart().get(0).getChart_data();
-       System.out.println(data);
 
        List<String> indicator = new ArrayList<String>();
        List<String> major = new ArrayList<String>();
@@ -239,7 +237,6 @@ public class JobController {
        model.addAttribute("memId", memId);
        model.addAttribute("model", whouModel);
        model.addAttribute("slide", slide);
-	   System.out.println("//////////"+memId);
        return "/job/description-detail";
     }
 	
@@ -275,10 +272,8 @@ public class JobController {
 //			jParam.setSearchJobCd(j+"");
 //			JobDicListResponseDTO jdlrDTO = dao.getJobDicListSorted(jParam);
 //			int a = jdlrDTO.getCount()/10;
-//			System.out.println(a);
 //			String [] list = new String[jdlrDTO.getCount()];
 //			for(int i = 1; i <= a+1; i++) {
-//				System.out.println(i);
 //				jParam.setPageIndex(i+"");
 //				jdlrDTO = dao.getJobDicListSorted(jParam);
 //				List<JobDicListResponseDTO.Jobs> jobs= jdlrDTO.getJobs();
@@ -287,7 +282,6 @@ public class JobController {
 //				}
 //			}
 //			String str = String.join(",", list);
-//			System.out.println(str);
 //			service.insertJCC(j, str);
 //		}
 //		return null;
@@ -311,9 +305,6 @@ public class JobController {
 		}else {
 			dto.setEmail("guest");
 		}
-		System.out.println(dto.getEmail());
-		System.out.println(dto.getJob());
-		System.out.println(dto.getKeyword());
 		
 		jobSearchLogService.insertSearchLog(dto);
 		return "";

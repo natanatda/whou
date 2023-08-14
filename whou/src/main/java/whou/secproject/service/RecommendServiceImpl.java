@@ -89,7 +89,6 @@ public class RecommendServiceImpl implements RecommendService{
 			arr2 = new ArrayList<String>();
 			for(int i = 1 ; i <= certiC; i++) arr2.add("certi"+i+" number");
 		}
-		System.out.println(arr2);
 		mapper.createJobPoint(user, arr, arr2);
 	}
 	@Override
@@ -215,7 +214,6 @@ public class RecommendServiceImpl implements RecommendService{
 	@Override
 	public List<HashMap<String, Object>> getJob_NM(String job_nm) {
 		if(job_nm!=""&&job_nm!=null) {
-			System.out.println(job_nm);
 			SelectDTO selDTO = new SelectDTO();
 			SqlSession sqlSession = sqlSessionFactory.openSession();
 			SelectResultHandler<Object> resultHandler = new SelectResultHandler<Object>();

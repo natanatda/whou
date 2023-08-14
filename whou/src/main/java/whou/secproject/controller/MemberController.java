@@ -146,13 +146,10 @@ public class MemberController {
 	public @ResponseBody String loginPro(String email, String pw, HttpServletRequest request) {
 		String dpw = service.login(email);
 		int level = service.level(email);
-		System.out.println("레벨머야?"+level);
-		System.out.println(dpw);
 		HttpSession session = request.getSession();
 		if(pw.equals(dpw)) {
 			session.setAttribute("memId", email);
 			session.setAttribute("level", level);
-			System.out.println("비번 일치");
 		}
 		return dpw;
 	}
@@ -175,7 +172,6 @@ public class MemberController {
   	//이메일 찾기
   	@RequestMapping("/findEmailPro")
   	public @ResponseBody String findEmailPro(String name, String tel) {
-  		System.out.println(name+" ////// "+tel);
   		String email = service.getEmail(name, tel);
   		String type = null;
   		if(email != null) {
@@ -275,7 +271,6 @@ public class MemberController {
         OAuth20Service serv = (OAuth20Service) request.getSession().getAttribute("oauth2Service");
         
         OAuth2AccessToken accessToken = serv.getAccessToken(code);
-        System.out.println(accessToken+"/////////////");
         
         // HttpClient를 사용하여 요청을 보냅니다.
         HttpClient httpClient = HttpClients.createDefault();
@@ -297,7 +292,6 @@ public class MemberController {
         //String id = jsonNode.get("response").get("id").asText();
         String email = jsonNode.get("response").get("email").asText();
         
-        System.out.println(jsonNode);
         
         //세션 생성
         HttpSession session = request.getSession();
@@ -331,14 +325,11 @@ public class MemberController {
   	@RequestMapping("/kakao")
   	public String login(@RequestParam("code") String code, Model model, HttpServletRequest request) {
   		String access_Token = service.getAccessToken(code);
-  		System.out.println("/////토큰////"+access_Token);
   	    String email = service.getUserInfo(access_Token);
-  		System.out.println("이메일------" + email);
   		HttpSession session = request.getSession();
   		if (email != null) {
   	        model.addAttribute("email", email);
   	        int count = service.check(email);
-  	        System.out.println(count);
   	        if(count == 0) {
   	        	model.addAttribute("join_type", "K");
   	        	model.addAttribute("join", 1);
@@ -346,7 +337,6 @@ public class MemberController {
   	        }else if(count == 1) {
   	        	//가입타입을 검사해서 N이면 로그인 아니면 다른걸로 가입햇음
   	        	String join = service.join_type(email);
-  	        	System.out.println(join);
   	        	if(join.equals("K")) {
   	        		session.setAttribute("memId", email);
   			        session.setAttribute("access_Token", access_Token);
@@ -370,7 +360,6 @@ public class MemberController {
 		          "&redirect_uri=" + "http://localhost:8080/whou/member/googleLog" +
 		          "&response_type=code" +
 		          "&scope=email profile";
-		System.out.println("구글 거쳐감");
 		return "redirect:" + googleLoginUrl;
 	}
   	
@@ -390,11 +379,9 @@ public class MemberController {
 
               // 접근 토큰 가져오기
               String accessToken = tokenResponse.getAccessToken();
-              System.out.println(accessToken);
               
               // 접근 토큰으로 정보 가져오기
               ResponseEntity<String> json = service.getInfo(accessToken);
-              System.out.println(json);
               
               // 회원 정보 파싱
               JsonParser jsonParser = new JsonParser();
@@ -407,7 +394,6 @@ public class MemberController {
 	      	  if (email != null) {
 	      	      model.addAttribute("email", email);
 	      	      int count = service.check(email);
-	      	      System.out.println(count);
 	      	      if(count == 0) {
 	      	      		model.addAttribute("join_type", "G");
 	      	        	model.addAttribute("join", 1);
@@ -438,10 +424,9 @@ public class MemberController {
   	public @ResponseBody int check(MemberDTO dto, HttpSession session) {
 		
 		
-  	    System.out.println(dto);
+  		
   	    int count = service.count(dto.getTel());
   	    int check = service.check(dto.getEmail());
-  	    System.out.println(count);
   	    int result = 0;
 
   	    if (count == 1 || check == 1) {
@@ -451,14 +436,16 @@ public class MemberController {
   	    }else if(count == 0 && check == 0){
   	    	result = 0;
   	    	service.insertPro(dto);
-  		  	service.insert2(dto.getEmail());
+  	    	int userNum = 0;
+	  		int num = serviceAt.userNumSelect(dto.getEmail());
+  		  	service.insert2(dto.getEmail(), num);
   	        session.setAttribute("memId", dto.getEmail());
 	  	    String memId = (String)session.getAttribute("memId");
-	  		int userNum = 0;
-	  		userNum=serviceAt.userNumSelect(memId);
-  	        serviceAt.createTableSet(userNum);
+	  	    int level = service.level(memId);
+			session.setAttribute("level", level);
+
+  	        serviceAt.createTableSet(num);
   	    }
-  	    System.out.println(result);
   	    return result;
   	}
   	
@@ -471,7 +458,6 @@ public class MemberController {
             numStr+=ran;
         }
         service.telChk(tel, numStr);
-        System.out.println(numStr);
         return numStr;
     }	
   	
@@ -490,7 +476,6 @@ public class MemberController {
 		OAuth2AccessToken accessToken = (OAuth2AccessToken) session.getAttribute("access_token");
 		model.addAttribute("memId", memId);
 		// user_info 테이블에서 세션에 해당하는 num 추출
-		System.out.println("세션있냐?"+memId);
 		int userNum = 0;
 		if(memId != null) {
 			userNum=serviceAt.userNumSelect(memId);
@@ -500,7 +485,6 @@ public class MemberController {
 		if(memId != null) {
 			model.addAttribute("model", serviceMo.customModel(memId));
 		}
-		System.out.println("userNum왜안댐? "+userNum);
 		// 적성 차트 점수
 	      String scoreA = serviceAt.getAptitudeScore(userNum);
 	      Boolean scoreTrue1 = false;
@@ -621,7 +605,6 @@ public class MemberController {
 	             books = temp.split(",");
 	             for(String book : books) {
 	                int job_cd = Integer.parseInt(book);
-	                System.out.println("직업 번호ㅗㅗㅗㅗㅗㅗ"+job_cd);
 	                //북마크 직업 정보 가져오기
 	                job.add(service.getJob(job_cd));
 	                model.addAttribute("books", books);
@@ -658,7 +641,6 @@ public class MemberController {
     	
     	//역량 보완법을 위해 크롤링한 결과에서 21번 테스트의 역량별 수치 가져옴
     	if(memId != null && userNum >0) {
-    		System.out.println("++service.getRecentTest21(userNum)+++ "+service.getRecentTest21(userNum));
     		String avilReinforce="";
     		avilReinforce=service.getRecentTest21(userNum);
     		
@@ -752,6 +734,7 @@ public class MemberController {
         ArrayList<List<Integer>> Inte_jobs= null;
         ArrayList<String> arrs2 = new ArrayList<String>();
 
+        double highValueOfTest = 0;
         if(aptiTrue) {
         	aptiRank = new LinkedHashMap<String,Double>();
         	Apti_jobs = new ArrayList<List<Integer>>();
@@ -785,8 +768,10 @@ public class MemberController {
         	});
         	Inte_jobs = new ArrayList<List<Integer>>(); 
         	sortedInteRank = new LinkedHashMap<>();
+        	int in = 0;
         	for (Map.Entry<String, Double> entry : entryList) {
-        		sortedInteRank.put(entry.getKey(), entry.getValue());
+        		if(in<5) sortedInteRank.put(entry.getKey(), entry.getValue());
+        		in++;
         		Inte_jobs.add(serviceRe.getInteLi(entry.getKey()));
         		arrs.add(entry.getKey());
         	}
@@ -805,8 +790,9 @@ public class MemberController {
         		}
         	});
         	sortedValueRank = new LinkedHashMap<>();
+        	int va =0;
         	for (Map.Entry<String, Integer> entry : entryList) {
-        		sortedValueRank.put(entry.getKey(), entry.getValue());
+        		if(va++<5)sortedValueRank.put(entry.getKey(), entry.getValue());
         	}
         }
 	     
@@ -830,9 +816,6 @@ public class MemberController {
         model.addAttribute("inteRank", sortedInteRank);
         model.addAttribute("valueRank", sortedValueRank);
         
-        System.out.println("aptiRank : "+aptiRank);
-        System.out.println("inteRank : "+sortedInteRank);
-        System.out.println("valueRank : "+sortedValueRank);
         if(!none) {
             String [] impt = request.getParameterValues("importance");
             if(impt != null) {
@@ -880,11 +863,6 @@ public class MemberController {
             	                .forEach(j -> {
             	                    double d = normalize.get(j);
         	                    	List<Integer> jobNum = jobNums.get(j);
-        	                    	if(i.get()==1) {
-        	                    		System.out.println(j+" : "+d+" : "+arrs2.get(j)+" : "+jobNum);
-        	                    	}else if(i.get()==2) {
-        	                    		System.out.println(j+" : "+d+" : "+arrs.get(j)+" : "+jobNum);
-        	                    	}
         	                    	int len2 = jobNum.size();
         	                    	for(int n=0; n<len2; n++) {
         	                    		int f = jList.indexOf(jobNum.get(n));
@@ -975,7 +953,7 @@ public class MemberController {
             ArrayList<List<HashMap<String,BigDecimal>>> recoValues= null;
             
     		recoSelDTO.setOrder(" order by total desc , job_cd asc");
-            double highValueOfTest = serviceRe.getJobPoint(recoSelDTO,userNum,1,1,"total").get(0).get("TOTAL").doubleValue();
+            highValueOfTest = serviceRe.getJobPoint(recoSelDTO,userNum,1,1,"total").get(0).get("TOTAL").doubleValue();
             model.addAttribute("highValueOfTest", highValueOfTest);
             if(aptiTrue) {
             	recoAptis= new ArrayList<List<HashMap<String,BigDecimal>>>(3);
@@ -1042,7 +1020,6 @@ public class MemberController {
                        "VALUE3","VALUE4"));
            for(int c = 0 ; c < majorC; c++) colNM2.add("MAJOR"+(c+1));
            for(int c = 0 ; c < certiC; c++) colNM2.add("CERTI"+(c+1));
-           System.out.println(colNM2);
            SelectDTO selDTOJ = new SelectDTO();
            ArrayList<RecoResultDTO> reres = new ArrayList<RecoResultDTO>();
            for(int h = 0 ;  h < recoLi.size(); h++) {
@@ -1099,7 +1076,8 @@ public class MemberController {
            model.addAttribute("reres", reres);
         }
         model.addAttribute("none", none);
-        
+        model.addAttribute("highValueOfTest", highValueOfTest);
+
         // 순위
         
         
@@ -1110,7 +1088,6 @@ public class MemberController {
         model.addAttribute("mem", mem);
         model.addAttribute("user", user);
         
-        System.out.println("학과정보ㅗㅗㅗㅗㅗ"+user.getSchool_major());
         
         if(user.getSchool_major() != null) {
         	String arrM [] = user.getSchool_major().split(",");
@@ -1181,7 +1158,6 @@ public class MemberController {
 	@RequestMapping("/getCerti")
     public @ResponseBody List<String> getCerti(String certi){
 		List<String> certiList = service.getCerti(certi); 
-		System.out.println(certiList);
 		return certiList;
 	}
 	
@@ -1190,7 +1166,6 @@ public class MemberController {
     public @ResponseBody List<String> getMajor(@RequestParam("major") String major,
             									@RequestParam("univSe") String univSe){
 		List<String> majorList = service.getMajor(major, univSe); 
-		System.out.println(majorList);
 		return majorList;
 	}
 	
@@ -1203,8 +1178,6 @@ public class MemberController {
 		String memId = (String)session.getAttribute("memId");
 		String combinedCerti = null;
 		String combinedMajor = null;
-		System.out.println("Certi "+certiList);
-		System.out.println("Major "+majorList);
 		if (certiList != null && majorList != null) {
 	           service.updateInfo(certiList, majorList, memId);
 	           serviceAt.commendNumUpdate(memId);
@@ -1257,7 +1230,6 @@ public class MemberController {
                        "VALUE3","VALUE4"));
            for(int c = 0 ; c < majorC; c++) colNM2.add("MAJOR"+(c+1));
            for(int c = 0 ; c < certiC; c++) colNM2.add("CERTI"+(c+1));
-           System.out.println(colNM2);
            SelectDTO selDTOJ = new SelectDTO();
            ArrayList<RecoResultDTO> reres = new ArrayList<RecoResultDTO>();
            for(int h = 0 ;  h < recoLi.size(); h++) {
@@ -1299,7 +1271,6 @@ public class MemberController {
                      }
                  }else if(c<12+majorC+certiC) { //c<15
                      factor = certis.get(c-12-majorC);
-                     System.out.println(factor);
                      if(recoLi.get(h).get(colNM2.get(c)).doubleValue()!=0.0) {
                         reredto.setDescription(
                            " 자격증 "+factor+"는 이 직업에서 도움이 되기에 직업 적합도 종합 점수에 10% 기");
@@ -1319,7 +1290,6 @@ public class MemberController {
 	         int userNum = 0;
 	         if(memId != null) userNum=serviceAt.userNumSelect(memId);
 	         String job_cdStr = request.getParameter("job_cd");
-	         System.out.println(job_cdStr);
 	         int job_cd = 0;
 	         if(job_cdStr != null) job_cd= Integer.parseInt(job_cdStr);
 	         serviceRe.insertConsult(userNum, job_cd);
@@ -1343,20 +1313,13 @@ public class MemberController {
 		  
 		  if(serviceRe.tbTrue(userNum)==1) {
 				serviceRe.dropTable(userNum);
-				System.out.println("/////드랍잡포인트////");
 		  }
 		  service.dropTest_Result(userNum);
-		  System.out.println("/////드랍 결과 테이블////");
 		  service.dropTest_Save(userNum);
-		  System.out.println("/////드랍 임시저장 테이블////");
 		  service.deleteRecommand_info(userNum);
-		  System.out.println("/////드랍 추천 테이블////");
 		  service.deleteModel(email);
-		  System.out.println("/////드랍 모델 테이블////");
 		  service.deleteUser_info(userNum);
-		  System.out.println("/////드랍 인포 테이블////");
 		  service.deleteUser(userNum);
-		  System.out.println("/////드랍 유저 테이블////");
 
 	      
 		  session.invalidate();

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html lang="en">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
 
@@ -233,7 +234,7 @@
 								<input type="hidden" name="startDate" value="${startDate}" />
 							</c:if>
 							<input type="hidden" name="endDate" value="${endDate}" />
-							<c:if test="${not empty searchJobList and not empty searchKeyList}"> <%-- 리스트 두 개 다 '[]'가 아닐 경우 동작 --%>
+							<c:if test="${fn:length(searchJobList) ge rownum or fn:length(searchKeyList) ge rownum}"> <%-- 리스트 두 개 중 하나가 rownum보다 크거나 같을때 동작 --%>
 								<input type="submit" class="btn btn-secondary" value="더보기"/>
 							</c:if>
 						</form>
