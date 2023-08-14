@@ -843,6 +843,7 @@
 							<div class="tab-pane fade" id="nav-reco" role="tabpanel"
 								aria-labelledby="nav-reco-tab" tabindex="0">
 								<div id="reco-container">
+									<div class="card">설명</div>
 									<div class="reco-wrap">
 										<div class="reco-item-container"
 											style="display: flex; justify-content: flex-start; gap: 20px;">
