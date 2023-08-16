@@ -131,9 +131,89 @@
         <!-- Features section-->
     
         <!-- Pricing section-->
-        <section class="py-2 test-section">
+        <section class="py-2 test-section ex-section">
             <div class="container px-5 my-5">
                 <div>
+                    <p class="fw-bolder">처음 이용해보시나요? 차근차근 함께 해요.</p>
+                    <p class="main-text">whoU 이용 방법</p>
+                </div>
+                <p class="add-btn mb-5"></p>
+                <div>
+                    <!-- 직업적성검사 -->
+                    <div class="col-lg-6 col-xl-12 mb-5">
+                        <div class="card mb-5 mb-xl-0 test-cont-wrap" style="min-height: 330px;">
+                             <div class="card-body p-4" style="min-height: 330px;display: flex; flex-direction: column;justify-content: space-between;">
+                               <div>
+	                                <h4>STEP.01</h4>
+	                                <h3>검사를 하세요.</h3>
+	                                <span>검사를 진행하면 직업 추천을 받을 수 있어요.</span>
+                               </div>
+                                <div>
+	                                <video controls>
+	                                	<source src="/whou/resources/video/test.mp4">
+	                                </video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 직업성숙도검사 -->
+                    <div class="col-lg-6 col-xl-12 mb-5">
+                         <div class="card mb-5 mb-xl-0 test-cont-wrap" >
+                            <div class="card-body p-4" style="min-height: 330px;display: flex; flex-direction: column;justify-content: space-between;">
+	                            <div>
+	                                <h4>STEP.02</h4>
+	                                <h3>개인정보를 입력하세요.</h3>
+	                                <span>추가정보를 입력하면 직업 추천이 더 정확해져요.</span>
+	                            </div>
+                                <div>
+	                                <video controls>
+	                                	<source src="/whou/resources/video/mypage.mp4">
+	                                </video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 직업흥미검사 -->
+                    <div class="col-lg-6 col-xl-12 mb-5">
+                        <div class="card mb-5 mb-xl-0 test-cont-wrap" >
+                            <div class="card-body p-4" style="min-height: 330px;display: flex; flex-direction: column;justify-content: space-between;">
+	                            <div>
+	                                <h4>STEP.03</h4>
+	                                <h3>추천 및 컨설팅을 받으세요.</h3>
+	                                <span>원하는 직업을 선택하여 컨설팅 받아보세요</span>
+	                            </div>
+                                <div class="video-wrap">
+	                                <video controls>
+	                                	<source src="/whou/resources/video/consulting.mp4">
+	                                </video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 직업가치관검사 -->
+                    <div class="col-lg-6 col-xl-12">
+                        <div class="card mb-5 mb-xl-0 test-cont-wrap" style="min-height: 330px;">
+                              <div class="card-body p-4" style="min-height: 330px;display: flex; flex-direction: column;justify-content: space-between;">
+                              <div>
+	                               <h4>STEP.04</h4>
+	                                <h3>자세한 정보를 탐색 하세요.</h3>
+	                                <span>직업에 대한 정보와 각종 교육, 채용 정보를 살펴보세요</span>
+                              </div>
+                                <div>
+	                                <video controls>
+	                                	<source src="/whou/resources/video/job.mp4">
+	                                </video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Testimonials section-->
+       <section class="py-2 test-section" style="background:#fff;">
+            <div class="container px-5 my-5">
+                <div style="color:#111">
                     <p class="fw-bolder">당신만을 위한 검사가 기다리고 있어요.</p>
                     <p class="main-text">직업 검사를 받아보세요.</p>
                 </div>
@@ -242,29 +322,7 @@
                 </div>
             </div>
         </section>
-        <!-- Testimonials section-->
-        <section class="py-5 consult-section">
-            <div class="container px-5 my-5 px-5">
-                <div class="mb-5">
-                    <p class="fw-bolder">당신만을 위한 컨설팅이 기다리고 있어요.</p>
-                    <p class="main-text">직업 컨설팅을 받아보세요.</p>
-                </div>
-                <div class="row gx-5 justify-content-center">
-                    <div class="col-lg-12">
-                        <div class="card mb-4 consult-box">
-                            <div class="card-body p-4">
-                                <div class="d-flex">
-                                   <div class="col-lg-3">ai</div>
-                                   <div class="col-lg-6">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo deleniti facilis commodi maiores laborum, nam officiis voluptatum perferendis blanditiis neque obcaecati, autem distinctio illum fugiat laudantium eaque. Nostrum, dolorem aliquid!</div>
-                                   <div class="col-lg-3">img</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <%@ include file="aiChatBot.jsp" %>
-        </section>
 
         <!-- Footer-->
         <%@ include file="footer.jsp" %> 
